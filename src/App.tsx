@@ -1,9 +1,9 @@
-import './App.css';
+import { Outlet, RouterProvider, createBrowserRouter } from 'react-router-dom';
 
 function App() {
   return (
     <>
-      <div></div>
+      <Outlet />
     </>
   );
 }
