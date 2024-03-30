@@ -1,9 +1,9 @@
-import Button from '@components/commons/buttons/Button';
+import Button, { LargeButton } from '@/components/commons/buttons/Button';
 const Main = () => {
   return (
     <>
-      <div>"Hello"</div>
-      <Button />
+      <Button text="가족여행" />
+      <LargeButton text="큰 버튼" />
     </>
   );
 };

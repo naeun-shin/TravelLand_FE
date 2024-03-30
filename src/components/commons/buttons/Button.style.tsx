@@ -1,0 +1,26 @@
+import styled from 'styled-components';
+
+interface ButtonProps {
+  width: string;
+  height: string;
+  color: string;
+  borderColor: string;
+  borderRadius: string;
+}
+
+export const StyledButton = styled.button<ButtonProps>`
+  width: ${(props) => props.width};
+  height: ${(props) => props.height};
+  background-color: ${(props) => props.color};
+  border: 1px solid ${(props) => props.borderColor};
+  border-radius: ${(props) => props.borderRadius};
+  color: #000;
+  cursor: pointer;
+  font-size: 16px;
+  text-align: center;
+  text-decoration: none;
+  &:active {
+    background-color: #4d87d4;
+    color: #fff;
+  }
+`;
