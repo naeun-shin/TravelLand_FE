@@ -8,6 +8,7 @@ interface ButtonProps {
   borderColor?: string;
   borderRadius?: string;
   text: string;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
 // 기본 버튼
 const Button: React.FC<ButtonProps> = ({
@@ -17,6 +18,7 @@ const Button: React.FC<ButtonProps> = ({
   borderColor = '#000',
   borderRadius = '30px',
   text,
+  onClick,
 }) => {
   return (
     <StyledButton
@@ -25,6 +27,7 @@ const Button: React.FC<ButtonProps> = ({
       color={color}
       borderColor={borderColor}
       borderRadius={borderRadius}
+      onClick={onClick}
     >
       {text}
     </StyledButton>

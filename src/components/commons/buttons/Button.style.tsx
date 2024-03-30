@@ -19,8 +19,4 @@ export const StyledButton = styled.button<ButtonProps>`
   font-size: 16px;
   text-align: center;
   text-decoration: none;
-  &:active {
-    background-color: #4d87d4;
-    color: #fff;
-  }
 `;
