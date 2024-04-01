@@ -3,12 +3,20 @@ import * as S from './Card.style';
 export interface CardProps {
   width?: string;
   height?: string;
+  title?: string;
+  date?: string;
+  writer?: string;
+  city?: string;
 }
 
-export const Card: React.FC<CardProps> = (children) => {
-  console.log(children);
-  //   console.log(width, height);
-  //   console.log(size);
+export const Card: React.FC<CardProps> = ({
+  width,
+  height,
+  title,
+  date,
+  writer,
+  city,
+}) => {
   return (
     <>
       {/* 이미지 박스 */}
@@ -23,11 +31,13 @@ export const Card: React.FC<CardProps> = (children) => {
           {/* 정보 우측 */}
           <S.CardInfoContent>
             <S.CardInfoContentTop>
-              <div>파리</div>
-              <div>2023.10.09-06.11</div>
+              <div>{title}</div>
+              <div>{date}</div>
             </S.CardInfoContentTop>
             <div>
-              <div>프랑스 - 파리 </div>
+              <div>
+                {writer} {city}
+              </div>
             </div>
           </S.CardInfoContent>
         </S.CardInfo>

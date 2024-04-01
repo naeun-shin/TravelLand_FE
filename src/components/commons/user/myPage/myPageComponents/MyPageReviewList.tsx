@@ -14,7 +14,7 @@ const MyPageReviewList = () => {
         <MediumButton text="스크랩 Number" />
       </S.MyPageButton>
       {/* 카드 섹션 */}
-      <Card />
+      <Card title={'후쿠오카'} date={'2024.03.31'} city={'일본 - 후쿠오카'} />
       {/* pagination */}
       <S.MyPagePagination>
         <button>1</button>
