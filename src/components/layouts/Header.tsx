@@ -21,7 +21,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 0 25px;
-  border-bottom: 1px solid #000;
+  /* border-bottom: 1px solid #000; */
   position: relative;
 `;
 

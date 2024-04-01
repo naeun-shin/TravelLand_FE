@@ -70,4 +70,5 @@ const Image = styled.img`
   height: 170px;
   object-fit: cover;
   border: 1px solid #000;
+  border-radius: 10px;
 `;

@@ -2,7 +2,7 @@
 import styled from 'styled-components';
 import Button from '../buttons/Button';
 
-const MainItem = () => {
+const Maintitle = () => {
   return (
     <>
       <Container>
@@ -19,7 +19,7 @@ const MainItem = () => {
   );
 };
 
-export default MainItem;
+export default Maintitle;
 
 const Container = styled.div`
   display: flex;
