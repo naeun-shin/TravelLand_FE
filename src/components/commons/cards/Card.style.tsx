@@ -1,4 +1,12 @@
 import styled from 'styled-components';
+import { CardProps } from './Card';
+
+const CardBox = styled.div<CardProps>`
+  width: 370px;
+  height: 300px;
+  border: 1px solid black;
+  padding: 5px;
+`;
 
 const CardImg = styled.img`
   width: 370px;
@@ -10,11 +18,23 @@ const CardInfo = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  width: 370px;
+
+  padding-top: 10px;
+
+  font-weight: bold;
+  font-size: 16px;
 `;
 
-const CardInfoRight = styled.div`
-  display: flex;
-  flex-direction: row;
+const CardInfoContent = styled.div`
+  padding: 0px 10px;
+  width: 100%;
 `;
-export { CardImg, CardInfo, CardInfoRight };
+
+const CardInfoContentTop = styled.div`
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+`;
+
+export { CardBox, CardImg, CardInfo, CardInfoContent, CardInfoContentTop };
