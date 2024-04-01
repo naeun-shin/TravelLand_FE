@@ -1,4 +1,18 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+
+const MyPagePagination = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+
+  button {
+    padding: 10px;
+    cursor: pointer;
+
+    background-color: white;
+    border: none;
+  }
+`;
 
 const MyPageTabStyle = styled.div`
   display: flex;
@@ -9,7 +23,13 @@ const MyPageTabStyle = styled.div`
   padding: 2px;
 `;
 
-const MyPageTabButton = styled.button`
+const MyPageButton = styled.div`
+  padding: 25px 5px;
+  display: flex;
+  justify-content: flex-end;
+`;
+
+const MyPageTabButton = styled.button<{ isActive: boolean }>`
   justify-content: center;
 
   background-color: white;
@@ -24,10 +44,12 @@ const MyPageTabButton = styled.button`
 
   cursor: pointer;
 
-  &:active {
-    background-color: black;
-    color: white;
-  }
+  ${({ isActive }) =>
+    isActive &&
+    css`
+      background-color: black;
+      color: white;
+    `}
 `;
 
 const MyPageListContaier = styled.div`
@@ -75,7 +97,9 @@ const MyPageListTitle = styled.div`
 `;
 
 export {
+  MyPagePagination,
   MyPageTabStyle,
+  MyPageButton,
   MyPageTabButton,
   MyPageListContaier,
   MyPageListSection,

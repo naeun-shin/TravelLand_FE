@@ -10,24 +10,4 @@ const MyPageStyle = styled.div`
   }
 `;
 
-const MyPageButton = styled.div`
-  padding: 25px 5px;
-  display: flex;
-  justify-content: flex-end;
-`;
-
-const MyPagePagination = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-
-  button {
-    padding: 10px;
-    cursor: pointer;
-
-    background-color: white;
-    border: none;
-  }
-`;
-
-export { MyPageStyle, MyPageButton, MyPagePagination };
+export { MyPageStyle };
