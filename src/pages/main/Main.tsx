@@ -1,9 +1,21 @@
-import Button from '@components/commons/buttons/Button';
+import ModernInput from '@/components/commons/inputs/Input';
+import Login from '../user/Login';
+import Button from '@/components/commons/buttons/Button';
+
 const Main = () => {
   return (
     <>
-      <div>"Hello"</div>
-      <Button />
+      <ModernInput
+        type={'text'}
+        placeholder={'모던 인풋 창 입니다.'}
+        border={'lightgray'}
+        width={250}
+        height={50}
+      />
+
+      {/* kakaologin API 연결 */}
+      <Login />
+      {/* <Button /> */}
     </>
   );
 };
