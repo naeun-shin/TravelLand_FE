@@ -62,7 +62,6 @@ export const MediumButton: React.FC<{ text: string }> = ({
     width="150px"
     height="50px"
     color="#fff"
-    borderColor={borderColor}
     borderRadius="25px"
     text={text}
   />

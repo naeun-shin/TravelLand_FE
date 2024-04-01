@@ -96,6 +96,13 @@ const MyPageListTitle = styled.div`
   width: 350px;
 `;
 
+const MyPageInvitedContainer = styled.div`
+  padding: 10px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 25px;
+`;
+
 export {
   MyPagePagination,
   MyPageTabStyle,
@@ -107,4 +114,5 @@ export {
   MyPageListRight,
   MyPageListCity,
   MyPageListTitle,
+  MyPageInvitedContainer,
 };

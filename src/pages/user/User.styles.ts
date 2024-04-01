@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const MyPageStyle = styled.div`
-  padding: 50px 350px;
+  padding: 50px 200px;
 
   h2 {
     font-size: 24px;
