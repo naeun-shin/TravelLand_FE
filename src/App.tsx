@@ -1,9 +1,12 @@
-import './App.css';
+import GlobalStyle from './styles/GlobalStyles';
+import { Outlet, RouterProvider, createBrowserRouter } from 'react-router-dom';
+import GlobalStyle from './styles/GlobalStyles';
 
 function App() {
   return (
     <>
-      <div></div>
+      <GlobalStyle />
+      <Outlet />
     </>
   );
 }
