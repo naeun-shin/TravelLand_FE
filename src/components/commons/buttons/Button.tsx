@@ -6,39 +6,41 @@ export interface ButtonProps {
   color?: string;
   borderColor?: string;
   borderRadius?: string;
+  fontSize?: any;
+  fontWeight?: any;
   text: string;
-  backgroundColor: string;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
 
 // 기본 버튼
-export const Button: React.FC<ButtonProps> = ({
-  width,
-  height,
-  color,
-  borderColor,
+const Button: React.FC<ButtonProps> = ({
+  width = '100px',
+  height = '40px',
+  color = '#fff',
+  borderColor = '#000',
   borderRadius,
-  backgroundColor,
   text,
   onClick,
+  fontSize,
+  fontWeight,
 }) => {
   return (
-    <>
-      <S.StyledButton
-        width={width}
-        height={height}
-        color={color}
-        borderColor={borderColor}
-        borderRadius={borderRadius}
-        backgroundColor={backgroundColor}
-        onClick={onClick}
-      >
-        {text}
-      </S.StyledButton>
-    </>
+    <S.StyledButton
+      width={width}
+      height={height}
+      color={color}
+      borderColor={borderColor}
+      borderRadius={borderRadius}
+      onClick={onClick}
+      style={{ fontSize, fontWeight }}
+    >
+      {text}
+    </S.StyledButton>
   );
 };
 
+export default Button;
+ 
 // 라지 버튼
 export const LargeButton: React.FC<{ text: string }> = ({ text }) => (
   <Button
@@ -47,7 +49,6 @@ export const LargeButton: React.FC<{ text: string }> = ({ text }) => (
     color="#fff"
     borderColor="#000"
     borderRadius="30px"
-    backgroundColor="tranparent"
     text={text}
   />
 );
@@ -59,7 +60,6 @@ export const MediumButton: React.FC<{ text: string }> = ({ text }) => (
     height="50px"
     color="#fff"
     borderRadius="25px"
-    backgroundColor="tranparent"
     text={text}
   />
 );
@@ -72,7 +72,21 @@ export const SmallButton: React.FC<{ text: string }> = ({ text }) => (
     color="#fff"
     borderColor="#000"
     borderRadius="30px"
-    backgroundColor="tranparent"
     text={text}
+  />
+);
+
+// main Tab버튼
+export const TabButton: React.FC<ButtonProps> = ({ text, onClick }) => (
+  <Button
+    width="120px"
+    height="40px"
+    color="#fff"
+    borderColor="#000"
+    borderRadius="10px"
+    text={text}
+    onClick={onClick}
+    fontWeight="bold"
+    backgroundColor="transparent"
   />
 );
