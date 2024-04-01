@@ -1,6 +1,5 @@
 import ModernInput from '@/components/commons/inputs/Input';
 import Login from '../user/Login';
-import Button from '@/components/commons/buttons/Button';
 
 const Main = () => {
   return (

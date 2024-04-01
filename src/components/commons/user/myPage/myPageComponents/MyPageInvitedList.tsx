@@ -5,7 +5,7 @@ const MyPageInvitedList = () => {
   return (
     <>
       <S.MyPageInvitedContainer>
-        <Card text:String={'hello'} />
+        <Card />
         <Card />
         <Card />
         <Card />
