@@ -1,12 +1,19 @@
 import styled from 'styled-components';
-import { ButtonProps } from './Button';
 
-const StyledButton = styled.button<ButtonProps>`
+interface ButtonProps {
+  width: string;
+  height: string;
+  color: string;
+  borderColor: string;
+  borderRadius?: string;
+}
+
+export const StyledButton = styled.button<ButtonProps>`
   width: ${(props) => props.width};
   height: ${(props) => props.height};
   background-color: ${(props) => props.color};
   border: 1px solid ${(props) => props.borderColor};
-  border-radius: ${(props) => props.borderRadius};
+  border-radius: ${(props) => props.borderRadius || '30px'};
   color: #000;
   cursor: pointer;
   font-size: 16px;
@@ -14,4 +21,11 @@ const StyledButton = styled.button<ButtonProps>`
   text-decoration: none;
 `;
 
-export { StyledButton };
+export const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin-top: 20px;
+  width: 100%;
+`;
