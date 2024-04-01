@@ -1,60 +1,58 @@
-import React from 'react';
+// import React from 'react';
 import styled from 'styled-components';
-// import Button from '../buttons/Button';
+import Button from '../buttons/Button';
 
-interface CardProps {
-  title?: string;
-  category?: string;
-  price?: string;
-  imageUrl?: string;
-}
-
-const Card: React.FC<CardProps> = ({ imageUrl }) => {
+const MainItem = () => {
   return (
-    <CardContainer>
-      <ImageContainer>
-        <img src={imageUrl} alt="이미지" />
-      </ImageContainer>
-      <TextContainer>
-        <button>카테고리</button>
-        {/* <h3>{title}</h3> */}
-        <p>일본 후쿠오카</p>
-        {/* <p>{price}</p> */}
-        <p>199,000원</p>
-      </TextContainer>
-    </CardContainer>
+    <>
+      <Container>
+        <TitleWrapper>
+          <Title>✈️이 여행 어떠행?</Title>
+        </TitleWrapper>
+        <ButtonsWrapper>
+          <Button text="가족 여행"></Button>
+          <Button text="커플 여행"></Button>
+        </ButtonsWrapper>
+        <DetailLink>자세히보기</DetailLink>
+      </Container>
+    </>
   );
 };
 
-export default Card;
+export default MainItem;
 
-const CardContainer = styled.div`
-  width: 370px;
-  height: 470px;
-  border: 1px solid #ddd;
-  padding: 5px;
-  border-radius: 8px;
+const Container = styled.div`
   display: flex;
-  gap: 20px;
-  flex-direction: column;
+  width: 800px;
+  margin: 0 auto;
+  margin-top: 40px;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const TitleWrapper = styled.div`
+  text-align: center;
+  margin-bottom: 20px;
+  margin-top: 10px;
+`;
+
+const Title = styled.h2`
+  font-size: 24px;
+  margin: 0;
+`;
+
+const ButtonsWrapper = styled.div`
+  display: flex;
+  gap: 10px;
   justify-content: center;
+  margin-bottom: 5px;
+  margin-right: 120px;
 `;
 
-const ImageContainer = styled.div`
-  height: 320px;
-  border: 1px solid #000;
-  margin-bottom: 10px;
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 4px;
-  }
-`;
-
-const TextContainer = styled.div`
-  width: 150px;
-  display: flex;
-  flex-direction: column;
+const DetailLink = styled.a`
+  display: block;
+  text-align: center;
+  color: #007bff;
+  text-decoration: none;
+  cursor: pointer;
 `;
