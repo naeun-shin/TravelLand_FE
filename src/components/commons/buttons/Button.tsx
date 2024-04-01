@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyledButton } from './Button.style';
+import * as S from './Button.style';
 
 interface ButtonProps {
   width?: string;
@@ -7,30 +7,36 @@ interface ButtonProps {
   color?: string;
   borderColor?: string;
   borderRadius?: string;
+  fontSize?: any;
+  fontWeight?: any;
   text: string;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
+
 // 기본 버튼
 const Button: React.FC<ButtonProps> = ({
   width = '100px',
   height = '40px',
   color = '#fff',
   borderColor = '#000',
-  borderRadius = '30px',
+  borderRadius,
   text,
   onClick,
+  fontSize,
+  fontWeight,
 }) => {
   return (
-    <StyledButton
+    <S.StyledButton
       width={width}
       height={height}
       color={color}
       borderColor={borderColor}
       borderRadius={borderRadius}
       onClick={onClick}
+      style={{ fontSize, fontWeight }}
     >
       {text}
-    </StyledButton>
+    </S.StyledButton>
   );
 };
 
@@ -55,7 +61,7 @@ export const MediumButton: React.FC<{ text: string }> = ({ text }) => (
     height="50px"
     color="#fff"
     borderColor="#000"
-    borderRadius="30px"
+    borderRadius="25px"
     text={text}
   />
 );
@@ -69,5 +75,19 @@ export const SmallButton: React.FC<{ text: string }> = ({ text }) => (
     borderColor="#000"
     borderRadius="30px"
     text={text}
+  />
+);
+
+// main Tab버튼
+export const TabButton: React.FC<ButtonProps> = ({ text, onClick }) => (
+  <Button
+    width="120px"
+    height="40px"
+    color="#fff"
+    borderColor="#000"
+    borderRadius="10px"
+    text={text}
+    onClick={onClick}
+    fontWeight="bold"
   />
 );
