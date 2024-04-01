@@ -1,4 +1,6 @@
 import ModernInput from '@/components/commons/inputs/Input';
+import Login from '../user/Login';
+import Button from '@/components/commons/buttons/Button';
 
 const Main = () => {
   return (
@@ -10,6 +12,10 @@ const Main = () => {
         width={250}
         height={50}
       />
+
+      {/* kakaologin API 연결 */}
+      <Login />
+      {/* <Button /> */}
     </>
   );
 };
