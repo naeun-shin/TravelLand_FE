@@ -1,7 +1,6 @@
-import React from 'react';
 import * as S from './Button.style';
 
-interface ButtonProps {
+export interface ButtonProps {
   width?: string;
   height?: string;
   color?: string;
@@ -41,7 +40,7 @@ const Button: React.FC<ButtonProps> = ({
 };
 
 export default Button;
-
+ 
 // 라지 버튼
 export const LargeButton: React.FC<{ text: string }> = ({ text }) => (
   <Button
@@ -89,5 +88,6 @@ export const TabButton: React.FC<ButtonProps> = ({ text, onClick }) => (
     text={text}
     onClick={onClick}
     fontWeight="bold"
+    backgroundColor="transparent"
   />
 );

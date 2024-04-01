@@ -1,7 +1,6 @@
-// import React from 'react';
 import * as S from '@/components/commons/inputs/Input.style';
 
-export type InputProps = {
+export interface InputProps {
   name?: string;
   id?: string;
   type: 'text' | 'email' | 'password';
@@ -11,7 +10,7 @@ export type InputProps = {
   value?: string;
   width?: number;
   height?: number;
-};
+}
 
 const ModernInput = (props: InputProps) => {
   return (
