@@ -4,6 +4,7 @@ import KakaoRedirect from '@/pages/user/KakaoRedirect';
 import MyPage from '@/pages/user/MyPage';
 import SearchPage from '@/pages/main/SearchPage';
 import TravelReviewPage from '@/pages/travelReview/TravelReviewPage';
+import TravelDetailPage from '@/pages/travelReview/TravelDetailPage';
 
 export const router = createBrowserRouter([
   {
@@ -12,6 +13,7 @@ export const router = createBrowserRouter([
   },
   { path: '/search', element: <SearchPage /> },
   { path: '/travelReview', element: <TravelReviewPage /> },
+  { path: '/travelDetail', element: <TravelDetailPage /> },
   { path: '/login/oauth', element: <KakaoRedirect /> },
   { path: '/user/myPage', element: <MyPage /> },
 ]);

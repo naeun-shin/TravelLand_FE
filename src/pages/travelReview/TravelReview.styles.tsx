@@ -1,7 +1,10 @@
+import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 
 const TravelReviewstyle = styled.div`
   padding: 50px 250px;
+  max-width: 1200px;
+  margin: 0 auto;
 
   h2 {
     font-size: 24px;
@@ -112,4 +115,11 @@ export const ReviewInvitedContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 25px;
+`;
+
+export const TitleLink = styled(Link)`
+  font-size: 24px;
+  font-weight: 600;
+  text-decoration: none;
+  color: #000;
 `;
