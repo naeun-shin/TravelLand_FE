@@ -6,6 +6,7 @@ const MyPageInvitedList = () => {
     <>
       <S.MyPageInvitedContainer>
         <Card
+          withPicture={true}
           title={'[일본 | 도쿄] 일본 여행'}
           date={'2024.03.31'}
           writer={'이*애 님'}

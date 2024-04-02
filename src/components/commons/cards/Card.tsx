@@ -7,6 +7,7 @@ export interface CardProps {
   date?: string;
   writer?: string;
   city?: string;
+  withPicture?: boolean;
 }
 
 export const Card: React.FC<CardProps> = ({
@@ -16,6 +17,7 @@ export const Card: React.FC<CardProps> = ({
   date,
   writer,
   city,
+  withPicture,
 }) => {
   return (
     <>
@@ -27,7 +29,11 @@ export const Card: React.FC<CardProps> = ({
         {/* 여행 정보*/}
         <S.CardInfo>
           {/* 정보 좌측 - 이모티콘 */}
-          <img src={'/assets/pinPoint.png'} />
+          {withPicture ? (
+            <img alt="사진" src={'/assets/paris.jpg'} />
+          ) : (
+            <img src={'/assets/pinPoint.png'} />
+          )}
           {/* 정보 우측 */}
           <S.CardInfoContent>
             <S.CardInfoContentTop>
