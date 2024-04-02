@@ -1,5 +1,5 @@
 import PlanList from '@/components/plans/planComponents/PlanList';
-import * as S from './TravelPlanMain.styles';
+import * as S from './TravelPlanMain.style';
 
 const TravelPlanList = () => {
   return (
