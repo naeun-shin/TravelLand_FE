@@ -10,6 +10,7 @@ interface ButtonProps {
 
 const PlanDetail: React.FC<ButtonProps> = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [address, setAddress] = useState('서울 강서구 우장산로 92'); // 예시 주소
 
   const dateArray: string[] = ['1일차', '2일차', '3일차']; // 표시할 일자 목록
   const [currentStep, setCurrentStep] = useState<number>(0); // 현재 스텝 인덱스
@@ -81,7 +82,7 @@ const PlanDetail: React.FC<ButtonProps> = () => {
                 </div>
                 <S.DetailButtonDiv onClick={handleOpenMapClick}>
                   <img src="/assets/icons/pin.png" alt="pin" />
-                  <p>위치 보기</p>
+                  <p>{address} </p>
                 </S.DetailButtonDiv>
               </S.DetailContentItem>
             </S.DetailPlanContent>
@@ -90,7 +91,7 @@ const PlanDetail: React.FC<ButtonProps> = () => {
         </S.DetailContentSection>
       </S.PlanDetailContentBox>
       {/*  지도 모달 */}
-      <Map isOpen={isModalOpen} onClose={closeModal} />
+      <Map isOpen={isModalOpen} onClose={closeModal} address={address} />
     </>
   );
 };

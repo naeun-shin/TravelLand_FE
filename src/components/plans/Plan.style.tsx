@@ -245,13 +245,13 @@ const DetailButtonDiv = styled.button`
   border-radius: 25px;
   background-color: white;
 
-  width: 100px;
   height: 40px;
 
   cursor: pointer;
 
   p {
     padding-left: 5px;
+    width: 100%;
   }
 `;
 
