@@ -29,7 +29,7 @@ const MainListContainer = styled.div`
   column-gap: 10px;
   row-gap: 20px;
   width: 100%;
-  max-width: 1000px;
+  max-width: 950px;
   margin: 0 auto;
 `;
 

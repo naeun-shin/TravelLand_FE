@@ -36,7 +36,7 @@ const Users = styled.div`
   display: flex;
   gap: 20px;
   position: absolute;
-  right: 25px;
+  right: 40px;
 `;
 
 const UserAction = styled.div`
