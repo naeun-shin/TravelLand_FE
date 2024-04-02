@@ -1,4 +1,5 @@
 import { ButtonContainer } from '@/components/commons/buttons/Button.style';
+import { Link } from 'react-router-dom';
 import Header from '@/components/layouts/Header';
 import Search from '@/components/search/Search';
 import { TabButton } from '@/components/commons/buttons/Button';
@@ -13,7 +14,9 @@ const Main = () => {
       <Header />
       <Search placeholder="검색어를 입력해주세요." />
       <ButtonContainer>
-        <TabButton text="떠돌이 랜드" />
+        <Link to="/travelReview">
+          <TabButton text="떠돌이 랜드" />
+        </Link>
         <TabButton text="어디 갈랜?" />
       </ButtonContainer>
       <Maintitle />
