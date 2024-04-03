@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import Stepper from '@/components/commons/stepper/Stepper';
 import * as S from '../Plan.style';
-import { MediumButton, SmallButton } from '@/components/commons/buttons/Button';
 import Map from '@/components/maps/Map';
 
 interface ButtonProps {
@@ -60,8 +58,15 @@ const PlanDetail: React.FC<ButtonProps> = () => {
             {dateArray[currentStep]}
           </S.DetailHeaderContent>
           <S.DetailHeaderSubContent>
-            {`${startDate.getFullYear()}년 ${startDate.getMonth() + 1}월 ${startDate.getDate()}일`}{' '}
-            | 상품소개
+            <S.DetailHeaderSubDate>
+              {`${startDate.getFullYear()}년 |  ${startDate.getMonth() + 1}월  | ${startDate.getDate()}일`}
+            </S.DetailHeaderSubDate>
+            |
+            <S.DetaiHeaderSubDestination>
+              <div>출발지</div>
+              인사동 | 명동 | <div>도착지</div>
+              서울타워{' '}
+            </S.DetaiHeaderSubDestination>
           </S.DetailHeaderSubContent>
         </S.PlanDetailContentHeader>
         {/* 스테퍼 내부 요소 영역 */}
@@ -79,6 +84,9 @@ const PlanDetail: React.FC<ButtonProps> = () => {
                     09:30 인천국제공항 제1터미널 3층 A카운터 창측 가이드 미팅
                   </div>
                   <div>12:10 인천국제공항 출발</div>
+                  <div>
+                    <img src="/assets/icons/pin.png" alt="pin" /> {address}
+                  </div>
                 </div>
                 <S.DetailButtonDiv onClick={handleOpenMapClick}>
                   <img src="/assets/icons/pin.png" alt="pin" />

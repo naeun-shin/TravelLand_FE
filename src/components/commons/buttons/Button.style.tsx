@@ -1,4 +1,3 @@
-import { before } from 'node:test';
 import styled from 'styled-components';
 
 interface ButtonProps {

@@ -168,7 +168,7 @@ const DetailHeaderSubContent = styled.div`
   display: flex;
   align-items: center;
 
-  background-color: lightgrey;
+  background-color: #eaeaea;
 
   height: 50px;
   width: 100%;
@@ -176,7 +176,42 @@ const DetailHeaderSubContent = styled.div`
   border-bottom-right-radius: 10px;
   border-top-right-radius: 10px;
 
-  padding-left: 25px;
+  padding-left: 20px;
+`;
+
+const DetailHeaderSubDate = styled.div`
+  display: flex;
+  align-items: center;
+
+  padding: 0px 10px;
+  height: 35px;
+
+  background-color: white;
+  border-radius: 5px;
+
+  margin-right: 10px;
+`;
+
+const DetaiHeaderSubDestination = styled.div`
+  display: flex;
+  align-items: center;
+
+  padding: 0px 10px;
+  height: 35px;
+
+  background-color: white;
+  border-radius: 5px;
+
+  margin-left: 10px;
+
+  div {
+    border: 1px solid black;
+    border-radius: 25px;
+    font-size: 12px;
+    padding: 3px 10px;
+
+    margin: 0px 5px;
+  }
 `;
 
 const DetailContentSection = styled.div`
@@ -234,6 +269,11 @@ const DetailContentItem = styled.div`
   div {
     justify-content: flex-start;
   }
+
+  img {
+    width: 15px;
+    height: 15px;
+  }
 `;
 
 const DetailButtonDiv = styled.button`
@@ -281,5 +321,6 @@ export {
   DetailPlanContentCity,
   DetailContentItem,
   DetailButtonDiv,
-  // DetailMapButton,
+  DetailHeaderSubDate,
+  DetaiHeaderSubDestination,
 };
