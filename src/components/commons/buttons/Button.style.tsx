@@ -8,6 +8,12 @@ interface ButtonProps {
   borderRadius?: string;
 }
 
+interface ToggelButtonProps {
+  latestSort: boolean;
+  beforeText: string;
+  afterText: string;
+}
+
 export const StyledButton = styled.button<ButtonProps>`
   width: ${(props) => props.width};
   height: ${(props) => props.height};
@@ -28,5 +34,4 @@ export const ButtonContainer = styled.div`
   gap: 20px;
   margin-top: 20px;
   width: 100%;
-  /* margin-bottom: 20px; */
 `;

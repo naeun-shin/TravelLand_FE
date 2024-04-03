@@ -55,12 +55,14 @@ export const LargeButton: React.FC<{ text: string }> = ({ text }) => (
 );
 
 // 미디움 버튼
-export const MediumButton: React.FC<{ text: string }> = ({ text }) => (
+export const MediumButton: React.FC<{ text: string }> = ({
+  text,
+  borderColor,
+}) => (
   <Button
     width="150px"
     height="50px"
     color="#fff"
-    borderColor="#000"
     borderRadius="25px"
     text={text}
   />

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const MyPageStyle = styled.div`
+const TravelPlanMainStyle = styled.div`
   padding: 50px 200px;
 
   h2 {
@@ -10,4 +10,4 @@ const MyPageStyle = styled.div`
   }
 `;
 
-export { MyPageStyle };
+export { TravelPlanMainStyle };
