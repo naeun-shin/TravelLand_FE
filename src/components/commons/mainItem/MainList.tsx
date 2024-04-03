@@ -29,7 +29,7 @@ const MainListContainer = styled.div`
   column-gap: 10px;
   row-gap: 20px;
   width: 100%;
-  max-width: 1000px;
+  max-width: 950px;
   margin: 0 auto;
 `;
 
@@ -70,4 +70,5 @@ const Image = styled.img`
   height: 170px;
   object-fit: cover;
   border: 1px solid #000;
+  border-radius: 10px;
 `;

@@ -1,8 +1,9 @@
 // import React from 'react';
 import styled from 'styled-components';
 import Button from '../buttons/Button';
+import { Link } from 'react-router-dom';
 
-const MainItem = () => {
+const Maintitle = () => {
   return (
     <>
       <Container>
@@ -13,13 +14,13 @@ const MainItem = () => {
           <Button text="가족 여행"></Button>
           <Button text="커플 여행"></Button>
         </ButtonsWrapper>
-        <DetailLink>자세히보기</DetailLink>
+        <DetailLink to="/travelReview">자세히보기</DetailLink>
       </Container>
     </>
   );
 };
 
-export default MainItem;
+export default Maintitle;
 
 const Container = styled.div`
   display: flex;
@@ -49,7 +50,7 @@ const ButtonsWrapper = styled.div`
   margin-right: 120px;
 `;
 
-const DetailLink = styled.a`
+const DetailLink = styled(Link)`
   display: block;
   text-align: center;
   color: #007bff;
