@@ -2,16 +2,40 @@ import Header from '@/components/layouts/Header';
 import * as S from './TravelReview.styles';
 import ReviewPageTab from '@/components/commons/user/TravelReview/ReviewTab';
 import Card from '@/components/commons/cards/Card';
+import { useNavigate } from 'react-router-dom';
 
 const TravelReviewPage = () => {
+  const navigate = useNavigate();
+
+  const handleCardClick = () => {
+    navigate('/TravelDetailPage');
+  };
   return (
     <>
-      y
       <Header />
       <S.TravelReviewstyle>
-        <S.TitleLink to="/travelDetail">여행 후기</S.TitleLink>
+        <h2>여행 후기</h2>
         <ReviewPageTab />
-        <Card />
+        <S.TravelReviewCardSection>
+          <Card
+            title="황*미님"
+            writer="2024.04.03"
+            date="♥20"
+            onClick={handleCardClick}
+          />
+          <Card
+            title="신*은님"
+            writer="2024.04.03"
+            date="♥20"
+            onClick={handleCardClick}
+          />
+          <Card
+            title="김*용님"
+            writer="2024.04.03"
+            date="♥20"
+            onClick={handleCardClick}
+          />
+        </S.TravelReviewCardSection>
       </S.TravelReviewstyle>
     </>
   );
