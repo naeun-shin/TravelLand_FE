@@ -1,24 +1,29 @@
 import React from 'react';
 import styled from 'styled-components';
 import SearchIcon from '@/icons/SearchIcon.svg';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 
 interface SearchInputProps {
   placeholder?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onIconClick?: () => void;
 }
 
-const SearchInput: React.FC<SearchInputProps> = ({ placeholder, onChange }) => {
-  const navigate = useNavigate();
+const SearchInput: React.FC<SearchInputProps> = ({
+  placeholder,
+  onChange,
+  onIconClick,
+}) => {
+  // const navigate = useNavigate();
 
-  const handleIconClick = () => {
-    navigate('/search');
-  };
+  // const handleIconClick = () => {
+  //   navigate('/search');
+  // };
 
   return (
     <SearchContainer>
       <Input type="text" placeholder={placeholder} onChange={onChange} />
-      <Icon src={SearchIcon} alt="Search" onClick={handleIconClick} />
+      <Icon src={SearchIcon} alt="Search" onClick={onIconClick} />
     </SearchContainer>
   );
 };

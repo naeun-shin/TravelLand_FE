@@ -10,6 +10,7 @@ import TravelPlanCreate1 from '@/pages/travelPlan/TravelPlanCreate1';
 import TravelPlanCreate2 from '@/pages/travelPlan/TravelPlanCreate2';
 import TravelPlanList from '@/pages/travelPlan/TravelPlanList';
 import TravelPlanDetail from '@/pages/travelPlan/TravelPlanDetail';
+import SearchResults from '@/pages/main/SearchResults';
 
 export const router = createBrowserRouter([
   {
@@ -17,6 +18,7 @@ export const router = createBrowserRouter([
     element: <Main />,
   },
   { path: '/search', element: <SearchPage /> },
+  { path: '/results', element: <SearchResults /> },
   { path: '/travelReview', element: <TravelReviewPage /> },
   // { path: '/travelDetail', element: <TravelDetailPage /> },
   { path: '/login/oauth', element: <KakaoRedirect /> },
