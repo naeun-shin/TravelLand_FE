@@ -7,8 +7,6 @@ export const ReviewListTabStyle = styled.div`
   border: 1px solid lightgray;
   border-radius: 5px;
   padding: 3px;
-  width: 1200px;
-  margin: 0 auto;
   margin-bottom: 30px;
 `;
 
@@ -75,14 +73,3 @@ export const ReviewListTitle = styled.div`
   padding: 5px 20px;
   width: 350px;
 `;
-
-// export {
-//   ReviewListTabStyle,
-//   ReviewListTabButton,
-//   ReviewListContaier,
-//   ReviewListSection,
-//   ReviewListLeft,
-//   ReviewListRight,
-//   ReviewListCity,
-//   ReviewListTitle,
-// };
