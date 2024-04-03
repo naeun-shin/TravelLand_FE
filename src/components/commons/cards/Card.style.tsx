@@ -23,6 +23,11 @@ const CardInfo = styled.div`
 
   font-weight: bold;
   font-size: 16px;
+  img {
+    width: 40px;
+    height: 40px;
+    border-radius: 25px;
+  }
 `;
 
 const CardInfoContent = styled.div`

@@ -3,12 +3,22 @@ import * as S from './Card.style';
 export interface CardProps {
   width?: string;
   height?: string;
+  title?: string;
+  date?: string;
+  writer?: string;
+  city?: string;
+  withPicture?: boolean;
 }
 
-export const Card: React.FC<CardProps> = (children) => {
-  console.log(children);
-  //   console.log(width, height);
-  //   console.log(size);
+export const Card: React.FC<CardProps> = ({
+  width,
+  height,
+  title,
+  date,
+  writer,
+  city,
+  withPicture,
+}) => {
   return (
     <>
       {/* 이미지 박스 */}
@@ -19,15 +29,21 @@ export const Card: React.FC<CardProps> = (children) => {
         {/* 여행 정보*/}
         <S.CardInfo>
           {/* 정보 좌측 - 이모티콘 */}
-          <img src={'/assets/pinPoint.png'} />
+          {withPicture ? (
+            <img alt="사진" src={'/assets/paris.jpg'} />
+          ) : (
+            <img src={'/assets/pinPoint.png'} />
+          )}
           {/* 정보 우측 */}
           <S.CardInfoContent>
             <S.CardInfoContentTop>
-              <div>파리</div>
-              <div>2023.10.09-06.11</div>
+              <div>{title}</div>
+              <div>{date}</div>
             </S.CardInfoContentTop>
             <div>
-              <div>프랑스 - 파리 </div>
+              <div>
+                {writer} {city}
+              </div>
             </div>
           </S.CardInfoContent>
         </S.CardInfo>
