@@ -2,105 +2,48 @@
 import Header from '@/components/layouts/Header';
 import SearchInput from '@/components/search/Search';
 import { IoLocationSharp } from 'react-icons/io5';
-import styled from 'styled-components';
+import * as S from '@components/search/Search.style';
 
 const SearchPage = () => {
   return (
-    <SearchPageContainer>
+    <S.SearchPageContainer>
       <Header />
-      <SearchSection>
-        <Title>✈️이 여행 어떠행?</Title>
+      <S.SearchSection>
+        <S.Title>✈️이 여행 어떠행?</S.Title>
         <SearchInput placeholder="검색어를 입력해주세요." />
-      </SearchSection>
-      <LocalContainer>
-        <LocalTitle>지역별 인기</LocalTitle>
-        <BtnContainer>
-          <CatagoryBtn>
+      </S.SearchSection>
+      <S.LocalContainer>
+        <S.LocalTitle>지역별 인기</S.LocalTitle>
+        <S.BtnContainer>
+          <S.CatagoryBtn>
             <IoLocationSharp />
             제주도
-          </CatagoryBtn>
-          <CatagoryBtn>
+          </S.CatagoryBtn>
+          <S.CatagoryBtn>
             <IoLocationSharp />
             서울
-          </CatagoryBtn>
-          <CatagoryBtn>
+          </S.CatagoryBtn>
+          <S.CatagoryBtn>
             <IoLocationSharp />
             강원도
-          </CatagoryBtn>
-          <CatagoryBtn>
+          </S.CatagoryBtn>
+          <S.CatagoryBtn>
             <IoLocationSharp />
             부산
-          </CatagoryBtn>
-        </BtnContainer>
-      </LocalContainer>
-      <ResultsSection>
-        <CatagoryBtn># 데이트</CatagoryBtn>
-        <CatagoryBtn># 친구</CatagoryBtn>
-        <CatagoryBtn># 가족</CatagoryBtn>
-        <CatagoryBtn># 가성비</CatagoryBtn>
-        <CatagoryBtn># 커플</CatagoryBtn>
-        <CatagoryBtn># 커플</CatagoryBtn>
-        <CatagoryBtn># 대체언제끝날까</CatagoryBtn>
-      </ResultsSection>
-    </SearchPageContainer>
+          </S.CatagoryBtn>
+        </S.BtnContainer>
+      </S.LocalContainer>
+      <S.ResultsSection>
+        <S.CatagoryBtn># 데이트</S.CatagoryBtn>
+        <S.CatagoryBtn># 친구</S.CatagoryBtn>
+        <S.CatagoryBtn># 가족</S.CatagoryBtn>
+        <S.CatagoryBtn># 가성비</S.CatagoryBtn>
+        <S.CatagoryBtn># 이색 여행</S.CatagoryBtn>
+        <S.CatagoryBtn># 지역 주민 추천</S.CatagoryBtn>
+        <S.CatagoryBtn># 2030</S.CatagoryBtn>
+      </S.ResultsSection>
+    </S.SearchPageContainer>
   );
 };
 
 export default SearchPage;
-
-const SearchPageContainer = styled.div`
-  width: 100%;
-`;
-
-const Title = styled.div`
-  font-size: 32px;
-  font-weight: 600;
-  margin-top: 130px;
-`;
-
-const LocalContainer = styled.div`
-  width: 500px;
-  margin: 0 auto;
-  border-bottom: 1px solid #ddd;
-  padding-bottom: 15px;
-`;
-const LocalTitle = styled.div`
-  font-size: 20px;
-  font-weight: 600;
-  margin-bottom: 30px;
-`;
-const CatagoryBtn = styled.button`
-  display: flex;
-  min-width: 80px;
-  height: 40px;
-  font-weight: 600;
-  border-radius: 20px;
-  border: none;
-  margin: 10px;
-  padding: 0 20px;
-  align-items: center;
-  text-align: center;
-  font-size: 14px;
-  cursor: pointer;
-`;
-
-const BtnContainer = styled.div`
-  width: 500px;
-  display: flex;
-  justify-content: flex-start;
-  flex-wrap: wrap;
-`;
-
-const SearchSection = styled.section`
-  margin-top: 20px;
-  text-align: center;
-`;
-
-const ResultsSection = styled.section`
-  width: 500px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: flex-start;
-  flex-wrap: wrap;
-  padding-top: 15px;
-`;
