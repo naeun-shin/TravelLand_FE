@@ -6,6 +6,7 @@ import Card from '@/components/commons/cards/Card';
 const TravelReviewPage = () => {
   return (
     <>
+      y
       <Header />
       <S.TravelReviewstyle>
         <S.TitleLink to="/travelDetail">여행 후기</S.TitleLink>
