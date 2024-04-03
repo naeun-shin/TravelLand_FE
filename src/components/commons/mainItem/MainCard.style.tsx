@@ -35,19 +35,9 @@ export const ImageContainer = styled.div`
 `;
 
 export const TextContainer = styled.div`
-  width: 150px;
+  width: 120px;
   display: flex;
   flex-direction: column;
-`;
-
-export const Category = styled.div`
-  width: 90px;
-  height: 30px;
-  /* border: 1px solid #ddd; */
-  text-align: center;
-  line-height: 30px;
-  background-color: #ddd;
-  border-radius: 8px;
 `;
 
 export const Title = styled.p`

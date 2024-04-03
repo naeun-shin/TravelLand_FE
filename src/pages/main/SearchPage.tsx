@@ -4,15 +4,15 @@ import SearchInput from '@/components/search/Search';
 import { IoLocationSharp } from 'react-icons/io5';
 import * as S from '@components/search/Search.style';
 import { useNavigate } from 'react-router-dom';
-import CategoryButton from '@/components/common/buttons/CategoryButton';
+import CategoryButton from '@/components/commons/buttons/CategoryButton';
 
 const SearchPage = () => {
   const navigate = useNavigate();
 
-  // 클릭 이벤트를 처리하는 함수를 정의합니다.
   const handleCategoryClick = (category: string) => {
-    console.log(`${category} 카테고리가 선택되었습니다.`);
-    // 여기서 API 호출 또는 다른 페이지로 navigate하는 로직을 추가할 수 있습니다.
+    console.log(`${category} 카테고리 선택`);
+
+    // 카테고리 Api 호출
   };
 
   return (
@@ -28,13 +28,11 @@ const SearchPage = () => {
       <S.LocalContainer>
         <S.LocalTitle>지역별 인기</S.LocalTitle>
         <S.BtnContainer>
-          {/* CategoryButton 컴포넌트를 사용하여 버튼을 생성합니다. */}
           <CategoryButton
             title="제주도"
             icon={<IoLocationSharp />}
             onClick={() => handleCategoryClick('제주도')}
           />
-          {/* 나머지 버튼들도 동일하게 처리 */}
         </S.BtnContainer>
       </S.LocalContainer>
       <S.ResultsSection>
@@ -42,7 +40,30 @@ const SearchPage = () => {
           title="# 데이트"
           onClick={() => handleCategoryClick('데이트')}
         />
-        {/* 나머지 버튼들도 동일하게 처리 */}
+        <CategoryButton
+          title="# 친구"
+          onClick={() => handleCategoryClick('친구')}
+        />
+        <CategoryButton
+          title="# 가족"
+          onClick={() => handleCategoryClick('가족')}
+        />
+        <CategoryButton
+          title="# 가성비"
+          onClick={() => handleCategoryClick('가성비')}
+        />
+        <CategoryButton
+          title="# 이색 여행"
+          onClick={() => handleCategoryClick('이색 여행')}
+        />
+        <CategoryButton
+          title="# 지역 주민 추천"
+          onClick={() => handleCategoryClick('지역 주민 추천')}
+        />
+        <CategoryButton
+          title="# 2030"
+          onClick={() => handleCategoryClick('2030')}
+        />
       </S.ResultsSection>
     </S.SearchPageContainer>
   );

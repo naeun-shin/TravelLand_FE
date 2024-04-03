@@ -1,53 +1,47 @@
-// import React from 'react';
+import React from 'react';
 import * as S from './MainCard.style';
-// import Button from '../buttons/Button';
+import CategoryButton from '../buttons/CategoryButton';
 
-// interface CardProps {
-//   title?: string;
-//   category?: string;
-//   price?: string;
-//   imageUrl?: string;
-// }
+//메인 헤더 카드 인터페이스
+interface CardProps {
+  title: string;
+  category: string;
+  price: string;
+  imageUrl: string;
+}
+interface MainCardProps {
+  cards: CardProps[];
+}
 
-const MainCard = () => {
+// 메인 리스트 인터페이스
+export interface ListItemProps {
+  title: string;
+  location: string;
+  description: string;
+  likes: number;
+  imageUrl: string;
+}
+
+// 메인 TOP 10 리스트 임시 데이터
+
+const MainCard: React.FC<MainCardProps> = ({ cards = [] }) => {
   return (
     <S.CardContainerWrapper>
-      <S.CardContainer>
-        <S.ImageContainer>
-          {/* <img src={imageUrl} alt="이미지" /> */}
-        </S.ImageContainer>
-        <S.TextContainer>
-          <S.Category>#특급호텔</S.Category>
-          {/* <h3>{title}</h3> */}
-          <S.Title>일본 후쿠오카</S.Title>
-          {/* <p>{price}</p> */}
-          <S.Price>199,000원</S.Price>
-        </S.TextContainer>
-      </S.CardContainer>
-      <S.CardContainer>
-        <S.ImageContainer>
-          {/* <img src={imageUrl} alt="이미지" /> */}
-        </S.ImageContainer>
-        <S.TextContainer>
-          <S.Category>#특급호텔</S.Category>
-          {/* <h3>{title}</h3> */}
-          <S.Title>일본 후쿠오카</S.Title>
-          {/* <p>{price}</p> */}
-          <S.Price>199,000원</S.Price>
-        </S.TextContainer>
-      </S.CardContainer>
-      <S.CardContainer>
-        <S.ImageContainer>
-          {/* <img src={imageUrl} alt="이미지" /> */}
-        </S.ImageContainer>
-        <S.TextContainer>
-          <S.Category>#카테고리</S.Category>
-          {/* <h3>{title}</h3> */}
-          <S.Title>일본 후쿠오카</S.Title>
-          {/* <p>{price}</p> */}
-          <S.Price>199,000원</S.Price>
-        </S.TextContainer>
-      </S.CardContainer>
+      {cards &&
+        cards.map((card, index) => (
+          <S.CardContainer key={index}>
+            <S.ImageContainer>
+              {/* 이미지 */}
+              <img src={card.imageUrl} alt={card.title} />
+            </S.ImageContainer>
+            <S.TextContainer>
+              {/* 카테고리, 타이틀, 가격 */}
+              <CategoryButton title={card.category} />
+              <S.Title>{card.title}</S.Title>
+              <S.Price>{card.price}</S.Price>
+            </S.TextContainer>
+          </S.CardContainer>
+        ))}
     </S.CardContainerWrapper>
   );
 };

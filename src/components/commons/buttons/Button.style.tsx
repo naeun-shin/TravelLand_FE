@@ -48,12 +48,12 @@ export const ButtonsWrapper = styled.div`
 // 카테고리 버튼 스타일
 export const CatagoryBtn = styled.button`
   display: flex;
-  min-width: 80px;
+  min-width: auto;
   height: 40px;
   font-weight: 600;
   border-radius: 20px;
   border: none;
-  margin: 10px;
+  margin: 10px 10px 10px 0;
   padding: 0 20px;
   align-items: center;
   text-align: center;

@@ -10,11 +10,16 @@ const TravelReviewPage = () => {
   const handleCardClick = () => {
     navigate('/TravelDetailPage');
   };
+
+  const handleTextClick = () => {
+    navigate('/travelCreate');
+  };
   return (
     <>
       <Header />
       <S.TravelReviewstyle>
         <h2>여행 후기</h2>
+        <h2 onClick={handleTextClick}>작성하기</h2>
         <ReviewPageTab />
         <S.TravelReviewCardSection>
           <Card

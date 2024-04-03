@@ -11,6 +11,7 @@ import TravelPlanCreate2 from '@/pages/travelPlan/TravelPlanCreate2';
 import TravelPlanList from '@/pages/travelPlan/TravelPlanList';
 import TravelPlanDetail from '@/pages/travelPlan/TravelPlanDetail';
 import SearchResults from '@/pages/main/SearchResults';
+import TravelCreateForm from '@/pages/travelReview/TravelCreatePage';
 
 export const router = createBrowserRouter([
   {
@@ -29,4 +30,5 @@ export const router = createBrowserRouter([
   { path: '/planList', element: <TravelPlanList /> },
   { path: '/planDetail', element: <TravelPlanDetail /> },
   { path: '/TravelDetailPage', element: <TravelDetailPage /> },
+  { path: '/travelCreate', element: <TravelCreateForm /> },
 ]);
