@@ -1,3 +1,4 @@
+import { before } from 'node:test';
 import styled from 'styled-components';
 
 interface ButtonProps {
@@ -6,6 +7,12 @@ interface ButtonProps {
   color: string;
   borderColor: string;
   borderRadius?: string;
+}
+
+interface ToggelButtonProps {
+  latestSort: boolean;
+  beforeText: string;
+  afterText: string;
 }
 
 export const StyledButton = styled.button<ButtonProps>`
@@ -28,4 +35,27 @@ export const ButtonContainer = styled.div`
   gap: 20px;
   margin-top: 20px;
   width: 100%;
+`;
+
+export const BtnWrapper = styled.div`
+  position: relative;
+`;
+
+export const CheckBox = styled.input`
+  opacity: 0;
+  width: 0;
+  height: 0;
+`;
+
+export const ButtonLabel = styled.label<ToggelButtonProps>`
+  display: block;
+  width: 60px;
+  height: 34px;
+  border: 1px solid black;
+  background-color: ${(props) => (props.latestSort ? 'white' : 'black')};
+  border-radius: 34px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  cursor: pointer;
 `;
