@@ -32,7 +32,7 @@ export const Card: React.FC<CardProps> = ({
           {withPicture ? (
             <img alt="사진" src={'/assets/paris.jpg'} />
           ) : (
-            <img src={'/assets/icons/pinPoint.png'} />
+            <img src={'/assets/pinPoint.png'} />
           )}
           {/* 정보 우측 */}
           <S.CardInfoContent>

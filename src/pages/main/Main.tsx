@@ -1,9 +1,10 @@
 import { ButtonContainer } from '@/components/commons/buttons/Button.style';
+import { Link } from 'react-router-dom';
 import Header from '@/components/layouts/Header';
 import Search from '@/components/search/Search';
 import { TabButton } from '@/components/commons/buttons/Button';
 import MainCard from '@/components/commons/mainItem/MainCard';
-import MainItem from '@/components/commons/mainItem/MainItem';
+import Maintitle from '@/components/commons/mainItem/MainTitle';
 import ListTitle from '@/components/commons/mainItem/ListTitle';
 import MainList from '@/components/commons/mainItem/MainList';
 import { useNavigate } from 'react-router-dom';
@@ -18,9 +19,10 @@ const Main = () => {
       navigate('/planList');
     } else {
       // 다른 경로로 이동하도록 처리
-      // navigate('');
+      navigate('/travelReview');
     }
   };
+  
   return (
     <>
       <Header />
@@ -38,7 +40,7 @@ const Main = () => {
           }}
         />
       </ButtonContainer>
-      <MainItem />
+      <Maintitle />
       <MainCard />
       <ListTitle />
       <MainList />

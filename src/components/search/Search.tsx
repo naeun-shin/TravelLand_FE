@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import SearchIcon from '@/icons/SearchIcon.svg';
+import { useNavigate } from 'react-router-dom';
 
 interface SearchInputProps {
   placeholder?: string;
@@ -8,10 +9,16 @@ interface SearchInputProps {
 }
 
 const SearchInput: React.FC<SearchInputProps> = ({ placeholder, onChange }) => {
+  const navigate = useNavigate();
+
+  const handleIconClick = () => {
+    navigate('/search');
+  };
+
   return (
     <SearchContainer>
       <Input type="text" placeholder={placeholder} onChange={onChange} />
-      <Icon src={SearchIcon} alt="Search" />
+      <Icon src={SearchIcon} alt="Search" onClick={handleIconClick} />
     </SearchContainer>
   );
 };
@@ -31,7 +38,8 @@ const SearchContainer = styled.div`
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   background: white;
   border: 1px solid #ccc;
-  margin: 20px auto;
+  margin: 30px auto;
+  margin-bottom: 40px;
 `;
 
 const Input = styled.input`
