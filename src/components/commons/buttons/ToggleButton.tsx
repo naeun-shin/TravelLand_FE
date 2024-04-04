@@ -9,7 +9,10 @@ interface ToggleSwitchProps {
 const ToggleButton: React.FC<ToggleSwitchProps> = ({ isChecked, onToggle }) => (
   <ToggleWrapper onClick={onToggle}>
     <ToggleInput type="checkbox" checked={isChecked} readOnly />
-    <Slider isChecked={isChecked} />
+    <Slider isChecked={isChecked}>
+      <span>공개</span>
+      <span>비공개</span>
+    </Slider>
   </ToggleWrapper>
 );
 
@@ -18,37 +21,57 @@ export default ToggleButton;
 const ToggleWrapper = styled.div`
   position: relative;
   display: inline-block;
-  width: 60px;
-  height: 34px;
-  margin: 10px 0;
+  margin: 10px 0px;
 `;
 
 const ToggleInput = styled.input`
   opacity: 0;
-  width: 0;
-  height: 0;
+  position: absolute;
+  top: -999px;
 `;
 
-const Slider = styled.span<{ isChecked: boolean }>`
-  position: absolute;
+const Slider = styled.div<{ isChecked: boolean }>`
+  display: flex;
+  flex-wrap: nowrap;
+  position: relative;
   cursor: pointer;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: ${(props) => (props.isChecked ? '#3e3e3e' : '#ccc')};
+  background-color: ${(props) => (props.isChecked ? 'white' : 'white')};
   transition: 0.4s;
-  border-radius: 34px;
+  border-radius: 40px;
+  border: 1px solid black;
+
+  span {
+    text-align: center;
+    width: 40px;
+
+    &:nth-child(1) {
+      transition: all 0.4s;
+      color: ${(props) => (props.isChecked ? 'black' : 'white')};
+    }
+    &:nth-child(2) {
+      transition: all 0.4s;
+      color: ${(props) => (props.isChecked ? 'white' : 'black')};
+    }
+    padding: 12px 7px;
+    font-size: 13px;
+    font-weight: bold;
+    z-index: 100;
+  }
 
   &:before {
     position: absolute;
     content: '';
-    height: 26px;
-    width: 26px;
-    left: ${(props) => (props.isChecked ? '34px' : '2px')};
-    bottom: 4px;
-    background-color: white;
-    transition: left 0.4s;
-    border-radius: 50%;
+    top: 50%;
+    height: 35px;
+    width: 45%;
+    left: ${(props) => (props.isChecked ? '57px' : '3px')};
+    background-color: black;
+    transition: all 0.4s;
+    border-radius: 20px;
+    transform: translateY(-50%);
   }
 `;
