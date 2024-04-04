@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+// 여행 정보페이지
+
 export const ReviewListTabStyle = styled.div`
   display: flex;
   flex-direction: row;
@@ -72,4 +74,59 @@ export const ReviewListCity = styled.div`
 export const ReviewListTitle = styled.div`
   padding: 5px 20px;
   width: 350px;
+`;
+
+// 여행 후기 상세보기 페이지
+
+export const Container = styled.div`
+  width: 900px;
+  margin: 0 auto;
+  padding: 16px 0;
+`;
+
+export const Title = styled.div`
+  font-size: 24px;
+  font-weight: bold;
+`;
+
+export const UserSection = styled.div`
+  display: flex;
+  margin: 30px 0 10px 0;
+`;
+
+export const UserImage = styled.img`
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 8px;
+  border: 1px solid #ddd;
+`;
+
+export const UserName = styled.span`
+  font-size: 16px;
+`;
+
+export const ImageBox = styled.div`
+  width: 100%;
+  height: 450px;
+  background-color: #f0f0f0;
+  position: relative;
+  margin-bottom: 20px;
+`;
+
+export const SliderDots = styled.div`
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+`;
+
+export const Dot = styled.div`
+  height: 15px;
+  width: 15px;
+  background-color: #bbb;
+  border-radius: 50%;
+  margin: 0 5px;
+  cursor: pointer;
 `;
