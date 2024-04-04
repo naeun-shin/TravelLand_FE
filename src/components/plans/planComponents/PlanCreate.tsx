@@ -15,6 +15,7 @@ const PlanCreate = () => {
   const [isInvitationModalOpen, setIsInvitationModalOpen] = useState(false);
   const [invitedPeople, setInvitedPeople] = useState<Person[]>([]);
   // 초대된 사람들 상태 추가
+  const [isPublic, setIsPublic] = useState<boolean>(true);
 
   const navigate = useNavigate();
 
@@ -54,13 +55,15 @@ const PlanCreate = () => {
     updatedInvitedPeople.splice(index, 1);
     setInvitedPeople(updatedInvitedPeople);
   };
+  // 토글
+  const toggleIsPublic = () => setIsPublic(!isPublic);
 
   return (
     <>
       <S.PlanFirstSection>
         <h3>[일본 | 도쿄] 일본 여행</h3>
         <div>
-          <ToggleButton />
+          <ToggleButton isChecked={isPublic} onToggle={toggleIsPublic} />
         </div>
       </S.PlanFirstSection>
       <S.PlanSecondSection>

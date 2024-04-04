@@ -1,11 +1,12 @@
 import styled from 'styled-components';
 
 const MyPageStyle = styled.div`
-  padding: 50px 200px;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0px 20px;
 
   h2 {
     font-size: 24px;
-    padding-right: 50%;
     font-weight: bold;
   }
 `;

@@ -3,8 +3,12 @@ import { ButtonProps } from '../commons/buttons/Button';
 
 const PlanFirstSection = styled.div`
   display: flex;
-  justify-content: space-between;
-  padding: 20px 5px;
+  /* padding: 20px 5px; */
+  align-items: center;
+  flex-direction: row;
+  h3 {
+    padding-right: 25px;
+  }
 `;
 
 const PlanSecondSection = styled.div``;
