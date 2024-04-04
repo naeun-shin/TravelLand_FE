@@ -8,10 +8,10 @@ interface ButtonProps {
 
 const PlanDetail: React.FC<ButtonProps> = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [address, setAddress] = useState('서울 강서구 우장산로 92'); // 예시 주소
+  const [address, setAddress] = useState(); // 예시 주소
 
-  const dateArray: string[] = ['1일차', '2일차', '3일차']; // 표시할 일자 목록
-  const [currentStep, setCurrentStep] = useState<number>(0); // 현재 스텝 인덱스
+  const dateArray: string[] = []; // 표시할 일자 목록
+  const [currentStep, setCurrentStep] = useState<number>(); // 현재 스텝 인덱스
 
   const startDate: Date = (() => {
     const today = new Date();
