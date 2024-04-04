@@ -42,4 +42,42 @@ const CardInfoContentTop = styled.div`
   align-items: center;
 `;
 
-export { CardBox, CardImg, CardInfo, CardInfoContent, CardInfoContentTop };
+const InvitationCardContainer = styled.div`
+  border-radius: 25px;
+  padding: 5px;
+  border: 1px solid lightgray;
+  width: 90px;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0px 5px;
+
+  img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50px;
+    margin-right: 20px;
+  }
+
+  button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    width: 15px;
+    height: 15px;
+    border-radius: 100%;
+    border: 1px solid black;
+    background-color: white;
+  }
+`;
+
+export {
+  CardBox,
+  CardImg,
+  CardInfo,
+  CardInfoContent,
+  CardInfoContentTop,
+  InvitationCardContainer,
+};

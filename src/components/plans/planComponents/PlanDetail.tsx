@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import Stepper from '@/components/commons/stepper/Stepper';
 import * as S from '../Plan.style';
-import { MediumButton, SmallButton } from '@/components/commons/buttons/Button';
 import Map from '@/components/maps/Map';
 
 interface ButtonProps {
@@ -10,10 +8,10 @@ interface ButtonProps {
 
 const PlanDetail: React.FC<ButtonProps> = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [address, setAddress] = useState('서울 강서구 우장산로 92'); // 예시 주소
+  const [address, setAddress] = useState(); // 예시 주소
 
-  const dateArray: string[] = ['1일차', '2일차', '3일차']; // 표시할 일자 목록
-  const [currentStep, setCurrentStep] = useState<number>(0); // 현재 스텝 인덱스
+  const dateArray: string[] = []; // 표시할 일자 목록
+  const [currentStep, setCurrentStep] = useState<number>(); // 현재 스텝 인덱스
 
   const startDate: Date = (() => {
     const today = new Date();
@@ -27,7 +25,6 @@ const PlanDetail: React.FC<ButtonProps> = () => {
   };
 
   const handleOpenMapClick = () => {
-    console.log('오픈');
     setIsModalOpen(true);
   };
 
@@ -60,8 +57,15 @@ const PlanDetail: React.FC<ButtonProps> = () => {
             {dateArray[currentStep]}
           </S.DetailHeaderContent>
           <S.DetailHeaderSubContent>
-            {`${startDate.getFullYear()}년 ${startDate.getMonth() + 1}월 ${startDate.getDate()}일`}{' '}
-            | 상품소개
+            <S.DetailHeaderSubDate>
+              {`${startDate.getFullYear()}년 |  ${startDate.getMonth() + 1}월  | ${startDate.getDate()}일`}
+            </S.DetailHeaderSubDate>
+            |
+            <S.DetaiHeaderSubDestination>
+              <div>출발지</div>
+              인사동 | 명동 | <div>도착지</div>
+              서울타워{' '}
+            </S.DetaiHeaderSubDestination>
           </S.DetailHeaderSubContent>
         </S.PlanDetailContentHeader>
         {/* 스테퍼 내부 요소 영역 */}
@@ -79,6 +83,9 @@ const PlanDetail: React.FC<ButtonProps> = () => {
                     09:30 인천국제공항 제1터미널 3층 A카운터 창측 가이드 미팅
                   </div>
                   <div>12:10 인천국제공항 출발</div>
+                  <div>
+                    <img src="/assets/icons/pin.png" alt="pin" /> {address}
+                  </div>
                 </div>
                 <S.DetailButtonDiv onClick={handleOpenMapClick}>
                   <img src="/assets/icons/pin.png" alt="pin" />
@@ -88,6 +95,29 @@ const PlanDetail: React.FC<ButtonProps> = () => {
             </S.DetailPlanContent>
           </S.DetailContentBox>
           {/* 반복 영역 끝 */}
+          <S.DetailContentBox>
+            {/* 순서 */}
+            <S.DetailPlanNumber>2</S.DetailPlanNumber>
+            {/* 내부 컨텐츠 */}
+            <S.DetailPlanContent>
+              <S.DetailPlanContentCity>인천</S.DetailPlanContentCity>
+              <S.DetailContentItem>
+                <div>
+                  <div>
+                    09:30 인천국제공항 제1터미널 3층 A카운터 창측 가이드 미팅
+                  </div>
+                  <div>12:10 인천국제공항 출발</div>
+                  <div>
+                    <img src="/assets/icons/pin.png" alt="pin" /> {address}
+                  </div>
+                </div>
+                <S.DetailButtonDiv onClick={handleOpenMapClick}>
+                  <img src="/assets/icons/pin.png" alt="pin" />
+                  <p>{address} </p>
+                </S.DetailButtonDiv>
+              </S.DetailContentItem>
+            </S.DetailPlanContent>
+          </S.DetailContentBox>
         </S.DetailContentSection>
       </S.PlanDetailContentBox>
       {/*  지도 모달 */}

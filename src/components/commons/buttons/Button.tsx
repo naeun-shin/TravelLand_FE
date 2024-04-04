@@ -7,6 +7,7 @@ export interface ButtonProps {
   color?: string;
   borderColor?: string;
   borderRadius?: string;
+  textColor?: string;
   fontSize?: any;
   fontWeight?: any;
   text: string;
@@ -20,6 +21,7 @@ const Button: React.FC<ButtonProps> = ({
   color = '#fff',
   borderColor = '#000',
   borderRadius,
+  textColor,
   text,
   onClick,
   fontSize,
@@ -34,6 +36,7 @@ const Button: React.FC<ButtonProps> = ({
       borderRadius={borderRadius}
       onClick={onClick}
       style={{ fontSize, fontWeight }}
+      textColor={textColor}
     >
       {text}
     </S.StyledButton>
@@ -51,6 +54,7 @@ export const LargeButton: React.FC<{ text: string }> = ({ text }) => (
     borderColor="#000"
     borderRadius="30px"
     text={text}
+    textColor="#000"
   />
 );
 
@@ -62,6 +66,7 @@ export const MediumButton: React.FC<{ text: string }> = ({ text }) => (
     color="#fff"
     borderRadius="25px"
     text={text}
+    textColor="#000"
   />
 );
 
@@ -74,6 +79,7 @@ export const SmallButton: React.FC<{ text: string }> = ({ text }) => (
     borderColor="#000"
     borderRadius="30px"
     text={text}
+    textColor="#000"
   />
 );
 

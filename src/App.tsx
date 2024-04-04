@@ -1,7 +1,5 @@
 import GlobalStyle from './styles/GlobalStyles';
-import { Outlet, RouterProvider, createBrowserRouter } from 'react-router-dom';
-import GlobalStyle from './styles/GlobalStyles';
-
+import { Outlet } from 'react-router-dom';
 function App() {
   return (
     <>

@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { InputProps } from './Input';
 
 const modernInput = styled.input<InputProps>`
