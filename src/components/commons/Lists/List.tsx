@@ -1,8 +1,22 @@
 import * as S from './List.style';
 import { useNavigate } from 'react-router-dom';
 
-const List = () => {
+interface PlanListItem {
+  title: string;
+  tripArea: string;
+  author: string;
+  date: string;
+  likes: number;
+}
+
+interface ListProps {
+  planListData: PlanListItem[];
+}
+
+const List: React.FC<ListProps> = ({ planListData }) => {
+  console.log(planListData);
   const navigate = useNavigate();
+
   const handleReadContent = () => {
     navigate('/planDetail');
   };

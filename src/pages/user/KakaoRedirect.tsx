@@ -1,4 +1,4 @@
-import { Instance } from '@/api/axios';
+import { instance } from '@/api/axios';
 import { useNavigate } from 'react-router-dom';
 
 const KakaoRedirect = () => {
@@ -8,7 +8,7 @@ const KakaoRedirect = () => {
 
   const response = async (code: any) => {
     try {
-      await Instance.get('/users/login/kakao', {
+      await instance.get('/users/login/kakao', {
         params: { code },
       });
       navigate('/');

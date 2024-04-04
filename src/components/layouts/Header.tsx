@@ -8,7 +8,7 @@ const Header: React.FC = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false); // 로그인 상태를 관리하는 상태 추가
 
   const navigate = useNavigate();
-
+  // 로그인 모달
   const handleOpenLogin = () => {
     console.log('모달 오픈 ');
     setIsModalOpen(true);
@@ -17,16 +17,19 @@ const Header: React.FC = () => {
   const closeModal = () => {
     setIsModalOpen(false);
   };
-
+  // mypage 이동
   const handleOpenMypage = () => {
     navigate('/user/myPage');
   };
-
+  // 로고 클릭 시 메인 페이지 이동
+  const handleMainPage = () => {
+    navigate('/');
+  };
   // 로그인 상태에 따라 보여지는 컨텐츠가 달라지도록 조건부 렌더링 처리
   return (
     <>
       <Container>
-        <Title>떠나볼까</Title>
+        <Title onClick={handleMainPage}>떠나볼까</Title>
         <Users>
           {isLoggedIn ? (
             <>
@@ -66,6 +69,7 @@ const Title = styled.div`
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
+  cursor: pointer;
 `;
 
 const Users = styled.div`
