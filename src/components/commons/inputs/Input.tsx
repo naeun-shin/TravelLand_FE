@@ -119,16 +119,7 @@ export const PlanListInput: React.FC<ListInputProps> = ({ value }) => {
             onChange={handleLocationChange}
           />
         </S.ListInputbox>
-        {/* 식사 영역 */}
-        {/* <div>
-          <div>식사 *</div>
-          <div>
-            <button>조식</button>
-            <button>중식</button>
-            <button>석식</button>
-            <button>간식</button>
-          </div>
-        </div> */}
+        
         {/* 일정 순서 영역 */}
         <S.ListInputboxWithOutBorder>
           <h4>일정 순서 *</h4>

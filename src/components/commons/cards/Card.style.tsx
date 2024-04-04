@@ -2,15 +2,15 @@ import styled from 'styled-components';
 import { CardProps } from './Card';
 
 const CardBox = styled.div<CardProps>`
-  width: 370px;
-  height: 300px;
+  width: 300px;
+  height: 250px;
   border: 1px solid black;
   padding: 5px;
 `;
 
 const CardImg = styled.img`
-  width: 370px;
-  height: 230px;
+  width: 300px;
+  height: 180px;
   border-radius: 10px;
 `;
 

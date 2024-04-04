@@ -1,5 +1,12 @@
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
+
+const TravelReviewCardSection = styled.div`
+  padding: 0 60px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 25px;
+`;
 
 const TravelReviewstyle = styled.div`
   padding: 50px 250px;
@@ -13,7 +20,7 @@ const TravelReviewstyle = styled.div`
   }
 `;
 
-export { TravelReviewstyle };
+export { TravelReviewCardSection, TravelReviewstyle };
 
 export const ReviewPagePagination = styled.div`
   display: flex;
@@ -117,9 +124,9 @@ export const ReviewInvitedContainer = styled.div`
   grid-gap: 25px;
 `;
 
-export const TitleLink = styled(Link)`
-  font-size: 24px;
-  font-weight: 600;
-  text-decoration: none;
-  color: #000;
-`;
+// export const TitleLink = styled(Link)`
+//   font-size: 24px;
+//   font-weight: 600;
+//   text-decoration: none;
+//   color: #000;
+// `;
