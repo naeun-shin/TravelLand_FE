@@ -16,17 +16,21 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 // import { ResultsSection } from '@/components/search/Search.style';
 
-const Main = () => {
-  const navigate = useNavigate();
-  const [isMakePlan, setIsMakePlan] = useState(false);
+interface MainProps {
+  onClick: () => void;
+}
 
-  const handlePageNavigateClick = () => {
-    if (isMakePlan) {
-      navigate('/planList');
-    } else {
-      navigate('/travelReview');
-    }
+const Main: React.FC<MainProps> = () => {
+  const navigate = useNavigate();
+
+   const handleMakePlanClick = () => {
+    navigate('/planList');
   };
+
+  const handleReviewPageClick = () => {
+    navigate('/travelReview');
+  };
+
 
   // 메인 헤더 카드 임시 데이터
   const MainCardsData = [
@@ -58,7 +62,7 @@ const Main = () => {
     likes: 77,
     imageUrl: '이미지URL',
   }));
-
+  
   return (
     <>
       <Header />
@@ -67,17 +71,8 @@ const Main = () => {
         onIconClick={() => navigate('/search')}
       />
       <ButtonContainer>
-        <TabButton
-          text="떠돌이 랜드"
-          onClick={() => handlePageNavigateClick()}
-        />
-        <TabButton
-          text="어디 갈랜?"
-          onClick={() => {
-            setIsMakePlan(true);
-            handlePageNavigateClick();
-          }}
-        />
+        <TabButton text="떠돌이 랜드" onClick={handleReviewPageClick} />
+        <TabButton text="어디 갈랜?" onClick={handleMakePlanClick} />
       </ButtonContainer>
       <Maintitle />
       <ButtonsWrapper>

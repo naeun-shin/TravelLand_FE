@@ -11,7 +11,7 @@ export interface CardProps {
   onClick?: React.MouseEventHandler<HTMLDivElement>;
 }
 
-export const Card: React.FC<CardProps> = ({
+const Card: React.FC<CardProps> = ({
   width,
   height,
   title,
@@ -34,7 +34,7 @@ export const Card: React.FC<CardProps> = ({
           {withPicture ? (
             <img alt="사진" src={'/assets/paris.jpg'} />
           ) : (
-            <img src={'/assets/pinPoint.png'} />
+            <img src={'/assets/icons/pinPoint.png'} />
           )}
           {/* 정보 우측 */}
           <S.CardInfoContent>
