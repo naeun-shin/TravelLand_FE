@@ -20,7 +20,6 @@ const ListRight = styled.div`
   align-items: center;
 
   div {
-    /* font-weight: ; */
     padding: 5px 20px;
     width: 60px;
   }
