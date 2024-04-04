@@ -108,6 +108,11 @@ const ButtonBox = styled.div`
   justify-content: flex-end;
 `;
 
+const ButtonBoxToCenter = styled.div`
+  padding-top: 15px;
+  display: flex;
+  justify-content: center;
+`;
 // detail 영역
 const PlanDetailDateBox = styled.div`
   padding: 10px 0px;
@@ -183,7 +188,7 @@ const DetailHeaderSubDate = styled.div`
   display: flex;
   align-items: center;
 
-  padding: 0px 10px;
+  padding: 0px 15px;
   height: 35px;
 
   background-color: white;
@@ -295,6 +300,10 @@ const DetailButtonDiv = styled.button`
   }
 `;
 
+const PlanInvitationBox = styled.div`
+  display: flex;
+`;
+
 export {
   PlanFirstSection,
   PlanSecondSection,
@@ -323,4 +332,6 @@ export {
   DetailButtonDiv,
   DetailHeaderSubDate,
   DetaiHeaderSubDestination,
+  ButtonBoxToCenter,
+  PlanInvitationBox,
 };

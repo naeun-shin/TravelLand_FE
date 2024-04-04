@@ -6,6 +6,7 @@ interface ButtonProps {
   color: string;
   borderColor: string;
   borderRadius?: string;
+  textColor?: string;
 }
 
 interface ToggelButtonProps {
@@ -20,7 +21,7 @@ export const StyledButton = styled.button<ButtonProps>`
   background-color: ${(props) => props.color};
   border: 1px solid ${(props) => props.borderColor};
   border-radius: ${(props) => props.borderRadius || '30px'};
-  color: #000;
+  color: ${(props) => props.textColor};
   cursor: pointer;
   font-size: 16px;
   text-align: center;

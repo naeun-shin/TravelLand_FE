@@ -5,6 +5,7 @@ import Header from '@/components/layouts/Header';
 const TravelPlanDetail = () => {
   return (
     <>
+      <Header />
       <S.TravelPlanMainStyle>
         {/* 타이틀 */}
         <h2>여행 플랜</h2>

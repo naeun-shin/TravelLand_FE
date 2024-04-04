@@ -25,7 +25,6 @@ const PlanDetail: React.FC<ButtonProps> = () => {
   };
 
   const handleOpenMapClick = () => {
-    console.log('오픈');
     setIsModalOpen(true);
   };
 
@@ -96,6 +95,29 @@ const PlanDetail: React.FC<ButtonProps> = () => {
             </S.DetailPlanContent>
           </S.DetailContentBox>
           {/* 반복 영역 끝 */}
+          <S.DetailContentBox>
+            {/* 순서 */}
+            <S.DetailPlanNumber>2</S.DetailPlanNumber>
+            {/* 내부 컨텐츠 */}
+            <S.DetailPlanContent>
+              <S.DetailPlanContentCity>인천</S.DetailPlanContentCity>
+              <S.DetailContentItem>
+                <div>
+                  <div>
+                    09:30 인천국제공항 제1터미널 3층 A카운터 창측 가이드 미팅
+                  </div>
+                  <div>12:10 인천국제공항 출발</div>
+                  <div>
+                    <img src="/assets/icons/pin.png" alt="pin" /> {address}
+                  </div>
+                </div>
+                <S.DetailButtonDiv onClick={handleOpenMapClick}>
+                  <img src="/assets/icons/pin.png" alt="pin" />
+                  <p>{address} </p>
+                </S.DetailButtonDiv>
+              </S.DetailContentItem>
+            </S.DetailPlanContent>
+          </S.DetailContentBox>
         </S.DetailContentSection>
       </S.PlanDetailContentBox>
       {/*  지도 모달 */}
