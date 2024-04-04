@@ -10,4 +10,14 @@ const MyPageStyle = styled.div`
   }
 `;
 
-export { MyPageStyle };
+const LoginStyle = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  p {
+    font-size: 12px;
+  }
+`;
+
+export { MyPageStyle, LoginStyle };

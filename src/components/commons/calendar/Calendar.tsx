@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import Modal from '../modals/Modal';
 import Button from '../buttons/Button';
 import * as C from './Calendar.style';
-import { DateRangePicker } from 'react-date-range';
-import { addDays } from 'date-fns';
 
 interface CalendarProps {
   isOpen: boolean;
