@@ -1,11 +1,13 @@
 import styled from 'styled-components';
 
-const ListContaier = styled.div`
-  border-top: 1px solid lightgray;
-  border-bottom: 1px solid lightgray;
+const ListContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+
+  border-top: 1px solid lightgray;
+  border-bottom: 1px solid lightgray;
+
   padding: 5px;
 `;
 
@@ -20,19 +22,22 @@ const ListRight = styled.div`
   align-items: center;
 
   div {
+    display: flex;
+    justify-content: flex-end;
     padding: 5px 20px;
-    width: 60px;
   }
 `;
 
 const ListCity = styled.div`
   display: flex;
   justify-content: center;
+  align-items: center;
 
-  width: 50px;
-  padding: 5px 20px;
+  width: 100px;
+  padding: 10px;
 
   border-radius: 5px;
+
   background-color: lightgray;
 
   font-weight: bold;
@@ -40,7 +45,8 @@ const ListCity = styled.div`
 
 const ListTitle = styled.div`
   padding: 5px 20px;
-  width: 350px;
+  /* width: 350px; */
+  align-content: center;
 `;
 
-export { ListContaier, ListCity, ListLeft, ListRight, ListSection, ListTitle };
+export { ListContainer, ListCity, ListLeft, ListRight, ListSection, ListTitle };

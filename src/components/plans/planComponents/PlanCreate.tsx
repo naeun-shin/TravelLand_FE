@@ -5,6 +5,8 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Invitation } from '@/components/commons/invitation/Invitation';
 import InvitationCard from '@/components/commons/cards/InvitationCard';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.min.css';
 
 interface Person {
   src: string;
@@ -16,6 +18,12 @@ const PlanCreate = () => {
   const [invitedPeople, setInvitedPeople] = useState<Person[]>([]);
   // 초대된 사람들 상태 추가
   const [isPublic, setIsPublic] = useState<boolean>(true);
+  const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([
+    null,
+    null,
+  ]);
+
+  const [startDate, endDate] = dateRange;
 
   const navigate = useNavigate();
 
@@ -95,9 +103,18 @@ const PlanCreate = () => {
             <img src="/assets/icons/calendar.png" />
             <S.PlanHorizontalContent>
               <div>여행 기간</div>
-              {/* 버튼 클릭 시 달력 모달 생성 */}
-              <S.PlanHorizontalRightButton onClick={handleOpenCalendar}>
-                <img src="/assets/icons/arrow_to_right.png" />
+              <img src="/assets/icons/arrow_to_right.png" />
+              <S.PlanHorizontalRightButton>
+                <DatePicker
+                  selectsRange={true}
+                  startDate={startDate}
+                  endDate={endDate}
+                  onChange={(event) => {
+                    setDateRange(event);
+                  }}
+                  withPortal
+                />
+                {/* 버튼 클릭 시 달력 모달 생성 */}
               </S.PlanHorizontalRightButton>
             </S.PlanHorizontalContent>
           </S.PlanBox>
@@ -135,7 +152,7 @@ const PlanCreate = () => {
         <S.PlanNextButton onClick={handleNextClick}>다음</S.PlanNextButton>
       </S.PlanBottomSection>
       {/* 달력 모달 처리 */}
-      <Calendar isOpen={isModalOpen} onClose={closeModal} />
+      {/* <Calendar isOpen={isModalOpen} onClose={closeModal} /> */}
       {/* 초대하기 모달 처리 */}
       <Invitation
         isOpen={isInvitationModalOpen}

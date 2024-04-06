@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { instance } from '@/api/axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -6,19 +7,26 @@ const KakaoRedirect = () => {
   const code = new URL(window.location.href).searchParams.get('code');
   console.log(code);
 
-  const response = async (code: any) => {
+  const response = async (code: string | null) => {
+    console.log(code);
     try {
-      await instance.get('/users/login/kakao', {
-        params: { code },
-      });
+      if (code) {
+        await instance.get('/users/login/kakao', {
+          params: { code },
+        });
+      }
       navigate('/');
-      console.log(response);
     } catch (error) {
       console.log(error);
       navigate('/');
     }
   };
-  return response;
+
+  useEffect(() => {
+    response(code);
+  }, [code, navigate]);
+
+  return null;
 };
 
 export default KakaoRedirect;

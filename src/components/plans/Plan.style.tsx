@@ -232,7 +232,6 @@ const DetailContentBox = styled.div`
   position: relative;
   border-left: 1px solid black;
   padding: 5px 0px;
-  /* border: 1px solid black; */
 `;
 
 const DetailPlanNumber = styled.div`
