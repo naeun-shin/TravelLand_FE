@@ -1,19 +1,19 @@
-import Calendar from '@/components/commons/calendar/Calendar';
 import ToggleButton from '@/components/commons/buttons/ToggleButton';
 import * as S from '@/components/plans/Plan.style';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Invitation } from '@/components/commons/invitation/Invitation';
 import InvitationCard from '@/components/commons/cards/InvitationCard';
-import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.min.css';
+// import * as DS from '@components/plans/DatePicker.styles';
 
+import DatePicker from 'react-datepicker';
 interface Person {
   src: string;
 }
 
 const PlanCreate = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const navigate = useNavigate();
   const [isInvitationModalOpen, setIsInvitationModalOpen] = useState(false);
   const [invitedPeople, setInvitedPeople] = useState<Person[]>([]);
   // 초대된 사람들 상태 추가
@@ -22,22 +22,40 @@ const PlanCreate = () => {
     null,
     null,
   ]);
+  const [isCalendarOpen, setIsCalendarOpen] = useState(false);
+  const [startDate, setStartDate] = useState(String);
+  const [endDate, setEndDate] = useState(String);
 
-  const [startDate, endDate] = dateRange;
+  // 커스텀 입력 컴포넌트 정의
+  // 이 컴포넌트는 달력 포탈을 열기 위한 버튼을 렌더링합니다.
+  const CalendarButton = ({ onClick }) => (
+    <img
+      src="/assets/icons/arrow_to_right.png"
+      onClick={onClick}
+      alt="Calendar"
+      style={{ cursor: 'pointer' }}
+    />
+  );
 
-  const navigate = useNavigate();
-
-  const handleNextClick = () => {
-    navigate('/planCreate/2');
+  // 날짜 범위 변경 핸들러
+  const handleDateRangeChange = (update: [Date, Date]) => {
+    setDateRange(update);
+    // 선택 범위가 완료되면 달력을 자동으로 닫도록 설정할 수 있음
+    if (update[0] && update[1]) {
+      setIsCalendarOpen(false);
+    }
   };
-  // 달력 모달 오픈 핸들러
 
-  const handleOpenCalendar = () => {
-    console.log('모달 오픈 ');
-    setIsModalOpen(true);
+  const toggleCalendar = () => {
+    setIsCalendarOpen(!isCalendarOpen);
   };
-  const closeModal = () => {
-    setIsModalOpen(false);
+
+  // 여행 기간 텍스트를 표시하기 위한 함수
+  const displayDateRange = () => {
+    const start = dateRange[0] ? dateRange[0].toLocaleDateString() : '';
+    const end = dateRange[1] ? dateRange[1].toLocaleDateString() : '';
+
+    return `${start} - ${end}`;
   };
 
   // 초대하기 모달 오픈 핸들러
@@ -65,6 +83,21 @@ const PlanCreate = () => {
   };
   // 토글
   const toggleIsPublic = () => setIsPublic(!isPublic);
+
+  // 다음 페이지 넘어가기
+  const handleNextClick = () => {
+    // dateRange 값 확인
+    console.log('선택된 날짜 범위:', dateRange);
+    if (dateRange[0] && dateRange[1]) {
+      // 날짜 범위가 모두 선택되었다면, 처리 로직 추가
+      console.log('시작 날짜:', dateRange[0].toLocaleDateString());
+      console.log('종료 날짜:', dateRange[1].toLocaleDateString());
+    }
+
+    navigate('/planCreate/2', {
+      state: { startDate: dateRange[0], endDate: dateRange[1] },
+    });
+  };
 
   return (
     <>
@@ -98,24 +131,30 @@ const PlanCreate = () => {
               <div>120,000원</div>
             </S.PlanContent>
           </S.PlanBox>
-          {/*기간 */}
+          {/*기간 선택*/}
           <S.PlanBox>
             <img src="/assets/icons/calendar.png" />
             <S.PlanHorizontalContent>
-              <div>여행 기간</div>
-              <img src="/assets/icons/arrow_to_right.png" />
-              <S.PlanHorizontalRightButton>
-                <DatePicker
-                  selectsRange={true}
-                  startDate={startDate}
-                  endDate={endDate}
-                  onChange={(event) => {
-                    setDateRange(event);
-                  }}
-                  withPortal
+              <S.PlanContentTitle>기간</S.PlanContentTitle>
+              <div>{displayDateRange()}</div>
+              {/* <S.PlanHorizontalRightButton onClick={toggleCalendar}>
+                <img
+                  src="/assets/icons/arrow_to_right.png"
+                  alt="Open Calendar"
                 />
-                {/* 버튼 클릭 시 달력 모달 생성 */}
-              </S.PlanHorizontalRightButton>
+              </S.PlanHorizontalRightButton> */}
+              <DatePicker
+                selectsRange={true}
+                startDate={dateRange[0]}
+                endDate={dateRange[1]}
+                onChange={handleDateRangeChange}
+                customInput={<CalendarButton onClick={undefined} />}
+                withPortal
+                open={isCalendarOpen}
+                shouldCloseOnSelect={true}
+                onCalendarOpen={() => setIsCalendarOpen(true)}
+                onCalendarClose={() => setIsCalendarOpen(false)} // 달력이 닫힐 때 상태를 업데이트하는 콜백 추가
+              />
             </S.PlanHorizontalContent>
           </S.PlanBox>
           {/*초대 */}
