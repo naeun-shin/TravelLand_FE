@@ -9,9 +9,9 @@ export const usePlanListQuery = (planListParams: PlanListParams) => {
   });
 };
 
-export const usePlanDetailQuery = () => {
-  return useQuery({
-    queryKey: ['plandDetail'],
-    queryFn: () => getPlanDetail(),
-  });
-};
+// export const usePlanDetailQuery = () => {
+//   return useQuery({
+//     queryKey: ['plandDetail'],
+//     queryFn: () => getPlanDetail(),
+//   });
+// };

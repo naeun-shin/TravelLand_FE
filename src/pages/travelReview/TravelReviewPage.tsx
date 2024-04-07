@@ -3,14 +3,37 @@ import * as S from './TravelReview.styles';
 import ReviewPageTab from '@/components/commons/user/TravelReview/ReviewTab';
 import Card from '@/components/commons/cards/Card';
 import { useNavigate } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import { useState } from 'react';
+import { getTripList } from '@/api/reviewAxios';
 
 const TravelReviewPage = () => {
   const navigate = useNavigate();
 
+  const [page, setPage] = useState(1);
+  const [size, setSize] = useState(9);
+  const [sortBy, setSortBy] = useState('createdAt');
+  const [isAsc, setASC] = useState(false);
+
+  const tripListParams = { page, size, sortBy, isAsc };
+
+  const { data } = useQuery({
+    queryKey: ['getTripList'],
+    queryFn: () => getTripList(tripListParams),
+    staleTime: 0,
+  });
+  console.log(data);
   const handleCardClick = () => {
     navigate('/TravelDetailPage');
   };
 
+  // const handleNextPage = () => {
+  //   setPage((prevPage) => prevPage + 1);
+  // };
+  // const handleSortChange = (sortBy, isAsc) => {
+  //   setSortBy(sortBy);
+  //   setASC(isAsc);
+  // };
   const handleTextClick = () => {
     navigate('/travelCreate');
   };
