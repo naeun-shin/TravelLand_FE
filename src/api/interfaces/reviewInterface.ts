@@ -9,10 +9,21 @@ export interface TripData {
   hashTag: string[];
   area: string;
   public: boolean;
-  // x: string;
-  // y: string;
-  // address: string;
-  // placeName: string;
+  x: string;
+  y: string;
+  address: string;
+  placeName: string;
+}
+
+// 여행 정보 목록 조회
+export interface Trip {
+  tripId: number;
+  title: string;
+  nickname: string;
+  thumbnailUrl: string;
+  tripPeriod: string;
+  viewCount: number;
+  createdAt: string;
 }
 
 // 여행 정보 목록 조회 인터페이스

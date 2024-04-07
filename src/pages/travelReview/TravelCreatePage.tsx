@@ -34,7 +34,7 @@ const TravelCreateForm: React.FC<TravelCreateFormProps> = () => {
       // queryClient.invalidateQueries(['trips']);
       console.log(data);
       alert('여행 정보 작성 성공!');
-      navigate('/TravelReviewPage');
+      navigate('/travelReview');
     },
     onError: (error: AxiosError) => {
       const message = error.response?.data;
@@ -58,10 +58,10 @@ const TravelCreateForm: React.FC<TravelCreateFormProps> = () => {
       hashTag: hashtags,
       area,
       public: isPublic,
-      // address: 'string',
-      // placeName: 'string',
-      // x: '100.123123',
-      // y: '100.123123',
+      address: 'string',
+      placeName: 'string',
+      x: '100.123123',
+      y: '100.123123',
     };
 
     // mutate 호출 //

@@ -17,15 +17,16 @@ export const createTrip = async ({
 
     formData.append('requestDto', JSON.stringify(tripData));
     console.log(imageList);
+
     // 이미지 리스트가 있으면 함께 전송
     if (imageList) {
       imageList.forEach((file: any) =>
-        //   // formData.append(`imageList[${index}]`, file),
+        // formData.append(`imageList[${index}]`, file),
         formData.append('imageList', file),
       );
     }
 
-    console.log('준수 폼데이터', formData);
+    console.log('폼데이터', formData);
     const response = await instance.post('/v1/trips', formData, {
       params: { email },
       headers: {
