@@ -8,6 +8,8 @@ import 'react-datepicker/dist/react-datepicker.min.css';
 // import * as DS from '@components/plans/DatePicker.styles';
 
 import DatePicker from 'react-datepicker';
+import { ModernInput } from '@/components/commons/inputs/Input';
+import { usePlanStore } from '@/store/usePlanStore';
 interface Person {
   src: string;
 }
@@ -17,14 +19,18 @@ const PlanCreate = () => {
   const [isInvitationModalOpen, setIsInvitationModalOpen] = useState(false);
   const [invitedPeople, setInvitedPeople] = useState<Person[]>([]);
   // 초대된 사람들 상태 추가
-  const [isPublic, setIsPublic] = useState<boolean>(true);
-  const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([
-    null,
-    null,
-  ]);
+  // 로컬 상태 훅 대신 Zustand 스토어 사용
+  const {
+    isPublic,
+    dateRange,
+    invitePeople,
+    setIsPublic,
+    setDateRange,
+    addInvitePerson,
+    removeInvitedPerson,
+  } = usePlanStore();
+
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
-  const [startDate, setStartDate] = useState(String);
-  const [endDate, setEndDate] = useState(String);
 
   // 커스텀 입력 컴포넌트 정의
   // 이 컴포넌트는 달력 포탈을 열기 위한 버튼을 렌더링합니다.
@@ -56,11 +62,6 @@ const PlanCreate = () => {
     const end = dateRange[1] ? dateRange[1].toLocaleDateString() : '';
 
     return `${start} - ${end}`;
-  };
-
-  // 초대하기 모달 오픈 핸들러
-  const handleOpenInvitation = () => {
-    setIsInvitationModalOpen(true);
   };
 
   const closeInvitationModal = () => {
@@ -113,14 +114,20 @@ const PlanCreate = () => {
           {/* 작성자 칸 */}
           <S.PlanWriterBox>
             <img src="/assets/icons/pinPoint.png" />
-            <input />
+            <div></div>
           </S.PlanWriterBox>
           {/* 지역 */}
           <S.PlanBox>
             <img src="/assets/icons/pinPoint.png" />
             <S.PlanContent>
               <S.PlanContentTitle>지역</S.PlanContentTitle>
-              <input />
+              <ModernInput
+                type="text"
+                placeholder="부산"
+                width={100}
+                height={30}
+                border="transparent"
+              />
             </S.PlanContent>
           </S.PlanBox>
           {/*예산 */}
@@ -128,7 +135,13 @@ const PlanCreate = () => {
             <img src="/assets/icons/dolor.png" />
             <S.PlanContent>
               <S.PlanContentTitle>예산</S.PlanContentTitle>
-              <input />
+              <ModernInput
+                type="text"
+                placeholder="100000"
+                width={100}
+                height={30}
+                border="transparent"
+              />
             </S.PlanContent>
           </S.PlanBox>
           {/*기간 선택*/}
@@ -137,12 +150,6 @@ const PlanCreate = () => {
             <S.PlanHorizontalContent>
               <S.PlanContentTitle>기간</S.PlanContentTitle>
               <div>{displayDateRange()}</div>
-              {/* <S.PlanHorizontalRightButton onClick={toggleCalendar}>
-                <img
-                  src="/assets/icons/arrow_to_right.png"
-                  alt="Open Calendar"
-                />
-              </S.PlanHorizontalRightButton> */}
               <DatePicker
                 selectsRange={true}
                 startDate={dateRange[0]}
@@ -157,41 +164,12 @@ const PlanCreate = () => {
               />
             </S.PlanHorizontalContent>
           </S.PlanBox>
-          {/*초대 */}
-          <S.PlanBox>
-            <img src="/assets/icons/plus.png" />
-            <S.PlanHorizontalContent>
-              <div>초대하기</div>
-              <S.PlanInvitationBox>
-                {/* 초대된 사람들 노출 및 삭제 구간 */}
-                {/* <InvitationCard
-                  src={'/assets/paris.jpg'}
-                  onClick={() => handleDeleteClick(1)}
-                /> */}
-                {invitedPeople.map((person, index) => (
-                  <InvitationCard
-                    key={index}
-                    src={person.src}
-                    onClick={() => handleDeleteClick(index)}
-                  />
-                ))}
-              </S.PlanInvitationBox>
-              <div>
-                <img
-                  src="/assets/icons/blackBackgroundPlus.png"
-                  onClick={handleOpenInvitation}
-                />
-              </div>
-            </S.PlanHorizontalContent>
-          </S.PlanBox>
         </div>
       </S.PlanSecondSection>
       <S.PlanBottomSection>
         {/* 다음 버튼 */}
         <S.PlanNextButton onClick={handleNextClick}>다음</S.PlanNextButton>
       </S.PlanBottomSection>
-      {/* 달력 모달 처리 */}
-      {/* <Calendar isOpen={isModalOpen} onClose={closeModal} /> */}
       {/* 초대하기 모달 처리 */}
       <Invitation
         isOpen={isInvitationModalOpen}

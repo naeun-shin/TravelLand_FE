@@ -72,7 +72,10 @@ const PlanDetail: React.FC<ButtonProps> = () => {
   const closeModal = () => {
     setIsModalOpen(false);
   };
-
+  // 초대하기 모달 오픈 핸들러
+  // const handleOpenInvitation = () => {
+  //   setIsInvitationModalOpen(true);
+  // };
   if (isLoading) {
     // 데이터 로딩 중 UI
     return <div>Loading...</div>;
@@ -145,6 +148,30 @@ const PlanDetail: React.FC<ButtonProps> = () => {
             ))}
           </S.DetailContentBox>
         </S.DetailContentSection>
+        {/*초대 */}
+        <S.PlanBox>
+          <img src="/assets/icons/plus.png" />
+          <S.PlanHorizontalContent>
+            <div>초대하기</div>
+            <S.PlanInvitationBox>
+              {/* 초대된 사람들 노출 및 삭제 구간 */}
+              {/* <InvitationCard
+                src={'/assets/paris.jpg'}
+                onClick={() => handleDeleteClick(1)}
+              /> */}
+              {/* {invitedPeople.map((person, index) => (
+                <InvitationCard
+                  key={index}
+                  src={person.src}
+                  onClick={() => handleDeleteClick(index)}
+                />
+              ))} */}
+            </S.PlanInvitationBox>
+            <div>
+              <img src="/assets/icons/blackBackgroundPlus.png" />
+            </div>
+          </S.PlanHorizontalContent>
+        </S.PlanBox>
       </S.PlanDetailContentBox>
       {/*  지도 모달 */}
       <Map isOpen={isModalOpen} onClose={closeModal} address={address} />
