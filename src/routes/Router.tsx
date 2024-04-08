@@ -21,7 +21,7 @@ export const router = createBrowserRouter([
   { path: '/search', element: <SearchPage /> },
   { path: '/results', element: <SearchResults /> },
   { path: '/travelReview', element: <TravelReviewPage /> },
-  // { path: '/travelDetail', element: <TravelDetailPage /> },
+  { path: '/travelDetail', element: <TravelDetailPage /> },
   { path: '/login/oauth', element: <KakaoRedirect /> },
   { path: '/user/myPage', element: <MyPage /> },
   { path: '/login', element: <Login /> },

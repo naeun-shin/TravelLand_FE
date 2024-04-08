@@ -8,6 +8,7 @@ export interface CardProps {
   writer?: string;
   city?: string;
   withPicture?: boolean;
+  borderColor?: string;
   onClick?: React.MouseEventHandler<HTMLDivElement>;
 }
 
