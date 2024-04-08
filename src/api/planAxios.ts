@@ -2,7 +2,6 @@ import { AxiosResponse } from 'axios';
 import { instance } from './axios';
 import {
   PlanListParams,
-  PlanDetailVariable,
   CreatePlanData,
   UpdatePlanData,
 } from './interfaces/planInterface';
@@ -24,11 +23,23 @@ export const getPlanList = async (
 
 // 여행 플랜 상세 조회
 export const getPlanDetail = async (
-  variableData: PlanDetailVariable,
+  planId: number,
 ): Promise<AxiosResponse<any>> => {
-  const { planId } = variableData;
+  console.log(planId);
   try {
-    return await instance.get(`/v1/plans/${planId}`);
+    return await instance.get(`/v1/plans/allInOn/${planId}`);
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+// 여행 플랜 dayPlanId 조회
+export const getDayPlanId = async (
+  planId: number,
+): Promise<AxiosResponse<any>> => {
+  try {
+    return await instance.get(`/v1/dayPlans/${planId}`);
   } catch (error) {
     console.error(error);
     throw error;
@@ -36,17 +47,17 @@ export const getPlanDetail = async (
 };
 
 // 여행 플랜 일자별 상세 조회
-export const getPlanDetailByDay = async (
-  variableData: PlanDetailVariable,
-): Promise<AxiosResponse<any>> => {
-  const { planId, dayPlanId } = variableData;
-  try {
-    return await instance.get(`/v1/plans/${planId}/dayplans/${dayPlanId}`);
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
-};
+// export const getPlanDetailByDay = async (
+//   planId: number,
+// ): Promise<AxiosResponse<any>> => {
+//   // const { planId, dayPlanId } = variableData;
+//   try {
+//     return await instance.get(`/v1/plans/${planId}/dayplans/${dayPlanId}`);
+//   } catch (error) {
+//     console.error(error);
+//     throw error;
+//   }
+// };
 
 // 여행 플랜 작성하기 - authInstace로 수정 필요
 export const createPlan = async (planDataValue: CreatePlanData) => {
