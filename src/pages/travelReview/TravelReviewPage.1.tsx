@@ -6,22 +6,14 @@ import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { getTripList } from '@/api/reviewAxios';
-import styled from 'styled-components';
+import {
+  TripsResponse,
+  LoadingContainer,
+  ErrorContainer,
+  Trip,
+} from './TravelReviewPage';
 
-// 여행 정보 목록 조회
-interface Trip {
-  tripId: number;
-  title: string;
-  nickname: string;
-  thumbnailUrl: string;
-  tripPeriod: string;
-  viewCount: number;
-  createdAt: string;
-}
-interface TripsResponse {
-  data: Trip[];
-}
-const TravelReviewPage = () => {
+export const TravelReviewPage = () => {
   const navigate = useNavigate();
 
   const [page, setPage] = useState(1);
@@ -31,18 +23,16 @@ const TravelReviewPage = () => {
 
   const tripListParams = { page, size, sortBy, isAsc };
 
-  // API 호출
+  // API 호출 및 타입 적용
   const { data, isLoading, isError, error } = useQuery<TripsResponse>({
     queryKey: ['getTripList'],
-    queryFn: () => getTripList(tripListParams),
-    // staleTime: 0,
+    queryFn: () =>
+      getTripList(tripListParams).then((response) => response.data),
+    staleTime: 0,
   });
-  console.log({ isLoading, isError, error, data });
-  console.log(data?.data);
+
   const handleCardClick = (tripId: number) => {
-    // tripId를 사용하여 상세 페이지로 이동하기 추가해야함!
-    // 여기에다 추가
-    navigate(`/TravelDetailPage/${tripId}`);
+    navigate('/TravelDetailPage');
   };
 
   const handleTextClick = () => {
@@ -72,13 +62,13 @@ const TravelReviewPage = () => {
         </h2>
         <ReviewPageTab />
         <S.TravelReviewCardSection>
-          {data?.data?.map((trip: Trip, index: number) => (
+          {data?.trips.map((trip: Trip, index: number) => (
             <Card
               key={index}
-              title={trip.title}
-              writer={trip.nickname}
-              date={`♥${trip.viewCount}`}
-              onClick={() => handleCardClick(trip.tripId)}
+              title={trip.title} // 'name'을 'title'로 변경
+              writer={trip.nickname} // 'date'를 'nickname'으로 변경
+              date={`♥${trip.viewCount}`} // 'likes'를 'viewCount'로 변경
+              onClick={() => handleCardClick(trip.tripId)} // 'id'를 'tripId'로 변경
             />
           ))}
         </S.TravelReviewCardSection>
@@ -86,11 +76,3 @@ const TravelReviewPage = () => {
     </>
   );
 };
-
-export default TravelReviewPage;
-
-// 로딩 상태
-const LoadingContainer = styled.div``;
-
-// 에러 상태
-const ErrorContainer = styled.div``;

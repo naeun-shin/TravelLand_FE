@@ -16,7 +16,7 @@ export const usePlanDetailQuery = (planId: number) => {
     queryKey: ['planDetail', planId],
     queryFn: () => getPlanDetail(planId),
     // staleTime: 5 * 60 * 1000, // 데이터를 5분간 신선하게 유지
-    // cacheTime: 30 * 60 * 1000, // 캐시에서 데이터를 30분간 유지
+    // cacheTime: 30 * 60 * 1000, // 캐시에서 데이터를 30분간 유지 => gcTime으로 수정 필요 => v5에서 변경 됨
     refetchOnWindowFocus: false, // 윈도우 포커스 시 데이터 재요청 안 함
     refetchOnReconnect: false, // 네트워크 재연결 시 데이터 재요청 안 함
   });

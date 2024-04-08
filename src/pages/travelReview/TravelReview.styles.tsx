@@ -1,5 +1,6 @@
 // import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
+import { FaCamera, FaTimes } from 'react-icons/fa';
 
 const TravelReviewCardSection = styled.div`
   padding: 0 60px;
@@ -130,3 +131,162 @@ export const ReviewInvitedContainer = styled.div`
 //   text-decoration: none;
 //   color: #000;
 // `;
+
+export const FieldContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+`;
+
+export const Label = styled.label`
+  margin-bottom: 5px;
+  font-weight: bold;
+`;
+
+export const DateFieldsContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  gap: 20px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+`;
+export const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  width: 80%;
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #f8f8f8;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+`;
+
+export const Input = styled.input`
+  width: 100%;
+  max-width: 400px;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+`;
+
+export const Textarea = styled.textarea`
+  width: 100%;
+  max-width: 600px;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  height: 150px;
+  resize: none;
+`;
+
+export const SubmitButton = styled.button`
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  background-color: #3e3e3e;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #212121;
+  }
+`;
+
+// 해시태그
+export const HashtagContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+`;
+
+export const Hashtag = styled.div`
+  display: flex;
+  align-items: center;
+  background-color: #e1e1e1;
+  border-radius: 20px;
+  padding: 5px 10px;
+  gap: 5px;
+  font-size: 14px;
+`;
+
+// 이미지
+export const ImageUploadContainer = styled.div`
+  text-align: center;
+`;
+
+export const ImageUploadLabel = styled.label`
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #ddd;
+  color: #444;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 10px 0;
+
+  &:hover {
+    background-color: #ccc;
+  }
+`;
+export const ImageUploadSection = styled.div`
+  /* 이미지 업로드 버튼을 감싸는 섹션 */
+`;
+
+export const ImagePreviewSection = styled.div`
+  /* 이미지 미리보기를 감싸는 섹션 */
+  margin-top: 10px;
+`;
+
+export const ImageUploadInput = styled.input`
+  display: none;
+`;
+
+export const ImagePreviewContainer = styled.div`
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+`;
+export const FaCameraIcon = styled(FaCamera)`
+  width: 30px;
+  height: 30px;
+  padding: 10px;
+  cursor: pointer;
+`;
+
+export const FaTimesCircle = styled(FaTimes)`
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  cursor: pointer;
+  color: red;
+  background: white;
+  border-radius: 50%;
+`;
+
+export const ImagePreview = styled.div`
+  position: relative;
+  width: 100px;
+  height: 100px;
+  overflow: hidden;
+  border-radius: 4px;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+`;
