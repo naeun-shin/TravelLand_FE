@@ -7,10 +7,10 @@ export interface PlanListParams {
 }
 
 // 상세 조회 & 일자 별 조회 인페이스
-export interface PlanDetailVariable {
-  planId: number;
-  dayPlanId: number;
-}
+// export interface PlanDetailVariable {
+//   planId: number;
+//   dayPlanId: number;
+// }
 
 /**
  * 작성하기 인터페이스

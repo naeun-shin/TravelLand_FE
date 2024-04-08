@@ -1,5 +1,4 @@
 import Card from '@/components/commons/cards/Card';
-import * as CS from '@styles/commonStyles';
 import * as S from '@/components/commons/user/myPage/MyPage.style';
 const MyPageInvitedList = () => {
   // const size = { width: 200, height: 500 };
@@ -13,15 +12,6 @@ const MyPageInvitedList = () => {
           writer={'이*애 님'}
         />
       </S.MyPageInvitedContainer>
-      {/* pagination */}
-      <CS.PagenationStyle>
-        <button>1</button>
-        <button>2</button>
-        <button>3</button>
-        <button>4</button>
-        <button>5</button>
-        <button>6</button>
-      </CS.PagenationStyle>
     </>
   );
 };
