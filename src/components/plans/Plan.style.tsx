@@ -40,6 +40,12 @@ const PlanBox = styled.div`
 const PlanContent = styled.div`
   padding-left: 15px;
   font-weight: normal;
+
+  input {
+    border: 1px solid black;
+    width: 500px;
+    /* padding: 10px 150px; */
+  }
 `;
 
 const PlanContentTitle = styled.div`
@@ -232,7 +238,6 @@ const DetailContentBox = styled.div`
   position: relative;
   border-left: 1px solid black;
   padding: 5px 0px;
-  /* border: 1px solid black; */
 `;
 
 const DetailPlanNumber = styled.div`
