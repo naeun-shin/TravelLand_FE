@@ -27,3 +27,12 @@ instanceWithToken.interceptors.request.use(
     return Promise.reject(error);
   },
 );
+
+// 여행 정보 인스턴스
+export const instanceWithReview = axios.create({
+  baseURL: import.meta.env.VITE_APP_BASE_URL,
+  headers: {
+    'Content-Type': 'multipart/form-data',
+    Accept: 'application/json',
+  },
+});
