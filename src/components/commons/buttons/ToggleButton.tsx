@@ -9,7 +9,7 @@ interface ToggleSwitchProps {
 const ToggleButton: React.FC<ToggleSwitchProps> = ({ isChecked, onToggle }) => (
   <ToggleWrapper onClick={onToggle}>
     <ToggleInput type="checkbox" checked={isChecked} readOnly />
-    <Slider $isChecked={isChecked} />
+    <Slider $isChecked={isChecked}>
       <span>공개</span>
       <span>비공개</span>
     </Slider>
@@ -50,11 +50,11 @@ const Slider = styled.span<{ $isChecked: boolean }>`
 
     &:nth-child(1) {
       transition: all 0.4s;
-      color: ${(props) => (props.isChecked ? 'black' : 'white')};
+      color: ${(props) => (props.$isChecked ? 'black' : 'white')};
     }
     &:nth-child(2) {
       transition: all 0.4s;
-      color: ${(props) => (props.isChecked ? 'white' : 'black')};
+      color: ${(props) => (props.$isChecked ? 'white' : 'black')};
     }
     padding: 12px 7px;
     font-size: 13px;
