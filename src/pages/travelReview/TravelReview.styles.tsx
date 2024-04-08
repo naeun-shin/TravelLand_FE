@@ -7,12 +7,21 @@ const TravelReviewCardSection = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 25px;
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(1, 1fr);
+    padding: 0 20px;
+  }
 `;
 
 const TravelReviewstyle = styled.div`
   padding: 50px 250px;
   max-width: 1200px;
   margin: 0 auto;
+
+  @media (max-width: 768px) {
+    padding: 20px;
+  }
 
   h2 {
     font-size: 24px;

@@ -29,7 +29,7 @@ interface UnitPlan {
 }
 
 const PlanDetail: React.FC<ButtonProps> = () => {
-  const { id } = useParams<{ id: String }>();
+  const { id } = useParams<{ id: string }>();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [currentStep, setCurrentStep] = useState<number>(0);
   const [dayPlans, setDayPlans] = useState<DayPlan[]>([]);

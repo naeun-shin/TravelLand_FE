@@ -7,11 +7,11 @@ export interface TripData {
   tripEndDate: string;
   cost: number;
   hashTag: string[];
-  area: string;
+  address: string;
   public: boolean;
+  area: string;
   x: string;
   y: string;
-  address: string;
   placeName: string;
 }
 
@@ -35,6 +35,29 @@ export interface TripListParams {
 }
 
 // 여행 정보 상세 조회 인터페이스
-export interface TripDetailParams {
+// export interface TripDetailParams {
+//   tripId: number;
+// }
+
+// 여행 정보 상세 조회
+export interface TripDetail {
   tripId: number;
+  title: string;
+  content: string;
+  cost: number;
+  area: string;
+  address: string;
+  placeName: string;
+  x: string;
+  y: string;
+  tripStartDate: string;
+  tripEndDate: string;
+  viewCount: number;
+  likeCount: number;
+  nickname: string;
+  createdAt: string;
+  hashTag: string[];
+  imageUrlList: string[];
+  like: boolean;
+  scrap: boolean;
 }

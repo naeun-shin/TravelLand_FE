@@ -39,7 +39,7 @@ const Slider = styled.span<{ $isChecked: boolean }>`
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: ${(props) => (props.$isChecked ? '#3e3e3e' : '#ccc')};
+  background-color: ${(props) => (props.$isChecked ? '#999999' : '#fff')};
   transition: 0.4s;
   border-radius: 40px;
   border: 1px solid black;
@@ -50,11 +50,11 @@ const Slider = styled.span<{ $isChecked: boolean }>`
 
     &:nth-child(1) {
       transition: all 0.4s;
-      color: ${(props) => (props.$isChecked ? 'black' : 'white')};
+      color: ${(props) => (props.$isChecked ? '#000' : '#fff')};
     }
     &:nth-child(2) {
       transition: all 0.4s;
-      color: ${(props) => (props.$isChecked ? 'white' : 'black')};
+      color: ${(props) => (props.$isChecked ? '#fff' : '#000')};
     }
     padding: 12px 7px;
     font-size: 13px;

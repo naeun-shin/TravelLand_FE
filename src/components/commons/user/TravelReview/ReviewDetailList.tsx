@@ -1,38 +1,55 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import { IoMdHeart } from 'react-icons/io';
 import { CiBookmark } from 'react-icons/ci';
+import { TripDetail } from '@/api/interfaces/reviewInterface';
 
 interface ButtonProps {
-  active: boolean;
+  $active: boolean;
 }
 
-type ActiveButtonState = 'like' | 'scrap' | null;
+interface ReviewDetailListProps {
+  tripDetail: TripDetail;
+}
 
-const ReviewDetailList = () => {
+const ReviewDetailList = ({ tripDetail }: ReviewDetailListProps) => {
   const [activeButton, setActiveButton] = useState<ActiveButtonState>(null);
 
-  const toggleActiveButton = (buttonType: ActiveButtonState) => {
+  type ActiveButtonState = 'like' | 'scrap' | null;
+
+  // tripDetail로부터 초기 like 및 scrap 상태를 설정
+  useEffect(() => {
+    setActiveButton(
+      tripDetail.like ? 'like' : tripDetail.scrap ? 'scrap' : null,
+    );
+  }, [tripDetail.like, tripDetail.scrap]);
+
+  const toggleActiveButton = (buttonType: ActiveButtonState): void => {
     setActiveButton((prevState) =>
       prevState === buttonType ? null : buttonType,
     );
+
+    // 여기에서 서버에 상태 업데이트를 요청하는 로직을 추가하면 좋을 것 같아요.
   };
+
+  // 컴포넌트의 나머지 부분...
+  // ...
 
   return (
     <Container>
       <ReviewHeader>
-        <LocationTag>[일본 | 도쿄] 즐거운 여행이었습니다</LocationTag>
+        <LocationTag>{`[${tripDetail.area} | ${tripDetail.placeName}] ${tripDetail.title}`}</LocationTag>
       </ReviewHeader>
-      <DateRange>2024.09.09 - 10.11</DateRange>
+      <DateRange>{`${tripDetail.tripStartDate} - ${tripDetail.tripEndDate}`}</DateRange>
       <ButtonSection>
         <LikeButton
-          active={activeButton === 'like'}
+          $active={activeButton === 'like'}
           onClick={() => toggleActiveButton('like')}
         >
           <IoMdHeart size="18" /> 좋아요
         </LikeButton>
         <ScrapButton
-          active={activeButton === 'scrap'}
+          $active={activeButton === 'scrap'}
           onClick={() => toggleActiveButton('scrap')}
         >
           <CiBookmark size="18" /> 스크랩하기
@@ -93,8 +110,8 @@ const buttonStyles = css<ButtonProps>`
     background-color 0.3s,
     color 0.3s;
 
-  ${({ active }) =>
-    active &&
+  ${({ $active }) =>
+    $active &&
     css`
       background-color: #000;
       color: #fff;

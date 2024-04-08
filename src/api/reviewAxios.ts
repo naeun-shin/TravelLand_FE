@@ -1,6 +1,10 @@
-import { AxiosResponse } from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { instance } from './axios';
-import { TripData, TripListParams } from './interfaces/reviewInterface';
+import {
+  TripData,
+  TripDetail,
+  TripListParams,
+} from './interfaces/reviewInterface';
 
 // 여행 정보 등록
 export const createTrip = async ({
@@ -26,7 +30,7 @@ export const createTrip = async ({
       );
     }
 
-    console.log('폼데이터', formData);
+    console.log('준워터 폼데이터', formData);
     const response = await instance.post('/v1/trips', formData, {
       params: { email },
       headers: {
@@ -88,13 +92,16 @@ export const updateTrip = async (
   }
 };
 
-// 여행 정보 상세 조회
+// 여행 정보 상세 보기
 export const getTripDetail = async (
   tripId: number,
-): Promise<AxiosResponse<any>> => {
+): Promise<AxiosResponse<TripDetail>> => {
   try {
-    const response = await instance.get(`/v1/trips/${tripId}`);
-    return response;
+    // const response = await axios.get<TripDetail>(`/v1/trips/${tripId}`);
+    // 아래 코드 -> <TripDetail> 타입 선언 삭제처리 후 get
+    // const response =
+    // console.log('response 데이터 연결 확인 >>> ', response);
+    return await instance.get(`/v1/trips/${tripId}`);
   } catch (error) {
     console.error(error);
     throw error;

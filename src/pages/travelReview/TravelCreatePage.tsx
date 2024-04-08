@@ -30,7 +30,7 @@ const TravelCreateForm: React.FC<TravelCreateFormProps> = () => {
 
   const createReviewMutation = useMutation({
     mutationFn: createTrip,
-    onSuccess: (data) => {
+    onSuccess: (data: TripData) => {
       // queryClient.invalidateQueries(['trips']);
       console.log(data);
       alert('여행 정보 작성 성공!');
@@ -56,13 +56,26 @@ const TravelCreateForm: React.FC<TravelCreateFormProps> = () => {
       tripEndDate,
       cost: parseFloat(cost),
       hashTag: hashtags,
-      area,
-      public: isPublic,
       address: 'string',
+      public: isPublic,
+      area,
       placeName: 'string',
       x: '100.123123',
       y: '100.123123',
     };
+
+    // 첫 번째 이미지를 썸네일로, 나머지를 별도의 배열로 구분
+    const thumbnail = imageFiles[0];
+    const remainingImages = imageFiles.slice(1);
+
+    const formData = new FormData();
+    formData.append('email', email);
+    formData.append('tripData', JSON.stringify(tripData));
+    formData.append('thumbnail', thumbnail);
+
+    remainingImages.forEach((file, index) => {
+      formData.append(`images[${index}]`, file);
+    });
 
     // mutate 호출 //
     createReviewMutation.mutate({ email, tripData, imageList: imageFiles });

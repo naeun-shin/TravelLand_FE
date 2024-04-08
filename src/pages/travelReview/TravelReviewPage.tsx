@@ -39,11 +39,15 @@ const TravelReviewPage = () => {
   });
   console.log({ isLoading, isError, error, data });
   console.log(data?.data);
+
   const handleCardClick = (tripId: number) => {
-    // tripId를 사용하여 상세 페이지로 이동하기 추가해야함!
-    // 여기에다 추가
-    navigate(`/TravelDetailPage/${tripId}`);
+    console.log(tripId);
+    navigate(`/travelDetail/${tripId}`);
   };
+
+  // const handleReadContent = (planId: number) => {
+  //   navigate(`/planDetail/${planId}`);
+  // };
 
   const handleTextClick = () => {
     navigate('/travelCreate');
@@ -73,13 +77,14 @@ const TravelReviewPage = () => {
         <ReviewPageTab />
         <S.TravelReviewCardSection>
           {data?.data?.map((trip: Trip, index: number) => (
-            <Card
-              key={index}
-              title={trip.title}
-              writer={trip.nickname}
-              date={`♥${trip.viewCount}`}
-              onClick={() => handleCardClick(trip.tripId)}
-            />
+            <div key={index}>
+              <Card
+                title={trip.title}
+                writer={trip.nickname}
+                date={`♥${trip.viewCount}`}
+                onClick={() => handleCardClick(trip.tripId)}
+              />
+            </div>
           ))}
         </S.TravelReviewCardSection>
       </S.TravelReviewstyle>
