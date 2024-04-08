@@ -15,7 +15,8 @@ const PlanCreate2 = () => {
   const { startDate, endDate } = location.state;
 
   const [currentStep, setCurrentStep] = useState<number>(0); // 현재 스텝 인덱스
-  const [planList, setPlanList] = useState<string[]>([]); // 계획 목록 상태 추가
+  // 초기 상태에 하나의 빈 항목을 포함하는 배열로 설정
+  const [planList, setPlanList] = useState<string[]>(['']);
 
   // 총 일수 계산
   const calculateTotalDays = () => {
@@ -49,12 +50,8 @@ const PlanCreate2 = () => {
 
   const handleDayChange = (stepIndex: number) => {
     setCurrentStep(stepIndex);
+    setPlanList(['']); // 다른 일차를 클릭하면 리스트를 초기화하여 1개의 항목만 보이도록 함
   };
-
-  // const handleStepClick = (stepIndex: number) => {
-  //   setCurrentStep(stepIndex);
-  //   setPlanList(['0']);
-  // };
 
   const handlePlanAdd = () => {
     setPlanList([...planList, '']); // 빈 문자열을 추가하여 새로운 PlanListInput을 생성
@@ -97,22 +94,15 @@ const PlanCreate2 = () => {
             </S.DetaiHeaderSubDestination>
           </S.DetailHeaderSubContent>
         </S.PlanDetailContentHeader>
-        {/* 첫 번째 리스트 영역 */}
-        <PlanListInput
-          // value={planList[0]} // 첫 번째 값만 보이도록 설정
-          onChange={(event) => handlePlanInputChange(0, event.target.value)}
-        />
-        {/* 나머지 리스트 영역 */}
-        {/* {planList.slice(1).map((value, index) => (
+        {planList.map((plan, index) => (
           <PlanListInput
-            key={index + 1} // 첫 번째 영역이 있으므로 index + 1부터 시작
-            value={value}
+            key={index}
+            value={plan}
             onChange={(event) =>
-              handlePlanInputChange(index + 1, event.target.value)
+              handlePlanInputChange(index, event.target.value)
             }
-            currentListNumber={currentListNumber}
           />
-        ))} */}
+        ))}
         {/* 추가하기 버튼 영역 */}
         <S.ButtonBoxToCenter>
           <Button

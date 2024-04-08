@@ -8,7 +8,6 @@ const KakaoRedirect = () => {
   console.log(code);
 
   const response = async (code: string | null) => {
-    console.log(code);
     try {
       if (code) {
         await instance.get('/users/login/kakao', {

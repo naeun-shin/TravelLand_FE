@@ -113,14 +113,14 @@ const PlanCreate = () => {
           {/* 작성자 칸 */}
           <S.PlanWriterBox>
             <img src="/assets/icons/pinPoint.png" />
-            <div>writer</div>
+            <input />
           </S.PlanWriterBox>
           {/* 지역 */}
           <S.PlanBox>
             <img src="/assets/icons/pinPoint.png" />
             <S.PlanContent>
               <S.PlanContentTitle>지역</S.PlanContentTitle>
-              <div>일본 - 도쿄</div>
+              <input />
             </S.PlanContent>
           </S.PlanBox>
           {/*예산 */}
@@ -128,7 +128,7 @@ const PlanCreate = () => {
             <img src="/assets/icons/dolor.png" />
             <S.PlanContent>
               <S.PlanContentTitle>예산</S.PlanContentTitle>
-              <div>120,000원</div>
+              <input />
             </S.PlanContent>
           </S.PlanBox>
           {/*기간 선택*/}
