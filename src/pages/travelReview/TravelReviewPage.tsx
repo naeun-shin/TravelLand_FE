@@ -17,6 +17,7 @@ interface Trip {
   viewCount: number;
   createdAt: string;
 }
+
 interface TripsResponse {
   data: Trip[];
 }
