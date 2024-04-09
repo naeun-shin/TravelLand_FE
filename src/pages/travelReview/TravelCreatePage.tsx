@@ -9,6 +9,7 @@ import { useMutation } from '@tanstack/react-query';
 import { TripData } from '@/api/interfaces/reviewInterface';
 import { AxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Button from '@/components/commons/buttons/Button';
 
 interface TravelCreateFormProps {
   email: string;
@@ -120,9 +121,16 @@ const TravelCreateForm: React.FC<TravelCreateFormProps> = () => {
     setImageFiles(imageFiles.filter((_, i) => i !== index));
   };
 
+  const handleNavigate = () => {
+    navigate('/travelReview');
+  };
+
   return (
     <>
       <Header />
+      <S.BackBox>
+        <Button text="돌아가기" onClick={handleNavigate} />
+      </S.BackBox>
       <S.Form onSubmit={handleSubmit}>
         <S.FieldContainer>
           <S.ImageUploadSection>

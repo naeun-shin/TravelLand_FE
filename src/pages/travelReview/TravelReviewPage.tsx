@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { getTripList } from '@/api/reviewAxios';
-import styled from 'styled-components';
 
 // 여행 정보 목록 조회
 interface Trip {
@@ -54,10 +53,11 @@ const TravelReviewPage = () => {
   };
 
   // 로딩 상태 처리
-  if (isLoading) return <LoadingContainer>Loading...</LoadingContainer>;
+  if (isLoading) return <S.LoadingContainer>Loading...</S.LoadingContainer>;
 
   // 에러 상태 처리
-  if (isError) return <ErrorContainer>Error: {error.message}</ErrorContainer>;
+  if (isError)
+    return <S.ErrorContainer>Error: {error.message}</S.ErrorContainer>;
 
   // const handleNextPage = () => {
   //   setPage((prevPage) => prevPage + 1);
@@ -70,10 +70,12 @@ const TravelReviewPage = () => {
     <>
       <Header />
       <S.TravelReviewstyle>
-        <h2>여행 후기</h2>
-        <h2 style={{ cursor: 'pointer' }} onClick={handleTextClick}>
-          작성하기
-        </h2>
+        <S.ReviewBox>
+          <h2>여행 후기</h2>
+          <S.ReviewBtn style={{ cursor: 'pointer' }} onClick={handleTextClick}>
+            작성하기
+          </S.ReviewBtn>
+        </S.ReviewBox>
         <ReviewPageTab />
         <S.TravelReviewCardSection>
           {data?.data?.map((trip: Trip, index: number) => (
@@ -93,9 +95,3 @@ const TravelReviewPage = () => {
 };
 
 export default TravelReviewPage;
-
-// 로딩 상태
-const LoadingContainer = styled.div``;
-
-// 에러 상태
-const ErrorContainer = styled.div``;

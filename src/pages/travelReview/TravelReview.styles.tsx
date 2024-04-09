@@ -299,3 +299,39 @@ export const ImagePreview = styled.div`
     object-fit: cover;
   }
 `;
+
+// 돌아가기 버튼 박스
+export const BackBox = styled.div`
+  max-width: 850px;
+  margin: 0 auto;
+`;
+
+// ReviewPage 스타일
+
+// 로딩 상태
+export const LoadingContainer = styled.div``;
+
+// 에러 상태
+export const ErrorContainer = styled.div``;
+
+// 작성버튼
+export const ReviewBtn = styled.button`
+  width: 100px;
+  height: 40px;
+  border: 1px solid #2b2b2b;
+  border-radius: 20px;
+  color: #000;
+  background-color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  &:hover {
+    background-color: #3c3c3c;
+    color: #fff;
+  }
+`;
+
+export const ReviewBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;

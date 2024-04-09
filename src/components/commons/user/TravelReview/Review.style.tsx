@@ -157,17 +157,3 @@ export const HeaderBox = styled.div`
   justify-content: space-between;
   /* align-items: center; */
 `;
-
-// 나중에 쓸꺼면 쓰기
-export const StyledButton = styled.button`
-  width: 100px;
-  height: 40px;
-  border-radius: 30px;
-  background-color: #fff;
-  border: 1px solid #000;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #4b4b4b;
-  }
-`;

@@ -3,20 +3,40 @@ import { TripDetail } from '@/api/interfaces/reviewInterface';
 import * as S from '@components/commons/user/TravelReview/Review.style';
 import { useState } from 'react';
 import Button from '../../buttons/Button';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
+import { deleteTrip } from '@/api/reviewAxios';
+import { useNavigate } from 'react-router-dom';
 
 interface ReviewDetailHeaderProps {
   tripDetail: TripDetail;
 }
-// 여기 tripDetail로 한번 더 감싸서 오자나여 -> 근데 상세보기 받아올 때 "tripDetail.data"  로 받아오죵? 그러면 그냥 tripDetail이라고 만 받아와볼까요?
-//  객체 빼고? 일단 임시로 any해봅시당 이제 새로고침 해봐용
 
 const ReviewDetailHeader = ({ tripDetail }: ReviewDetailHeaderProps) => {
+  const navigate = useNavigate();
   const [activeIndex, setActiveIndex] = useState(0);
-  console.log(tripDetail);
-  // 여기자나여 => 여기가 썸네일 이미지 구간 맞죠?? useImage는 사용자 이미지가 맞을것같ㄱ...
-  // 제가봤을때 여기선 썸네일이 필요한게 아니라 이미지 리스트를 저기 ImageBox에서 보여줘야하는게 맞아보요요...
-  // 저기는 나중에 사용자 정보 받아서 제가 zustand로 상태관리하면 거기서 받아서 적용하면 됩니댜
+  const queryClient = useQueryClient(); // react-query 캐시관리
 
+  // 여행 정보 -> 삭제하기
+  const deleteReviewMutation = useMutation({
+    mutationFn: (tripId: number) => deleteTrip(tripId),
+    onSuccess: () => {
+      alert('여행 정보가 성공적으로 삭제되었습니다.');
+      queryClient.invalidateQueries('trips');
+      navigate('/travelReview');
+    },
+    onError: (error: AxiosError) => {
+      const message = error.response?.data;
+      alert(`여행 정보 삭제 실패! 오류: ${message}`);
+      console.error(error.response?.data);
+    },
+  });
+
+  const handleDelete = (tripId: number) => {
+    deleteReviewMutation.mutate(tripId); // tripId를 전달하여 mutate 메서드를 호출합니다.
+  };
+
+  // 여기자나여 => 여기가 썸네일 이미지 구간
   const imageUrl =
     tripDetail.imageUrlList && tripDetail.imageUrlList.length > 0
       ? tripDetail.imageUrlList[0]
@@ -28,7 +48,10 @@ const ReviewDetailHeader = ({ tripDetail }: ReviewDetailHeaderProps) => {
       <S.HeaderBox>
         <S.Title>상세보기</S.Title>
         <S.ButtonBox>
-          <Button text="삭제하기" />
+          <Button
+            text="삭제하기"
+            onClick={() => handleDelete(tripDetail.tripId)}
+          />
           <Button text="수정하기" />
         </S.ButtonBox>
       </S.HeaderBox>
