@@ -14,6 +14,7 @@ interface LocationState {
 
 const PlanCreate2: React.FC = () => {
   const location = useLocation<LocationState>(); // 타입스크립트를 사용하여 위치 상태의 타입 지정
+
   const { startDate, endDate } = location.state;
 
   const [currentStep, setCurrentStep] = useState<number>(0); // 현재 스텝 인덱스
@@ -53,22 +54,41 @@ const PlanCreate2: React.FC = () => {
     setTotalDays(calculateTotalDays());
   }, [startDate, endDate]);
 
-  const handleDayChange = (stepIndex: number) => {
-    setCurrentStep(stepIndex);
-    setPlanList(['']); // 다른 일차를 클릭하면 리스트를 초기화하여 1개의 항목만 보이도록 함
-    usePlanStore.getState().clearPlansForDay(currentStep.toString());
-  };
-
   // Subscribe to unitPlans from the store
   const unitPlans = useUnitPlansStore((state) => state.unitPlans);
-
   console.log(unitPlans);
 
-  // // 추가하기 버튼
-  // const handlePlanAdd = () => {};
+  const handleDayChange = (stepIndex: number) => {
+    // 현재 날짜의 계획 저장
+    usePlanStore
+      .getState()
+      .setUnitPlansForDay(currentStep.toString(), planList);
+
+    // 선택된 날짜의 계획 불러오기 혹은 초기화
+    const nextDayPlans = usePlanStore
+      .getState()
+      .getUnitPlansForDay(stepIndex.toString());
+    setPlanList(
+      nextDayPlans.length
+        ? nextDayPlans
+        : [{ departure: '', time: '', schedule: '', location: '' }],
+    );
+
+    // 현재 스텝 업데이트
+    setCurrentStep(stepIndex);
+  };
 
   // 등록하기 버튼
-  const handlePlanSubmit = () => {};
+  const handlePlanSubmit = () => {
+    // 현재 날짜의 계획을 반드시 저장
+    usePlanStore
+      .getState()
+      .setUnitPlansForDay(currentStep.toString(), planList);
+
+    // 서버로 제출하기 위한 준비
+    const wholePlan = usePlanStore.getState().dayPlans;
+    console.log(wholePlan);
+  };
   return (
     <>
       {/* 여행 일자 박스 영역 */}

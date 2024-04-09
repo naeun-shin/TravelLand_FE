@@ -51,7 +51,7 @@ const PlanList = () => {
   const content = data?.data.content; // 실제 항목이 포함된 배열
   console.log(content);
   // 현재 입력 값 public이 true 저장 불가한 상태로 false로 임시 목록 보여주기
-  const filteredData = content?.filter((item: any) => item.public === false); // public 속성이 true인 항목만 필터링
+  const filteredData = content?.filter((item: any) => item.isPublic === true); // public 속성이 true인 항목만 필터링
 
   // console.log(filteredData);
   //

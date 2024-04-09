@@ -135,7 +135,7 @@ const PlanDetail: React.FC<ButtonProps> = () => {
             </S.DetailHeaderSubDate>
             |
             <S.DetaiHeaderSubDestination>
-              <div>출발지</div>| <div>도착지</div>
+              {dayPlans.path}
             </S.DetaiHeaderSubDestination>
           </S.DetailHeaderSubContent>
         </S.PlanDetailContentHeader>
@@ -154,7 +154,7 @@ const PlanDetail: React.FC<ButtonProps> = () => {
                     <div>
                       <div>{unitPlan.title}</div>
                       <div>{unitPlan.content}</div>
-                      <div>{unitPlan.time.split('T')[0]}</div>
+                      <div>{unitPlan.time}</div>
                       <img src="/assets/icons/pin.png" alt="pin" />
                       {unitPlan.location}
                     </div>

@@ -67,6 +67,7 @@ export const PlanListInput: React.FC<ListInputProps> = () => {
 
     // 새로운 빈 unitPlan을 로컬 상태에 추가하여 새 입력 폼을 생성
     setPlanInputs([...planInputs, newUnitPlan]);
+    console.log(newUnitPlan);
   };
 
   return (
@@ -75,9 +76,9 @@ export const PlanListInput: React.FC<ListInputProps> = () => {
         <S.PlanListInputContainer key={index}>
           {/* 출발지 영역 */}
           <S.ListInputbox>
-            <div>제목</div>
+            <div>출발</div>
             <input
-              placeholder="일정 제목"
+              placeholder="서울시 강남구"
               value={input.departure}
               onChange={(e) =>
                 handleInputChange(index, 'departure', e.target.value)

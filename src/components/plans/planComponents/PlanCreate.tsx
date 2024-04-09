@@ -7,7 +7,7 @@ import 'react-datepicker/dist/react-datepicker.min.css';
 
 import DatePicker from 'react-datepicker';
 import { ModernInput } from '@/components/commons/inputs/Input';
-import { useDayPlanStore } from '@/store/usePlanStore';
+import { usePlanStore } from '@/store/usePlanStore';
 
 interface Person {
   src: string;
@@ -24,8 +24,7 @@ const PlanCreate = () => {
     setDateRange,
     addInvitePerson,
     removeInvitedPerson,
-  } = useDayPlanStore();
-
+  } = usePlanStore();
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
 
   // 커스텀 입력 컴포넌트 정의
