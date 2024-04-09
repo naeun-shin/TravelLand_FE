@@ -8,14 +8,6 @@ import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { getTripDetail } from '@api/reviewAxios';
 
-// 이미 reviewAxios에 만들어 둔게 있으셔서, 그걸로 불러와야할텐데 그게 임포트가 안되어있엇던것 같아요. 일단 아래 코드 수정했으니까, 35번 콘솔 한번 더 볼게용 뭔일이지...
-
-// const getTripDetail = async (tripId: number) => {
-//   const { data } = await axios.get<TripDetail>(`/v1/trips/${tripId}`);
-//   console.log(data);
-//   return data;
-// };
-
 const TravelDetailPage = () => {
   // useParam으로 들어오는 값은 string이라서 const tripId를 Number로 강제 치환 진행
   const { tripId } = useParams<{ tripId: string }>();
@@ -36,7 +28,6 @@ const TravelDetailPage = () => {
    * TO-BE(수정해준거) : data.data => tripDetail.data로 수정한거에요
    *
    */
-  // 로딩 상태나 에러 핸들링을 적절히 구현
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error occurred</div>;
   if (!tripDetail) return <div>No data</div>;

@@ -28,12 +28,7 @@ const ReviewDetailList = ({ tripDetail }: ReviewDetailListProps) => {
     setActiveButton((prevState) =>
       prevState === buttonType ? null : buttonType,
     );
-
-    // 여기에서 서버에 상태 업데이트를 요청하는 로직을 추가하면 좋을 것 같아요.
   };
-
-  // 컴포넌트의 나머지 부분...
-  // ...
 
   return (
     <Container>

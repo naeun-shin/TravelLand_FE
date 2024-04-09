@@ -140,3 +140,34 @@ export const Dot = styled.div<DotProps>`
       background-color: #000; // active 상태일 때의 색상
     `}
 `;
+
+// 수정 / 삭제 버튼
+
+export const ButtonBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+  Button:nth-child(2) {
+    margin-left: 15px;
+  }
+`;
+
+export const HeaderBox = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  /* align-items: center; */
+`;
+
+// 나중에 쓸꺼면 쓰기
+export const StyledButton = styled.button`
+  width: 100px;
+  height: 40px;
+  border-radius: 30px;
+  background-color: #fff;
+  border: 1px solid #000;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #4b4b4b;
+  }
+`;
