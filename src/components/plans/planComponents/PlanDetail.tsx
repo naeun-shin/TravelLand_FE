@@ -3,6 +3,7 @@ import * as S from '../Plan.style';
 import Map from '@/components/maps/Map';
 import { usePlanDetailQuery } from '@/hooks/useQuery';
 import { useParams } from 'react-router-dom';
+import { useMutation } from '@tanstack/react-query';
 
 // 사용할 데이터 타입 정의 (예시입니다, 실제 데이터에 맞게 조정해야 합니다.)
 
@@ -29,7 +30,7 @@ interface UnitPlan {
 }
 
 const PlanDetail: React.FC<ButtonProps> = () => {
-  const { id } = useParams<{ id: String }>();
+  const { id } = useParams<{ id: string }>();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [currentStep, setCurrentStep] = useState<number>(0);
   const [dayPlans, setDayPlans] = useState<DayPlan[]>([]);
@@ -69,6 +70,10 @@ const PlanDetail: React.FC<ButtonProps> = () => {
     setIsModalOpen(true);
   };
 
+  const handlePlanDelete = (planId: number) => {
+    // useMutation;
+    // deletePlan;
+  };
   const closeModal = () => {
     setIsModalOpen(false);
   };
@@ -76,6 +81,26 @@ const PlanDetail: React.FC<ButtonProps> = () => {
   // const handleOpenInvitation = () => {
   //   setIsInvitationModalOpen(true);
   // };
+
+  // const closeInvitationModal = () => {
+  //   setIsInvitationModalOpen(false);
+  // };
+  // // 초대하기 버튼 클릭 시 호출될 함수
+  // const handleInvite = () => {
+  //   // 초대 로직 구현
+  //   // 초대된 사람을 invitedPeople 상태에 추가
+  //   // 모달 닫기
+  //   setIsInvitationModalOpen(false);
+  // };
+
+  // 초대한 사람 삭제
+  // const handleDeleteClick = (index: number) => {
+  //   // 초대된 사람들 배열에서 해당 인덱스의 항목을 제거
+  //   const updatedInvitedPeople = [...invitedPeople];
+  //   updatedInvitedPeople.splice(index, 1);
+  //   setInvitedPeople(updatedInvitedPeople);
+  // };
+
   if (isLoading) {
     // 데이터 로딩 중 UI
     return <div>Loading...</div>;
@@ -147,6 +172,7 @@ const PlanDetail: React.FC<ButtonProps> = () => {
               </div>
             ))}
           </S.DetailContentBox>
+          <button onClick={handlePlanDelete}>삭제하기</button>
         </S.DetailContentSection>
         {/*초대 */}
         <S.PlanBox>
@@ -175,6 +201,12 @@ const PlanDetail: React.FC<ButtonProps> = () => {
       </S.PlanDetailContentBox>
       {/*  지도 모달 */}
       <Map isOpen={isModalOpen} onClose={closeModal} address={address} />
+      {/* 초대하기 모달 처리 */}
+      {/* <Invitation
+        isOpen={isInvitationModalOpen}
+        onClose={closeInvitationModal}
+        onInvite={handleInvite} // 초대하기 버튼 클릭 시 호출될 함수 전달
+      /> */}
     </>
   );
 };

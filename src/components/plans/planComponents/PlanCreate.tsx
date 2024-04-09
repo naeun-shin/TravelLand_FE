@@ -2,23 +2,19 @@ import ToggleButton from '@/components/commons/buttons/ToggleButton';
 import * as S from '@/components/plans/Plan.style';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Invitation } from '@/components/commons/invitation/Invitation';
-import InvitationCard from '@/components/commons/cards/InvitationCard';
 import 'react-datepicker/dist/react-datepicker.min.css';
 // import * as DS from '@components/plans/DatePicker.styles';
 
 import DatePicker from 'react-datepicker';
 import { ModernInput } from '@/components/commons/inputs/Input';
-import { usePlanStore } from '@/store/usePlanStore';
+import { useDayPlanStore } from '@/store/usePlanStore';
+
 interface Person {
   src: string;
 }
 
 const PlanCreate = () => {
   const navigate = useNavigate();
-  const [isInvitationModalOpen, setIsInvitationModalOpen] = useState(false);
-  const [invitedPeople, setInvitedPeople] = useState<Person[]>([]);
-  // 초대된 사람들 상태 추가
   // 로컬 상태 훅 대신 Zustand 스토어 사용
   const {
     isPublic,
@@ -28,7 +24,7 @@ const PlanCreate = () => {
     setDateRange,
     addInvitePerson,
     removeInvitedPerson,
-  } = usePlanStore();
+  } = useDayPlanStore();
 
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
 
@@ -64,24 +60,6 @@ const PlanCreate = () => {
     return `${start} - ${end}`;
   };
 
-  const closeInvitationModal = () => {
-    setIsInvitationModalOpen(false);
-  };
-  // 초대하기 버튼 클릭 시 호출될 함수
-  const handleInvite = () => {
-    // 초대 로직 구현
-    // 초대된 사람을 invitedPeople 상태에 추가
-    // 모달 닫기
-    setIsInvitationModalOpen(false);
-  };
-
-  // 초대한 사람 삭제
-  const handleDeleteClick = (index: number) => {
-    // 초대된 사람들 배열에서 해당 인덱스의 항목을 제거
-    const updatedInvitedPeople = [...invitedPeople];
-    updatedInvitedPeople.splice(index, 1);
-    setInvitedPeople(updatedInvitedPeople);
-  };
   // 토글
   const toggleIsPublic = () => setIsPublic(!isPublic);
 
@@ -170,12 +148,6 @@ const PlanCreate = () => {
         {/* 다음 버튼 */}
         <S.PlanNextButton onClick={handleNextClick}>다음</S.PlanNextButton>
       </S.PlanBottomSection>
-      {/* 초대하기 모달 처리 */}
-      <Invitation
-        isOpen={isInvitationModalOpen}
-        onClose={closeInvitationModal}
-        onInvite={handleInvite} // 초대하기 버튼 클릭 시 호출될 함수 전달
-      />
     </>
   );
 };
