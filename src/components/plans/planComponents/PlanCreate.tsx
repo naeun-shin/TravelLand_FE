@@ -1,42 +1,36 @@
+import React from 'react'; // ReactElement import 추가
+
 import ToggleButton from '@/components/commons/buttons/ToggleButton';
 import * as S from '@/components/plans/Plan.style';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import 'react-datepicker/dist/react-datepicker.min.css';
-// import * as DS from '@components/plans/DatePicker.styles';
 
 import DatePicker from 'react-datepicker';
 import { ModernInput } from '@/components/commons/inputs/Input';
 import { usePlanStore } from '@/store/usePlanStore';
 
-interface Person {
-  src: string;
-}
-
 const PlanCreate = () => {
   const navigate = useNavigate();
   // 로컬 상태 훅 대신 Zustand 스토어 사용
-  const {
-    isPublic,
-    dateRange,
-    invitePeople,
-    setIsPublic,
-    setDateRange,
-    addInvitePerson,
-    removeInvitedPerson,
-  } = usePlanStore();
+  const { isPublic, dateRange, setIsPublic, setDateRange } = usePlanStore();
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
 
-  // 커스텀 입력 컴포넌트 정의
   // 이 컴포넌트는 달력 포탈을 열기 위한 버튼을 렌더링합니다.
-  const CalendarButton = ({ onClick }) => (
+  const CalendarButton = React.forwardRef<
+    HTMLImageElement,
+    { onClick: () => void }
+  >(({ onClick }, ref) => (
     <img
+      ref={ref}
       src="/assets/icons/arrow_to_right.png"
       onClick={onClick}
       alt="Calendar"
       style={{ cursor: 'pointer' }}
     />
-  );
+  ));
+
+  CalendarButton.displayName = 'CalendarButton';
 
   // 날짜 범위 변경 핸들러
   const handleDateRangeChange = (update: [Date, Date]) => {
@@ -45,10 +39,6 @@ const PlanCreate = () => {
     if (update[0] && update[1]) {
       setIsCalendarOpen(false);
     }
-  };
-
-  const toggleCalendar = () => {
-    setIsCalendarOpen(!isCalendarOpen);
   };
 
   // 여행 기간 텍스트를 표시하기 위한 함수
@@ -132,7 +122,13 @@ const PlanCreate = () => {
                 startDate={dateRange[0]}
                 endDate={dateRange[1]}
                 onChange={handleDateRangeChange}
-                customInput={<CalendarButton onClick={undefined} />}
+                customInput={
+                  <CalendarButton
+                    onClick={function (): void {
+                      throw new Error('Function not implemented.');
+                    }}
+                  />
+                } // 이제 여기서 ref와 onClick 모두 처리 가능
                 withPortal
                 open={isCalendarOpen}
                 shouldCloseOnSelect={true}

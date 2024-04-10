@@ -1,9 +1,9 @@
 // import React from 'react';
 import { TripDetail } from '@/api/interfaces/reviewInterface';
-import * as S from '@components/commons/user/TravelReview/Review.style';
+import * as S from '@/components/commons/user/TravelReview/Review.style';
 import { useState } from 'react';
 import Button from '../../buttons/Button';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { deleteTrip } from '@/api/reviewAxios';
 import { useNavigate } from 'react-router-dom';
@@ -15,14 +15,12 @@ interface ReviewDetailHeaderProps {
 const ReviewDetailHeader = ({ tripDetail }: ReviewDetailHeaderProps) => {
   const navigate = useNavigate();
   const [activeIndex, setActiveIndex] = useState(0);
-  const queryClient = useQueryClient(); // react-query 캐시관리
 
   // 여행 정보 -> 삭제하기
   const deleteReviewMutation = useMutation({
     mutationFn: (tripId: number) => deleteTrip(tripId),
     onSuccess: () => {
       alert('여행 정보가 성공적으로 삭제되었습니다.');
-      queryClient.invalidateQueries('trips');
       navigate('/travelReview');
     },
     onError: (error: AxiosError) => {

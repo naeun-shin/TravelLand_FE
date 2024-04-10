@@ -16,7 +16,13 @@ import TravelCreateForm from '@/pages/travelReview/TravelCreatePage';
 export const router = createBrowserRouter([
   {
     path: '/',
-    element: <Main />,
+    element: (
+      <Main
+        onClick={function (): void {
+          throw new Error('Function not implemented.');
+        }}
+      />
+    ),
   },
   { path: '/search', element: <SearchPage /> },
   { path: '/results', element: <SearchResults /> },
@@ -24,11 +30,40 @@ export const router = createBrowserRouter([
   { path: '/travelDetail/:tripId', element: <TravelDetailPage /> },
   { path: '/login/oauth', element: <KakaoRedirect /> },
   { path: '/user/myPage', element: <MyPage /> },
-  { path: '/login', element: <Login /> },
+  {
+    path: '/login',
+    element: (
+      <Login
+        isOpen={false}
+        onClose={function (): void {
+          throw new Error('Function not implemented.');
+        }}
+      />
+    ),
+  },
   { path: '/planCreate/1', element: <TravelPlanCreate1 /> },
   { path: '/planCreate/2', element: <TravelPlanCreate2 /> },
   { path: '/planList', element: <TravelPlanList /> },
   { path: '/planDetail/:id', element: <TravelPlanDetail /> },
   // { path: '/TravelDetailPage/:tripId', element: <TravelDetailPage /> },
-  { path: '/travelCreate', element: <TravelCreateForm /> },
+  {
+    path: '/travelCreate',
+    element: (
+      <TravelCreateForm
+        email={''} // 필요한 경우 실제 이메일 값을 사용하세요.
+        tripData={{
+          title: '',
+          content: '',
+          tripStartDate: '',
+          tripEndDate: '',
+          cost: 0,
+          hashTag: [],
+          address: '',
+          isPublic: true,
+          // 기타 필요한 필드를 여기에 추가하세요.
+        }}
+        imageList={[]}
+      />
+    ),
+  },
 ]);
