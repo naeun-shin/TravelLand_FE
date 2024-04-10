@@ -8,8 +8,8 @@ import { useUnitPlansStore } from '@/store/useUnitPlanStore';
 
 // 네비게이션에서 받을 수 있는 state의 타입 정의
 interface LocationState {
-  startDate: string;
-  endDate: string;
+  // startDate: string;
+  // endDate: string;
 }
 
 const PlanCreate2: React.FC = () => {

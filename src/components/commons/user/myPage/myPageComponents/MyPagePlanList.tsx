@@ -14,7 +14,7 @@ const MyPagePlanList = () => {
         <MediumButton text="스크랩 Number" />
       </S.MyPageButton>
       {/* 목록 */}
-      <List />
+      <List planListData={[]} />
       {/* pagination */}
       <CS.PagenationStyle>
         <button>1</button>

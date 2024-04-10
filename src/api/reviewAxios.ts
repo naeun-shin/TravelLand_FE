@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from 'axios';
+import { AxiosResponse } from 'axios';
 import { instance } from './axios';
 import {
   TripData,
@@ -17,18 +17,6 @@ export const createTrip = async ({ email, formData }: CreateTripRequest) => {
     formData.get('imageList'),
   );
   try {
-    // const formData = new FormData();
-    // formData.append('requestDto', JSON.stringify(tripData));
-    // console.log(imageList);
-    // // 이미지 리스트가 있으면 함께 전송
-    // if (imageList) {
-    //   imageList.forEach((file: any) =>
-    //     // formData.append(`imageList[${index}]`, file),
-    //     formData.append('imageList', file),
-    //   );
-    // }
-    // console.log('준워터 폼데이터', formData);
-    // 데이터 전달
     const response = await instance.post('/v1/trips', formData, {
       params: { email },
       headers: {

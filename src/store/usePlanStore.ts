@@ -5,10 +5,10 @@ interface InvitePerson {
 }
 
 interface UnitPlan {
-  departure: string;
-  time: string;
-  schedule: string;
-  location: Date | string;
+  departure?: string;
+  time?: string;
+  schedule?: string;
+  location?: Date | string;
 }
 
 interface DayPlan {
