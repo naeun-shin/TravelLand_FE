@@ -2,7 +2,6 @@ import {
   ButtonContainer,
   ButtonsWrapper,
 } from '@/components/commons/buttons/Button.style';
-// import { Link } from 'react-router-dom';
 import Header from '@/components/layouts/Header';
 import Search from '@/components/search/Search';
 import Button, { TabButton } from '@/components/commons/buttons/Button';
@@ -13,7 +12,7 @@ import Maintitle from '@/components/commons/mainItem/MainTitle';
 import ListTitle from '@/components/commons/mainItem/ListTitle';
 import MainList from '@/components/commons/mainItem/MainList';
 import { useNavigate } from 'react-router-dom';
-// import { ResultsSection } from '@/components/search/Search.style';
+import { Cookies } from 'react-cookie';
 
 interface MainProps {
   onClick: () => void;
@@ -21,6 +20,7 @@ interface MainProps {
 
 const Main: React.FC<MainProps> = () => {
   const navigate = useNavigate();
+  const cookie = new Cookies();
 
   const handleMakePlanClick = () => {
     navigate('/planList');
@@ -60,6 +60,10 @@ const Main: React.FC<MainProps> = () => {
     likes: 77,
     imageUrl: '이미지URL',
   }));
+
+  console.log('메인 페이지 영역 콘솔');
+
+  console.log('coookie >> ', cookie.get('KD_SESSION'));
 
   return (
     <>
