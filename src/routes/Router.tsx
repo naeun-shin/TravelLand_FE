@@ -21,7 +21,7 @@ export const router = createBrowserRouter([
   { path: '/search', element: <SearchPage /> },
   { path: '/results', element: <SearchResults /> },
   { path: '/travelReview', element: <TravelReviewPage /> },
-  { path: '/travelDetail', element: <TravelDetailPage /> },
+  { path: '/travelDetail/:tripId', element: <TravelDetailPage /> },
   { path: '/login/oauth', element: <KakaoRedirect /> },
   { path: '/user/myPage', element: <MyPage /> },
   { path: '/login', element: <Login /> },
@@ -29,6 +29,6 @@ export const router = createBrowserRouter([
   { path: '/planCreate/2', element: <TravelPlanCreate2 /> },
   { path: '/planList', element: <TravelPlanList /> },
   { path: '/planDetail/:id', element: <TravelPlanDetail /> },
-  { path: '/TravelDetailPage', element: <TravelDetailPage /> },
+  // { path: '/TravelDetailPage/:tripId', element: <TravelDetailPage /> },
   { path: '/travelCreate', element: <TravelCreateForm /> },
 ]);

@@ -50,11 +50,11 @@ const Slider = styled.span<{ $isChecked: boolean }>`
 
     &:nth-child(1) {
       transition: all 0.4s;
-      color: ${(props) => (props.$isChecked ? 'black' : 'white')};
+      color: ${(props) => (props.$isChecked ? '#000' : '#fff')};
     }
     &:nth-child(2) {
       transition: all 0.4s;
-      color: ${(props) => (props.$isChecked ? 'white' : 'black')};
+      color: ${(props) => (props.$isChecked ? '#fff' : '#000')};
     }
     padding: 12px 7px;
     font-size: 13px;
