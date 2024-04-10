@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { getTripList } from '@/api/reviewAxios';
+import { Cookies } from 'react-cookie';
 
 // 여행 정보 목록 조회
 interface Trip {
@@ -39,6 +40,10 @@ const TravelReviewPage = () => {
   });
   console.log({ isLoading, isError, error, data });
   console.log(data?.data);
+
+  const cookies = new Cookies();
+  console.log('cookies >>> main >> ', cookies.getAll());
+  console.log('뭐라도 뜨겠지..?');
 
   const handleCardClick = (tripId: number) => {
     console.log(tripId);
