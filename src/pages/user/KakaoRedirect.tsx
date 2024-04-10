@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 const KakaoRedirect = () => {
   const navigate = useNavigate();
+  console.log('test');
   const code = new URL(window.location.href).searchParams.get('code');
   console.log(code);
 
