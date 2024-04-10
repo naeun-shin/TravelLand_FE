@@ -17,6 +17,11 @@ interface TravelCreateFormProps {
   imageList: File[];
 }
 
+export interface CreateTripRequest {
+  email: string;
+  formData: FormData;
+}
+
 const TravelCreateForm: React.FC<TravelCreateFormProps> = () => {
   const navigate = useNavigate();
   const [title, setTitle] = useState<string>('');
@@ -28,6 +33,8 @@ const TravelCreateForm: React.FC<TravelCreateFormProps> = () => {
   const [area, setArea] = useState<string>('');
   const [isPublic, setIsPublic] = useState<boolean>(true);
   const [imageFiles, setImageFiles] = useState<File[]>([]);
+
+  const email = 'test@test.com';
 
   const createReviewMutation = useMutation({
     mutationFn: createTrip,
@@ -47,8 +54,6 @@ const TravelCreateForm: React.FC<TravelCreateFormProps> = () => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const email = 'test@test.com';
-
     // tripData 객체 생성
     const tripData: TripData = {
       title,
@@ -58,28 +63,43 @@ const TravelCreateForm: React.FC<TravelCreateFormProps> = () => {
       cost: parseFloat(cost),
       hashTag: hashtags,
       address: 'string',
-      public: isPublic,
-      area,
-      placeName: 'string',
-      x: '100.123123',
-      y: '100.123123',
+      isPublic,
+      // area,
+      // placeName: 'string',
+      // x: '100.123123',
+      // y: '100.123123',
     };
 
-    // 첫 번째 이미지를 썸네일로, 나머지를 별도의 배열로 구분
-    const thumbnail = imageFiles[0];
-    const remainingImages = imageFiles.slice(1);
-
     const formData = new FormData();
-    formData.append('email', email);
-    formData.append('tripData', JSON.stringify(tripData));
-    formData.append('thumbnail', thumbnail);
-
-    remainingImages.forEach((file, index) => {
-      formData.append(`images[${index}]`, file);
+    formData.append('requestDto', JSON.stringify(tripData));
+    // 첫 번째 이미지 파일을 'thumbnail'로 추가
+    // imageFiles 배열은 이미지 파일들을 담고 있다고 가정
+    if (imageFiles.length > 0) {
+      formData.append('thumbnail', imageFiles[0]);
+    }
+    // 나머지 이미지 파일들을 'imageList'로 추가
+    imageFiles.slice(1).forEach((file) => {
+      formData.append('imageList', file);
     });
 
+    // 첫 번째 이미지를 썸네일로, 나머지를 별도의 배열로 구분
+    // const thumbnail = imageFiles[0];
+    // const remainingImages = imageFiles.slice(1);
+
+    // formData.append('email', email);
+    // formData.append('tripData', JSON.stringify(tripData));
+    // formData.append('thumbnail', thumbnail);
+
+    // remainingImages.forEach((file, index) => {
+    //   formData.append(`images[${index}]`, file);
+    // });
+    // mutate 함수에 전달할 객체 생성
+    const request: CreateTripRequest = {
+      email, // 이메일 주소
+      formData, // FormData 객체
+    };
     // mutate 호출 //
-    createReviewMutation.mutate({ email, tripData, imageList: imageFiles });
+    createReviewMutation.mutate(request);
   };
 
   // 토글

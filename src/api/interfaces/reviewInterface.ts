@@ -8,11 +8,11 @@ export interface TripData {
   cost: number;
   hashTag: string[];
   address: string;
-  public: boolean;
-  area: string;
-  x: string;
-  y: string;
-  placeName: string;
+  isPublic: boolean;
+  // area: string;
+  // x: string;
+  // y: string;
+  // placeName: string;
 }
 
 // 여행 정보 목록 조회

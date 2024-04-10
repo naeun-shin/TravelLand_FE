@@ -5,38 +5,37 @@ import {
   TripDetail,
   TripListParams,
 } from './interfaces/reviewInterface';
+import { CreateTripRequest } from '@/pages/travelReview/TravelCreatePage';
 
 // 여행 정보 등록
-export const createTrip = async ({
-  email,
-  tripData,
-  imageList,
-}: {
-  email: string;
-  tripData: TripData;
-  imageList?: File[];
-}) => {
+export const createTrip = async ({ email, formData }: CreateTripRequest) => {
+  console.log(
+    'async 12 > ',
+    email,
+    formData.get('requestDto'),
+    formData.get('thumbnail'),
+    formData.get('imageList'),
+  );
   try {
-    const formData = new FormData();
-
-    formData.append('requestDto', JSON.stringify(tripData));
-    console.log(imageList);
-
-    // 이미지 리스트가 있으면 함께 전송
-    if (imageList) {
-      imageList.forEach((file: any) =>
-        // formData.append(`imageList[${index}]`, file),
-        formData.append('imageList', file),
-      );
-    }
-
-    console.log('준워터 폼데이터', formData);
+    // const formData = new FormData();
+    // formData.append('requestDto', JSON.stringify(tripData));
+    // console.log(imageList);
+    // // 이미지 리스트가 있으면 함께 전송
+    // if (imageList) {
+    //   imageList.forEach((file: any) =>
+    //     // formData.append(`imageList[${index}]`, file),
+    //     formData.append('imageList', file),
+    //   );
+    // }
+    // console.log('준워터 폼데이터', formData);
+    // 데이터 전달
     const response = await instance.post('/v1/trips', formData, {
       params: { email },
       headers: {
         'Content-Type': 'multipart/form-data',
       },
     });
+    console.log(response);
     return response;
   } catch (error) {
     console.error(error);
