@@ -81,3 +81,12 @@ export const updatePlan = async (
     throw error;
   }
 };
+
+export const deletePlan = async (planId: Number) => {
+  try {
+    return await instance.delete(`/v1/plans/${planId}`);
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};

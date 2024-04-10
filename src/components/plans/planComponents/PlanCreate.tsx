@@ -1,41 +1,36 @@
+import React from 'react'; // ReactElement import 추가
+
 import ToggleButton from '@/components/commons/buttons/ToggleButton';
 import * as S from '@/components/plans/Plan.style';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Invitation } from '@/components/commons/invitation/Invitation';
-import InvitationCard from '@/components/commons/cards/InvitationCard';
 import 'react-datepicker/dist/react-datepicker.min.css';
-// import * as DS from '@components/plans/DatePicker.styles';
 
 import DatePicker from 'react-datepicker';
-interface Person {
-  src: string;
-}
+import { ModernInput } from '@/components/commons/inputs/Input';
+import { usePlanStore } from '@/store/usePlanStore';
 
 const PlanCreate = () => {
   const navigate = useNavigate();
-  const [isInvitationModalOpen, setIsInvitationModalOpen] = useState(false);
-  const [invitedPeople, setInvitedPeople] = useState<Person[]>([]);
-  // 초대된 사람들 상태 추가
-  const [isPublic, setIsPublic] = useState<boolean>(true);
-  const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([
-    null,
-    null,
-  ]);
+  // 로컬 상태 훅 대신 Zustand 스토어 사용
+  const { isPublic, dateRange, setIsPublic, setDateRange } = usePlanStore();
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
-  const [startDate, setStartDate] = useState(String);
-  const [endDate, setEndDate] = useState(String);
 
-  // 커스텀 입력 컴포넌트 정의
   // 이 컴포넌트는 달력 포탈을 열기 위한 버튼을 렌더링합니다.
-  const CalendarButton = ({ onClick }) => (
+  const CalendarButton = React.forwardRef<
+    HTMLImageElement,
+    { onClick: () => void }
+  >(({ onClick }, ref) => (
     <img
+      ref={ref}
       src="/assets/icons/arrow_to_right.png"
       onClick={onClick}
       alt="Calendar"
       style={{ cursor: 'pointer' }}
     />
-  );
+  ));
+
+  CalendarButton.displayName = 'CalendarButton';
 
   // 날짜 범위 변경 핸들러
   const handleDateRangeChange = (update: [Date, Date]) => {
@@ -46,10 +41,6 @@ const PlanCreate = () => {
     }
   };
 
-  const toggleCalendar = () => {
-    setIsCalendarOpen(!isCalendarOpen);
-  };
-
   // 여행 기간 텍스트를 표시하기 위한 함수
   const displayDateRange = () => {
     const start = dateRange[0] ? dateRange[0].toLocaleDateString() : '';
@@ -58,29 +49,6 @@ const PlanCreate = () => {
     return `${start} - ${end}`;
   };
 
-  // 초대하기 모달 오픈 핸들러
-  const handleOpenInvitation = () => {
-    setIsInvitationModalOpen(true);
-  };
-
-  const closeInvitationModal = () => {
-    setIsInvitationModalOpen(false);
-  };
-  // 초대하기 버튼 클릭 시 호출될 함수
-  const handleInvite = () => {
-    // 초대 로직 구현
-    // 초대된 사람을 invitedPeople 상태에 추가
-    // 모달 닫기
-    setIsInvitationModalOpen(false);
-  };
-
-  // 초대한 사람 삭제
-  const handleDeleteClick = (index: number) => {
-    // 초대된 사람들 배열에서 해당 인덱스의 항목을 제거
-    const updatedInvitedPeople = [...invitedPeople];
-    updatedInvitedPeople.splice(index, 1);
-    setInvitedPeople(updatedInvitedPeople);
-  };
   // 토글
   const toggleIsPublic = () => setIsPublic(!isPublic);
 
@@ -113,14 +81,20 @@ const PlanCreate = () => {
           {/* 작성자 칸 */}
           <S.PlanWriterBox>
             <img src="/assets/icons/pinPoint.png" />
-            <input />
+            <div></div>
           </S.PlanWriterBox>
           {/* 지역 */}
           <S.PlanBox>
             <img src="/assets/icons/pinPoint.png" />
             <S.PlanContent>
               <S.PlanContentTitle>지역</S.PlanContentTitle>
-              <input />
+              <ModernInput
+                type="text"
+                placeholder="부산"
+                width={100}
+                height={30}
+                border="transparent"
+              />
             </S.PlanContent>
           </S.PlanBox>
           {/*예산 */}
@@ -128,7 +102,13 @@ const PlanCreate = () => {
             <img src="/assets/icons/dolor.png" />
             <S.PlanContent>
               <S.PlanContentTitle>예산</S.PlanContentTitle>
-              <input />
+              <ModernInput
+                type="text"
+                placeholder="100000"
+                width={100}
+                height={30}
+                border="transparent"
+              />
             </S.PlanContent>
           </S.PlanBox>
           {/*기간 선택*/}
@@ -137,18 +117,18 @@ const PlanCreate = () => {
             <S.PlanHorizontalContent>
               <S.PlanContentTitle>기간</S.PlanContentTitle>
               <div>{displayDateRange()}</div>
-              {/* <S.PlanHorizontalRightButton onClick={toggleCalendar}>
-                <img
-                  src="/assets/icons/arrow_to_right.png"
-                  alt="Open Calendar"
-                />
-              </S.PlanHorizontalRightButton> */}
               <DatePicker
                 selectsRange={true}
                 startDate={dateRange[0]}
                 endDate={dateRange[1]}
                 onChange={handleDateRangeChange}
-                customInput={<CalendarButton onClick={undefined} />}
+                customInput={
+                  <CalendarButton
+                    onClick={function (): void {
+                      throw new Error('Function not implemented.');
+                    }}
+                  />
+                } // 이제 여기서 ref와 onClick 모두 처리 가능
                 withPortal
                 open={isCalendarOpen}
                 shouldCloseOnSelect={true}
@@ -157,47 +137,12 @@ const PlanCreate = () => {
               />
             </S.PlanHorizontalContent>
           </S.PlanBox>
-          {/*초대 */}
-          <S.PlanBox>
-            <img src="/assets/icons/plus.png" />
-            <S.PlanHorizontalContent>
-              <div>초대하기</div>
-              <S.PlanInvitationBox>
-                {/* 초대된 사람들 노출 및 삭제 구간 */}
-                {/* <InvitationCard
-                  src={'/assets/paris.jpg'}
-                  onClick={() => handleDeleteClick(1)}
-                /> */}
-                {invitedPeople.map((person, index) => (
-                  <InvitationCard
-                    key={index}
-                    src={person.src}
-                    onClick={() => handleDeleteClick(index)}
-                  />
-                ))}
-              </S.PlanInvitationBox>
-              <div>
-                <img
-                  src="/assets/icons/blackBackgroundPlus.png"
-                  onClick={handleOpenInvitation}
-                />
-              </div>
-            </S.PlanHorizontalContent>
-          </S.PlanBox>
         </div>
       </S.PlanSecondSection>
       <S.PlanBottomSection>
         {/* 다음 버튼 */}
         <S.PlanNextButton onClick={handleNextClick}>다음</S.PlanNextButton>
       </S.PlanBottomSection>
-      {/* 달력 모달 처리 */}
-      {/* <Calendar isOpen={isModalOpen} onClose={closeModal} /> */}
-      {/* 초대하기 모달 처리 */}
-      <Invitation
-        isOpen={isInvitationModalOpen}
-        onClose={closeInvitationModal}
-        onInvite={handleInvite} // 초대하기 버튼 클릭 시 호출될 함수 전달
-      />
     </>
   );
 };

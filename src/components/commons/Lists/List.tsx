@@ -33,7 +33,6 @@ const List: React.FC<ListProps> = ({ planListData }) => {
       ) : (
         planListData.map((item, index) => (
           <S.ListContainer key={index}>
-            {/* 오타 수정: ListContaier -> ListContainer */}
             <S.ListLeft>
               <S.ListCity>{item.area}</S.ListCity>
               <S.ListTitle onClick={() => handleReadContent(item.planId)}>

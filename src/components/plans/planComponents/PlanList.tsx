@@ -13,13 +13,13 @@ const PlanList = () => {
   };
 
   const [page, setPage] = useState(1); // 페이지 번호
-  const [size, setSize] = useState(20); // 한 페이지 당 받아올 겟수
+  const [size] = useState(20); // 한 페이지 당 받아올 겟수
   const [pageGroup, setPageGroup] = useState(0); // 현재 페이지 그룹
   const [totalPages, setTotalPages] = useState(0); // 전체 페이지 수
   const pageGroupSize = 10; // 페이지 그룹 당 표시할 페이지 수
 
-  const [sortBy, setSortBy] = useState('createdAt');
-  const [isAsc, setASC] = useState(true);
+  const [sortBy] = useState('createdAt');
+  const [isAsc] = useState(true);
 
   // 페이지네이션을 위한 파라미터 설정
   const planListParams = { page, size, sortBy, isAsc };
@@ -51,7 +51,7 @@ const PlanList = () => {
   const content = data?.data.content; // 실제 항목이 포함된 배열
   console.log(content);
   // 현재 입력 값 public이 true 저장 불가한 상태로 false로 임시 목록 보여주기
-  const filteredData = content?.filter((item: any) => item.public === false); // public 속성이 true인 항목만 필터링
+  const filteredData = content?.filter((item: any) => item.isPublic === true); // public 속성이 true인 항목만 필터링
 
   // console.log(filteredData);
   //

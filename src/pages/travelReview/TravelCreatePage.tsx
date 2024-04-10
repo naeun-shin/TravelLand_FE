@@ -39,7 +39,6 @@ const TravelCreateForm: React.FC<TravelCreateFormProps> = () => {
   const createReviewMutation = useMutation({
     mutationFn: createTrip,
     onSuccess: (data: TripData) => {
-      // queryClient.invalidateQueries(['trips']);
       console.log(data);
       alert('여행 정보 작성 성공!');
       navigate('/travelReview');

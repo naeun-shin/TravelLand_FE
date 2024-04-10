@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
 import * as S from '../Plan.style';
-import { PlanListInput } from '@/components/commons/inputs/Input';
+import { PlanListInput } from '@components/commons/inputs/PlanListInput';
 import Button from '@/components/commons/buttons/Button';
 import { useLocation } from 'react-router-dom';
+import { usePlanStore } from '@/store/usePlanStore';
+import { useUnitPlansStore } from '@/store/useUnitPlanStore';
 
 // 네비게이션에서 받을 수 있는 state의 타입 정의
 interface LocationState {
@@ -10,13 +12,20 @@ interface LocationState {
   endDate: string;
 }
 
-const PlanCreate2 = () => {
-  const location = useLocation<LocationState>(); // 타입스크립트를 사용하여 위치 상태의 타입 지정
-  const { startDate, endDate } = location.state;
+const PlanCreate2: React.FC = () => {
+  const location = useLocation();
+  // 타입 단언을 사용하여 location.state의 타입을 명시합니다.
+  const state = location.state as LocationState;
+
+  // 이제 state에서 startDate와 endDate를 안전하게 사용할 수 있습니다.
+  const { startDate, endDate } = state;
 
   const [currentStep, setCurrentStep] = useState<number>(0); // 현재 스텝 인덱스
-  // 초기 상태에 하나의 빈 항목을 포함하는 배열로 설정
-  const [planList, setPlanList] = useState<string[]>(['']);
+  // planList를 객체의 배열로 변경합니다.
+  // 각 객체는 개별 PlanListInput 컴포넌트의 상태를 담습니다.
+  const [planList, _] = useState([
+    { departure: '', time: '', schedule: '', location: '' },
+  ]);
 
   // 총 일수 계산
   const calculateTotalDays = () => {
@@ -48,22 +57,50 @@ const PlanCreate2 = () => {
     setTotalDays(calculateTotalDays());
   }, [startDate, endDate]);
 
+  // Subscribe to unitPlans from the store
+  const unitPlans = useUnitPlansStore((state) => state.unitPlans);
+  console.log(unitPlans);
+
   const handleDayChange = (stepIndex: number) => {
+    // 현재 날짜의 계획 저장
+    usePlanStore
+      .getState()
+      .setUnitPlansForDay(currentStep.toString(), planList);
+
+    // 선택된 날짜의 계획 불러오기 혹은 초기화
+    // const nextDayPlans = usePlanStore
+    //   .getState()
+    //   .getUnitPlansForDay(stepIndex.toString());
+
+    // nextDayPlans를 올바른 형태로 매핑
+    // const nextDayPlansMapped = nextDayPlans.map((plan) => ({
+    //   departure: plan.departure, // departure가 undefined인 경우 빈 문자열을 사용
+    //   time: plan.time,
+    //   schedule: plan.schedule,
+    //   location: plan.location,
+    // }));
+
+    // 매핑된 배열을 상태로 설정
+    // setPlanList(nextDayPlansMapped);
+    // nextDayPlansMapped.length
+    //   ? nextDayPlansMapped
+    //   : [{ departure: '', time: '', schedule: '', location: '' }],
+
+    // 현재 스텝 업데이트
     setCurrentStep(stepIndex);
-    setPlanList(['']); // 다른 일차를 클릭하면 리스트를 초기화하여 1개의 항목만 보이도록 함
   };
 
-  const handlePlanAdd = () => {
-    setPlanList([...planList, '']); // 빈 문자열을 추가하여 새로운 PlanListInput을 생성
-  };
+  // 등록하기 버튼
+  const handlePlanSubmit = () => {
+    // 현재 날짜의 계획을 반드시 저장
+    usePlanStore
+      .getState()
+      .setUnitPlansForDay(currentStep.toString(), planList);
 
-  const handlePlanSubmit = () => {};
-  const handlePlanInputChange = (index: number, value: string) => {
-    const updatedPlanList = [...planList];
-    updatedPlanList[index] = value;
-    setPlanList(updatedPlanList);
+    // 서버로 제출하기 위한 준비
+    const wholePlan = usePlanStore.getState().dayPlans;
+    console.log(wholePlan);
   };
-
   return (
     <>
       {/* 여행 일자 박스 영역 */}
@@ -73,6 +110,7 @@ const PlanCreate2 = () => {
             key={index}
             onClick={() => handleDayChange(index)}
             active={index === currentStep}
+            text=""
           >
             {`${index + 1}일차`}
           </S.PlanDetailDateButton>
@@ -86,36 +124,12 @@ const PlanCreate2 = () => {
             {`${currentStep + 1}일차`}
           </S.DetailHeaderContent>
           <S.DetailHeaderSubContent>
-            <S.DetailHeaderSubDate>{displayDate}</S.DetailHeaderSubDate>|
-            <S.DetaiHeaderSubDestination>
-              <div>출발지</div>
-              인사동 | 명동 | <div>도착지</div>
-              서울타워{' '}
-            </S.DetaiHeaderSubDestination>
+            <S.DetailHeaderSubDate>{displayDate}</S.DetailHeaderSubDate>
           </S.DetailHeaderSubContent>
         </S.PlanDetailContentHeader>
         {planList.map((plan, index) => (
-          <PlanListInput
-            key={index}
-            value={plan}
-            onChange={(event) =>
-              handlePlanInputChange(index, event.target.value)
-            }
-          />
+          <PlanListInput key={index} {...plan} /> // {...plan}은 plan 객체의 속성을 PlanListInput에 전달한다고 가정
         ))}
-        {/* 추가하기 버튼 영역 */}
-        <S.ButtonBoxToCenter>
-          <Button
-            text="추가하기"
-            width="150px"
-            height="50px"
-            color="white"
-            borderColor="black"
-            borderRadius="15px"
-            fontWeight="bold"
-            onClick={handlePlanAdd} // 추가하기 버튼 클릭 핸들러 추가
-          />
-        </S.ButtonBoxToCenter>
       </S.PlanDetailContentBox>
       {/* 등록하기 버튼 영역 */}
       <S.ButtonBox>

@@ -1,18 +1,26 @@
 import React, { useEffect } from 'react';
-import { propsType } from './LandingKaKao';
 
-interface placeType {
+interface PlaceType {
   place_name: string;
   road_address_name: string;
+  x: string;
+  y: string;
   address_name: string;
   phone: string;
   place_url: string;
 }
 
+export interface MapSearchType {
+  searchKeyword: string;
+  onSelect: (place: PlaceType) => void; // 장소 선택 콜백 함수 추가
+}
 // head에 작성한 Kakao API 불러오기
 const { kakao } = window as any;
 
-const MapSerachTest = (props: propsType) => {
+export const KaKaoMapResult: React.FC<MapSearchType> = ({
+  searchKeyword,
+  onSelect,
+}) => {
   // 마커를 담는 배열
   let markers: any[] = [];
 
@@ -38,7 +46,7 @@ const MapSerachTest = (props: propsType) => {
 
     // 키워드 검색을 요청하는 함수
     function searchPlaces() {
-      let keyword = props.searchKeyword;
+      let keyword = searchKeyword;
 
       if (!keyword.replace(/^\s+|\s+$/g, '')) {
         console.log('키워드를 입력해주세요!');
@@ -55,7 +63,7 @@ const MapSerachTest = (props: propsType) => {
         // 정상적으로 검색이 완료됐으면
         // 검색 목록과 마커를 표출
         displayPlaces(data);
-        console.log(data);
+        // console.log(data);
 
         // 페이지 번호를 표출
         displayPagination(pagination);
@@ -152,8 +160,9 @@ const MapSerachTest = (props: propsType) => {
     }
 
     // 검색결과 항목을 Element로 반환하는 함수
-    function getListItem(index: number, places: placeType) {
+    function getListItem(index: number, place: PlaceType) {
       const div = document.createElement('div');
+      div.onclick = () => onSelect(place);
       const itemStr = `
       <div class="marker marker_${index + 1}"
         style=
@@ -168,18 +177,20 @@ const MapSerachTest = (props: propsType) => {
         color: black;
         text-decoration: none;
         font-weight : bold;
-      ">${index + 1}. ${places.place_name}</div>
+        cursor :pointer;
+      "
+      >${index + 1}. ${place.place_name}</div>
 
       ${
-        places.road_address_name
+        place.road_address_name
           ? `<div style=
             "
              color: black;
              padding-left : 10px;
             "
-          > ${places.road_address_name}
+          > ${place.road_address_name}
           </div>
-          <a href="${places.place_url}"
+          <a href="${place.place_url}"
           style=
           " 
             background-color: #f0f0f0;
@@ -197,7 +208,7 @@ const MapSerachTest = (props: propsType) => {
                 color: red;
               "
             >
-            ${places.address_name}
+            ${place.address_name}
             
           </div>`
       }
@@ -211,7 +222,7 @@ const MapSerachTest = (props: propsType) => {
     }
 
     // 마커를 생성하고 지도 위에 마커를 표시하는 함수
-    function addMarker(position: any, idx: number, title: undefined) {
+    function addMarker(position: any, idx: number, _title: undefined) {
       var imageSrc =
           'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png', // 마커 이미지 url, 스프라이트 이미지
         imageSize = new kakao.maps.Size(36, 37), // 마커 이미지의 크기
@@ -262,7 +273,7 @@ const MapSerachTest = (props: propsType) => {
         el.lastChild && el.removeChild(el.lastChild);
       }
     }
-  }, [props.searchKeyword]);
+  }, [searchKeyword]);
 
   return (
     <div style={{ display: 'flex' }}>
@@ -278,6 +289,8 @@ const MapSerachTest = (props: propsType) => {
       >
         <div style={{ padding: '10px' }}>
           <span>검색 결과{/* <div> {props.searchKeyword}</div> */}</span>
+          {/* 선택된 장소명을 출력합니다. */}
+          {/* <div>선택된 장소: {selectedPlaceInfo?.road_address_name}</div> */}
         </div>
         <div id="places-list" style={{ padding: '5px 10px' }}></div>
         <div
@@ -288,5 +301,3 @@ const MapSerachTest = (props: propsType) => {
     </div>
   );
 };
-
-export default MapSerachTest;

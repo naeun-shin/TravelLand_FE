@@ -72,3 +72,7 @@ export interface UpdatePlanData {
   invitee: string[]; // invitee 배열의 요소는 string 타입
   plan: Plan;
 }
+
+export interface deletePlan {
+  tripId: number;
+}
