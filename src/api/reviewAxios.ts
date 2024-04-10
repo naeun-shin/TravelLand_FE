@@ -8,10 +8,9 @@ import {
 import { CreateTripRequest } from '@/pages/travelReview/TravelCreatePage';
 
 // 여행 정보 등록
-export const createTrip = async ({ email, formData }: CreateTripRequest) => {
+export const createTrip = async ({ formData }: CreateTripRequest) => {
   try {
     const response = await instance.post('/v1/trips', formData, {
-      params: { email },
       headers: {
         'Content-Type': 'multipart/form-data',
       },
@@ -24,9 +23,7 @@ export const createTrip = async ({ email, formData }: CreateTripRequest) => {
 };
 
 // 여행 정보 목록 조회
-export const getTripList = async (
-  tripListparam: TripListParams,
-): Promise<AxiosResponse<any>> => {
+export const getTripList = async (tripListparam: TripListParams) => {
   const { page, size, sortBy, isAsc } = tripListparam;
   try {
     const response = await instance.get('/v1/trips', {
@@ -42,7 +39,6 @@ export const getTripList = async (
 // 여행 정보 수정
 export const updateTrip = async (
   tripId: number,
-  email: string,
   tripData: TripData,
   imageList?: File[],
 ): Promise<AxiosResponse<any>> => {
@@ -59,7 +55,6 @@ export const updateTrip = async (
     }
 
     const response = await instance.put(`/v1/trips/${tripId}`, formData, {
-      params: { email },
       headers: {
         'Content-Type': 'multipart/form-data',
       },

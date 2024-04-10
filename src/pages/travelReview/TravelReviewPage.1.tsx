@@ -1,20 +1,14 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { QueryKey, useInfiniteQuery } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import Header from '@/components/layouts/Header';
 import * as S from './TravelReview.styles';
 import ReviewPageTab from '@/components/commons/user/TravelReview/ReviewTab';
 import Card from '@/components/commons/cards/Card';
 import { getTripList } from '@/api/reviewAxios';
-import { Trip } from '@/api/interfaces/reviewInterface';
+import { TripData } from './TravelReviewPage';
 
-interface TripData {
-  items: Trip[];
-  nextPage?: number;
-  isLast?: boolean;
-}
-
-const TravelReviewPage = () => {
+export const TravelReviewPage = () => {
   const navigate = useNavigate();
 
   // 여행 정보 목록 조회 API 호출 함수
@@ -90,27 +84,21 @@ const TravelReviewPage = () => {
         </S.ReviewBox>
         <ReviewPageTab />
         <S.TravelReviewCardSection>
-          {data?.pages.map(
-            (
-              page,
-              pageIndex, // page는 TripData 타입입니다.
-            ) =>
-              page.items.map((trip: Trip, tripIndex: Number) => (
-                <div key={`trip-${pageIndex}-${tripIndex}`}>
-                  <Card
-                    title={trip.title}
-                    writer={trip.nickname}
-                    date={`♥${trip.viewCount}`}
-                    imageUrl={trip.thumbnailUrl}
-                    onClick={() => navigate(`/travelDetail/${trip.tripId}`)}
-                  />
-                </div>
-              )),
+          {data?.pages.map((page, pageIndex) =>
+            page.items.map((trip: any, tripIndex: any) => (
+              <div key={`trip-${pageIndex}-${tripIndex}`}>
+                <Card
+                  title={trip.title}
+                  writer={trip.nickname}
+                  date={`♥${trip.viewCount}`}
+                  imageUrl={trip.thumbnailUrl}
+                  onClick={() => navigate(`/travelDetail/${trip.tripId}`)}
+                />
+              </div>
+            )),
           )}
         </S.TravelReviewCardSection>
       </S.TravelReviewstyle>
     </>
   );
 };
-
-export default TravelReviewPage;

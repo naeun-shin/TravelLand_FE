@@ -3,7 +3,7 @@ import Main from '../pages/main/Main';
 import KakaoRedirect from '@/pages/user/KakaoRedirect';
 import MyPage from '@/pages/user/MyPage';
 import SearchPage from '@/pages/main/SearchPage';
-import TravelReviewPage from '@/pages/travelReview/TravelReviewPage';
+import TravelReviewPage from '@/pages/travelReview/TravelReviewPage.1';
 import TravelDetailPage from '@/pages/travelReview/TravelDetailPage';
 import Login from '@/pages/user/Login';
 import TravelPlanCreate1 from '@/pages/travelPlan/TravelPlanCreate1';

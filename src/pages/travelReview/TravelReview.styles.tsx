@@ -335,3 +335,9 @@ export const ReviewBox = styled.div`
   justify-content: space-between;
   align-items: center;
 `;
+
+export const LoadingText = styled.span`
+  font-size: 16px;
+  font-weight: bold;
+  color: #000;
+`;
