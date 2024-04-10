@@ -2,7 +2,6 @@ import {
   ButtonContainer,
   ButtonsWrapper,
 } from '@/components/commons/buttons/Button.style';
-// import { Link } from 'react-router-dom';
 import Header from '@/components/layouts/Header';
 import Search from '@/components/search/Search';
 import Button, { TabButton } from '@/components/commons/buttons/Button';
@@ -13,7 +12,6 @@ import Maintitle from '@/components/commons/mainItem/MainTitle';
 import ListTitle from '@/components/commons/mainItem/ListTitle';
 import MainList from '@/components/commons/mainItem/MainList';
 import { useNavigate } from 'react-router-dom';
-// import { ResultsSection } from '@/components/search/Search.style';
 import { Cookies } from 'react-cookie';
 
 interface MainProps {
@@ -63,8 +61,8 @@ const Main: React.FC<MainProps> = () => {
   }));
 
   const cookies = new Cookies();
-  console.log('cookies >>> main >> ', cookies.get('Authorization'));
-
+  console.log('cookies >>> main >> ', cookies.getAll());
+  console.log('뭐라도 뜨겠지..?');
   return (
     <>
       <Header />
