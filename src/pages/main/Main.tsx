@@ -14,6 +14,7 @@ import ListTitle from '@/components/commons/mainItem/ListTitle';
 import MainList from '@/components/commons/mainItem/MainList';
 import { useNavigate } from 'react-router-dom';
 // import { ResultsSection } from '@/components/search/Search.style';
+import { Cookies } from 'react-cookie';
 
 interface MainProps {
   onClick: () => void;
@@ -60,6 +61,9 @@ const Main: React.FC<MainProps> = () => {
     likes: 77,
     imageUrl: '이미지URL',
   }));
+
+  const cookies = new Cookies();
+  console.log('cookies >>> main >> ', cookies.get('Authorization'));
 
   return (
     <>
