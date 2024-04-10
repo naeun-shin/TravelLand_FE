@@ -12,6 +12,7 @@ export interface ButtonProps {
   fontWeight?: any;
   text: string;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  active?: any;
 }
 
 // 기본 버튼

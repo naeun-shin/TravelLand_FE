@@ -222,7 +222,7 @@ export const KaKaoMapResult: React.FC<MapSearchType> = ({
     }
 
     // 마커를 생성하고 지도 위에 마커를 표시하는 함수
-    function addMarker(position: any, idx: number, title: undefined) {
+    function addMarker(position: any, idx: number, _title: undefined) {
       var imageSrc =
           'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png', // 마커 이미지 url, 스프라이트 이미지
         imageSize = new kakao.maps.Size(36, 37), // 마커 이미지의 크기
