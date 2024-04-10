@@ -8,12 +8,11 @@ export interface CardProps {
   writer?: string;
   city?: string;
   withPicture?: boolean;
+  borderColor?: string;
   onClick?: React.MouseEventHandler<HTMLDivElement>;
 }
 
 const Card: React.FC<CardProps> = ({
-  width,
-  height,
   title,
   date,
   writer,
@@ -39,7 +38,7 @@ const Card: React.FC<CardProps> = ({
           {/* 정보 우측 */}
           <S.CardInfoContent>
             <S.CardInfoContentTop>
-              <div>{title}</div>
+              <S.Title>{title}</S.Title>
               <div>{date}</div>
             </S.CardInfoContentTop>
             <div>

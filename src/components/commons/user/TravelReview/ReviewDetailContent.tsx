@@ -1,19 +1,18 @@
 // import React from 'react';
+import { TripDetail } from '@/api/interfaces/reviewInterface';
 import styled from 'styled-components';
 
-const ReviewContent = () => {
+interface ReviewContentProps {
+  tripDetail: TripDetail;
+}
+
+const ReviewContent = ({ tripDetail }: ReviewContentProps) => {
   return (
     <>
       <Container>
         <ContentBox>
           <ContentDiv>
-            오사카는 호텔이 다 입니다.너무 좋은 호텔 어렵게 구했습니다. 시내
-            호텔이라 쇼핑이 자유롭습니다. 오사카에서 보기드문 천연온천이
-            가능합니다. 좁은 방 아니고 정규 트윈룸 입니다.호텔에서는 야식라면과
-            음료, 주류도 무제한입니다.여러 단서 넣지않은 패키지 입니다. 팁
-            3천엔, 자유식 2천엔 총 5만원 상당의 혜택 포함 되었습니다.
-            자유여행으로 가기 힘든롯코산 포함,여행의 꽃, 베테랑 가이드 선정은
-            기본이죠.일본 여행 전문가가 자신있게 소개합니다.
+            {tripDetail.content} {/* 여기에  리뷰 내용을 렌더링 */}
           </ContentDiv>
         </ContentBox>
         <CommentsList>

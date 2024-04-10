@@ -1,102 +1,124 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import * as S from '../Plan.style';
-import { PlanListInput } from '@/components/commons/inputs/Input';
+import { PlanListInput } from '@components/commons/inputs/PlanListInput';
 import Button from '@/components/commons/buttons/Button';
+import { useLocation } from 'react-router-dom';
+import { usePlanStore } from '@/store/usePlanStore';
+import { useUnitPlansStore } from '@/store/useUnitPlanStore';
 
-const PlanCreate2 = () => {
-  const dateArray: string[] = ['1일차', '2일차', '3일차']; // 표시할 일자 목록
+// 네비게이션에서 받을 수 있는 state의 타입 정의
+interface LocationState {
+  startDate: string;
+  endDate: string;
+}
+
+const PlanCreate2: React.FC = () => {
+  const location = useLocation<LocationState>(); // 타입스크립트를 사용하여 위치 상태의 타입 지정
+
+  const { startDate, endDate } = location.state;
+
   const [currentStep, setCurrentStep] = useState<number>(0); // 현재 스텝 인덱스
-  const [planList, setPlanList] = useState<string[]>([]); // 계획 목록 상태 추가
+  // planList를 객체의 배열로 변경합니다.
+  // 각 객체는 개별 PlanListInput 컴포넌트의 상태를 담습니다.
+  const [planList, setPlanList] = useState([
+    { departure: '', time: '', schedule: '', location: '' },
+  ]);
 
-  const handleStepClick = (stepIndex: number) => {
+  // 총 일수 계산
+  const calculateTotalDays = () => {
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    const diff = end.getTime() - start.getTime();
+    const totalDays = Math.ceil(diff / (1000 * 3600 * 24)) + 1; // 종료 날짜 포함
+    return totalDays;
+  };
+
+  // 총 일수 상태
+  const [totalDays, setTotalDays] = useState(calculateTotalDays());
+
+  // startDate와 currentStep을 기반으로 해당 일차의 날짜 계산
+  const calculateDateForStep = (start: string, step: number): string => {
+    const resultDate = new Date(start);
+    resultDate.setDate(resultDate.getDate() + step);
+    return resultDate.toLocaleDateString('ko-KR', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    });
+  };
+
+  // 각 일차의 날짜를 보여주는 부분을 업데이트
+  const displayDate = calculateDateForStep(startDate, currentStep);
+
+  useEffect(() => {
+    setTotalDays(calculateTotalDays());
+  }, [startDate, endDate]);
+
+  // Subscribe to unitPlans from the store
+  const unitPlans = useUnitPlansStore((state) => state.unitPlans);
+  console.log(unitPlans);
+
+  const handleDayChange = (stepIndex: number) => {
+    // 현재 날짜의 계획 저장
+    usePlanStore
+      .getState()
+      .setUnitPlansForDay(currentStep.toString(), planList);
+
+    // 선택된 날짜의 계획 불러오기 혹은 초기화
+    const nextDayPlans = usePlanStore
+      .getState()
+      .getUnitPlansForDay(stepIndex.toString());
+    setPlanList(
+      nextDayPlans.length
+        ? nextDayPlans
+        : [{ departure: '', time: '', schedule: '', location: '' }],
+    );
+
+    // 현재 스텝 업데이트
     setCurrentStep(stepIndex);
-    setPlanList(['0']);
   };
 
-  const handlePlanAdd = () => {
-    setPlanList([...planList, '']); // 빈 문자열을 추가하여 새로운 PlanListInput을 생성
+  // 등록하기 버튼
+  const handlePlanSubmit = () => {
+    // 현재 날짜의 계획을 반드시 저장
+    usePlanStore
+      .getState()
+      .setUnitPlansForDay(currentStep.toString(), planList);
+
+    // 서버로 제출하기 위한 준비
+    const wholePlan = usePlanStore.getState().dayPlans;
+    console.log(wholePlan);
   };
-
-  const handlePlanSubmit = () => {};
-  const handlePlanInputChange = (index: number, value: string) => {
-    const updatedPlanList = [...planList];
-    updatedPlanList[index] = value;
-    setPlanList(updatedPlanList);
-  };
-
-  const startDate: Date = (() => {
-    const today = new Date();
-    const start = new Date(today);
-    start.setDate(today.getDate() + currentStep);
-    return start;
-  })();
-
   return (
     <>
       {/* 여행 일자 박스 영역 */}
       <S.PlanDetailDateBox>
-        {dateArray.map((_, index) => {
-          const date = new Date(startDate); // 시작일을 복사
-          date.setDate(startDate.getDate() + index); // 해당 날짜로 설정
-          return (
-            <S.PlanDetailDateButton
-              key={index}
-              onClick={() => handleStepClick(index)}
-              active={index === currentStep}
-            >
-              {`${index + 1}일차 `}
-            </S.PlanDetailDateButton>
-          );
-        })}
+        {Array.from({ length: totalDays }, (_, index) => (
+          <S.PlanDetailDateButton
+            key={index}
+            onClick={() => handleDayChange(index)}
+            active={index === currentStep}
+          >
+            {`${index + 1}일차`}
+          </S.PlanDetailDateButton>
+        ))}
       </S.PlanDetailDateBox>
       {/* 스태퍼 박스 영역 */}
       <S.PlanDetailContentBox>
         {/* 박스 헤더 영역 */}
         <S.PlanDetailContentHeader>
           <S.DetailHeaderContent>
-            {dateArray[currentStep]}
+            {`${currentStep + 1}일차`}
           </S.DetailHeaderContent>
           <S.DetailHeaderSubContent>
-            <S.DetailHeaderSubDate>
-              {`${startDate.getFullYear()}년 |  ${startDate.getMonth() + 1}월  | ${startDate.getDate()}일`}
-            </S.DetailHeaderSubDate>
-            |
-            <S.DetaiHeaderSubDestination>
-              <div>출발지</div>
-              인사동 | 명동 | <div>도착지</div>
-              서울타워{' '}
-            </S.DetaiHeaderSubDestination>
+            <S.DetailHeaderSubDate>{displayDate}</S.DetailHeaderSubDate>
           </S.DetailHeaderSubContent>
         </S.PlanDetailContentHeader>
-        {/* 첫 번째 리스트 영역 */}
-        <PlanListInput
-          // value={planList[0]} // 첫 번째 값만 보이도록 설정
-          onChange={(event) => handlePlanInputChange(0, event.target.value)}
-        />
-        {/* 나머지 리스트 영역 */}
-        {/* {planList.slice(1).map((value, index) => (
-          <PlanListInput
-            key={index + 1} // 첫 번째 영역이 있으므로 index + 1부터 시작
-            value={value}
-            onChange={(event) =>
-              handlePlanInputChange(index + 1, event.target.value)
-            }
-            currentListNumber={currentListNumber}
-          />
-        ))} */}
-        {/* 추가하기 버튼 영역 */}
-        <S.ButtonBoxToCenter>
-          <Button
-            text="추가하기"
-            width="150px"
-            height="50px"
-            color="white"
-            borderColor="black"
-            borderRadius="15px"
-            fontWeight="bold"
-            onClick={handlePlanAdd} // 추가하기 버튼 클릭 핸들러 추가
-          />
-        </S.ButtonBoxToCenter>
+        {planList.map((index) => (
+          <>
+            <PlanListInput key={index} />
+          </>
+        ))}
       </S.PlanDetailContentBox>
       {/* 등록하기 버튼 영역 */}
       <S.ButtonBox>
@@ -108,7 +130,7 @@ const PlanCreate2 = () => {
           borderRadius="15px"
           fontWeight="bold"
           textColor="white"
-          onClick={handlePlanSubmit} // 추가하기 버튼 클릭 핸들러 추가
+          onClick={handlePlanSubmit} // 등록하기 버튼 클릭 핸들러 추가
         />
       </S.ButtonBox>
     </>
