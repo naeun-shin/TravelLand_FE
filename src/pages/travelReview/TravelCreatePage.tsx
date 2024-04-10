@@ -9,11 +9,17 @@ import { useMutation } from '@tanstack/react-query';
 import { TripData } from '@/api/interfaces/reviewInterface';
 import { AxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Button from '@/components/commons/buttons/Button';
 
 interface TravelCreateFormProps {
   email: string;
   tripData: TripData;
   imageList: File[];
+}
+
+export interface CreateTripRequest {
+  email: string;
+  formData: FormData;
 }
 
 const TravelCreateForm: React.FC<TravelCreateFormProps> = () => {
@@ -28,9 +34,11 @@ const TravelCreateForm: React.FC<TravelCreateFormProps> = () => {
   const [isPublic, setIsPublic] = useState<boolean>(true);
   const [imageFiles, setImageFiles] = useState<File[]>([]);
 
+  const email = 'test@test.com';
+
   const createReviewMutation = useMutation({
     mutationFn: createTrip,
-    onSuccess: (data) => {
+    onSuccess: (data: TripData) => {
       // queryClient.invalidateQueries(['trips']);
       console.log(data);
       alert('여행 정보 작성 성공!');
@@ -46,8 +54,6 @@ const TravelCreateForm: React.FC<TravelCreateFormProps> = () => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const email = 'test@test.com';
-
     // tripData 객체 생성
     const tripData: TripData = {
       title,
@@ -56,16 +62,44 @@ const TravelCreateForm: React.FC<TravelCreateFormProps> = () => {
       tripEndDate,
       cost: parseFloat(cost),
       hashTag: hashtags,
-      area,
-      public: isPublic,
       address: 'string',
-      placeName: 'string',
-      x: '100.123123',
-      y: '100.123123',
+      isPublic,
+      // area,
+      // placeName: 'string',
+      // x: '100.123123',
+      // y: '100.123123',
     };
 
+    const formData = new FormData();
+    formData.append('requestDto', JSON.stringify(tripData));
+    // 첫 번째 이미지 파일을 'thumbnail'로 추가
+    // imageFiles 배열은 이미지 파일들을 담고 있다고 가정
+    if (imageFiles.length > 0) {
+      formData.append('thumbnail', imageFiles[0]);
+    }
+    // 나머지 이미지 파일들을 'imageList'로 추가
+    imageFiles.slice(1).forEach((file) => {
+      formData.append('imageList', file);
+    });
+
+    // 첫 번째 이미지를 썸네일로, 나머지를 별도의 배열로 구분
+    // const thumbnail = imageFiles[0];
+    // const remainingImages = imageFiles.slice(1);
+
+    // formData.append('email', email);
+    // formData.append('tripData', JSON.stringify(tripData));
+    // formData.append('thumbnail', thumbnail);
+
+    // remainingImages.forEach((file, index) => {
+    //   formData.append(`images[${index}]`, file);
+    // });
+    // mutate 함수에 전달할 객체 생성
+    const request: CreateTripRequest = {
+      email, // 이메일 주소
+      formData, // FormData 객체
+    };
     // mutate 호출 //
-    createReviewMutation.mutate({ email, tripData, imageList: imageFiles });
+    createReviewMutation.mutate(request);
   };
 
   // 토글
@@ -107,9 +141,16 @@ const TravelCreateForm: React.FC<TravelCreateFormProps> = () => {
     setImageFiles(imageFiles.filter((_, i) => i !== index));
   };
 
+  const handleNavigate = () => {
+    navigate('/travelReview');
+  };
+
   return (
     <>
       <Header />
+      <S.BackBox>
+        <Button text="돌아가기" onClick={handleNavigate} />
+      </S.BackBox>
       <S.Form onSubmit={handleSubmit}>
         <S.FieldContainer>
           <S.ImageUploadSection>
