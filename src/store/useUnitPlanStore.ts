@@ -8,6 +8,7 @@ interface UnitPlan {
 }
 
 interface UnitPlansState {
+  updateUnitPlan: any;
   unitPlans: UnitPlan[];
   addUnitPlan: (unitPlan: UnitPlan) => void;
   clearUnitPlans: () => void; // unitPlans 배열을 비우는 함수
@@ -19,5 +20,11 @@ export const useUnitPlansStore = create<UnitPlansState>((set) => ({
   addUnitPlan: (unitPlan) =>
     set((state) => ({ unitPlans: [...state.unitPlans, unitPlan] })),
   clearUnitPlans: () => set(() => ({ unitPlans: [] })), // unitPlans 배열을 비우는 로직
-  // 기타 액션 구현...
+  // useUnitPlanStore.ts 내부에 추가할 updateUnitPlan 액션
+  updateUnitPlan: (index: number, newPlan: PlanInput) =>
+    set((state) => {
+      const updatedUnitPlans = [...state.unitPlans];
+      updatedUnitPlans[index] = newPlan;
+      return { unitPlans: updatedUnitPlans };
+    }),
 }));
