@@ -12,7 +12,6 @@ import Maintitle from '@/components/commons/mainItem/MainTitle';
 import ListTitle from '@/components/commons/mainItem/ListTitle';
 import MainList from '@/components/commons/mainItem/MainList';
 import { useNavigate } from 'react-router-dom';
-import { Cookies } from 'react-cookie';
 
 interface MainProps {
   onClick: () => void;
@@ -60,9 +59,6 @@ const Main: React.FC<MainProps> = () => {
     imageUrl: '이미지URL',
   }));
 
-  const cookies = new Cookies();
-  console.log('cookies >>> main >> ', cookies.getAll());
-  console.log('뭐라도 뜨겠지..?');
   return (
     <>
       <Header />
