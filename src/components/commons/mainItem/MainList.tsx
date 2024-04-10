@@ -1,19 +1,30 @@
 import React from 'react';
 import styled from 'styled-components';
 
+interface ListItemProps {
+  title?: string;
+  location?: string;
+  description?: string;
+  likes?: number;
+  imageUrl?: string;
+}
+
+interface MainListProps {
+  items: ListItemProps[];
+}
 // 메인 리스트
-const MainList: React.FC = () => {
+const MainList: React.FC<MainListProps> = ({ items }) => {
   return (
     <MainListContainer>
-      {[...Array(10)].map((_, index) => (
+      {items.map((item, index) => (
         <ItemContainer key={index}>
           <TextSection>
-            <Title>{index + 1} 후쿠오카</Title>
-            <p>일본&gt;후쿠오카</p>
-            <Content>아름답고 화려한 건축 양식의 사원</Content>
-            <button>♥ 77개</button>
+            <Title>{item.title}</Title>
+            <p>{item.location}</p>
+            <Content>{item.description}</Content>
+            <button>♥ {item.likes}개</button>
           </TextSection>
-          <Image src="" alt="이미지" />
+          <Image src={item.imageUrl} alt="이미지" />
         </ItemContainer>
       ))}
     </MainListContainer>
@@ -29,7 +40,7 @@ const MainListContainer = styled.div`
   column-gap: 10px;
   row-gap: 20px;
   width: 100%;
-  max-width: 1000px;
+  max-width: 950px;
   margin: 0 auto;
 `;
 
@@ -70,4 +81,5 @@ const Image = styled.img`
   height: 170px;
   object-fit: cover;
   border: 1px solid #000;
+  border-radius: 10px;
 `;

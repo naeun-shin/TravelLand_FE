@@ -11,8 +11,7 @@ export interface InputProps {
   width?: number;
   height?: number;
 }
-
-const ModernInput = (props: InputProps) => {
+export const ModernInput = (props: InputProps) => {
   return (
     <>
       <S.modernInput
@@ -29,5 +28,3 @@ const ModernInput = (props: InputProps) => {
     </>
   );
 };
-
-export default ModernInput;

@@ -1,3 +1,4 @@
+import React from 'react';
 import * as S from './Button.style';
 
 export interface ButtonProps {
@@ -6,6 +7,7 @@ export interface ButtonProps {
   color?: string;
   borderColor?: string;
   borderRadius?: string;
+  textColor?: string;
   fontSize?: any;
   fontWeight?: any;
   text: string;
@@ -19,6 +21,7 @@ const Button: React.FC<ButtonProps> = ({
   color = '#fff',
   borderColor = '#000',
   borderRadius,
+  textColor,
   text,
   onClick,
   fontSize,
@@ -33,6 +36,7 @@ const Button: React.FC<ButtonProps> = ({
       borderRadius={borderRadius}
       onClick={onClick}
       style={{ fontSize, fontWeight }}
+      textColor={textColor}
     >
       {text}
     </S.StyledButton>
@@ -40,7 +44,7 @@ const Button: React.FC<ButtonProps> = ({
 };
 
 export default Button;
- 
+
 // 라지 버튼
 export const LargeButton: React.FC<{ text: string }> = ({ text }) => (
   <Button
@@ -50,21 +54,19 @@ export const LargeButton: React.FC<{ text: string }> = ({ text }) => (
     borderColor="#000"
     borderRadius="30px"
     text={text}
+    textColor="#000"
   />
 );
 
 // 미디움 버튼
-export const MediumButton: React.FC<{ text: string }> = ({
-  text,
-  borderColor,
-}) => (
+export const MediumButton: React.FC<{ text: string }> = ({ text }) => (
   <Button
     width="150px"
     height="50px"
     color="#fff"
-    borderColor={borderColor}
     borderRadius="25px"
     text={text}
+    textColor="#000"
   />
 );
 
@@ -77,6 +79,7 @@ export const SmallButton: React.FC<{ text: string }> = ({ text }) => (
     borderColor="#000"
     borderRadius="30px"
     text={text}
+    textColor="#000"
   />
 );
 
@@ -91,6 +94,5 @@ export const TabButton: React.FC<ButtonProps> = ({ text, onClick }) => (
     text={text}
     onClick={onClick}
     fontWeight="bold"
-    backgroundColor="transparent"
   />
 );
