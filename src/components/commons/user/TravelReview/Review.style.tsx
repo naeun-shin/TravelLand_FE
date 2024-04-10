@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 // 여행 정보페이지
 
@@ -78,6 +78,10 @@ export const ReviewListTitle = styled.div`
 
 // 여행 후기 상세보기 페이지
 
+interface DotProps {
+  active?: boolean;
+}
+
 export const Container = styled.div`
   width: 900px;
   margin: 0 auto;
@@ -122,11 +126,34 @@ export const SliderDots = styled.div`
   display: flex;
 `;
 
-export const Dot = styled.div`
+export const Dot = styled.div<DotProps>`
   height: 15px;
   width: 15px;
   background-color: #bbb;
   border-radius: 50%;
   margin: 0 5px;
   cursor: pointer;
+  // active prop에 따라 스타일 적용
+  ${(props) =>
+    props.active &&
+    css`
+      background-color: #000; // active 상태일 때의 색상
+    `}
+`;
+
+// 수정 / 삭제 버튼
+
+export const ButtonBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+  Button:nth-child(2) {
+    margin-left: 15px;
+  }
+`;
+
+export const HeaderBox = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  /* align-items: center; */
 `;

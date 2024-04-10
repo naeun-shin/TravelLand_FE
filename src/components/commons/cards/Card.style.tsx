@@ -11,11 +11,12 @@ const CardBox = styled.div<CardProps>`
 
 const CardImg = styled.img`
   width: 100%;
-  height: auto;
+  max-height: 180px; //auto에서 수정
   /* width: 300px;
   height: 180px; */
   border-radius: 10px;
   object-fit: cover;
+  margin-bottom: 3px; // 추가했슴
 `;
 
 const CardInfo = styled.div`
@@ -23,7 +24,7 @@ const CardInfo = styled.div`
   flex-direction: row;
   align-items: center;
 
-  padding-top: 10px;
+  padding-top: 5px; // 10px에서 수정
 
   font-weight: bold;
   font-size: 16px;
@@ -81,6 +82,14 @@ const StyledButton = styled.button<CardProps>`
   border-color: ${(props) => props.borderColor || 'black'};
 `;
 
+// 카드 타이틀 ...처리
+const Title = styled.div`
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
+
 export {
   CardBox,
   CardImg,
@@ -89,4 +98,5 @@ export {
   CardInfoContentTop,
   InvitationCardContainer,
   StyledButton,
+  Title,
 };
