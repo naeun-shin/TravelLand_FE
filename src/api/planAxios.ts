@@ -82,6 +82,7 @@ export const updatePlan = async (
   }
 };
 
+// 여행 플랜 삭제
 export const deletePlan = async (planId: Number) => {
   try {
     return await instance.delete(`/v1/plans/${planId}`);

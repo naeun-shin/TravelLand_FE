@@ -2,7 +2,11 @@ import React, { useEffect, useState } from 'react';
 import * as S from '../Plan.style';
 import Map from '@/components/maps/Map';
 import { usePlanDetailQuery } from '@/hooks/useQuery';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useMutation } from '@tanstack/react-query';
+import { deletePlan } from '@/api/planAxios';
+import Button from '@/components/commons/buttons/Button';
+import { deleteMutaion, useDeleteMutation } from '@/hooks/useMutation';
 
 // 사용할 데이터 타입 정의 (예시입니다, 실제 데이터에 맞게 조정해야 합니다.)
 
@@ -29,6 +33,7 @@ interface UnitPlan {
 }
 
 const PlanDetail: React.FC<ButtonProps> = () => {
+  const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [currentStep, setCurrentStep] = useState<number>(0);
@@ -39,8 +44,6 @@ const PlanDetail: React.FC<ButtonProps> = () => {
   // `id`를 숫자로 변환하기 전에 유효성 검사 수행
   const planId = Number(id);
   const { data, isLoading, isError } = usePlanDetailQuery(planId);
-
-  console.log('43 data >>>>>>> ', data);
 
   const planDetails = data?.data;
 
@@ -69,10 +72,13 @@ const PlanDetail: React.FC<ButtonProps> = () => {
     setIsModalOpen(true);
   };
 
+  // 삭제 기능
+  const deleteMutaion = useDeleteMutation();
+
   const handlePlanDelete = () => {
-    // useMutation;
-    // deletePlan;
+    deleteMutaion.mutate(planId);
   };
+
   const closeModal = () => {
     setIsModalOpen(false);
   };
@@ -172,7 +178,7 @@ const PlanDetail: React.FC<ButtonProps> = () => {
               </div>
             ))}
           </S.DetailContentBox>
-          <button onClick={handlePlanDelete}>삭제하기</button>
+          <Button onClick={handlePlanDelete} text={'삭제하기'} />
         </S.DetailContentSection>
         {/*초대 */}
         <S.PlanBox>
