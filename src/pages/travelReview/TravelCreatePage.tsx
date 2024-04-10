@@ -81,17 +81,6 @@ const TravelCreateForm: React.FC<TravelCreateFormProps> = () => {
       formData.append('imageList', file);
     });
 
-    // 첫 번째 이미지를 썸네일로, 나머지를 별도의 배열로 구분
-    // const thumbnail = imageFiles[0];
-    // const remainingImages = imageFiles.slice(1);
-
-    // formData.append('email', email);
-    // formData.append('tripData', JSON.stringify(tripData));
-    // formData.append('thumbnail', thumbnail);
-
-    // remainingImages.forEach((file, index) => {
-    //   formData.append(`images[${index}]`, file);
-    // });
     // mutate 함수에 전달할 객체 생성
     const request: CreateTripRequest = {
       email, // 이메일 주소

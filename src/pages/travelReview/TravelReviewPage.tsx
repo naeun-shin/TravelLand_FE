@@ -60,13 +60,6 @@ const TravelReviewPage = () => {
   if (isError)
     return <S.ErrorContainer>Error: {error.message}</S.ErrorContainer>;
 
-  // const handleNextPage = () => {
-  //   setPage((prevPage) => prevPage + 1);
-  // };
-  // const handleSortChange = (sortBy, isAsc) => {
-  //   setSortBy(sortBy);
-  //   setASC(isAsc);
-  // };
   return (
     <>
       <Header />
@@ -85,6 +78,7 @@ const TravelReviewPage = () => {
                 title={trip.title}
                 writer={trip.nickname}
                 date={`♥${trip.viewCount}`}
+                imageUrl={trip.thumbnailUrl}
                 onClick={() => handleCardClick(trip.tripId)}
               />
             </div>
