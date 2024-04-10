@@ -9,13 +9,6 @@ import { CreateTripRequest } from '@/pages/travelReview/TravelCreatePage';
 
 // 여행 정보 등록
 export const createTrip = async ({ email, formData }: CreateTripRequest) => {
-  console.log(
-    'async 12 > ',
-    email,
-    formData.get('requestDto'),
-    formData.get('thumbnail'),
-    formData.get('imageList'),
-  );
   try {
     const response = await instance.post('/v1/trips', formData, {
       params: { email },
@@ -23,8 +16,7 @@ export const createTrip = async ({ email, formData }: CreateTripRequest) => {
         'Content-Type': 'multipart/form-data',
       },
     });
-    console.log(response);
-    return response;
+    return response.data as TripData;
   } catch (error) {
     console.error(error);
     throw error;

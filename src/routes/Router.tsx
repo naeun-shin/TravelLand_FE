@@ -48,6 +48,22 @@ export const router = createBrowserRouter([
   // { path: '/TravelDetailPage/:tripId', element: <TravelDetailPage /> },
   {
     path: '/travelCreate',
-    element: <TravelCreateForm email={''} imageList={[]} />,
+    element: (
+      <TravelCreateForm
+        email={''} // 필요한 경우 실제 이메일 값을 사용하세요.
+        tripData={{
+          title: '',
+          content: '',
+          tripStartDate: '',
+          tripEndDate: '',
+          cost: 0,
+          hashTag: [],
+          address: '',
+          isPublic: true,
+          // 기타 필요한 필드를 여기에 추가하세요.
+        }}
+        imageList={[]}
+      />
+    ),
   },
 ]);
