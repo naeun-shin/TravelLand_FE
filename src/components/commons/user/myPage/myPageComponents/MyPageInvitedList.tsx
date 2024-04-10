@@ -1,5 +1,5 @@
 import Card from '@/components/commons/cards/Card';
-import * as S from '@/components/commons/user/myPage/MyPage.style';
+import * as S from '@components/commons/user/myPage/MyPage.style';
 const MyPageInvitedList = () => {
   // const size = { width: 200, height: 500 };
   return (

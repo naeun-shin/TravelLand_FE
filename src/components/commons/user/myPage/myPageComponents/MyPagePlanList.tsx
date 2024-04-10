@@ -1,5 +1,5 @@
 import { MediumButton } from '@/components/commons/buttons/Button';
-import * as S from '../MyPage.style';
+import * as S from '@components/commons/user/myPage/MyPage.style';
 import * as CS from '@styles/commonStyles';
 import { List } from '@/components/commons/Lists/List';
 const MyPagePlanList = () => {
