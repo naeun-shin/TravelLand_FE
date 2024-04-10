@@ -114,8 +114,10 @@ const PlanCreate2: React.FC = () => {
             <S.DetailHeaderSubDate>{displayDate}</S.DetailHeaderSubDate>
           </S.DetailHeaderSubContent>
         </S.PlanDetailContentHeader>
-        {planList.map((plan, index) => (
-          <PlanListInput key={index} />
+        {planList.map((index) => (
+          <>
+            <PlanListInput key={index} />
+          </>
         ))}
       </S.PlanDetailContentBox>
       {/* 등록하기 버튼 영역 */}
