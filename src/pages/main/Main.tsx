@@ -63,7 +63,8 @@ const Main: React.FC<MainProps> = () => {
 
   console.log('메인 페이지 영역 콘솔');
 
-  console.log('coookie >> ', cookie.get('KD_SESSION'));
+  console.log('coookie get authorization>> ', cookie.get('Authorization'));
+  console.log('coookie get all>> ', cookie.getAll());
 
   return (
     <>
