@@ -48,8 +48,6 @@ export const router = createBrowserRouter([
   // { path: '/TravelDetailPage/:tripId', element: <TravelDetailPage /> },
   {
     path: '/travelCreate',
-    element: (
-      <TravelCreateForm email={''} imageList={[]} tripData={undefined} />
-    ),
+    element: <TravelCreateForm email={''} imageList={[]} />,
   },
 ]);

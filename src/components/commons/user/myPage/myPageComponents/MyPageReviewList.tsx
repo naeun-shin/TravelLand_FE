@@ -1,6 +1,6 @@
 import { MediumButton } from '@/components/commons/buttons/Button';
 import Card from '@/components/commons/cards/Card';
-import * as S from '@components/commons/user/myPage/MyPage.style';
+import * as S from '@/components/commons/user/myPage/MyPage.style';
 
 const MyPageReviewList = () => {
   return (

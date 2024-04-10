@@ -1,7 +1,7 @@
 import { useState } from 'react';
 // import { MediumButton } from '../../buttons/Button';
 import MyPagePlanList from './myPageComponents/MyPagePlanList';
-import * as S from './MyPage.style';
+import * as S from '@/components/commons/user/myPage/MyPage.style';
 import MyPageInvitedList from './myPageComponents/MyPageInvitedList';
 import MyPageReviewList from './myPageComponents/MyPageReviewList';
 

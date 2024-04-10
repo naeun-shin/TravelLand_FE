@@ -119,6 +119,7 @@ const PlanDetail: React.FC<ButtonProps> = () => {
             key={index}
             onClick={() => handleStepClick(index)}
             active={index === currentStep}
+            text=""
           >
             {`${index + 1}일차`}
           </S.PlanDetailDateButton>
