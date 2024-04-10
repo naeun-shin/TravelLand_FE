@@ -13,8 +13,6 @@ export interface CardProps {
 }
 
 const Card: React.FC<CardProps> = ({
-  width,
-  height,
   title,
   date,
   writer,

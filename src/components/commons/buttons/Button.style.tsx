@@ -9,12 +9,6 @@ interface ButtonProps {
   textColor?: string;
 }
 
-interface ToggelButtonProps {
-  latestSort: boolean;
-  beforeText: string;
-  afterText: string;
-}
-
 export const StyledButton = styled.button<ButtonProps>`
   width: ${(props) => props.width};
   height: ${(props) => props.height};

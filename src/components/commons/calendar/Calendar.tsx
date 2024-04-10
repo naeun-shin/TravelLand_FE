@@ -1,7 +1,4 @@
 import React, { useState } from 'react';
-import Modal from '../modals/Modal';
-import Button from '../buttons/Button';
-import * as C from './Calendar.style';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.min.css';
 

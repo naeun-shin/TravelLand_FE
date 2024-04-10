@@ -24,10 +24,10 @@ interface TripsResponse {
 const TravelReviewPage = () => {
   const navigate = useNavigate();
 
-  const [page, setPage] = useState(1);
-  const [size, setSize] = useState(9);
-  const [sortBy, setSortBy] = useState('createdAt');
-  const [isAsc, setASC] = useState(false);
+  const [page] = useState(1);
+  const [size] = useState(9);
+  const [sortBy] = useState('createdAt');
+  const [isAsc] = useState(false);
 
   const tripListParams = { page, size, sortBy, isAsc };
 
