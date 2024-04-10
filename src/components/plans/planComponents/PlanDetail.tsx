@@ -3,7 +3,6 @@ import * as S from '../Plan.style';
 import Map from '@/components/maps/Map';
 import { usePlanDetailQuery } from '@/hooks/useQuery';
 import { useParams } from 'react-router-dom';
-import { useMutation } from '@tanstack/react-query';
 
 // 사용할 데이터 타입 정의 (예시입니다, 실제 데이터에 맞게 조정해야 합니다.)
 
@@ -70,7 +69,7 @@ const PlanDetail: React.FC<ButtonProps> = () => {
     setIsModalOpen(true);
   };
 
-  const handlePlanDelete = (planId: number) => {
+  const handlePlanDelete = () => {
     // useMutation;
     // deletePlan;
   };
@@ -115,7 +114,7 @@ const PlanDetail: React.FC<ButtonProps> = () => {
     <>
       {/* 여행 일자 박스 영역 */}
       <S.PlanDetailDateBox>
-        {dayPlans.map((plan, index) => (
+        {dayPlans.map((_plan, index) => (
           <S.PlanDetailDateButton
             key={index}
             onClick={() => handleStepClick(index)}
@@ -135,7 +134,7 @@ const PlanDetail: React.FC<ButtonProps> = () => {
             </S.DetailHeaderSubDate>
             |
             <S.DetaiHeaderSubDestination>
-              {dayPlans.path}
+              {/* {dayPlans.path} */}
             </S.DetaiHeaderSubDestination>
           </S.DetailHeaderSubContent>
         </S.PlanDetailContentHeader>

@@ -16,7 +16,13 @@ import TravelCreateForm from '@/pages/travelReview/TravelCreatePage';
 export const router = createBrowserRouter([
   {
     path: '/',
-    element: <Main />,
+    element: (
+      <Main
+        onClick={function (): void {
+          throw new Error('Function not implemented.');
+        }}
+      />
+    ),
   },
   { path: '/search', element: <SearchPage /> },
   { path: '/results', element: <SearchResults /> },
@@ -24,11 +30,26 @@ export const router = createBrowserRouter([
   { path: '/travelDetail/:tripId', element: <TravelDetailPage /> },
   { path: '/login/oauth', element: <KakaoRedirect /> },
   { path: '/user/myPage', element: <MyPage /> },
-  { path: '/login', element: <Login /> },
+  {
+    path: '/login',
+    element: (
+      <Login
+        isOpen={false}
+        onClose={function (): void {
+          throw new Error('Function not implemented.');
+        }}
+      />
+    ),
+  },
   { path: '/planCreate/1', element: <TravelPlanCreate1 /> },
   { path: '/planCreate/2', element: <TravelPlanCreate2 /> },
   { path: '/planList', element: <TravelPlanList /> },
   { path: '/planDetail/:id', element: <TravelPlanDetail /> },
   // { path: '/TravelDetailPage/:tripId', element: <TravelDetailPage /> },
-  { path: '/travelCreate', element: <TravelCreateForm /> },
+  {
+    path: '/travelCreate',
+    element: (
+      <TravelCreateForm email={''} imageList={[]} tripData={undefined} />
+    ),
+  },
 ]);
