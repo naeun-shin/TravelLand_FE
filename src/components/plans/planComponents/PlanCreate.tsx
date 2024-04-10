@@ -16,8 +16,6 @@ const PlanCreate = () => {
   const { isPublic, dateRange, setIsPublic, setDateRange } = usePlanStore();
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
 
-  const { setArea, setBudget } = usePlanStore();
-
   // 이 컴포넌트는 달력 포탈을 열기 위한 버튼을 렌더링합니다.
   const CalendarButton = React.forwardRef<
     HTMLImageElement,
@@ -42,15 +40,6 @@ const PlanCreate = () => {
       setIsCalendarOpen(false);
     }
   };
-  // 지역 입력 필드 onChange 핸들러
-  const handleAreaChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setArea(e.target.value); // Zustand 스토어의 setArea 메소드 호출
-  };
-
-  // 예산 입력 필드 onChange 핸들러
-  const handleBudgetChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setBudget(parseInt(e.target.value, 10)); // Zustand 스토어의 setBudget 메소드 호출
-  };
 
   // 여행 기간 텍스트를 표시하기 위한 함수
   const displayDateRange = () => {
@@ -65,24 +54,17 @@ const PlanCreate = () => {
 
   // 다음 페이지 넘어가기
   const handleNextClick = () => {
+    // dateRange 값 확인
+    console.log('선택된 날짜 범위:', dateRange);
     if (dateRange[0] && dateRange[1]) {
-      // 날짜 범위가 모두 선택되었다면, 지역과 예산 데이터를 가져옵니다.
-      const { area, budget } = usePlanStore.getState();
-
-      // navigate 함수를 사용하여 다음 페이지로 넘어가면서 상태 데이터를 전달합니다.
-      navigate('/planCreate/2', {
-        state: {
-          startDate: dateRange[0],
-          endDate: dateRange[1],
-          area,
-          budget,
-          // 다른 필요한 상태 데이터도 이곳에 추가할 수 있습니다.
-        },
-      });
-    } else {
-      // 날짜가 제대로 선택되지 않았다면, 경고 메시지를 표시하거나 다른 처리를 할 수 있습니다.
-      console.log('날짜를 모두 선택해주세요.');
+      // 날짜 범위가 모두 선택되었다면, 처리 로직 추가
+      console.log('시작 날짜:', dateRange[0].toLocaleDateString());
+      console.log('종료 날짜:', dateRange[1].toLocaleDateString());
     }
+
+    navigate('/planCreate/2', {
+      state: { startDate: dateRange[0], endDate: dateRange[1] },
+    });
   };
 
   return (
@@ -112,7 +94,6 @@ const PlanCreate = () => {
                 width={100}
                 height={30}
                 border="transparent"
-                onChange={handleAreaChange} // 지역 입력 필드에 onChange 이벤트 추가
               />
             </S.PlanContent>
           </S.PlanBox>
@@ -127,7 +108,6 @@ const PlanCreate = () => {
                 width={100}
                 height={30}
                 border="transparent"
-                onChange={handleBudgetChange} // 예산 입력 필드에 onChange 이벤트 추가
               />
             </S.PlanContent>
           </S.PlanBox>

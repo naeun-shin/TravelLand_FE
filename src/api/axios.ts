@@ -1,8 +1,4 @@
 import axios from 'axios';
-import { Cookies } from 'react-cookie';
-
-const cookies = new Cookies();
-console.log('cookies', cookies.get('Authorization'));
 
 export const instance = axios.create({
   baseURL: import.meta.env.VITE_APP_BASE_URL,
@@ -14,7 +10,7 @@ export const instanceWithToken = axios.create({
   headers: {
     'content-type': 'application/json',
     accept: 'application/json',
-    Authorization: `${cookies.get('Authorization')}`,
+    // Authorization: `${cookies.get('Authorization')}`,
   },
 });
 

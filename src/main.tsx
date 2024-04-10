@@ -6,6 +6,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { CookiesProvider } from 'react-cookie';
 
 const queryClient = new QueryClient();
+
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <CookiesProvider>
     <QueryClientProvider client={queryClient}>

@@ -3,7 +3,7 @@ import * as S from '../Plan.style';
 import { PlanListInput } from '@components/commons/inputs/PlanListInput';
 import Button from '@/components/commons/buttons/Button';
 import { useLocation } from 'react-router-dom';
-import { usePlanStore } from '@/store/usePlanStore';
+// import { usePlanStore } from '@/store/usePlanStore';
 import { useUnitPlansStore } from '@/store/useUnitPlanStore';
 
 const PlanCreate2: React.FC = () => {
@@ -16,11 +16,11 @@ const PlanCreate2: React.FC = () => {
     // 다른 상태 데이터를 추가로 타입에 명시할 수 있습니다.
   };
 
-  const { addDayPlan, finalizePlan } = usePlanStore();
+  // const { addDayPlan, finalizePlan } = usePlanStore();
   // 현재 스텝의 unitPlans를 저장하는 함수
   const saveCurrentStepPlans = () => {
-    const unitPlansForDay = useUnitPlansStore.getState().unitPlans;
-    addDayPlan(currentStep.toString(), unitPlansForDay);
+    // const unitPlansForDay = useUnitPlansStore.getState().unitPlans;
+    // addDayPlan(currentStep.toString(), unitPlansForDay);
   };
 
   const [currentStep, setCurrentStep] = useState<number>(0); // 현재 스텝 인덱스
@@ -51,7 +51,7 @@ const PlanCreate2: React.FC = () => {
   const [totalDays, setTotalDays] = useState(calculateTotalDays());
 
   // startDate와 currentStep을 기반으로 해당 일차의 날짜 계산
-  const calculateDateForStep = (start: string, step: number): string => {
+  const calculateDateForStep = (start: string | Date, step: number): string => {
     const resultDate = new Date(start);
     resultDate.setDate(resultDate.getDate() + step);
     return resultDate.toLocaleDateString('ko-KR', {
@@ -62,10 +62,7 @@ const PlanCreate2: React.FC = () => {
   };
 
   // 각 일차의 날짜를 보여주는 부분을 업데이트
-  const displayDate = calculateDateForStep(
-    startDate.toDateString(),
-    currentStep,
-  );
+  const displayDate = calculateDateForStep(startDate, currentStep);
 
   useEffect(() => {
     setTotalDays(calculateTotalDays());
@@ -84,8 +81,8 @@ const PlanCreate2: React.FC = () => {
   // 등록하기 버튼
   const handlePlanSubmit = () => {
     saveCurrentStepPlans(); // 마지막 스텝의 unitPlans 저장
-    const finalPlan = finalizePlan(); // 최종 계획 객체 생성
-    console.log(finalPlan); // 콘솔에 최종 계획 객체 로깅
+    // const finalPlan = finalizePlan(); // 최종 계획 객체 생성
+    // console.log(finalPlan); // 콘솔에 최종 계획 객체 로깅
 
     // 여기에서 서버로 finalPlan을 전송하는 로직을 추가하세요.
   };
