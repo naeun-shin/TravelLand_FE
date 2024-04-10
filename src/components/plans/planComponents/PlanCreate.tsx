@@ -9,22 +9,10 @@ import DatePicker from 'react-datepicker';
 import { ModernInput } from '@/components/commons/inputs/Input';
 import { usePlanStore } from '@/store/usePlanStore';
 
-interface Person {
-  src: string;
-}
-
 const PlanCreate = () => {
   const navigate = useNavigate();
   // 로컬 상태 훅 대신 Zustand 스토어 사용
-  const {
-    isPublic,
-    dateRange,
-    invitePeople,
-    setIsPublic,
-    setDateRange,
-    addInvitePerson,
-    removeInvitedPerson,
-  } = usePlanStore();
+  const { isPublic, dateRange, setIsPublic, setDateRange } = usePlanStore();
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
 
   // 커스텀 입력 컴포넌트 정의
@@ -45,10 +33,6 @@ const PlanCreate = () => {
     if (update[0] && update[1]) {
       setIsCalendarOpen(false);
     }
-  };
-
-  const toggleCalendar = () => {
-    setIsCalendarOpen(!isCalendarOpen);
   };
 
   // 여행 기간 텍스트를 표시하기 위한 함수

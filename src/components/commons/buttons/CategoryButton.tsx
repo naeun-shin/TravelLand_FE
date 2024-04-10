@@ -11,7 +11,6 @@ interface CategoryButtonProps {
 
 const CategoryButton: React.FC<CategoryButtonProps> = ({
   width,
-  heigth,
   title,
   onClick,
   icon,
