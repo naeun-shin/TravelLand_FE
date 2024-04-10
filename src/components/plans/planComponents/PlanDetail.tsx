@@ -3,10 +3,8 @@ import * as S from '../Plan.style';
 import Map from '@/components/maps/Map';
 import { usePlanDetailQuery } from '@/hooks/useQuery';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useMutation } from '@tanstack/react-query';
-import { deletePlan } from '@/api/planAxios';
 import Button from '@/components/commons/buttons/Button';
-import { deleteMutaion, useDeleteMutation } from '@/hooks/useMutation';
+import { useDeleteMutation } from '@/hooks/useMutation';
 
 // 사용할 데이터 타입 정의 (예시입니다, 실제 데이터에 맞게 조정해야 합니다.)
 
@@ -33,7 +31,6 @@ interface UnitPlan {
 }
 
 const PlanDetail: React.FC<ButtonProps> = () => {
-  const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [currentStep, setCurrentStep] = useState<number>(0);
