@@ -120,7 +120,7 @@ export const PlanListInput: React.FC<ListInputProps> = () => {
             </div>
             <input
               placeholder="서울특별시 중구 을지로 201"
-              value={input.location.place_name}
+              value={input.location}
               readOnly
             />
           </S.ListInputbox>

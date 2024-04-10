@@ -13,7 +13,6 @@ import Maintitle from '@/components/commons/mainItem/MainTitle';
 import ListTitle from '@/components/commons/mainItem/ListTitle';
 import MainList from '@/components/commons/mainItem/MainList';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
 // import { ResultsSection } from '@/components/search/Search.style';
 
 interface MainProps {
@@ -23,14 +22,13 @@ interface MainProps {
 const Main: React.FC<MainProps> = () => {
   const navigate = useNavigate();
 
-   const handleMakePlanClick = () => {
+  const handleMakePlanClick = () => {
     navigate('/planList');
   };
 
   const handleReviewPageClick = () => {
     navigate('/travelReview');
   };
-
 
   // 메인 헤더 카드 임시 데이터
   const MainCardsData = [
@@ -62,7 +60,7 @@ const Main: React.FC<MainProps> = () => {
     likes: 77,
     imageUrl: '이미지URL',
   }));
-  
+
   return (
     <>
       <Header />
