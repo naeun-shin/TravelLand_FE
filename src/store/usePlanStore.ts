@@ -1,5 +1,4 @@
 import create from 'zustand';
-import { useUnitPlansStore } from './useUnitPlanStore'; // useUnitPlanStore를 임포트합니다.
 
 interface InvitePerson {
   invitee: string;
@@ -13,27 +12,19 @@ interface UnitPlan {
 }
 
 interface DayPlan {
-  title: string;
-  content: string;
-  budget: number;
-  date: string;
-  unitPlans: UnitPlan[];
+  [key: string]: UnitPlan[];
 }
 
 interface PlanState {
-  area: string;
-  budget: number;
-  dayPlans: DayPlan[];
+  dayPlans: DayPlan;
   isPublic: boolean;
   dateRange: [Date | null, Date | null];
   invitePeople: InvitePerson[];
-
   // DayPlanState 관련 액션
   setIsPublic: (isPublic: boolean) => void;
   setDateRange: (dateRange: [Date | null, Date | null]) => void;
   addInvitePerson: (invitee: InvitePerson) => void;
   removeInvitedPerson: (index: number) => void;
-
   // UnitPlan 관련 액션
   addUnitPlan: (day: string, unitPlan: UnitPlan) => void;
   clearPlansForDay: (day: string) => void;
@@ -41,16 +32,10 @@ interface PlanState {
   setUnitPlansForDay: (day: string, plans: UnitPlan[]) => void;
   getUnitPlansForDay: (day: string) => UnitPlan[];
   clearUnitPlansForDay: (day: string) => void;
-  setArea: (area: string) => void;
-  setBudget: (budget: number) => void;
-  addDayPlan: (dayPlan: DayPlan) => void;
-  finalizePlan: () => any; // 최종 JSON 구조를 반환하는 함수
 }
 
 export const usePlanStore = create<PlanState>((set, get) => ({
-  area: '',
-  budget: 0,
-  dayPlans: [],
+  dayPlans: {},
   setUnitPlansForDay: (day, plans) =>
     set((state) => ({
       dayPlans: { ...state.dayPlans, [day]: plans },
@@ -95,24 +80,4 @@ export const usePlanStore = create<PlanState>((set, get) => ({
 
       return { ...state, dayPlans: clearedDayPlans };
     }),
-  setArea: (area) => set(() => ({ area })),
-  setBudget: (budget) => set(() => ({ budget })),
-  addDayPlan: (dayPlan) =>
-    set((state) => ({
-      dayPlans: [...state.dayPlans, dayPlan],
-    })),
-  finalizePlan: () => {
-    // useUnitPlanStore에서 unitPlans를 가져옵니다.
-    const unitPlans = useUnitPlansStore.getState().unitPlans;
-    // 마지막 dayPlan에 unitPlans를 추가합니다.
-    const lastDayPlanIndex = get().dayPlans.length - 1;
-    if (lastDayPlanIndex >= 0) {
-      get().dayPlans[lastDayPlanIndex].unitPlans = unitPlans;
-    }
-    // 여기에서 최종 JSON 구조를 생성하고 반환합니다.
-    return {
-      // 다른 필드들...
-      dayPlans: get().dayPlans,
-    };
-  },
 }));

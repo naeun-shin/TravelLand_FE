@@ -6,22 +6,19 @@ import { useLocation } from 'react-router-dom';
 import { usePlanStore } from '@/store/usePlanStore';
 import { useUnitPlansStore } from '@/store/useUnitPlanStore';
 
+// 네비게이션에서 받을 수 있는 state의 타입 정의
+interface LocationState {
+  startDate: string;
+  endDate: string;
+}
+
 const PlanCreate2: React.FC = () => {
   const location = useLocation();
-  const { startDate, endDate } = location.state as {
-    startDate: Date;
-    endDate: Date;
-    area: string;
-    budget: number;
-    // 다른 상태 데이터를 추가로 타입에 명시할 수 있습니다.
-  };
+  // 타입 단언을 사용하여 location.state의 타입을 명시합니다.
+  const state = location.state as LocationState;
 
-  const { addDayPlan, finalizePlan } = usePlanStore();
-  // 현재 스텝의 unitPlans를 저장하는 함수
-  const saveCurrentStepPlans = () => {
-    const unitPlansForDay = useUnitPlansStore.getState().unitPlans;
-    addDayPlan(currentStep.toString(), unitPlansForDay);
-  };
+  // 이제 state에서 startDate와 endDate를 안전하게 사용할 수 있습니다.
+  const { startDate, endDate } = state;
 
   const [currentStep, setCurrentStep] = useState<number>(0); // 현재 스텝 인덱스
   // planList를 객체의 배열로 변경합니다.
@@ -29,14 +26,6 @@ const PlanCreate2: React.FC = () => {
   const [planList, _] = useState([
     { departure: '', time: '', schedule: '', location: '' },
   ]);
-
-  useEffect(() => {
-    useUnitPlansStore.getState().clearUnitPlans();
-    // 새로운 일차에 대한 빈 unitPlan을 추가
-    useUnitPlansStore
-      .getState()
-      .addUnitPlan({ departure: '', time: '', schedule: '', location: '' });
-  }, [currentStep]); // currentStep이 변경될 때마다 실행
 
   // 총 일수 계산
   const calculateTotalDays = () => {
@@ -62,10 +51,7 @@ const PlanCreate2: React.FC = () => {
   };
 
   // 각 일차의 날짜를 보여주는 부분을 업데이트
-  const displayDate = calculateDateForStep(
-    startDate.toDateString(),
-    currentStep,
-  );
+  const displayDate = calculateDateForStep(startDate, currentStep);
 
   useEffect(() => {
     setTotalDays(calculateTotalDays());
@@ -76,18 +62,44 @@ const PlanCreate2: React.FC = () => {
   console.log(unitPlans);
 
   const handleDayChange = (stepIndex: number) => {
-    saveCurrentStepPlans(); // 현재 스텝의 unitPlans 저장
-    setCurrentStep(stepIndex); // 다음 스텝으로 이동
-    useUnitPlansStore.getState().clearUnitPlans(); // unitPlans 상태 초기화
+    // 현재 날짜의 계획 저장
+    usePlanStore
+      .getState()
+      .setUnitPlansForDay(currentStep.toString(), planList);
+
+    // 선택된 날짜의 계획 불러오기 혹은 초기화
+    // const nextDayPlans = usePlanStore
+    //   .getState()
+    //   .getUnitPlansForDay(stepIndex.toString());
+
+    // nextDayPlans를 올바른 형태로 매핑
+    // const nextDayPlansMapped = nextDayPlans.map((plan) => ({
+    //   departure: plan.departure, // departure가 undefined인 경우 빈 문자열을 사용
+    //   time: plan.time,
+    //   schedule: plan.schedule,
+    //   location: plan.location,
+    // }));
+
+    // 매핑된 배열을 상태로 설정
+    // setPlanList(nextDayPlansMapped);
+    // nextDayPlansMapped.length
+    //   ? nextDayPlansMapped
+    //   : [{ departure: '', time: '', schedule: '', location: '' }],
+
+    // 현재 스텝 업데이트
+    setCurrentStep(stepIndex);
   };
 
   // 등록하기 버튼
   const handlePlanSubmit = () => {
-    saveCurrentStepPlans(); // 마지막 스텝의 unitPlans 저장
-    const finalPlan = finalizePlan(); // 최종 계획 객체 생성
-    console.log(finalPlan); // 콘솔에 최종 계획 객체 로깅
+    // 현재 날짜의 계획을 반드시 저장
+    usePlanStore
+      .getState()
+      .setUnitPlansForDay(currentStep.toString(), planList);
 
-    // 여기에서 서버로 finalPlan을 전송하는 로직을 추가하세요.
+    // 서버로 제출하기 위한 준비
+    const wholePlan = usePlanStore.getState().dayPlans;
+    console.log(wholePlan);
   };
   return (
     <>
