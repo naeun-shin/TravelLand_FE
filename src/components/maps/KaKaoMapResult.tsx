@@ -124,7 +124,7 @@ export const KaKaoMapResult: React.FC<MapSearchType> = ({
       for (var i = 0; i < places.length; i++) {
         // 마커를 생성하고 지도에 표시
         let placePosition = new kakao.maps.LatLng(places[i].y, places[i].x),
-          marker = addMarker(placePosition, i, undefined),
+          marker = addMarker(placePosition, i),
           itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성
 
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
