@@ -1,115 +1,109 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import { useNavigate } from 'react-router-dom';
-import { QueryKey, useInfiniteQuery } from '@tanstack/react-query';
 import Header from '@/components/layouts/Header';
 import * as S from './TravelReview.styles';
 import ReviewPageTab from '@/components/commons/user/TravelReview/ReviewTab';
 import Card from '@/components/commons/cards/Card';
 import { getTripList } from '@/api/reviewAxios';
-import { Trip } from '@/api/interfaces/reviewInterface';
+import { AxiosResponse } from 'axios';
 
-interface TripData {
-  items: Trip[];
-  nextPage?: number;
-  isLast?: boolean;
+interface Trip {
+  tripId: number;
+  title: string;
+  nickname: string;
+  thumbnailUrl: string;
+  tripPeriod: string;
+  viewCount: number;
+  createdAt: string;
 }
 
 const TravelReviewPage = () => {
   const navigate = useNavigate();
+  const [page, setPage] = useState<number>(1);
+  const [trips, setTrips] = useState<Trip[]>([]);
+  const [hasMore, setHasMore] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
 
-  // 여행 정보 목록 조회 API 호출 함수
-  const fetchTrips = async (context: {
-    queryKey: QueryKey;
-    pageParam?: number;
-    signal: AbortSignal;
-  }): Promise<TripData> => {
-    // 페이지 번호는 pageParam이거나 기본값 0입니다.
-    const pageParam = context.pageParam ?? 0;
-
-    // context 객체에서 필요한 정보를 추출하여 API 호출을 수행합니다.
-    const { data } = await getTripList({
-      page: pageParam,
-      size: 9,
-      sortBy: 'createdAt',
-      isAsc: false,
-    });
-
-    // API 응답에서 필요한 정보를 반환합니다.
-    // 이 예에서는 API 응답에서 items와 hasNext 속성을 사용하는 것으로 가정합니다.
-    const { items, hasNext } = data;
-    return {
-      items,
-      nextPage: hasNext ? pageParam + 1 : undefined,
-      isLast: !hasNext,
-    };
-  };
-
-  // 무한 스크롤링 쿼리
-  const { data, isLoading, isError, error, fetchNextPage, hasNextPage } =
-    useInfiniteQuery<TripData, Error>({
-      queryKey: ['getTripList'],
-      queryFn: fetchTrips,
-      getNextPageParam: (lastPage) => {
-        if (!lastPage.isLast) return lastPage.nextPage;
-        return undefined;
-      },
-    });
-
-  // 스크롤 이벤트 핸들러
-  const handleScroll = () => {
-    if (
-      window.innerHeight + document.documentElement.scrollTop !==
-        document.documentElement.offsetHeight ||
-      !hasNextPage
-    )
-      return;
-    fetchNextPage();
+  const loadTrips = async () => {
+    setLoading(true);
+    try {
+      const response: AxiosResponse<Trip[]> = await getTripList({
+        page,
+        size: 9,
+        sortBy: 'createdAt',
+        isAsc: false,
+      });
+      const responseData: Trip[] = response.data;
+      setTrips((prevTrips) => [...prevTrips, ...responseData]);
+      if (responseData.length === 0 || responseData.length < 9) {
+        setHasMore(false);
+      }
+    } catch (error) {
+      setError('An error occurred');
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [handleScroll]);
+    loadTrips();
+  }, []);
 
-  if (isLoading) return <S.LoadingContainer>Loading...</S.LoadingContainer>;
-  if (isError)
-    return <S.ErrorContainer>Error: {error.message}</S.ErrorContainer>;
+  const handleCardClick = (tripId: number) => {
+    navigate(`/travelDetail/${tripId}`);
+  };
+
+  const handleTextClick = () => {
+    navigate('/travelCreate');
+  };
+
+  const fetchMoreData = () => {
+    if (!loading && hasMore) {
+      setPage((prevPage) => prevPage + 1);
+    }
+  };
+
+  if (loading && page === 1)
+    return <S.LoadingContainer>Loading...</S.LoadingContainer>;
+  if (error) return <S.ErrorContainer>Error: {error}</S.ErrorContainer>;
 
   return (
-    <>
+    <div id="scrollableDiv">
       <Header />
       <S.TravelReviewstyle>
         <S.ReviewBox>
           <h2>여행 후기</h2>
-          <S.ReviewBtn
-            style={{ cursor: 'pointer' }}
-            onClick={() => navigate('/travelCreate')}
-          >
+          <S.ReviewBtn style={{ cursor: 'pointer' }} onClick={handleTextClick}>
             작성하기
           </S.ReviewBtn>
         </S.ReviewBox>
         <ReviewPageTab />
-        <S.TravelReviewCardSection>
-          {data?.pages.map(
-            (
-              page,
-              pageIndex, // page는 TripData 타입입니다.
-            ) =>
-              page.items.map((trip: Trip, tripIndex: Number) => (
-                <div key={`trip-${pageIndex}-${tripIndex}`}>
-                  <Card
-                    title={trip.title}
-                    writer={trip.nickname}
-                    date={`♥${trip.viewCount}`}
-                    imageUrl={trip.thumbnailUrl}
-                    onClick={() => navigate(`/travelDetail/${trip.tripId}`)}
-                  />
-                </div>
-              )),
-          )}
-        </S.TravelReviewCardSection>
+        <InfiniteScroll
+          style={{ overflow: 'hidden' }}
+          dataLength={trips.length}
+          next={fetchMoreData}
+          hasMore={hasMore}
+          loader={<h4>Loading...</h4>}
+          endMessage={<p>더 이상 로드할 내용이 없습니다.</p>}
+          scrollableTarget="scrollableDiv"
+        >
+          <S.TravelReviewCardSection>
+            {trips.map((trip) => (
+              <Card
+                key={trip.tripId}
+                title={trip.title}
+                writer={trip.nickname}
+                date={`♥${trip.viewCount}`}
+                imageUrl={trip.thumbnailUrl}
+                onClick={() => handleCardClick(trip.tripId)}
+              />
+            ))}
+          </S.TravelReviewCardSection>
+        </InfiniteScroll>
       </S.TravelReviewstyle>
-    </>
+    </div>
   );
 };
 

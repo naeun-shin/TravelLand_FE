@@ -3,7 +3,7 @@ import Main from '../pages/main/Main';
 import KakaoRedirect from '@/pages/user/KakaoRedirect';
 import MyPage from '@/pages/user/MyPage';
 import SearchPage from '@/pages/main/SearchPage';
-import TravelReviewPage from '@/pages/travelReview/TravelReviewPage.1';
+import TravelReviewPage from '@/pages/travelReview/TravelReviewPage';
 import TravelDetailPage from '@/pages/travelReview/TravelDetailPage';
 import Login from '@/pages/user/Login';
 import TravelPlanCreate1 from '@/pages/travelPlan/TravelPlanCreate1';
@@ -45,7 +45,7 @@ export const router = createBrowserRouter([
   { path: '/planCreate/2', element: <TravelPlanCreate2 /> },
   { path: '/planList', element: <TravelPlanList /> },
   { path: '/planDetail/:id', element: <TravelPlanDetail /> },
-  // { path: '/TravelDetailPage/:tripId', element: <TravelDetailPage /> },
+  { path: '/TravelDetailPage/:tripId', element: <TravelDetailPage /> },
   {
     path: '/travelCreate',
     element: (
