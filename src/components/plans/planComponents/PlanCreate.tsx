@@ -8,13 +8,18 @@ import 'react-datepicker/dist/react-datepicker.min.css';
 
 import DatePicker from 'react-datepicker';
 import { ModernInput } from '@/components/commons/inputs/Input';
-import { usePlanStore } from '@/store/usePlanStore';
 
 const PlanCreate = () => {
   const navigate = useNavigate();
-  // 로컬 상태 훅 대신 Zustand 스토어 사용
-  const { isPublic, dateRange, setIsPublic, setDateRange } = usePlanStore();
-  const [isCalendarOpen, setIsCalendarOpen] = useState(false);
+  // 로컬 상태로 관리할 변수 선언
+  const [isPublic, setIsPublic] = useState(false); // 공개 여부
+  const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([
+    null,
+    null,
+  ]); // 날짜 범위
+  const [isCalendarOpen, setIsCalendarOpen] = useState(false); // 달력 열림 상태
+  const [area, setArea] = useState<string>('');
+  const [budget, setBudget] = useState<string>('');
 
   // 이 컴포넌트는 달력 포탈을 열기 위한 버튼을 렌더링합니다.
   const CalendarButton = React.forwardRef<
@@ -43,10 +48,10 @@ const PlanCreate = () => {
 
   // 여행 기간 텍스트를 표시하기 위한 함수
   const displayDateRange = () => {
-    const start = dateRange[0] ? dateRange[0].toLocaleDateString() : '';
-    const end = dateRange[1] ? dateRange[1].toLocaleDateString() : '';
+    const tripStartDate = dateRange[0] ? dateRange[0].toLocaleDateString() : '';
+    const tripEndDate = dateRange[1] ? dateRange[1].toLocaleDateString() : '';
 
-    return `${start} - ${end}`;
+    return `${tripStartDate} - ${tripEndDate}`;
   };
 
   // 토글
@@ -56,14 +61,14 @@ const PlanCreate = () => {
   const handleNextClick = () => {
     // dateRange 값 확인
     console.log('선택된 날짜 범위:', dateRange);
-    if (dateRange[0] && dateRange[1]) {
-      // 날짜 범위가 모두 선택되었다면, 처리 로직 추가
-      console.log('시작 날짜:', dateRange[0].toLocaleDateString());
-      console.log('종료 날짜:', dateRange[1].toLocaleDateString());
-    }
-
     navigate('/planCreate/2', {
-      state: { startDate: dateRange[0], endDate: dateRange[1] },
+      state: {
+        tripStartDate: dateRange[0],
+        tripEndDate: dateRange[1],
+        area: area,
+        budget: budget ? Number(budget) : undefined,
+        isPublic: isPublic,
+      },
     });
   };
 
@@ -94,6 +99,7 @@ const PlanCreate = () => {
                 width={100}
                 height={30}
                 border="transparent"
+                onChange={(e) => setArea(e.target.value)}
               />
             </S.PlanContent>
           </S.PlanBox>
@@ -108,6 +114,11 @@ const PlanCreate = () => {
                 width={100}
                 height={30}
                 border="transparent"
+                value={budget}
+                // 입력된 값이 숫자인지 검사 후 상태를 업데이트합니다. 숫자가 아닐 경우 상태를 빈 문자열로 설정합니다.
+                onChange={(e) =>
+                  setBudget(e.target.value.replace(/[^0-9]/g, ''))
+                }
               />
             </S.PlanContent>
           </S.PlanBox>

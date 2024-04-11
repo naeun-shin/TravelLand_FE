@@ -61,6 +61,8 @@ const Main: React.FC<MainProps> = () => {
     imageUrl: '이미지URL',
   }));
 
+  cookie.set('Authorization', 'TEST Cookies');
+
   console.log('메인 페이지 영역 콘솔');
 
   console.log('coookie get authorization>> ', cookie.get('Authorization'));
