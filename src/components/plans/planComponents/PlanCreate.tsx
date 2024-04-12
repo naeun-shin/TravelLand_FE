@@ -21,6 +21,7 @@ const PlanCreate = () => {
   const [totalPlanTitle, setTotalPlanTitle] = useState<String>('');
   const [totalBudget, setTotalBudget] = useState<number>(0);
   const [area, setArea] = useState<String>('');
+  // const [title, setTitle] = useState<String>('');
 
   // const [isCalendarOpen, setIsCalendarOpen] = useState(false);
 

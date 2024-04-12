@@ -47,8 +47,10 @@ const PlanCreate2: React.FC = () => {
   const isPublic = location.state.isPublic;
   const area = location.state.area;
   const totalBudget = location.state.totalBudget;
-  const totalTitle = location.state.totalTitle;
+  const totalPlanTitle = location.state.totalPlanTitle;
   const parsedTotalBudget = parseInt(totalBudget, 10); // 문자열을 숫자로 변환
+
+  // console.log(totalPlanTitle);
 
   // useState부분
   const [currentStep, setCurrentStep] = useState<number>(0);
@@ -68,7 +70,7 @@ const PlanCreate2: React.FC = () => {
 
   const [wholePlan, _] = useState<WholePlan[]>([
     {
-      title: totalTitle,
+      title: totalPlanTitle,
       budget: isNaN(parsedTotalBudget) ? 0 : parsedTotalBudget, // 숫자 변환 실패 시 0으로 대체
       area,
       isPublic,
@@ -100,12 +102,14 @@ const PlanCreate2: React.FC = () => {
     resultDate.setDate(resultDate.getDate() + step);
     return formatDate(resultDate);
   };
+
   const [dayPlans, setDayPlans] = useState<DayPlan[]>([
     {
       date: calculateDateForStep(tripStartDate, 0),
       unitPlans: [],
     },
   ]);
+
   // 각 일차의 날짜를 보여주는 부분을 업데이트
   const displayDate = calculateDateForStep(tripStartDate, currentStep);
 
@@ -147,18 +151,19 @@ const PlanCreate2: React.FC = () => {
     const y = parseFloat(selectedLocation.y);
     const address =
       selectedLocation.road_address_name || selectedLocation.address_name;
+    const place_name = selectedLocation.place_name;
     handleInputChange(index, 'x', x.toString());
     handleInputChange(index, 'y', y.toString());
     handleInputChange(index, 'address', address);
+    handleInputChange(index, 'place_name', place_name);
     setIsModalOpen(false);
-
-    // const place_name = selectedLocation.place_name;
   };
 
   const handleOpenMapClick = (index: number) => {
     setSelectedLocationIndex(index);
     setIsModalOpen(true);
   };
+
   const createPlanList = useCreatePlanMutaton();
 
   // 추가하기 버튼
@@ -174,11 +179,12 @@ const PlanCreate2: React.FC = () => {
       x: 0,
       y: 0,
     };
+
     const updatedUnitPlans = [...unitPlans, newUnitPlan];
     setUnitPlans(updatedUnitPlans);
-
     console.log('unitPlans >> ', unitPlans); // 현재 planInputs 상태를 확인하기 위한 로그 (선택적)
   };
+
   useEffect(() => {
     // 현재 단계의 DayPlan에 현재 unitPlans를 저장합니다.
     const newDayPlans = [...dayPlans];
@@ -261,14 +267,17 @@ const PlanCreate2: React.FC = () => {
       // wholePlan을 객체로 설정하여 전송
       const planToSubmit = {
         ...wholePlan[0],
+        title: totalPlanTitle,
+        area: area,
         budget: validBudget, // 숫자로 변환된 예산 적용
         tripStartDate: formatDate(tripStartDate), // 포맷된 날짜로 확정
         tripEndDate: formatDate(tripEndDate), // 포맷된 날짜로 확정
         dayPlans: updatedDayPlans,
       };
+      console.log('planToSubmit >> ', planToSubmit);
 
       // 여기서 API 호출 등의 추가 작업을 수행할 수 있습니다.
-      createPlanList.mutate(planToSubmit);
+      // createPlanList.mutate(planToSubmit);
     } else {
       // 마지막 일차의 unitPlans가 비어 있다면, 사용자에게 작성을 유도하는 메시지 표시
       alert('마지막 일차의 계획을 완성해주세요.');
@@ -371,6 +380,7 @@ const PlanCreate2: React.FC = () => {
               </div>
               <input
                 placeholder="서울특별시 중구 을지로 201"
+                value={`${input.place_name}, ${input.address}`}
                 // value={location}
                 readOnly
                 // onChange={(e) =>
