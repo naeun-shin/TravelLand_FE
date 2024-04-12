@@ -50,8 +50,6 @@ const PlanCreate2: React.FC = () => {
   const totalPlanTitle = location.state.totalPlanTitle;
   const parsedTotalBudget = parseInt(totalBudget, 10); // 문자열을 숫자로 변환
 
-  // console.log(totalPlanTitle);
-
   // useState부분
   const [currentStep, setCurrentStep] = useState<number>(0);
 
@@ -182,7 +180,6 @@ const PlanCreate2: React.FC = () => {
 
     const updatedUnitPlans = [...unitPlans, newUnitPlan];
     setUnitPlans(updatedUnitPlans);
-    console.log('unitPlans >> ', unitPlans); // 현재 planInputs 상태를 확인하기 위한 로그 (선택적)
   };
 
   useEffect(() => {
@@ -198,9 +195,7 @@ const PlanCreate2: React.FC = () => {
 
   // handleDayChange 함수 내에서 currentStep 업데이트 로직 확인 및 최적화
   const handleDayChange = (stepIndex: number) => {
-    console.log(stepIndex);
     const currentUnitPlans = [...unitPlans];
-    console.log('currentUnitPlans > ', currentUnitPlans);
 
     // 새로운 dayPlans 배열을 준비합니다. 기존 dayPlans를 복사합니다.
     let newDayPlans = [...dayPlans];
@@ -219,7 +214,6 @@ const PlanCreate2: React.FC = () => {
 
     // DayPlans 업데이트
     setDayPlans(newDayPlans);
-    console.log('dayPlans >> ', dayPlans); // 변경된 dayPlans 상태를 확인
     // 다음 단계로 이동
     setCurrentStep(stepIndex);
 
@@ -274,7 +268,6 @@ const PlanCreate2: React.FC = () => {
         tripEndDate: formatDate(tripEndDate), // 포맷된 날짜로 확정
         dayPlans: updatedDayPlans,
       };
-      console.log('planToSubmit >> ', planToSubmit);
 
       // 여기서 API 호출 등의 추가 작업을 수행할 수 있습니다.
       createPlanList.mutate(planToSubmit);
@@ -283,11 +276,6 @@ const PlanCreate2: React.FC = () => {
       alert('마지막 일차의 계획을 완성해주세요.');
     }
   };
-
-  // useEffect를 사용하여 wholePlan 상태의 변화를 감지하고 콘솔에 로그 출력
-  // useEffect(() => {
-  //   console.log('wholePlan 업데이트됨:', wholePlan);
-  // }, [wholePlan]);
 
   return (
     <>

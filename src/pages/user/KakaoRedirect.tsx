@@ -8,7 +8,6 @@ const KakaoRedirect: React.FC = () => {
   const cookie = new Cookies();
   const navigate = useNavigate();
   const code = new URL(window.location.href).searchParams.get('code');
-  console.log(code);
 
   const response = async (code: string | null) => {
     if (!code) {
@@ -27,7 +26,6 @@ const KakaoRedirect: React.FC = () => {
       const authToken = res.headers['authorization']; // Headers are generally case-insensitive but depend on server configuration
       if (authToken) {
         cookie.set('Authorization', authToken, { path: '/' });
-        console.log(cookie.get('Authorization'));
       } else {
         console.log('Authorization token not found in the response headers.');
       }
