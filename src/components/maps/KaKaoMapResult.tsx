@@ -277,11 +277,11 @@ export const KaKaoMapResult: React.FC<MapSearchType> = ({
 
   return (
     <div style={{ display: 'flex' }}>
-      <div id="map" style={{ flex: 1, width: '250px', height: '350px' }}></div>
+      <div id="map" style={{ width: '500px', height: '50px' }}></div>
       <div
         style={{
-          width: '250px',
-          height: '350px',
+          width: '500px',
+          height: '500px',
 
           overflowY: 'scroll',
           marginLeft: '5px',

@@ -58,14 +58,14 @@ const KaKaoMap: React.FC<KaKaoMapSearchModalProps & MapSearchType> = ({
   return (
     <>
       <Modal isOpen={isOpen} onClose={onClose}>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
+        <div style={{ alignItems: 'center' }}>
           <form onSubmit={submitKeyword} style={{ marginRight: '10px' }}>
             <label
               htmlFor="place"
               style={{
                 display: 'flex',
                 alignItems: 'center',
-                padding: ' 15px;',
+                // padding: ' 15px;',
               }}
             >
               <input

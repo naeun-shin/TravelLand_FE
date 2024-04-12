@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import * as S from '../Plan.style';
 import Map from '@/components/maps/Map';
 import { usePlanDetailQuery } from '@/hooks/useQuery';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Button from '@/components/commons/buttons/Button';
 import { useDeleteMutation } from '@/hooks/useMutation';
 
@@ -10,6 +10,8 @@ import { useDeleteMutation } from '@/hooks/useMutation';
 
 interface ButtonProps {
   active: boolean;
+  text: string;
+  onClick: () => void;
 }
 
 interface DayPlan {
@@ -121,8 +123,8 @@ const PlanDetail: React.FC<ButtonProps> = () => {
           <S.PlanDetailDateButton
             key={index}
             onClick={() => handleStepClick(index)}
-            active={index === currentStep}
-            text=""
+            // active={index === currentStep} // 조건부 스타일링 적용
+            // text=""
           >
             {`${index + 1}일차`}
           </S.PlanDetailDateButton>
