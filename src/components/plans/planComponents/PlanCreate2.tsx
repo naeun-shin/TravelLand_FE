@@ -70,15 +70,7 @@ const PlanCreate2: React.FC = () => {
       y: 0,
     },
   ]);
-  const [dayPlans, setDayPlans] = useState<DayPlan[]>([
-    {
-      title: '',
-      content: '',
-      budget: '',
-      date: '',
-      unitPlans: [],
-    },
-  ]);
+
   const [wholePlan, _] = useState<WholePlan[]>([
     {
       title: totalTitle,
@@ -118,7 +110,15 @@ const PlanCreate2: React.FC = () => {
       day: 'numeric',
     });
   };
-
+  const [dayPlans, setDayPlans] = useState<DayPlan[]>([
+    {
+      title: '',
+      content: '',
+      budget: '',
+      date: calculateDateForStep(tripStartDate, 0),
+      unitPlans: [],
+    },
+  ]);
   // 각 일차의 날짜를 보여주는 부분을 업데이트
   const displayDate = calculateDateForStep(tripStartDate, currentStep);
 
@@ -181,6 +181,16 @@ const PlanCreate2: React.FC = () => {
 
     console.log('unitPlans >> ', unitPlans); // 현재 planInputs 상태를 확인하기 위한 로그 (선택적)
   };
+  useEffect(() => {
+    // 현재 단계의 DayPlan에 현재 unitPlans를 저장합니다.
+    const newDayPlans = [...dayPlans];
+    newDayPlans[currentStep] = {
+      ...newDayPlans[currentStep],
+      unitPlans: [...unitPlans],
+    };
+
+    setDayPlans(newDayPlans);
+  }, [unitPlans, currentStep]);
 
   // handleDayChange 함수 내에서 currentStep 업데이트 로직 확인 및 최적화
   const handleDayChange = (stepIndex: number) => {
@@ -204,10 +214,13 @@ const PlanCreate2: React.FC = () => {
     }
 
     // 현재 단계의 DayPlan에 현재 unitPlans를 저장합니다.
-    newDayPlans[stepIndex - 1].unitPlans = currentUnitPlans;
+    newDayPlans[stepIndex].unitPlans = currentUnitPlans;
 
     // DayPlans 업데이트
     setDayPlans(newDayPlans);
+    console.log('dayPlans >> ', dayPlans); // 변경된 dayPlans 상태를 확인
+    // 다음 단계로 이동
+    setCurrentStep(stepIndex);
 
     // unitPlans를 초기화합니다.
     setUnitPlans([
@@ -221,10 +234,6 @@ const PlanCreate2: React.FC = () => {
         y: 0,
       },
     ]);
-
-    // 다음 단계로 이동
-    setCurrentStep(stepIndex);
-    console.log('dayPlans >> ', dayPlans); // 변경된 dayPlans 상태를 확인
   };
 
   // 등록하기 버튼
