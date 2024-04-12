@@ -22,7 +22,7 @@ const KakaoRedirect: React.FC = () => {
         params: { code },
       });
 
-      console.log(res);
+      // console.log(res);
       // Correct way to access custom headers - make sure the header names are correctly handled
       const authToken = res.headers['authorization']; // Headers are generally case-insensitive but depend on server configuration
       if (authToken) {
