@@ -1,11 +1,11 @@
 import { AxiosResponse } from 'axios';
-import { instance } from './axios';
+import { instance, instanceWithToken } from './axios';
 import { PlanListParams, WholePlan } from './interfaces/planInterface';
 
 // 여행 플랜 작성하기
 export const createPlanList = async (wholePlan: WholePlan) => {
   try {
-    return await instance.post('/v1/plans/allInOn', wholePlan);
+    return await instanceWithToken.post('/v1/plans/allInOn', wholePlan);
   } catch (error) {
     console.error(error);
     throw error;
