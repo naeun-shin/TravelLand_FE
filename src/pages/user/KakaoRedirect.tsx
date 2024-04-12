@@ -18,7 +18,7 @@ const KakaoRedirect = () => {
           console.log(res.headers.getAuthorization);
           cookie.set('Authorization', res.headers.getAuthorization);
         });
-      // navigate('/');
+      navigate('/');
     } catch (error) {
       console.log(error);
       navigate('/');
