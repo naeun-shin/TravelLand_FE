@@ -70,14 +70,6 @@ const formatDate = (date: { toISOString: () => string }) => {
 };
 const PlanCreate2: React.FC = () => {
   const location = useLocation();
-  // const [_title, setTitle] = useState<string>('');
-  // const [_time, setTime] = useState<string>('');
-  // const [_address, setAddress] = useState<string>('');
-  // const [_content, setContent] = useState<string>('');
-  // const [_budget, setBudget] = useState<string>('');
-  // const [_x, setX] = useState<number>(0);
-  // const [_y, setY] = useState<number>(0);
-  // console.log(location.state);
 
   const tripStartDate = new Date(location.state.tripStartDate);
   const tripEndDate = new Date(location.state.tripEndDate);
