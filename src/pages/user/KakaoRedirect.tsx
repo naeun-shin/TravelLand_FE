@@ -24,7 +24,7 @@ const KakaoRedirect: React.FC = () => {
 
       console.log(res);
       // Correct way to access custom headers - make sure the header names are correctly handled
-      const authToken = res.headers['authorization']; // Headers are generally case-insensitive but depend on server configuration
+      const authToken = res.headers['Authorization']; // Headers are generally case-insensitive but depend on server configuration
       if (authToken) {
         cookie.set('Authorization', authToken, { path: '/' });
       } else {
