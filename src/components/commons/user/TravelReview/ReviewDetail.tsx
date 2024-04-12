@@ -16,6 +16,10 @@ const ReviewDetailHeader = ({ tripDetail }: ReviewDetailHeaderProps) => {
   const navigate = useNavigate();
   const [activeIndex, setActiveIndex] = useState(0);
 
+  const handleEdit = () => {
+    navigate(`/travelEdit/${tripDetail.tripId}`);
+  };
+
   // 여행 정보 -> 삭제하기
   const deleteReviewMutation = useMutation({
     mutationFn: (tripId: number) => deleteTrip(tripId),
@@ -31,7 +35,7 @@ const ReviewDetailHeader = ({ tripDetail }: ReviewDetailHeaderProps) => {
   });
 
   const handleDelete = (tripId: number) => {
-    deleteReviewMutation.mutate(tripId); // tripId를 전달하여 mutate 메서드를 호출합니다.
+    deleteReviewMutation.mutate(tripId);
   };
 
   // 여기자나여 => 여기가 썸네일 이미지 구간
@@ -50,7 +54,7 @@ const ReviewDetailHeader = ({ tripDetail }: ReviewDetailHeaderProps) => {
             text="삭제하기"
             onClick={() => handleDelete(tripDetail.tripId)}
           />
-          <Button text="수정하기" />
+          <Button text="수정하기" onClick={handleEdit} />
         </S.ButtonBox>
       </S.HeaderBox>
       <S.UserSection>

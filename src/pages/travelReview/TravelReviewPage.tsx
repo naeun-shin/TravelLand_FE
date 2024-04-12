@@ -74,7 +74,7 @@ const TravelReviewPage = () => {
   if (error) return <S.ErrorContainer>Error: {error}</S.ErrorContainer>;
 
   return (
-    <ScrollDiv>
+    <ScrollDiv id="scrollableDiv">
       <Header />
       <S.TravelReviewstyle>
         <S.ReviewBox>
@@ -95,7 +95,7 @@ const TravelReviewPage = () => {
             </div>
           }
           endMessage={<p>더 이상 로드할 내용이 없습니다.</p>}
-          // scrollableTarget="scrollableDiv"
+          scrollableTarget="scrollableDiv"
         >
           <S.TravelReviewCardSection>
             {trips.map((trip) => (
@@ -136,7 +136,7 @@ const TravelReviewPage = () => {
 export default TravelReviewPage;
 
 const ScrollDiv = styled.div`
-  /* height: 90vh; */
+  height: 90vh;
   overflow-y: auto;
   overflow-x: hidden;
   width: 100%;

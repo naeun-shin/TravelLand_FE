@@ -12,6 +12,7 @@ import TravelPlanList from '@/pages/travelPlan/TravelPlanList';
 import TravelPlanDetail from '@/pages/travelPlan/TravelPlanDetail';
 import SearchResults from '@/pages/main/SearchResults';
 import TravelCreateForm from '@/pages/travelReview/TravelCreatePage';
+import { getTripDetail } from '@/api/reviewAxios';
 
 export const router = createBrowserRouter([
   {
@@ -65,5 +66,28 @@ export const router = createBrowserRouter([
         imageList={[]}
       />
     ),
+  },
+  {
+    path: '/travelEdit/:tripId',
+    element: <TravelCreateForm />,
+    loader: async ({ params }) => {
+      const tripIdStr = params.tripId;
+      if (typeof tripIdStr !== 'string') {
+        throw new Error('tripId is missing');
+      }
+      const tripId = parseInt(tripIdStr, 10);
+      if (isNaN(tripId)) {
+        throw new Error('Invalid tripId');
+      }
+      try {
+        // 여행 정보를 불러오기 API 호출
+        const tripDetailResponse = await getTripDetail(tripId);
+        // TravelCreateForm에 props로 여행 정보를 전달
+        return { tripData: tripDetailResponse.data, tripId };
+      } catch (error) {
+        console.error(error);
+        throw new Error('Failed to load trip data');
+      }
+    },
   },
 ]);
