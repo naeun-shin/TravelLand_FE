@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { ButtonProps } from '../commons/buttons/Button';
 
 const PlanFirstSection = styled.div`
   display: flex;
