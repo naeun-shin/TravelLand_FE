@@ -15,6 +15,7 @@ const KakaoRedirect = () => {
           params: { code },
         })
         .then((res: any) => {
+          console.log(res);
           console.log(res.headers.getAuthorization);
           cookie.set('Authorization', res.headers.getAuthorization);
         });
