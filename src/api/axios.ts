@@ -8,8 +8,6 @@ export const instance = axios.create({
 
 const cookies = new Cookies();
 
-console.log(cookies.get('Authorization'));
-
 // 헤더가 필요한 인스턴스
 export const instanceWithToken = axios.create({
   baseURL: import.meta.env.VITE_APP_BASE_URL,
@@ -23,10 +21,7 @@ export const instanceWithToken = axios.create({
 // interceptor로 해야함
 instanceWithToken.interceptors.request.use(
   (config) => {
-    console.log(config);
     const token = cookies.get('Authorization');
-    console.log(token);
-    // const token = `${new Cookies().get('accessToken')}`;
     if (token) {
       config.headers['Authorization'] = token;
     }

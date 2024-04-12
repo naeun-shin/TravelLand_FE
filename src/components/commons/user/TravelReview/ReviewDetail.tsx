@@ -40,7 +40,6 @@ const ReviewDetailHeader = ({ tripDetail }: ReviewDetailHeaderProps) => {
       ? tripDetail.imageUrlList[0]
       : '기본이미지URL';
 
-  console.log(imageUrl);
   return (
     <S.Container>
       <S.HeaderBox>

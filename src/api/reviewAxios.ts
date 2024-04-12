@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios';
-import { instance } from './axios';
+import { instance, instanceWithToken } from './axios';
 import {
   TripData,
   TripDetail,
@@ -10,7 +10,7 @@ import { CreateTripRequest } from '@/pages/travelReview/TravelCreatePage';
 // 여행 정보 등록
 export const createTrip = async ({ email, formData }: CreateTripRequest) => {
   try {
-    const response = await instance.post('/v1/trips', formData, {
+    const response = await instanceWithToken.post('/v1/trips', formData, {
       params: { email },
       headers: {
         'Content-Type': 'multipart/form-data',
@@ -58,12 +58,16 @@ export const updateTrip = async (
       );
     }
 
-    const response = await instance.put(`/v1/trips/${tripId}`, formData, {
-      params: { email },
-      headers: {
-        'Content-Type': 'multipart/form-data',
+    const response = await instanceWithToken.put(
+      `/v1/trips/${tripId}`,
+      formData,
+      {
+        params: { email },
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
       },
-    });
+    );
     return response;
   } catch (error) {
     console.error(error);
