@@ -52,36 +52,10 @@ export const getDayPlanId = async (
   }
 };
 
-// 여행 플랜 일자별 상세 조회
-// export const getPlanDetailByDay = async (
-//   planId: number,
-// ): Promise<AxiosResponse<any>> => {
-//   // const { planId, dayPlanId } = variableData;
-//   try {
-//     return await instance.get(`/v1/plans/${planId}/dayplans/${dayPlanId}`);
-//   } catch (error) {
-//     console.error(error);
-//     throw error;
-//   }
-// };
-
-// 여행 플랜 수정 - authInstance로 수정 필요
-// export const updatePlan = async (
-//   planId: Number,
-//   updatePlanDataValue: UpdatePlanData,
-// ) => {
-//   try {
-//     return await instance.put(`/v1/plans/${planId}`, updatePlanDataValue);
-//   } catch (error) {
-//     console.error(error);
-//     throw error;
-//   }
-// };
-
 // 여행 플랜 삭제
 export const deletePlan = async (planId: Number) => {
   try {
-    return await instance.delete(`/v1/plans/${planId}`);
+    return await instanceWithToken.delete(`/v1/plans/${planId}`);
   } catch (error) {
     console.error(error);
     throw error;
