@@ -16,17 +16,19 @@ export const instanceWithToken = axios.create({
   headers: {
     'content-type': 'application/json',
     accept: 'application/json',
-    Authorization: cookies.get('Authorization'),
+    // Authorization: cookies.get('Authorization'),
   },
 });
 
 // interceptor로 해야함
 instanceWithToken.interceptors.request.use(
   (config) => {
+    const cookies = new Cookies();
+    const token = cookies.get('Authorization');
     // const token = `${new Cookies().get('accessToken')}`;
-    // if (token) {
-    //   config.headers.Authorization = token;
-    // }
+    if (token) {
+      config.headers['Authorization'] = token;
+    }
     return config;
   },
   (error) => {
