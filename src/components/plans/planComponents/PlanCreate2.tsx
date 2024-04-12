@@ -277,7 +277,7 @@ const PlanCreate2: React.FC = () => {
       console.log('planToSubmit >> ', planToSubmit);
 
       // 여기서 API 호출 등의 추가 작업을 수행할 수 있습니다.
-      // createPlanList.mutate(planToSubmit);
+      createPlanList.mutate(planToSubmit);
     } else {
       // 마지막 일차의 unitPlans가 비어 있다면, 사용자에게 작성을 유도하는 메시지 표시
       alert('마지막 일차의 계획을 완성해주세요.');
