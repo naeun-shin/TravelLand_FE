@@ -7,6 +7,7 @@ import ReviewPageTab from '@/components/commons/user/TravelReview/ReviewTab';
 import Card from '@/components/commons/cards/Card';
 import { getTripList } from '@/api/reviewAxios';
 import { AxiosResponse } from 'axios';
+import styled from 'styled-components';
 
 interface Trip {
   tripId: number;
@@ -31,13 +32,13 @@ const TravelReviewPage = () => {
     try {
       const response: AxiosResponse<Trip[]> = await getTripList({
         page,
-        size: 9,
+        size: 3,
         sortBy: 'createdAt',
         isAsc: false,
       });
       const responseData: Trip[] = response.data;
       setTrips((prevTrips) => [...prevTrips, ...responseData]);
-      if (responseData.length === 0 || responseData.length < 9) {
+      if (responseData.length === 0 && responseData.length < 3) {
         setHasMore(false);
       }
     } catch (error) {
@@ -49,7 +50,8 @@ const TravelReviewPage = () => {
 
   useEffect(() => {
     loadTrips();
-  }, []);
+    console.log('현재페이지', page);
+  }, [page]);
 
   const handleCardClick = (tripId: number) => {
     navigate(`/travelDetail/${tripId}`);
@@ -60,8 +62,10 @@ const TravelReviewPage = () => {
   };
 
   const fetchMoreData = () => {
+    console.log('스크롤 감지', hasMore);
     if (!loading && hasMore) {
       setPage((prevPage) => prevPage + 1);
+      console.log('page증가');
     }
   };
 
@@ -70,7 +74,7 @@ const TravelReviewPage = () => {
   if (error) return <S.ErrorContainer>Error: {error}</S.ErrorContainer>;
 
   return (
-    <div id="scrollableDiv">
+    <ScrollDiv>
       <Header />
       <S.TravelReviewstyle>
         <S.ReviewBox>
@@ -85,26 +89,56 @@ const TravelReviewPage = () => {
           dataLength={trips.length}
           next={fetchMoreData}
           hasMore={hasMore}
-          loader={<h4>Loading...</h4>}
+          loader={
+            <div className="loader" key={0}>
+              Loading ...
+            </div>
+          }
           endMessage={<p>더 이상 로드할 내용이 없습니다.</p>}
-          scrollableTarget="scrollableDiv"
+          // scrollableTarget="scrollableDiv"
         >
           <S.TravelReviewCardSection>
             {trips.map((trip) => (
-              <Card
-                key={trip.tripId}
-                title={trip.title}
-                writer={trip.nickname}
-                date={`♥${trip.viewCount}`}
-                imageUrl={trip.thumbnailUrl}
-                onClick={() => handleCardClick(trip.tripId)}
-              />
+              <div key={trip.tripId}>
+                <Card
+                  // key={trip.tripId}
+                  title={trip.title}
+                  writer={trip.nickname}
+                  date={`♥${trip.viewCount}`}
+                  imageUrl={trip.thumbnailUrl}
+                  onClick={() => handleCardClick(trip.tripId)}
+                />
+                <Card
+                  // key={trip.tripId}
+                  title={trip.title}
+                  writer={trip.nickname}
+                  date={`♥${trip.viewCount}`}
+                  imageUrl={trip.thumbnailUrl}
+                  onClick={() => handleCardClick(trip.tripId)}
+                />
+                <Card
+                  // key={trip.tripId}
+                  title={trip.title}
+                  writer={trip.nickname}
+                  date={`♥${trip.viewCount}`}
+                  imageUrl={trip.thumbnailUrl}
+                  onClick={() => handleCardClick(trip.tripId)}
+                />
+              </div>
             ))}
           </S.TravelReviewCardSection>
         </InfiniteScroll>
       </S.TravelReviewstyle>
-    </div>
+    </ScrollDiv>
   );
 };
 
 export default TravelReviewPage;
+
+const ScrollDiv = styled.div`
+  /* height: 90vh; */
+  overflow-y: auto;
+  overflow-x: hidden;
+  width: 100%;
+  box-sizing: border-box;
+`;
