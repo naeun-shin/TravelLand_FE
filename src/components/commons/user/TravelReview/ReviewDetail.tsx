@@ -16,10 +16,6 @@ const ReviewDetailHeader = ({ tripDetail }: ReviewDetailHeaderProps) => {
   const navigate = useNavigate();
   const [activeIndex, setActiveIndex] = useState(0);
 
-  const handleEdit = () => {
-    navigate(`/travelEdit/${tripDetail.tripId}`);
-  };
-
   // 여행 정보 -> 삭제하기
   const deleteReviewMutation = useMutation({
     mutationFn: (tripId: number) => deleteTrip(tripId),
@@ -54,7 +50,7 @@ const ReviewDetailHeader = ({ tripDetail }: ReviewDetailHeaderProps) => {
             text="삭제하기"
             onClick={() => handleDelete(tripDetail.tripId)}
           />
-          <Button text="수정하기" onClick={handleEdit} />
+          <Button text="수정하기" />
         </S.ButtonBox>
       </S.HeaderBox>
       <S.UserSection>
