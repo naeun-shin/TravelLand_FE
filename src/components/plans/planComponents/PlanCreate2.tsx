@@ -6,37 +6,7 @@ import Button from '@/components/commons/buttons/Button';
 import { useLocation } from 'react-router-dom';
 import { ModernInput } from '@/components/commons/inputs/Input';
 import KaKaoMap from '@/components/maps/KaKaoMap';
-
-export interface UnitPlan {
-  title: string;
-  content: string;
-  time: string;
-  budget: string;
-  schedule: string;
-  address: string;
-  x: number;
-  y: number;
-}
-
-export interface DayPlan {
-  title: string;
-  content: string;
-  budget: string;
-  date: string;
-  unitPlans: UnitPlan[];
-}
-
-export interface WholePlan {
-  title: string;
-  content: string;
-  budget: string;
-  area: string;
-  isPublic: boolean;
-  tripStartDate: string;
-  tripEndDate: string;
-  isVotable: boolean;
-  dayPlans: DayPlan[];
-}
+import { useCreatePlanMutaton } from '@/hooks/useMutation';
 
 export interface UnitPlan {
   title: string;
@@ -70,14 +40,6 @@ const formatDate = (date: { toISOString: () => string }) => {
 };
 const PlanCreate2: React.FC = () => {
   const location = useLocation();
-  // const [_title, setTitle] = useState<string>('');
-  // const [_time, setTime] = useState<string>('');
-  // const [_address, setAddress] = useState<string>('');
-  // const [_content, setContent] = useState<string>('');
-  // const [_budget, setBudget] = useState<string>('');
-  // const [_x, setX] = useState<number>(0);
-  // const [_y, setY] = useState<number>(0);
-  // console.log(location.state);
 
   const tripStartDate = new Date(location.state.tripStartDate);
   const tripEndDate = new Date(location.state.tripEndDate);
@@ -90,6 +52,7 @@ const PlanCreate2: React.FC = () => {
 
   // useState부분
   const [currentStep, setCurrentStep] = useState<number>(0);
+
   const [unitPlans, setUnitPlans] = useState<UnitPlan[]>([
     {
       title: '',
@@ -102,28 +65,6 @@ const PlanCreate2: React.FC = () => {
       y: 0,
     },
   ]);
-  const [dayPlans, setDayPlans] = useState<DayPlan[]>([
-    {
-      title: '',
-      content: '',
-      budget: '',
-      date: '',
-      unitPlans: [],
-    },
-  ]);
-  // const [wholePlan, setWholePlan] = useState<WholePlan[]>([
-  //   {
-  //     title: '',
-  //     content: '',
-  //     budget: '',
-  //     area: '',
-  //     isPublic: false,
-  //     tripStartDate: '',
-  //     tripEndDate: '',
-  //     isVotable: false,
-  //     dayPlans: [],
-  //   },
-  // ]);
 
   const [wholePlan, _] = useState<WholePlan[]>([
     {
@@ -143,10 +84,8 @@ const PlanCreate2: React.FC = () => {
 
   // 총 일수 계산
   const calculateTotalDays = () => {
-
     const start = tripStartDate;
     const end = tripEndDate;
-
     const diff = end.getTime() - start.getTime();
     const totalDays = Math.ceil(diff / (1000 * 3600 * 24)) + 1; // 종료 날짜 포함
     return totalDays;
@@ -180,7 +119,6 @@ const PlanCreate2: React.FC = () => {
     value: string,
   ) => {
     const newUnitPlans = [...unitPlans];
-
     if (field === 'budget') {
       // 입력값을 정수로 변환합니다. 숫자가 아닌 값은 무시합니다.
       const numericValue = parseInt(value, 10);
@@ -254,7 +192,6 @@ const PlanCreate2: React.FC = () => {
 
   // handleDayChange 함수 내에서 currentStep 업데이트 로직 확인 및 최적화
   const handleDayChange = (stepIndex: number) => {
-
     console.log(stepIndex);
     const currentUnitPlans = [...unitPlans];
     console.log('currentUnitPlans > ', currentUnitPlans);
@@ -443,18 +380,6 @@ const PlanCreate2: React.FC = () => {
             </IS.ListInputbox>
           </IS.PlanListInputContainer>
         ))}
-        <PS.ButtonBoxToCenter>
-          <Button
-            text="추가하기"
-            width="150px"
-            height="50px"
-            color="white"
-            borderColor="black"
-            borderRadius="15px"
-            fontWeight="bold"
-            onClick={handlePlanAdd}
-          />
-        </PS.ButtonBoxToCenter>
       </S.PlanDetailContentBox>
       <PS.ButtonBoxToCenter>
         <Button

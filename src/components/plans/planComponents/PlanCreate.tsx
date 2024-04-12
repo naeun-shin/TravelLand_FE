@@ -47,10 +47,10 @@ const PlanCreate = () => {
 
   // 여행 기간 텍스트를 표시하기 위한 함수
   const displayDateRange = () => {
-    const tripStartDate = dateRange[0] ? dateRange[0].toLocaleDateString() : '';
-    const tripEndDate = dateRange[1] ? dateRange[1].toLocaleDateString() : '';
+    const start = dateRange[0] ? dateRange[0].toLocaleDateString() : '';
+    const end = dateRange[1] ? dateRange[1].toLocaleDateString() : '';
 
-    return `${tripStartDate} - ${tripEndDate}`;
+    return `${start} - ${end}`;
   };
 
   // 지역
