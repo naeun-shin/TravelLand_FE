@@ -9,7 +9,13 @@ const TravelPlanDetail = () => {
       <S.TravelPlanMainStyle>
         {/* 타이틀 */}
         <h2>여행 플랜</h2>
-        <PlanDetail active={false} />
+        <PlanDetail
+          active={false}
+          text={''}
+          onClick={function (): void {
+            throw new Error('Function not implemented.');
+          }}
+        />
       </S.TravelPlanMainStyle>
     </>
   );

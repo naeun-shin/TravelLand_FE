@@ -124,7 +124,7 @@ export const KaKaoMapResult: React.FC<MapSearchType> = ({
       for (var i = 0; i < places.length; i++) {
         // 마커를 생성하고 지도에 표시
         let placePosition = new kakao.maps.LatLng(places[i].y, places[i].x),
-          marker = addMarker(placePosition, i, undefined),
+          marker = addMarker(placePosition, i),
           itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성
 
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
@@ -222,7 +222,7 @@ export const KaKaoMapResult: React.FC<MapSearchType> = ({
     }
 
     // 마커를 생성하고 지도 위에 마커를 표시하는 함수
-    function addMarker(position: any, idx: number, _title: undefined) {
+    function addMarker(position: any, idx: number) {
       var imageSrc =
           'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png', // 마커 이미지 url, 스프라이트 이미지
         imageSize = new kakao.maps.Size(36, 37), // 마커 이미지의 크기
@@ -277,11 +277,11 @@ export const KaKaoMapResult: React.FC<MapSearchType> = ({
 
   return (
     <div style={{ display: 'flex' }}>
-      <div id="map" style={{ flex: 1, width: '250px', height: '350px' }}></div>
+      <div id="map" style={{ width: '500px', height: '50px' }}></div>
       <div
         style={{
-          width: '250px',
-          height: '350px',
+          width: '500px',
+          height: '500px',
 
           overflowY: 'scroll',
           marginLeft: '5px',

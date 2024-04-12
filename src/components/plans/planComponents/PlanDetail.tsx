@@ -3,11 +3,15 @@ import * as S from '../Plan.style';
 import Map from '@/components/maps/Map';
 import { usePlanDetailQuery } from '@/hooks/useQuery';
 import { useParams } from 'react-router-dom';
+import Button from '@/components/commons/buttons/Button';
+import { useDeleteMutation } from '@/hooks/useMutation';
 
 // 사용할 데이터 타입 정의 (예시입니다, 실제 데이터에 맞게 조정해야 합니다.)
 
 interface ButtonProps {
   active: boolean;
+  text: string;
+  onClick: () => void;
 }
 
 interface DayPlan {
@@ -40,8 +44,6 @@ const PlanDetail: React.FC<ButtonProps> = () => {
   const planId = Number(id);
   const { data, isLoading, isError } = usePlanDetailQuery(planId);
 
-  console.log('43 data >>>>>>> ', data);
-
   const planDetails = data?.data;
 
   useEffect(() => {
@@ -69,10 +71,13 @@ const PlanDetail: React.FC<ButtonProps> = () => {
     setIsModalOpen(true);
   };
 
+  // 삭제 기능
+  const deleteMutaion = useDeleteMutation();
+
   const handlePlanDelete = () => {
-    // useMutation;
-    // deletePlan;
+    deleteMutaion.mutate(planId);
   };
+
   const closeModal = () => {
     setIsModalOpen(false);
   };
@@ -118,8 +123,8 @@ const PlanDetail: React.FC<ButtonProps> = () => {
           <S.PlanDetailDateButton
             key={index}
             onClick={() => handleStepClick(index)}
-            active={index === currentStep}
-            text=""
+            // active={index === currentStep} // 조건부 스타일링 적용
+            // text=""
           >
             {`${index + 1}일차`}
           </S.PlanDetailDateButton>
@@ -172,7 +177,7 @@ const PlanDetail: React.FC<ButtonProps> = () => {
               </div>
             ))}
           </S.DetailContentBox>
-          <button onClick={handlePlanDelete}>삭제하기</button>
+          <Button onClick={handlePlanDelete} text={'삭제하기'} />
         </S.DetailContentSection>
         {/*초대 */}
         <S.PlanBox>
