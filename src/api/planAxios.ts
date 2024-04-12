@@ -1,10 +1,16 @@
 import { AxiosResponse } from 'axios';
 import { instance } from './axios';
-import {
-  PlanListParams,
-  CreatePlanData,
-  UpdatePlanData,
-} from './interfaces/planInterface';
+import { PlanListParams, WholePlan } from './interfaces/planInterface';
+
+// 여행 플랜 작성하기
+export const createPlanList = async (wholePlan: WholePlan) => {
+  try {
+    return await instance.post('/v1/plans/allInOn', wholePlan);
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
 
 // 여행 플랜 목록 조회
 export const getPlanList = async (
@@ -59,29 +65,20 @@ export const getDayPlanId = async (
 //   }
 // };
 
-// 여행 플랜 작성하기 - authInstace로 수정 필요
-export const createPlan = async (planDataValue: CreatePlanData) => {
-  try {
-    return await instance.post('/v1/plans', planDataValue);
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
-};
-
 // 여행 플랜 수정 - authInstance로 수정 필요
-export const updatePlan = async (
-  planId: Number,
-  updatePlanDataValue: UpdatePlanData,
-) => {
-  try {
-    return await instance.put(`/v1/plans/${planId}`, updatePlanDataValue);
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
-};
+// export const updatePlan = async (
+//   planId: Number,
+//   updatePlanDataValue: UpdatePlanData,
+// ) => {
+//   try {
+//     return await instance.put(`/v1/plans/${planId}`, updatePlanDataValue);
+//   } catch (error) {
+//     console.error(error);
+//     throw error;
+//   }
+// };
 
+// 여행 플랜 삭제
 export const deletePlan = async (planId: Number) => {
   try {
     return await instance.delete(`/v1/plans/${planId}`);
