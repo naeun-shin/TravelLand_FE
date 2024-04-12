@@ -15,22 +15,19 @@ export interface UnitPlan {
   content: string;
   time: string;
   budget: number;
+  place_name: string;
   address: string;
   x: number;
   y: number;
 }
 
 export interface DayPlan {
-  title: string;
-  content: string;
-  budget: number;
   date: string;
   unitPlans: UnitPlan[];
 }
 
 export interface WholePlan {
   title: string;
-  content: string;
   budget: number;
   area: string;
   isPublic: boolean;

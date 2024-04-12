@@ -13,22 +13,19 @@ export interface UnitPlan {
   content: string;
   time: string;
   budget: number;
+  place_name: string;
   address: string;
   x: number;
   y: number;
 }
 
 export interface DayPlan {
-  title: string;
-  content: string;
-  budget: number;
   date: string;
   unitPlans: UnitPlan[];
 }
 
 export interface WholePlan {
   title: string;
-  content: string;
   budget: number;
   area: string;
   isPublic: boolean;
@@ -68,6 +65,7 @@ const PlanCreate2: React.FC = () => {
     {
       title: '',
       time: '',
+      place_name: '',
       address: '',
       content: '',
       budget: 0,
@@ -79,7 +77,6 @@ const PlanCreate2: React.FC = () => {
   const [wholePlan, _] = useState<WholePlan[]>([
     {
       title: totalTitle,
-      content: '임시 영역',
       budget: isNaN(parsedTotalBudget) ? 0 : parsedTotalBudget, // 숫자 변환 실패 시 0으로 대체
       area,
       isPublic,
@@ -113,9 +110,6 @@ const PlanCreate2: React.FC = () => {
   };
   const [dayPlans, setDayPlans] = useState<DayPlan[]>([
     {
-      title: '',
-      content: '',
-      budget: 0,
       date: calculateDateForStep(tripStartDate, 0),
       unitPlans: [],
     },
@@ -183,6 +177,7 @@ const PlanCreate2: React.FC = () => {
       time: '',
       address: '',
       content: '',
+      place_name: '',
       budget: 0,
       x: 0,
       y: 0,
@@ -215,9 +210,6 @@ const PlanCreate2: React.FC = () => {
       // 선택된 일차에 대한 DayPlan이 없으면 새로운 DayPlan을 추가합니다.
       while (newDayPlans.length <= stepIndex) {
         newDayPlans.push({
-          title: '',
-          content: '',
-          budget: 0,
           date: calculateDateForStep(tripStartDate, newDayPlans.length),
           unitPlans: [],
         });
@@ -240,6 +232,7 @@ const PlanCreate2: React.FC = () => {
         time: '',
         address: '',
         content: '',
+        place_name: '',
         budget: 0,
         x: 0,
         y: 0,
@@ -265,9 +258,6 @@ const PlanCreate2: React.FC = () => {
       } else {
         // 마지막 일차가 아직 작성되지 않았다면 추가
         updatedDayPlans.push({
-          title: '', // 필요에 따라 적절한 값을 설정
-          content: '',
-          budget: 0,
           date: calculateDateForStep(tripStartDate, updatedDayPlans.length),
           unitPlans: unitPlans,
         });
