@@ -14,7 +14,7 @@ export interface UnitPlan {
   title: string;
   content: string;
   time: string;
-  budget: string;
+  budget: number;
   address: string;
   x: number;
   y: number;
@@ -23,7 +23,7 @@ export interface UnitPlan {
 export interface DayPlan {
   title: string;
   content: string;
-  budget: string;
+  budget: number;
   date: string;
   unitPlans: UnitPlan[];
 }
@@ -31,11 +31,11 @@ export interface DayPlan {
 export interface WholePlan {
   title: string;
   content: string;
-  budget: string;
+  budget: number;
   area: string;
   isPublic: boolean;
-  tripStartDate: Date;
-  tripEndDate: Date;
+  tripStartDate: string;
+  tripEndDate: string;
   isVotable: boolean;
   dayPlans: DayPlan[];
 }

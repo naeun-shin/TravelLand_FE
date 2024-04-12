@@ -12,7 +12,7 @@ export interface UnitPlan {
   title: string;
   content: string;
   time: string;
-  budget: string;
+  budget: number;
   address: string;
   x: number;
   y: number;
@@ -21,7 +21,7 @@ export interface UnitPlan {
 export interface DayPlan {
   title: string;
   content: string;
-  budget: string;
+  budget: number;
   date: string;
   unitPlans: UnitPlan[];
 }
@@ -29,15 +29,18 @@ export interface DayPlan {
 export interface WholePlan {
   title: string;
   content: string;
-  budget: string;
+  budget: number;
   area: string;
   isPublic: boolean;
-  tripStartDate: Date;
-  tripEndDate: Date;
+  tripStartDate: string;
+  tripEndDate: string;
   isVotable: boolean;
   dayPlans: DayPlan[];
 }
-
+// 날짜 변환 함수
+const formatDate = (date: { toISOString: () => string }) => {
+  return date.toISOString().split('T')[0]; // 날짜 부분만 추출 ('YYYY-MM-DD')
+};
 const PlanCreate2: React.FC = () => {
   const location = useLocation();
   // const [_title, setTitle] = useState<string>('');
@@ -51,10 +54,12 @@ const PlanCreate2: React.FC = () => {
 
   const tripStartDate = new Date(location.state.tripStartDate);
   const tripEndDate = new Date(location.state.tripEndDate);
+
   const isPublic = location.state.isPublic;
   const area = location.state.area;
   const totalBudget = location.state.totalBudget;
   const totalTitle = location.state.totalTitle;
+  const parsedTotalBudget = parseInt(totalBudget, 10); // 문자열을 숫자로 변환
 
   // useState부분
   const [currentStep, setCurrentStep] = useState<number>(0);
@@ -65,7 +70,7 @@ const PlanCreate2: React.FC = () => {
       time: '',
       address: '',
       content: '',
-      budget: '',
+      budget: 0,
       x: 0,
       y: 0,
     },
@@ -75,11 +80,11 @@ const PlanCreate2: React.FC = () => {
     {
       title: totalTitle,
       content: '임시 영역',
-      budget: totalBudget,
+      budget: isNaN(parsedTotalBudget) ? 0 : parsedTotalBudget, // 숫자 변환 실패 시 0으로 대체
       area,
       isPublic,
-      tripStartDate,
-      tripEndDate,
+      tripStartDate: formatDate(tripStartDate),
+      tripEndDate: formatDate(tripEndDate),
       isVotable: false,
       dayPlans: [],
     },
@@ -104,17 +109,13 @@ const PlanCreate2: React.FC = () => {
   const calculateDateForStep = (start: string | Date, step: number): string => {
     const resultDate = new Date(start);
     resultDate.setDate(resultDate.getDate() + step);
-    return resultDate.toLocaleDateString('ko-KR', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    });
+    return formatDate(resultDate);
   };
   const [dayPlans, setDayPlans] = useState<DayPlan[]>([
     {
       title: '',
       content: '',
-      budget: '',
+      budget: 0,
       date: calculateDateForStep(tripStartDate, 0),
       unitPlans: [],
     },
@@ -132,12 +133,22 @@ const PlanCreate2: React.FC = () => {
     value: string,
   ) => {
     const newUnitPlans = [...unitPlans];
-    // 'x' 또는 'y' 필드일 경우, 문자열을 숫자로 변환
-    if (field === 'x' || field === 'y') {
+    if (field === 'budget') {
+      // 입력값을 정수로 변환합니다. 숫자가 아닌 값은 무시합니다.
+      const numericValue = parseInt(value, 10);
+      if (!isNaN(numericValue)) {
+        newUnitPlans[index][field] = numericValue;
+      } else {
+        // 숫자가 아닌 입력이 들어올 경우 경고를 출력하고 값을 변경하지 않습니다.
+        console.log(
+          'Invalid input: Please enter numeric values only for budget.',
+        );
+        return; // 상태를 업데이트하지 않음
+      }
+    } else if (field === 'x' || field === 'y') {
       const numericValue = parseFloat(value);
       newUnitPlans[index][field] = isNaN(numericValue) ? 0 : numericValue;
     } else {
-      // 그 외의 경우, 문자열 값을 직접 할당
       newUnitPlans[index][field] = value;
     }
     setUnitPlans(newUnitPlans);
@@ -172,7 +183,7 @@ const PlanCreate2: React.FC = () => {
       time: '',
       address: '',
       content: '',
-      budget: '',
+      budget: 0,
       x: 0,
       y: 0,
     };
@@ -206,7 +217,7 @@ const PlanCreate2: React.FC = () => {
         newDayPlans.push({
           title: '',
           content: '',
-          budget: '',
+          budget: 0,
           date: calculateDateForStep(tripStartDate, newDayPlans.length),
           unitPlans: [],
         });
@@ -229,7 +240,7 @@ const PlanCreate2: React.FC = () => {
         time: '',
         address: '',
         content: '',
-        budget: '',
+        budget: 0,
         x: 0,
         y: 0,
       },
@@ -256,15 +267,21 @@ const PlanCreate2: React.FC = () => {
         updatedDayPlans.push({
           title: '', // 필요에 따라 적절한 값을 설정
           content: '',
-          budget: '',
+          budget: 0,
           date: calculateDateForStep(tripStartDate, updatedDayPlans.length),
           unitPlans: unitPlans,
         });
       }
+      // `totalBudget`를 숫자로 파싱
+      const numericBudget = parseInt(wholePlan[0].budget.toString(), 10);
+      const validBudget = isNaN(numericBudget) ? 0 : numericBudget;
 
       // wholePlan을 객체로 설정하여 전송
       const planToSubmit = {
         ...wholePlan[0],
+        budget: validBudget, // 숫자로 변환된 예산 적용
+        tripStartDate: formatDate(tripStartDate), // 포맷된 날짜로 확정
+        tripEndDate: formatDate(tripEndDate), // 포맷된 날짜로 확정
         dayPlans: updatedDayPlans,
       };
 
@@ -352,7 +369,7 @@ const PlanCreate2: React.FC = () => {
               <ModernInput
                 placeholder="경비"
                 value={input.budget}
-                type="text"
+                type="text" // Set input type as number to allow only numeric values
                 height={50}
                 onChange={(e) =>
                   handleInputChange(index, 'budget', e.target.value)
