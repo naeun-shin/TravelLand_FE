@@ -12,7 +12,6 @@ import Maintitle from '@/components/commons/mainItem/MainTitle';
 import ListTitle from '@/components/commons/mainItem/ListTitle';
 import MainList from '@/components/commons/mainItem/MainList';
 import { useNavigate } from 'react-router-dom';
-import { Cookies } from 'react-cookie';
 
 interface MainProps {
   onClick: () => void;
@@ -20,7 +19,6 @@ interface MainProps {
 
 const Main: React.FC<MainProps> = () => {
   const navigate = useNavigate();
-  const cookie = new Cookies();
 
   const handleMakePlanClick = () => {
     navigate('/planList');
@@ -60,13 +58,6 @@ const Main: React.FC<MainProps> = () => {
     likes: 77,
     imageUrl: '이미지URL',
   }));
-
-  cookie.set('Authorization', 'TEST Cookies');
-
-  console.log('메인 페이지 영역 콘솔');
-
-  console.log('coookie get authorization>> ', cookie.get('Authorization'));
-  console.log('coookie get all>> ', cookie.getAll());
 
   return (
     <>

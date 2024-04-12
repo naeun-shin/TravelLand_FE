@@ -122,17 +122,15 @@ const PlanDetailDateBox = styled.div`
   padding: 10px 0px;
 `;
 
-const PlanDetailDateButton = styled.button<ButtonProps>`
+const PlanDetailDateButton = styled.button`
   margin-right: 10px;
   padding: 5px;
 
   width: 150px;
   height: 50px;
 
-  background-color: ${({ active }) =>
-    active ? 'black' : 'white'}; /* 클릭된 버튼일 때 배경색 검은색 */
-  color: ${({ active }) =>
-    active ? 'white' : 'black'}; /* 클릭된 버튼일 때 글씨색 하얀색 */
+  background-color: gray;
+  color: white;
 
   border: 1px solid lightgray;
   border-radius: 5px;
@@ -159,18 +157,23 @@ const PlanDetailContentHeader = styled.div`
 `;
 
 const DetailHeaderContent = styled.div`
-  background-color: black;
+  background-color: gray;
   color: white;
-
-  height: 50px;
-  width: 100px;
-
+  height: 100px;
+  width: 150px;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
+  border-radius: 5px;
 
-  border-bottom-left-radius: 10px;
-  border-top-left-radius: 10px;
+  div {
+    /* border-top: 1px solid white; */
+    margin: 5px;
+  }
+  hr {
+    width: 100px;
+  }
 `;
 
 const DetailHeaderSubContent = styled.div`
