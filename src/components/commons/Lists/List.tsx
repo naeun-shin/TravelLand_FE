@@ -18,7 +18,6 @@ interface ListProps {
 
 const List: React.FC<ListProps> = ({ planListData }) => {
   const navigate = useNavigate();
-  console.log(planListData);
 
   const handleReadContent = (planId: number) => {
     navigate(`/planDetail/${planId}`);
