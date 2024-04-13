@@ -45,7 +45,7 @@ export const router = createBrowserRouter([
   { path: '/planCreate/2', element: <TravelPlanCreate2 /> },
   { path: '/planList', element: <TravelPlanList /> },
   { path: '/planDetail/:id', element: <TravelPlanDetail /> },
-  // { path: '/TravelDetailPage/:tripId', element: <TravelDetailPage /> },
+  { path: '/TravelDetailPage/:tripId', element: <TravelDetailPage /> },
   {
     path: '/travelCreate',
     element: (
