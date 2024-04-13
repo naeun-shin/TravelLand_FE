@@ -53,6 +53,7 @@ export const updateTrip = async (
         formData.append(`imageList[${index}]`, file),
       );
     }
+
     const response = await instanceWithToken.put(
       `/v1/trips/${tripId}`,
       formData,
