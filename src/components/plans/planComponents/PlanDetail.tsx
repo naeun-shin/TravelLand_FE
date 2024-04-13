@@ -3,11 +3,15 @@ import * as S from '../Plan.style';
 import Map from '@/components/maps/Map';
 import { usePlanDetailQuery } from '@/hooks/useQuery';
 import { useParams } from 'react-router-dom';
+import Button from '@/components/commons/buttons/Button';
+import { useDeleteMutation } from '@/hooks/useMutation';
 
 // 사용할 데이터 타입 정의 (예시입니다, 실제 데이터에 맞게 조정해야 합니다.)
 
 interface ButtonProps {
   active: boolean;
+  text: string;
+  onClick: () => void;
 }
 
 interface DayPlan {
@@ -16,6 +20,8 @@ interface DayPlan {
   content: string;
   budget: number;
   date: string;
+  startAddress: string;
+  endAddress: string;
   unitPlans: UnitPlan[];
 }
 
@@ -24,7 +30,7 @@ interface UnitPlan {
   title: string;
   content: string;
   budget: number;
-  location: string;
+  address: string;
   time: string;
 }
 
@@ -40,10 +46,7 @@ const PlanDetail: React.FC<ButtonProps> = () => {
   const planId = Number(id);
   const { data, isLoading, isError } = usePlanDetailQuery(planId);
 
-  console.log('43 data >>>>>>> ', data);
-
   const planDetails = data?.data;
-
   useEffect(() => {
     if (planDetails?.dayPlans) {
       setDayPlans(planDetails.dayPlans);
@@ -69,17 +72,21 @@ const PlanDetail: React.FC<ButtonProps> = () => {
     setIsModalOpen(true);
   };
 
+  // 삭제 기능
+  const deleteMutaion = useDeleteMutation();
+
   const handlePlanDelete = () => {
-    // useMutation;
-    // deletePlan;
+    deleteMutaion.mutate(planId);
   };
+
   const closeModal = () => {
     setIsModalOpen(false);
   };
   // 초대하기 모달 오픈 핸들러
-  // const handleOpenInvitation = () => {
-  //   setIsInvitationModalOpen(true);
-  // };
+  const handleOpenInvitation = () => {
+    // setIsInvitationModalOpen(true);
+    alert('개발중입니다.');
+  };
 
   // const closeInvitationModal = () => {
   //   setIsInvitationModalOpen(false);
@@ -118,8 +125,8 @@ const PlanDetail: React.FC<ButtonProps> = () => {
           <S.PlanDetailDateButton
             key={index}
             onClick={() => handleStepClick(index)}
-            active={index === currentStep}
-            text=""
+            // active={index === currentStep} // 조건부 스타일링 적용
+            // text=""
           >
             {`${index + 1}일차`}
           </S.PlanDetailDateButton>
@@ -135,7 +142,7 @@ const PlanDetail: React.FC<ButtonProps> = () => {
             </S.DetailHeaderSubDate>
             |
             <S.DetaiHeaderSubDestination>
-              {/* {dayPlans.path} */}
+              {selectedDayPlan?.startAddress} , {selectedDayPlan?.endAddress}
             </S.DetaiHeaderSubDestination>
           </S.DetailHeaderSubContent>
         </S.PlanDetailContentHeader>
@@ -156,15 +163,15 @@ const PlanDetail: React.FC<ButtonProps> = () => {
                       <div>{unitPlan.content}</div>
                       <div>{unitPlan.time}</div>
                       <img src="/assets/icons/pin.png" alt="pin" />
-                      {unitPlan.location}
+                      {unitPlan.address}
                     </div>
                     <div>
                       {/* 이 부분에 지도 버튼 추가 및 클릭 이벤트 핸들러 연결 */}
                       <S.DetailButtonDiv
-                        onClick={() => handleOpenMapClick(unitPlan.location)}
+                        onClick={() => handleOpenMapClick(unitPlan.address)}
                       >
                         <img src="/assets/icons/pin.png" alt="pin" />
-                        {unitPlan.location}
+                        {unitPlan.address}
                       </S.DetailButtonDiv>
                     </div>
                   </S.DetailContentItem>
@@ -172,7 +179,7 @@ const PlanDetail: React.FC<ButtonProps> = () => {
               </div>
             ))}
           </S.DetailContentBox>
-          <button onClick={handlePlanDelete}>삭제하기</button>
+          <Button onClick={handlePlanDelete} text={'삭제하기'} />
         </S.DetailContentSection>
         {/*초대 */}
         <S.PlanBox>
@@ -194,7 +201,10 @@ const PlanDetail: React.FC<ButtonProps> = () => {
               ))} */}
             </S.PlanInvitationBox>
             <div>
-              <img src="/assets/icons/blackBackgroundPlus.png" />
+              <img
+                src="/assets/icons/blackBackgroundPlus.png"
+                onClick={handleOpenInvitation}
+              />
             </div>
           </S.PlanHorizontalContent>
         </S.PlanBox>

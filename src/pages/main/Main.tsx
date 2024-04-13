@@ -2,7 +2,6 @@ import {
   ButtonContainer,
   ButtonsWrapper,
 } from '@/components/commons/buttons/Button.style';
-// import { Link } from 'react-router-dom';
 import Header from '@/components/layouts/Header';
 import Search from '@/components/search/Search';
 import Button, { TabButton } from '@/components/commons/buttons/Button';
@@ -13,7 +12,6 @@ import Maintitle from '@/components/commons/mainItem/MainTitle';
 import ListTitle from '@/components/commons/mainItem/ListTitle';
 import MainList from '@/components/commons/mainItem/MainList';
 import { useNavigate } from 'react-router-dom';
-// import { ResultsSection } from '@/components/search/Search.style';
 
 interface MainProps {
   onClick: () => void;

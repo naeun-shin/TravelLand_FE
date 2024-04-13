@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios';
-import { instance } from './axios';
+import { instance, instanceWithToken } from './axios';
 import {
   TripData,
   TripDetail,
@@ -10,7 +10,7 @@ import { CreateTripRequest } from '@/pages/travelReview/TravelCreatePage';
 // 여행 정보 등록
 export const createTrip = async ({ formData }: CreateTripRequest) => {
   try {
-    const response = await instance.post('/v1/trips', formData, {
+    const response = await instanceWithToken.post('/v1/trips', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
@@ -54,11 +54,11 @@ export const updateTrip = async (
       );
     }
 
-    const response = await instance.put(`/v1/trips/${tripId}`, formData, {
+    const response = await instanceWithToken.put(`/v1/trips/${tripId}`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
-    });
+    );
     return response;
   } catch (error) {
     console.error(error);
@@ -87,7 +87,7 @@ export const deleteTrip = async (
   tripId: number,
 ): Promise<AxiosResponse<any>> => {
   try {
-    const response = await instance.delete(`/v1/trips/${tripId}`);
+    const response = await instanceWithToken.delete(`/v1/trips/${tripId}`);
     return response;
   } catch (error) {
     console.error(error);

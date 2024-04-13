@@ -1,8 +1,12 @@
 import axios from 'axios';
 
+import { Cookies } from 'react-cookie';
+
 export const instance = axios.create({
   baseURL: import.meta.env.VITE_APP_BASE_URL,
 });
+
+const cookies = new Cookies();
 
 // 헤더가 필요한 인스턴스
 export const instanceWithToken = axios.create({
@@ -10,17 +14,17 @@ export const instanceWithToken = axios.create({
   headers: {
     'content-type': 'application/json',
     accept: 'application/json',
-    // Authorization: `${new Cookies().get('accessToken')}`,
+    // Authorization: cookies.get('Authorization'),
   },
 });
 
 // interceptor로 해야함
 instanceWithToken.interceptors.request.use(
   (config) => {
-    // const token = `${new Cookies().get('accessToken')}`;
-    // if (token) {
-    //   config.headers.Authorization = token;
-    // }
+    const token = cookies.get('Authorization');
+    if (token) {
+      config.headers['Authorization'] = token;
+    }
     return config;
   },
   (error) => {
