@@ -3,7 +3,7 @@ import { CardProps } from './Card';
 
 const CardBox = styled.div<CardProps>`
   width: 300px;
-  height: 250px;
+  height: 260px;
   border: 1px solid black;
   padding: 5px;
   box-sizing: border-box; // 추가했슴
@@ -24,7 +24,7 @@ const CardInfo = styled.div`
   flex-direction: row;
   align-items: center;
 
-  padding-top: 5px; // 10px에서 수정
+  padding-top: 10px; // 5px에서 수정
 
   font-weight: bold;
   font-size: 16px;
@@ -46,6 +46,7 @@ const CardInfoContentTop = styled.div`
   justify-content: space-between;
   flex-direction: row;
   align-items: center;
+  margin-bottom: 3px;
 `;
 
 const InvitationCardContainer = styled.div`
