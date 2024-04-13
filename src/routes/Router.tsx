@@ -50,7 +50,6 @@ export const router = createBrowserRouter([
     path: '/travelCreate',
     element: (
       <TravelCreateForm
-        email={''}
         tripData={{
           title: '',
           content: '',
