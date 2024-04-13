@@ -276,7 +276,7 @@ export const KaKaoMapResult: React.FC<MapSearchType> = ({
 
   return (
     <div style={{ display: 'flex' }}>
-      <div id="map" style={{ width: '500px', height: '50px' }}></div>
+      <div id="map" style={{ width: '500px', height: '500px' }}></div>
       <div
         style={{
           width: '500px',
