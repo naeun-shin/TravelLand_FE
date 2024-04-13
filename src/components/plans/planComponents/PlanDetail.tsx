@@ -151,8 +151,7 @@ const PlanDetail: React.FC<ButtonProps> = () => {
             {dayPlans[currentStep]?.unitPlans.map((unitPlan, index) => (
               <div key={index}>
                 {/* 순서 */}
-                <S.DetailPlanNumber>{index + 1}</S.DetailPlanNumber>
-
+                <S.DetailPlanNumber></S.DetailPlanNumber>
                 <S.DetailPlanContent>
                   <S.DetailPlanContentCity>
                     {unitPlan.title}
