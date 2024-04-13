@@ -115,12 +115,12 @@ const PlanCreate = () => {
         {/* 플랜 계획 첫페이지 */}
         <div>
           {/* 작성자 칸 */}
-          <S.PlanWriterBox>
+          {/* <S.PlanWriterBox>
             <img src="/assets/icons/pinPoint.png" />
             <div>
               <p>작성자 유저 정보 표시란</p>
             </div>
-          </S.PlanWriterBox>
+          </S.PlanWriterBox> */}
           {/* 지역 */}
           <S.PlanBox>
             <img src="/assets/icons/pinPoint.png" />
