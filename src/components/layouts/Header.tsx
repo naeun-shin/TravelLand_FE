@@ -10,7 +10,6 @@ const Header: React.FC = () => {
   const navigate = useNavigate();
   // 로그인 모달
   const handleOpenLogin = () => {
-    console.log('모달 오픈 ');
     setIsModalOpen(true);
   };
 
