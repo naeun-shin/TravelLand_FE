@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import Button from '../commons/buttons/Button';
 
 interface PlaceType {
   place_name: string;
@@ -13,6 +14,7 @@ interface PlaceType {
 export interface MapSearchType {
   searchKeyword: string;
   onSelect: (place: PlaceType) => void; // 장소 선택 콜백 함수 추가
+  onClose: () => void;
 }
 // head에 작성한 Kakao API 불러오기
 const { kakao } = window as any;
@@ -166,9 +168,10 @@ export const KaKaoMapResult: React.FC<MapSearchType> = ({
       <div class="marker marker_${index + 1}"
         style=
           " 
-          border-radius : 5px;
+            border-radius: 5px;
             background-color: #f0f0f0;
-            padding: 10px;
+            padding: 5px;
+            margin: 5px;
           "
         >
       <div style=
@@ -275,26 +278,44 @@ export const KaKaoMapResult: React.FC<MapSearchType> = ({
   }, [searchKeyword]);
 
   return (
-    <div style={{ display: 'flex' }}>
-      <div id="map" style={{ width: '500px', height: '50px' }}></div>
+    <div
+      style={{
+        position: 'relative',
+        width: '100%',
+        height: '100%',
+        display: ' flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'column',
+      }}
+    >
+      {' '}
+      <div id="map" style={{ width: '30rem', height: '30rem' }}>
+        <Button text="닫기" />
+      </div>
       <div
         style={{
-          width: '500px',
-          height: '500px',
-
-          overflowY: 'scroll',
-          marginLeft: '5px',
+          position: 'relative',
+          bottom: '300px',
+          left: '170px',
+          width: 'fit-content',
+          maxHeight: '300px',
+          overflowY: 'auto',
+          zIndex: '1',
+          background: 'rgba(255, 255, 255, 0.9)',
+          padding: '5px',
+          borderRadius: '15px',
+          boxShadow: 'rgba(0, 0, 0, 0.2) 0px 2px 4px',
         }}
       >
-        <div style={{ padding: '10px' }}>
-          <span>검색 결과{/* <div> {props.searchKeyword}</div> */}</span>
+        <div style={{ fontWeight: 'bold' }}>
           {/* 선택된 장소명을 출력합니다. */}
           {/* <div>선택된 장소: {selectedPlaceInfo?.road_address_name}</div> */}
         </div>
-        <div id="places-list" style={{ padding: '5px 10px' }}></div>
+        <div id="places-list" style={{ marginTop: '5px' }}></div>
         <div
           id="pagination"
-          style={{ display: 'flex', justifyContent: 'center' }}
+          style={{ textAlign: 'center', marginTop: '5px' }}
         ></div>
       </div>
     </div>
