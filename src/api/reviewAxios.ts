@@ -54,9 +54,13 @@ export const updateTrip = async (
       );
     }
 
-    const response = await instanceWithToken.put(`/v1/trips/${tripId}`, formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
+    const response = await instanceWithToken.put(
+      `/v1/trips/${tripId}`,
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
       },
     );
     return response;
