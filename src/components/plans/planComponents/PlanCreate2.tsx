@@ -295,7 +295,6 @@ const PlanCreate2: React.FC = () => {
             key={index}
             onClick={() => handleDayChange(index)}
             isActive={currentStep === index}
-            // date={calculateDateForStep(tripStartDate, index)}
           >
             {`${index + 1}일차`}
             {currentStep === index && (
@@ -310,7 +309,7 @@ const PlanCreate2: React.FC = () => {
       {/* 스태퍼 박스 영역 */}
 
       {unitPlans.map((input, index) => (
-        <S.PlanDetailContentBox>
+        <S.PlanDetailCreateBox>
           <IS.PlanListInputContainer key={index}>
             {/* 출발지 영역 */}
             <IS.ListInputbox>
@@ -370,6 +369,7 @@ const PlanCreate2: React.FC = () => {
                   readonly={true}
                   type={'text'}
                   border="transparent"
+                  width={750}
                 />
                 <IS.ImgBox>
                   <img
@@ -381,7 +381,7 @@ const PlanCreate2: React.FC = () => {
               </IS.ListContent>
             </IS.ListInputboxWithFlex>
           </IS.PlanListInputContainer>
-        </S.PlanDetailContentBox>
+        </S.PlanDetailCreateBox>
       ))}
       <PS.ButtonBox>
         <Button

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 type PlanDetailDateButtonProps = {
-  isActive: boolean;
-  // date: any;
+  isActive?: boolean;
+  date?: any;
 };
 const PlanFirstSection = styled.div`
   display: flex;
@@ -87,6 +87,20 @@ const PlanNextButton = styled.button`
 `;
 // 두번째 플랜 페이지
 
+const PlanDetailCreateBox = styled.div`
+  background-color: white;
+  border: 1px solid lightgray;
+  border-radius: 35px;
+
+  width: 75%;
+  height: 100%;
+
+  padding: 25px;
+
+  div {
+    padding: 5px 0px;
+  }
+`;
 const PlanDateButton = styled.div`
   background-color: white;
   border: none;
@@ -108,7 +122,7 @@ const PlanDateButton = styled.div`
 // List 영역
 const ButtonBox = styled.div`
   padding-top: 30px;
-  width: 75%;
+  width: 80%;
 `;
 
 const ButtonBoxToRight = styled.div`
@@ -120,8 +134,12 @@ const ButtonBoxToRight = styled.div`
 `;
 
 // detail 영역
+const PlanDetailContainer = styled.div`
+  width: 75%;
+`;
+
 const PlanDetailDateBox = styled.div`
-  padding: 30px 0px;
+  padding: 25px 0px;
 `;
 
 const PlanDetailDateButton = styled.button<PlanDetailDateButtonProps>`
@@ -162,8 +180,12 @@ const PlanDetailContentBox = styled.div`
   width: 75%;
   height: 100%;
 
-  padding: 25px;
-  margin: 10px 0px;
+  padding: 15px;
+  margin: 5px 0px 5px 50px;
+
+  div {
+    padding: 5px 0px;
+  }
 `;
 
 const PlanDetailContentHeader = styled.div`
@@ -246,50 +268,67 @@ const DetaiHeaderSubDestination = styled.div`
 `;
 
 const DetailContentSection = styled.div`
-  padding: 25px 10px;
+  padding: 15px 10px;
   height: auto;
 `;
 
 const DetailContentBox = styled.div`
   position: relative;
-  border-left: 1px solid black;
+  /* border-left: 1px solid black; */
   padding: 5px 0px;
+  display: flex;
+  align-items: center;
+  width: 100%;
 `;
 
 const DetailPlanNumber = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-
   position: absolute; /* 추가된 부분: 절대 위치 지정 */
-  top: 0; /* 추가된 부분: 부모 요소의 좌상단을 기준으로 설정 */
-  left: -13px; /* 추가된 부분: 부모 요소의 좌상단을 기준으로 설정 */
+
+  /* top: 40%; */
+  /* 추가된 부분: 부모 요소의 좌상단을 기준으로 설정 */
+  /* left: -13px;  */
+  /* 추가된 부분: 부모 요소의 좌상단을 기준으로 설정 */
 
   border-radius: 50px;
 
-  background-color: black;
+  background-color: gray;
   color: white;
 
   font-size: 12px;
 
   width: 25px;
   height: 25px;
+
+  margin-right: 15px;
 `;
 
 const DetailPlanContent = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0px 25px;
-  font-size: 16px;
+  font-size: 18px;
   div {
     padding-bottom: 15px;
   }
 `;
 
 const DetailPlanContentCity = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
   font-size: 18px;
   font-weight: bold;
   padding-bottom: 15px;
+
+  div {
+    padding-left: 10px;
+    color: Gray;
+    font-weight: normal;
+  }
 `;
 
 const DetailContentItem = styled.div`
@@ -298,6 +337,7 @@ const DetailContentItem = styled.div`
 
   div {
     justify-content: flex-start;
+    font-size: 18px;
   }
 
   img {
@@ -325,6 +365,18 @@ const DetailButtonDiv = styled.button`
   }
 `;
 
+const InvitationDiv = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0px 20px;
+  height: 60px;
+  color: gray;
+  border: 1px solid lightgray;
+  border-radius: 25px;
+`;
+
 const PlanInvitationBox = styled.div`
   display: flex;
 `;
@@ -336,6 +388,7 @@ export {
   PlanBox,
   PlanContent,
   PlanHorizontalContent,
+  PlanDetailContainer,
   PlanContentTitle,
   PlanHorizontalRightButton,
   PlanBottomSection,
@@ -343,6 +396,7 @@ export {
   PlanDateButton,
   PlanDetailDateBox,
   PlanDetailContentBox,
+  PlanDetailCreateBox,
   ButtonBox,
   PlanDetailDateButton,
   PlanDetailContentHeader,
@@ -361,4 +415,5 @@ export {
   PlanInvitationBox,
   PlanBoxWithCalendar,
   DateDisplay,
+  InvitationDiv,
 };
