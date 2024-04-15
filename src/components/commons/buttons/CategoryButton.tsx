@@ -16,11 +16,11 @@ const CategoryButton: React.FC<CategoryButtonProps> = ({
   icon,
 }) => {
   return (
-    <S.CatagoryBtn onClick={onClick}>
+    <S.CategoryButtonStyle onClick={onClick}>
       {icon}
       {title}
       {width}
-    </S.CatagoryBtn>
+    </S.CategoryButtonStyle>
   );
 };
 

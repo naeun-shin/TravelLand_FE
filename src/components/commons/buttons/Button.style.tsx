@@ -32,26 +32,29 @@ export const ButtonContainer = styled.div`
 `;
 
 export const ButtonsWrapper = styled.div`
-  width: 100%;
+  width: 1100px;
   margin: 0 auto;
+  margin-top: 10px;
   padding-bottom: 10px;
   display: flex;
   gap: 10px;
-  justify-content: center;
+  /* justify-content: center; */
 `;
 
 // 카테고리 버튼 스타일
-export const CatagoryBtn = styled.button`
+export const CategoryButtonStyle = styled.button`
   display: flex;
-  min-width: auto;
+  width: fit-content;
   height: 40px;
   font-weight: 600;
   border-radius: 20px;
   border: none;
-  margin: 10px 10px 10px 0;
+  margin: 5px 0 0px;
   padding: 0 20px;
   align-items: center;
   text-align: center;
   font-size: 14px;
   cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
 `;

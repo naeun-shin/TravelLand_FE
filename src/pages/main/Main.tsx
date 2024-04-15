@@ -2,7 +2,7 @@ import {
   ButtonContainer,
   ButtonsWrapper,
 } from '@/components/commons/buttons/Button.style';
-import Header from '@/components/layouts/Header';
+// import Header from '@/components/layouts/Header';
 import Search from '@/components/search/Search';
 import Button, { TabButton } from '@/components/commons/buttons/Button';
 import MainCard from '@/components/commons/mainItem/MainCard'; // ListItemProps,
@@ -10,6 +10,7 @@ import Maintitle from '@/components/commons/mainItem/MainTitle';
 import ListTitle from '@/components/commons/mainItem/ListTitle';
 import MainList from '@/components/commons/mainItem/MainList';
 import { useNavigate } from 'react-router-dom';
+import ReDesignHeader from '@/components/layouts/Header2';
 
 interface MainProps {
   onClick: () => void;
@@ -29,22 +30,36 @@ const Main: React.FC<MainProps> = () => {
   // 메인 헤더 카드 임시 데이터
   const MainCardsData = [
     {
-      title: '경상도 경주',
-      category: '#한옥',
-      price: '150,000원',
-      imageUrl: '/assets/kyeongju_720.jpg',
+      title: '향기로운 봄날의 한옥 체험', // 게시물 제목
+      categories: ['#한옥', '#데이트', '#가족여행', '#역사', '#역사'],
+      imageUrl: '/assets/kyeongju_720.jpg', // 이미지 URL
+      location: '경상도', // 지역 이름
+      startDate: '2024-05-01', // 시작 날짜
+      endDate: '2024-05-03', // 종료 날짜
     },
     {
-      title: '경기도 가평',
-      category: '#여름',
-      price: '50,000원',
-      imageUrl: '/assets/gapyeong_720.jpg',
+      title: '향기로운 봄날의 한옥 체험', // 게시물 제목
+      categories: ['#한옥'],
+      imageUrl: '/assets/kyeongju_720.jpg', // 이미지 URL
+      location: '경상도', // 지역 이름
+      startDate: '2024-05-01', // 시작 날짜
+      endDate: '2024-05-03', // 종료 날짜
     },
     {
-      title: '전라도 여수',
-      category: '#밤바다',
-      price: '200,000원',
-      imageUrl: '/assets/yeosu_720.jpg',
+      title: '향기로운 봄날의 한옥 체험', // 게시물 제목
+      categories: ['#한옥'],
+      imageUrl: '/assets/kyeongju_720.jpg', // 이미지 URL
+      location: '경상도', // 지역 이름
+      startDate: '2024-05-01', // 시작 날짜
+      endDate: '2024-05-03', // 종료 날짜
+    },
+    {
+      title: '향기로운 봄날의 한옥 체험', // 게시물 제목
+      categories: ['#한옥'],
+      imageUrl: '/assets/kyeongju_720.jpg', // 이미지 URL
+      location: '경상도', // 지역 이름
+      startDate: '2024-05-01', // 시작 날짜
+      endDate: '2024-05-03', // 종료 날짜
     },
   ];
 
@@ -132,7 +147,7 @@ const Main: React.FC<MainProps> = () => {
 
   return (
     <>
-      <Header />
+      <ReDesignHeader />
       <Search
         placeholder="검색어를 입력해주세요."
         onIconClick={() => navigate('/search')}

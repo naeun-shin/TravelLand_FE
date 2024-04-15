@@ -19,7 +19,7 @@ export default Maintitle;
 
 const Container = styled.div`
   display: flex;
-  width: 800px;
+  width: 1100px;
   margin: 0 auto;
   margin-top: 30px;
   justify-content: space-between;

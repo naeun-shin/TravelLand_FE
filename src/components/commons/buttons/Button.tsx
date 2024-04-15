@@ -20,13 +20,13 @@ const Button: React.FC<ButtonProps> = ({
   width = '100px',
   height = '40px',
   color = '#fff',
-  borderColor = '#000',
+  borderColor = '#ccc',
   borderRadius,
   textColor,
   text,
   onClick,
   fontSize,
-  fontWeight,
+  fontWeight = '600',
 }) => {
   return (
     <S.StyledButton
