@@ -12,33 +12,36 @@ const PlanFirstSection = styled.div`
 
 const PlanSecondSection = styled.div``;
 
-const PlanWriterBox = styled.div`
+const PlanBoxWithSpaceBetween = styled.div`
   display: flex;
-  align-items: center;
-
-  border: 1px solid lightgray;
-  border-radius: 5px;
-
-  padding: 20px 15px;
-
+  justify-content: space-between;
   div {
     padding-left: 15px;
-    font-weight: bold;
-    font-size: 18px;
   }
+`;
+
+const PlanBoxWithCalendar = styled.div`
+  display: flex;
+  justify-content: space-between;
 `;
 
 const PlanBox = styled.div`
   display: flex;
+  /* align-content: center; */
+  flex-direction: row;
   align-items: center;
 
   /* border-bottom: 1px solid lightgray; */
-  padding: 20px 15px;
+  padding: 10px 0px;
 `;
 
 const PlanContent = styled.div`
   padding-left: 15px;
-  font-weight: normal;
+  /* font-weight: normal; */
+  /* justify-content: center; */
+  div {
+    padding-left: 5px;
+  }
 `;
 
 const PlanContentTitle = styled.div`
@@ -55,11 +58,6 @@ const PlanHorizontalContent = styled.div`
   width: 100%;
 
   padding-left: 15px;
-
-  div {
-    font-weight: bold;
-    font-size: 18px;
-  }
 `;
 
 const PlanHorizontalRightButton = styled.button`
@@ -312,7 +310,7 @@ const PlanInvitationBox = styled.div`
 export {
   PlanFirstSection,
   PlanSecondSection,
-  PlanWriterBox,
+  PlanBoxWithSpaceBetween,
   PlanBox,
   PlanContent,
   PlanHorizontalContent,
@@ -339,4 +337,5 @@ export {
   DetaiHeaderSubDestination,
   ButtonBoxToCenter,
   PlanInvitationBox,
+  PlanBoxWithCalendar,
 };

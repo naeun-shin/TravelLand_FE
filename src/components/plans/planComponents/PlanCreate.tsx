@@ -50,8 +50,35 @@ const PlanCreate = () => {
   const displayDateRange = () => {
     const start = dateRange[0] ? dateRange[0].toLocaleDateString() : '';
     const end = dateRange[1] ? dateRange[1].toLocaleDateString() : '';
+    if (!start && !end) {
+      return (
+        <ModernInput
+          type="text"
+          placeholder="지역을 입력해주세요"
+          width={400}
+          height={30}
+          border="transparent"
+          fontSize={16}
+          readonly={true}
+          // onChange={handleAreaChange}
+        />
+      );
+    }
 
-    return `${start} - ${end}`;
+    return (
+      <div
+        style={{
+          padding: '5px',
+          width: '400px',
+          border: ' 1px solid transparent',
+          height: '30px',
+          fontSize: '16px',
+          fontWeight: 'bold',
+        }}
+      >
+        {start} - {end}
+      </div>
+    );
   };
 
   // 지역
@@ -87,80 +114,91 @@ const PlanCreate = () => {
           area,
         },
       });
+    } else {
+      alert('전체 입력이 필요합니다!');
     }
   };
+
+  const dateFormat = 'yyyy-MM';
 
   return (
     <>
       {/* 전체 컨테이너 */}
-      <div>
+      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
         {/* 작성 컨테이너 */}
-        <div style={{ width: '800px' }}>
+        <div
+          style={{
+            width: '100%',
+          }}
+        >
           <div>
             <div>제목</div>
-            <ModernInput
-              type="text"
-              placeholder="제목을 입력해주세요"
-              width={100}
-              height={30}
-              border="transparent"
-              onChange={handleTitleChange}
-            />
+            <S.PlanBoxWithSpaceBetween>
+              <ModernInput
+                type="text"
+                placeholder="제목을 입력해주세요"
+                width={400}
+                height={50}
+                border="transparent"
+                onChange={handleTitleChange}
+                fontSize={18}
+                fontWeight={'bold'}
+              />
+              <div>
+                <ToggleButton isChecked={!isPublic} onToggle={toggleIsPublic} />
+              </div>
+            </S.PlanBoxWithSpaceBetween>
           </div>
-          <div>
-            <ToggleButton isChecked={!isPublic} onToggle={toggleIsPublic} />
-          </div>
-          <hr />
           <div>
             {/* 플랜 계획 첫페이지 */}
             <div>
-              {/* 작성자 칸 */}
-              {/* <S.PlanWriterBox>
-            <img src="/assets/icons/pinPoint.png" />
-            <div>
-              <p>작성자 유저 정보 표시란</p>
-            </div>
-          </S.PlanWriterBox> */}
               {/* 지역 */}
-              <div>
+              <S.PlanBox>
                 <img src="/assets/icons/pinPoint.png" />
-                <div>
+                <S.PlanContent>
                   <div>지역</div>
                   <ModernInput
                     type="text"
                     placeholder="지역을 입력해주세요"
-                    width={100}
+                    width={400}
                     height={30}
                     border="transparent"
+                    fontSize={16}
                     onChange={handleAreaChange}
                   />
-                </div>
-              </div>
+                </S.PlanContent>
+              </S.PlanBox>
               <hr />
               {/*예산 */}
-              <div>
+              <S.PlanBox>
                 <img src="/assets/icons/dolor.png" />
-                <div>
+                <S.PlanContent>
                   <div>예산</div>
                   <ModernInput
                     type="text"
                     placeholder="예산을 입력해주세요"
-                    width={100}
+                    width={400}
                     height={30}
                     border="transparent"
+                    fontSize={16}
                     onChange={handleBudgetChange}
                   />
-                </div>
-              </div>
+                </S.PlanContent>
+              </S.PlanBox>
               <hr />
               {/*기간 선택*/}
-              <div>
+              <S.PlanBox>
                 <img src="/assets/icons/calendar.png" />
-                <div>
-                  <S.PlanContentTitle>여행기간</S.PlanContentTitle>
-                  <div> {displayDateRange()}</div>
-                </div>
-              </div>
+                <S.PlanBoxWithCalendar>
+                  <div style={{ paddingLeft: '15px' }}>
+                    <div>여행기간</div>
+                    <div> {displayDateRange()}</div>
+                  </div>
+                  <div style={{ paddingLeft: '200px' }}>
+                    <img src="/assets/icons/arrow_to_right.png" />
+                  </div>
+                </S.PlanBoxWithCalendar>
+              </S.PlanBox>
               <hr />
             </div>
           </div>
@@ -178,8 +216,10 @@ const PlanCreate = () => {
             selectsRange={true}
             startDate={dateRange[0]}
             endDate={dateRange[1]}
-            onChange={handleDateRangeChange}
             inline
+            dateFormat={dateFormat}
+            onChange={handleDateRangeChange}
+
             // customInput={
             //   <CalendarButton
             //     onClick={function (): void {

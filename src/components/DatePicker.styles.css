@@ -380,7 +380,7 @@
 
 .react-datepicker__week {
   white-space: nowrap;
-  padding: 10px;
+  /* padding: 10px; */
 }
 .react-datepicker__day-name {
   color: lightgray;
