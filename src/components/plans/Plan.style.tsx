@@ -32,7 +32,7 @@ const PlanBox = styled.div`
   display: flex;
   align-items: center;
 
-  border-bottom: 1px solid lightgray;
+  /* border-bottom: 1px solid lightgray; */
   padding: 20px 15px;
 `;
 

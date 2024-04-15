@@ -88,16 +88,17 @@ const PlanCreate2: React.FC = () => {
     const end = tripEndDate;
     const diff = end.getTime() - start.getTime();
     const totalDays = Math.ceil(diff / (1000 * 3600 * 24)) + 1; // 종료 날짜 포함
+    console.log(start, end, diff);
     return totalDays;
   };
-
   // 상태를 초기화하는 부분에서 함수를 호출
   const [totalDays, setTotalDays] = useState(calculateTotalDays());
 
   // startDate와 currentStep을 기반으로 해당 일차의 날짜 계산
   const calculateDateForStep = (start: string | Date, step: number): string => {
+    console.log(start, step);
     const resultDate = new Date(start);
-    resultDate.setDate(resultDate.getDate() + step);
+    resultDate.setDate(resultDate.getDate() + 1 + step); // step이 0부터 시작으로 0인 경우 전일이 보여서 수정
     return formatDate(resultDate);
   };
 

@@ -5,7 +5,7 @@ import { ModernInput } from '@/components/commons/inputs/Input';
 import * as S from '@/components/plans/Plan.style';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import '@/components/DatePicker.styles.css';
-import 'react-datepicker/dist/react-datepicker.min.css';
+// import 'react-datepicker/dist/react-datepicker.min.css';
 import { Locale } from 'node_modules/date-fns/locale/types';
 import ko from 'date-fns/locale/ko';
 registerLocale('ko', ko as unknown as Locale);
@@ -92,101 +92,115 @@ const PlanCreate = () => {
 
   return (
     <>
-      <S.PlanFirstSection>
-        <S.PlanBox>
-          <img src="/assets/icons/pinPoint.png" />
-          <S.PlanContent>
-            <S.PlanContentTitle>제목</S.PlanContentTitle>
+      {/* 전체 컨테이너 */}
+      <div>
+        {/* 작성 컨테이너 */}
+        <div style={{ width: '800px' }}>
+          <div>
+            <div>제목</div>
             <ModernInput
               type="text"
-              placeholder="제목을 입력하세요"
+              placeholder="제목을 입력해주세요"
               width={100}
               height={30}
               border="transparent"
               onChange={handleTitleChange}
             />
-          </S.PlanContent>
-        </S.PlanBox>
-        <div>
-          <ToggleButton isChecked={!isPublic} onToggle={toggleIsPublic} />
-        </div>
-      </S.PlanFirstSection>
-      <S.PlanSecondSection>
-        {/* 플랜 계획 첫페이지 */}
-        <div>
-          {/* 작성자 칸 */}
-          {/* <S.PlanWriterBox>
+          </div>
+          <div>
+            <ToggleButton isChecked={!isPublic} onToggle={toggleIsPublic} />
+          </div>
+          <hr />
+          <div>
+            {/* 플랜 계획 첫페이지 */}
+            <div>
+              {/* 작성자 칸 */}
+              {/* <S.PlanWriterBox>
             <img src="/assets/icons/pinPoint.png" />
             <div>
               <p>작성자 유저 정보 표시란</p>
             </div>
           </S.PlanWriterBox> */}
-          {/* 지역 */}
-          <S.PlanBox>
-            <img src="/assets/icons/pinPoint.png" />
-            <S.PlanContent>
-              <S.PlanContentTitle>지역</S.PlanContentTitle>
-              <ModernInput
-                type="text"
-                placeholder="부산"
-                width={100}
-                height={30}
-                border="transparent"
-                onChange={handleAreaChange}
-              />
-            </S.PlanContent>
-          </S.PlanBox>
-          {/*예산 */}
-          <S.PlanBox>
-            <img src="/assets/icons/dolor.png" />
-            <S.PlanContent>
-              <S.PlanContentTitle>예산</S.PlanContentTitle>
-              <ModernInput
-                type="text"
-                placeholder="100000"
-                width={100}
-                height={30}
-                border="transparent"
-                onChange={handleBudgetChange}
-              />
-            </S.PlanContent>
-          </S.PlanBox>
-          {/*기간 선택*/}
-          <S.PlanBox>
-            <img src="/assets/icons/calendar.png" />
-            <S.PlanHorizontalContent>
-              <S.PlanContentTitle>기간</S.PlanContentTitle>
-              <div>{displayDateRange()}</div>
-            </S.PlanHorizontalContent>
-          </S.PlanBox>
+              {/* 지역 */}
+              <div>
+                <img src="/assets/icons/pinPoint.png" />
+                <div>
+                  <div>지역</div>
+                  <ModernInput
+                    type="text"
+                    placeholder="지역을 입력해주세요"
+                    width={100}
+                    height={30}
+                    border="transparent"
+                    onChange={handleAreaChange}
+                  />
+                </div>
+              </div>
+              <hr />
+              {/*예산 */}
+              <div>
+                <img src="/assets/icons/dolor.png" />
+                <div>
+                  <div>예산</div>
+                  <ModernInput
+                    type="text"
+                    placeholder="예산을 입력해주세요"
+                    width={100}
+                    height={30}
+                    border="transparent"
+                    onChange={handleBudgetChange}
+                  />
+                </div>
+              </div>
+              <hr />
+              {/*기간 선택*/}
+              <div>
+                <img src="/assets/icons/calendar.png" />
+                <div>
+                  <S.PlanContentTitle>여행기간</S.PlanContentTitle>
+                  <div> {displayDateRange()}</div>
+                </div>
+              </div>
+              <hr />
+            </div>
+          </div>
         </div>
-      </S.PlanSecondSection>
+        {/* 달력 컨테이너 */}
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <DatePicker
+            locale="ko"
+            selectsRange={true}
+            startDate={dateRange[0]}
+            endDate={dateRange[1]}
+            onChange={handleDateRangeChange}
+            inline
+            // customInput={
+            //   <CalendarButton
+            //     onClick={function (): void {
+            //       throw new Error('Function not implemented.');
+            //     }}
+            //   />
+            // }
+            // 이제 여기서 ref와 onClick 모두 처리 가능
+            // excludeDates={[addDays(new Date(), 1), addDays(new Date(), 5)]}
+
+            // open={isCalendarOpen}
+            // shouldCloseOnSelect={true}
+            // onCalendarOpen={() => setIsCalendarOpen(true)}
+            // onCalendarClose={() => setIsCalendarOpen(false)} // 달력이 닫힐 때 상태를 업데이트하는 콜백 추가
+          />
+        </div>
+      </div>
       <S.PlanBottomSection>
         {/* 다음 버튼 */}
         <S.PlanNextButton onClick={handleNextClick}>다음</S.PlanNextButton>
       </S.PlanBottomSection>
-      <DatePicker
-        locale="ko"
-        selectsRange={true}
-        startDate={dateRange[0]}
-        endDate={dateRange[1]}
-        onChange={handleDateRangeChange}
-        inline
-        // customInput={
-        //   <CalendarButton
-        //     onClick={function (): void {
-        //       throw new Error('Function not implemented.');
-        //     }}
-        //   />
-        // }
-        // 이제 여기서 ref와 onClick 모두 처리 가능
-        // excludeDates={[addDays(new Date(), 1), addDays(new Date(), 5)]}
-
-        // open={isCalendarOpen}
-        // shouldCloseOnSelect={true}
-        // onCalendarOpen={() => setIsCalendarOpen(true)}
-        // onCalendarClose={() => setIsCalendarOpen(false)} // 달력이 닫힐 때 상태를 업데이트하는 콜백 추가
-      />
     </>
   );
 };
