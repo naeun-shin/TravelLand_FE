@@ -54,9 +54,7 @@ const PlanCreate2: React.FC = () => {
   const [currentStep, setCurrentStep] = useState<number>(0);
 
   // Initializing displayDate
-  const [displayDate, setDisplayDate] = useState<string>(
-    formatDate(tripStartDate),
-  );
+  const [, setDisplayDate] = useState<string>(formatDate(tripStartDate));
 
   const [unitPlans, setUnitPlans] = useState<UnitPlan[]>([
     {
