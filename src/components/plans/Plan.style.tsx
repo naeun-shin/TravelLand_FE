@@ -1,5 +1,8 @@
 import styled from 'styled-components';
-
+type PlanDetailDateButtonProps = {
+  isActive: boolean;
+  // date: any;
+};
 const PlanFirstSection = styled.div`
   display: flex;
   /* padding: 20px 5px; */
@@ -116,29 +119,46 @@ const ButtonBoxToCenter = styled.div`
 `;
 // detail 영역
 const PlanDetailDateBox = styled.div`
-  padding: 10px 0px;
+  padding: 30px 0px;
 `;
 
-const PlanDetailDateButton = styled.button`
+const PlanDetailDateButton = styled.button<PlanDetailDateButtonProps>`
+  position: relative; // 부모 요소에 상대적인 위치 지정
+
   margin-right: 10px;
   padding: 5px;
-
+  background-color: ${(props) => (props.isActive ? '#5ac8ec' : 'default')};
   width: 150px;
   height: 50px;
 
-  background-color: gray;
+  background-color: #5ac8ec;
   color: white;
 
-  border: 1px solid lightgray;
-  border-radius: 5px;
+  border: 1px solid transparent;
+  border-radius: 25px;
+  height: auto; /* 높이를 자동으로 설정하여 내부 요소에 맞춤 */
+  padding-bottom: ${(props) =>
+    props.isActive
+      ? '35px'
+      : '5px'}; /* 활성화 상태일 때 아래쪽 패딩을 늘려 날짜에 여백을 제공 */
+`;
+
+const DateDisplay = styled.div`
+  position: absolute;
+  /* bottom: -20px; // Adjust as necessary to position below the day button */
+  left: 0;
+  right: 0;
+  text-align: center;
+  color: white;
+  padding: 5px;
 `;
 
 const PlanDetailContentBox = styled.div`
   background-color: white;
   border: 1px solid lightgray;
-  border-radius: 5px;
+  border-radius: 35px;
 
-  width: 100%;
+  width: 65%;
   height: 100%;
 
   padding: 25px;
@@ -154,7 +174,7 @@ const PlanDetailContentHeader = styled.div`
 `;
 
 const DetailHeaderContent = styled.div`
-  background-color: gray;
+  /* background-color: gray; */
   color: white;
   height: 100px;
   width: 150px;
@@ -338,4 +358,5 @@ export {
   ButtonBoxToCenter,
   PlanInvitationBox,
   PlanBoxWithCalendar,
+  DateDisplay,
 };

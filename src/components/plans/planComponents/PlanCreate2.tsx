@@ -53,6 +53,11 @@ const PlanCreate2: React.FC = () => {
   // useState부분
   const [currentStep, setCurrentStep] = useState<number>(0);
 
+  // Initializing displayDate
+  const [displayDate, setDisplayDate] = useState<string>(
+    formatDate(tripStartDate),
+  );
+
   const [unitPlans, setUnitPlans] = useState<UnitPlan[]>([
     {
       title: '',
@@ -98,7 +103,8 @@ const PlanCreate2: React.FC = () => {
   const calculateDateForStep = (start: string | Date, step: number): string => {
     console.log(start, step);
     const resultDate = new Date(start);
-    resultDate.setDate(resultDate.getDate() + 1 + step); // step이 0부터 시작으로 0인 경우 전일이 보여서 수정
+
+    resultDate.setDate(resultDate.getDate() + step + 1); // step이 0부터 시작으로 0인 경우 전일이 보여서 수정
     return formatDate(resultDate);
   };
 
@@ -108,9 +114,6 @@ const PlanCreate2: React.FC = () => {
       unitPlans: [],
     },
   ]);
-
-  // 각 일차의 날짜를 보여주는 부분을 업데이트
-  const displayDate = calculateDateForStep(tripStartDate, currentStep);
 
   useEffect(() => {
     setTotalDays(calculateTotalDays());
@@ -163,8 +166,6 @@ const PlanCreate2: React.FC = () => {
     setIsModalOpen(true);
   };
 
-  const createPlanList = useCreatePlanMutaton();
-
   // 추가하기 버튼
   const handlePlanAdd = () => {
     // 현재 unitPlans에 새 UnitPlan 추가
@@ -197,6 +198,13 @@ const PlanCreate2: React.FC = () => {
   // handleDayChange 함수 내에서 currentStep 업데이트 로직 확인 및 최적화
   const handleDayChange = (stepIndex: number) => {
     const currentUnitPlans = [...unitPlans];
+    console.log('Changing day to:', stepIndex);
+
+    const newDisplayDate = calculateDateForStep(tripStartDate, stepIndex);
+    console.log('New display date:', newDisplayDate);
+
+    setDisplayDate(newDisplayDate);
+    setCurrentStep(stepIndex);
 
     // 새로운 dayPlans 배열을 준비합니다. 기존 dayPlans를 복사합니다.
     let newDayPlans = [...dayPlans];
@@ -232,6 +240,8 @@ const PlanCreate2: React.FC = () => {
       },
     ]);
   };
+
+  const createPlanList = useCreatePlanMutaton();
 
   // 등록하기 버튼
   const handlePlanSubmit = () => {
@@ -286,26 +296,21 @@ const PlanCreate2: React.FC = () => {
           <S.PlanDetailDateButton
             key={index}
             onClick={() => handleDayChange(index)}
+            isActive={currentStep === index}
+            // date={calculateDateForStep(tripStartDate, index)}
           >
             {`${index + 1}일차`}
+            <hr />
+            {currentStep === index && (
+              <div style={{ marginTop: '5px' }}>
+                {calculateDateForStep(tripStartDate, index)}
+              </div>
+            )}
           </S.PlanDetailDateButton>
         ))}
       </S.PlanDetailDateBox>
       {/* 스태퍼 박스 영역 */}
       <S.PlanDetailContentBox>
-        {/* 박스 헤더 영역 */}
-        <S.PlanDetailContentHeader>
-          <S.DetailHeaderContent>
-            <div>{`${currentStep + 1}일차`}</div>
-            <hr />
-          </S.DetailHeaderContent>
-          <S.DetailHeaderSubContent>
-            <S.DetailHeaderSubDate>
-              {' '}
-              <div>{displayDate}</div>
-            </S.DetailHeaderSubDate>
-          </S.DetailHeaderSubContent>
-        </S.PlanDetailContentHeader>
         {unitPlans.map((input, index) => (
           <IS.PlanListInputContainer key={index}>
             {/* 출발지 영역 */}
@@ -357,26 +362,25 @@ const PlanCreate2: React.FC = () => {
               />
             </IS.ListInputbox>
             {/* 위치 영역 */}
-            <IS.ListInputbox>
-              <div>
-                위치
-                <img
-                  src="/assets/icons/pin.png"
-                  alt="pin"
-                  onClick={() => handleOpenMapClick(index)}
+            <IS.ListInputboxWithFlex>
+              <div>위치</div>
+              <IS.ListContent>
+                <ModernInput
+                  placeholder="서울특별시 중구 을지로 201"
+                  value={`${input.place_name}, ${input.address}`}
+                  readonly={true}
+                  type={'text'}
+                  border="transparent"
                 />
-                <p>아이콘을 클릭하면 지도가 보입니다.</p>
-              </div>
-              <input
-                placeholder="서울특별시 중구 을지로 201"
-                value={`${input.place_name}, ${input.address}`}
-                // value={location}
-                readOnly
-                // onChange={(e) =>
-                //   handleInputChange(index, 'budget', e.target.value)
-                // }
-              />
-            </IS.ListInputbox>
+                <IS.ImgBox>
+                  <img
+                    src="/assets/icons/pin.png"
+                    alt="pin"
+                    onClick={() => handleOpenMapClick(index)}
+                  />
+                </IS.ImgBox>
+              </IS.ListContent>
+            </IS.ListInputboxWithFlex>
           </IS.PlanListInputContainer>
         ))}
       </S.PlanDetailContentBox>
