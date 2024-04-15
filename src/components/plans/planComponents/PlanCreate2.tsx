@@ -300,18 +300,19 @@ const PlanCreate2: React.FC = () => {
             // date={calculateDateForStep(tripStartDate, index)}
           >
             {`${index + 1}일차`}
-            <hr />
             {currentStep === index && (
-              <div style={{ marginTop: '5px' }}>
-                {calculateDateForStep(tripStartDate, index)}
-              </div>
+              <>
+                <hr />
+                <div>{calculateDateForStep(tripStartDate, index)}</div>
+              </>
             )}
           </S.PlanDetailDateButton>
         ))}
       </S.PlanDetailDateBox>
       {/* 스태퍼 박스 영역 */}
-      <S.PlanDetailContentBox>
-        {unitPlans.map((input, index) => (
+
+      {unitPlans.map((input, index) => (
+        <S.PlanDetailContentBox>
           <IS.PlanListInputContainer key={index}>
             {/* 출발지 영역 */}
             <IS.ListInputbox>
@@ -382,33 +383,35 @@ const PlanCreate2: React.FC = () => {
               </IS.ListContent>
             </IS.ListInputboxWithFlex>
           </IS.PlanListInputContainer>
-        ))}
-      </S.PlanDetailContentBox>
-      <PS.ButtonBoxToCenter>
+        </S.PlanDetailContentBox>
+      ))}
+      <PS.ButtonBox>
         <Button
           text="+"
-          width="auto"
-          height="50px"
+          width="100%"
+          height="60px"
           color="white"
-          borderColor="black"
-          borderRadius="15px"
-          fontWeight="bold"
+          borderColor="lightGray"
+          borderRadius="25px"
+          textColor="lightGray"
           onClick={handlePlanAdd}
         />
-      </PS.ButtonBoxToCenter>
+      </PS.ButtonBox>
       {/* 등록하기 버튼 영역 */}
-      <S.ButtonBox>
+      <S.ButtonBoxToRight>
         <Button
           text="등록하기"
           width="150px"
           height="50px"
-          color="black"
           borderRadius="15px"
           fontWeight="bold"
-          textColor="white"
+          textColor="black"
+          color="lightGray"
+          borderColor="transparent"
+          marginRight="15px"
           onClick={handlePlanSubmit} // 등록하기 버튼 클릭 핸들러 추가
         />
-      </S.ButtonBox>
+      </S.ButtonBoxToRight>
 
       {isModalOpen && (
         <KaKaoMap
