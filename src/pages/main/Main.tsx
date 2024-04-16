@@ -6,7 +6,7 @@ import {
 import Search from '@/components/search/Search';
 import Button, {
   SmallButton,
-  TabButton,
+  // TabButton,
 } from '@/components/commons/buttons/Button';
 import MainCard from '@/components/commons/mainItem/MainCard';
 import Maintitle from '@/components/commons/mainItem/MainTitle';
@@ -14,7 +14,7 @@ import ListTitle from '@/components/commons/mainItem/ListTitle';
 import MainList from '@/components/commons/mainItem/MainList';
 import ReDesignHeader from '@/components/layouts/Header2';
 import SearchModal from './SearchPage';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 // import SearchModal from '@/components/SearchModal';
 
@@ -23,7 +23,7 @@ interface MainProps {
 }
 
 const Main: React.FC<MainProps> = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const [isSearchModalOpen, setSearchModalOpen] = useState<boolean>(false);
 
@@ -31,22 +31,22 @@ const Main: React.FC<MainProps> = () => {
   const toggleSearchModal = () => setSearchModalOpen(!isSearchModalOpen);
 
   // 모달을 여는 함수
-  const openSearchModal = () => {
-    setSearchModalOpen(true);
-  };
+  // const openSearchModal = () => {
+  //   setSearchModalOpen(true);
+  // };
 
-  // 모달을 닫는 함수
-  const closeSearchModal = () => {
-    setSearchModalOpen(false);
-  };
+  // // 모달을 닫는 함수
+  // const closeSearchModal = () => {
+  //   setSearchModalOpen(false);
+  // };
 
-  const handleMakePlanClick = () => {
-    navigate('/planList');
-  };
+  // const handleMakePlanClick = () => {
+  //   navigate('/planList');
+  // };
 
-  const handleReviewPageClick = () => {
-    navigate('/travelReview');
-  };
+  // const handleReviewPageClick = () => {
+  //   navigate('/travelReview');
+  // };
 
   // 메인 헤더 카드 임시 데이터
   const MainCardsData = [
