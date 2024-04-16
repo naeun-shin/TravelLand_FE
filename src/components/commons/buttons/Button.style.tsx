@@ -23,10 +23,10 @@ export const StyledButton = styled.button<ButtonProps>`
   text-align: center;
   text-decoration: none;
   &:hover {
-    background-color: ${(props) =>
-      props.hoverColor || props.color}; // 호버 시 색상 변경
+    background-color: ${(props) => props.hoverColor || props.color}; // 호버 시 색상 변경
   }
   margin-right: ${(props) => props.marginRight || '0px'};
+`;
 
 export const ButtonContainer = styled.div`
   display: flex;
