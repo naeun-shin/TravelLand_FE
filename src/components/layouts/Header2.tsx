@@ -12,9 +12,9 @@ interface SearchInputContainerProps {
   isScrolled: boolean;
 }
 
-interface UsersProps {
-  isLoggedIn: boolean;
-}
+// interface UsersProps {
+//   isLoggedIn: boolean;
+// }
 
 const ReDesignHeader: React.FC = () => {
   // 메뉴 모달
@@ -28,7 +28,7 @@ const ReDesignHeader: React.FC = () => {
   const navigate = useNavigate();
 
   // 모달을 토글하는 함수
-  const toggleModal = () => setIsModalOpen((prevState) => !prevState);
+  // const toggleModal = () => setIsModalOpen((prevState) => !prevState);
 
   // 모달을 여는 함수
   const openSearchModal = () => {
@@ -46,9 +46,9 @@ const ReDesignHeader: React.FC = () => {
   };
 
   // 메뉴 모달 닫기
-  const closeMenuModal = () => {
-    setIsMenuModalOpen(false);
-  };
+  // const closeMenuModal = () => {
+  //   setIsMenuModalOpen(false);
+  // };
 
   // 로그인 모달 열기
   const handleOpenLogin = () => {

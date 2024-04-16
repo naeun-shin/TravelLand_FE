@@ -6,7 +6,7 @@ import {
 import Search from '@/components/search/Search';
 import Button, {
   SmallButton,
-  TabButton,
+  // TabButton,
 } from '@/components/commons/buttons/Button';
 import MainCard from '@/components/commons/mainItem/MainCard';
 import Maintitle from '@/components/commons/mainItem/MainTitle';
@@ -31,14 +31,14 @@ const Main: React.FC<MainProps> = () => {
   const toggleSearchModal = () => setSearchModalOpen(!isSearchModalOpen);
 
   // 모달을 여는 함수
-  const openSearchModal = () => {
-    setSearchModalOpen(true);
-  };
+  // const openSearchModal = () => {
+  //   setSearchModalOpen(true);
+  // };
 
-  // 모달을 닫는 함수
-  const closeSearchModal = () => {
-    setSearchModalOpen(false);
-  };
+  // // 모달을 닫는 함수
+  // const closeSearchModal = () => {
+  //   setSearchModalOpen(false);
+  // };
 
   const handleMakePlanClick = () => {
     navigate('/planList');
@@ -240,8 +240,8 @@ const Main: React.FC<MainProps> = () => {
         {/* ... */}
       </ButtonContainer>
       <ButtonsWrapper1>
-        <Button text="떠돌이랜드" />
-        <Button text="어디 갈랜?" />
+        <Button text="떠돌이랜드" onClick={handleReviewPageClick} />
+        <Button text="어디 갈랜?" onClick={handleMakePlanClick} />
       </ButtonsWrapper1>
       <Maintitle />
       <ButtonsWrapper>

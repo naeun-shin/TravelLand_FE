@@ -1,6 +1,6 @@
 // import React from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import minilogo from '@/icons/Group 11478.svg';
 
 const Maintitle = () => {
