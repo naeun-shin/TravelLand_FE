@@ -5,6 +5,7 @@ import CategoryButton from '@/components/commons/buttons/CategoryButton';
 import SearchInput from '@/components/search/Search';
 import { IoClose } from 'react-icons/io5';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 interface SearchModalProps {
   isOpen: boolean;
@@ -12,6 +13,7 @@ interface SearchModalProps {
 }
 
 const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
+  const navigate = useNavigate();
   useEffect(() => {
     const handleScroll = (event: Event) => {
       event.preventDefault();
@@ -31,7 +33,12 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
   const handleCategoryClick = (category: string) => {
     console.log(`${category} 카테고리 선택`);
     // 카테고리 Api 호출
+    navigate('/results');
   };
+
+  // const handleResultpage = () => {
+  //   navigate('/results');
+  // }
 
   return (
     <>
@@ -48,9 +55,9 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
             <S.LocalTitle>지역별 인기</S.LocalTitle>
             <S.BtnContainer>
               <CategoryButton
-                title="제주도"
+                title="고성"
                 icon={<IoLocationSharp />}
-                onClick={() => handleCategoryClick('제주도')}
+                onClick={() => handleCategoryClick('고성')}
               />
               <CategoryButton
                 title="강원도"
