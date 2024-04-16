@@ -148,6 +148,7 @@ export const ResultItem = styled.article`
   /* padding: 10px 0; */
   display: flex;
   margin-top: 30px;
+  position: relative;
 
   &:last-child {
     border-bottom: none;

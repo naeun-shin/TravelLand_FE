@@ -12,6 +12,7 @@ import TravelPlanList from '@/pages/travelPlan/TravelPlanList';
 import TravelPlanDetail from '@/pages/travelPlan/TravelPlanDetail';
 import SearchResults from '@/pages/main/SearchResults';
 import TravelCreateForm from '@/pages/travelReview/TravelCreatePage';
+import ReviewCreatePage1 from '@/pages/travelReview/ReviewCreate1';
 
 export const router = createBrowserRouter([
   {
@@ -56,22 +57,23 @@ export const router = createBrowserRouter([
   { path: '/planList', element: <TravelPlanList /> },
   { path: '/planDetail/:id', element: <TravelPlanDetail /> },
   { path: '/TravelDetailPage/:tripId', element: <TravelDetailPage /> },
-  {
-    path: '/travelCreate',
-    element: (
-      <TravelCreateForm
-        tripData={{
-          title: '',
-          content: '',
-          tripStartDate: '',
-          tripEndDate: '',
-          cost: 0,
-          hashTag: [],
-          address: '',
-          isPublic: true,
-        }}
-        imageList={[]}
-      />
-    ),
-  },
+  // {
+  //   path: '/travelCreate',
+  //   element: (
+  //     <TravelCreateForm
+  //       tripData={{
+  //         title: '',
+  //         content: '',
+  //         tripStartDate: '',
+  //         tripEndDate: '',
+  //         cost: 0,
+  //         hashTag: [],
+  //         address: '',
+  //         isPublic: true,
+  //       }}
+  //       imageList={[]}
+  //     />
+  //   ),
+  // },
+  { path: '/travelCreate', element: <ReviewCreatePage1 /> },
 ]);
