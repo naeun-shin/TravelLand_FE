@@ -14,7 +14,7 @@ import ListTitle from '@/components/commons/mainItem/ListTitle';
 import MainList from '@/components/commons/mainItem/MainList';
 import ReDesignHeader from '@/components/layouts/Header2';
 import SearchModal from './SearchPage';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 // import SearchModal from '@/components/SearchModal';
 
@@ -23,7 +23,7 @@ interface MainProps {
 }
 
 const Main: React.FC<MainProps> = () => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const [isSearchModalOpen, setSearchModalOpen] = useState<boolean>(false);
 
@@ -40,13 +40,13 @@ const Main: React.FC<MainProps> = () => {
   //   setSearchModalOpen(false);
   // };
 
-  // const handleMakePlanClick = () => {
-  //   navigate('/planList');
-  // };
+  const handleMakePlanClick = () => {
+    navigate('/planList');
+  };
 
-  // const handleReviewPageClick = () => {
-  //   navigate('/travelReview');
-  // };
+  const handleReviewPageClick = () => {
+    navigate('/travelReview');
+  };
 
   // 메인 헤더 카드 임시 데이터
   const MainCardsData = [
@@ -240,8 +240,8 @@ const Main: React.FC<MainProps> = () => {
         {/* ... */}
       </ButtonContainer>
       <ButtonsWrapper1>
-        <Button text="떠돌이랜드" />
-        <Button text="어디 갈랜?" />
+        <Button text="떠돌이랜드" onClick={handleReviewPageClick} />
+        <Button text="어디 갈랜?" onClick={handleMakePlanClick} />
       </ButtonsWrapper1>
       <Maintitle />
       <ButtonsWrapper>
