@@ -1,6 +1,7 @@
+import { CiBookmark, CiHeart } from 'react-icons/ci';
 import * as S from './List.style';
 import { useNavigate } from 'react-router-dom';
-
+import { IoEyeOutline } from 'react-icons/io5';
 interface PlanListItem {
   area: string;
   title: string;
@@ -22,9 +23,9 @@ const List: React.FC<ListProps> = ({ planListData }) => {
     navigate(`/planDetail/${planId}`);
   };
 
-  const handleBookmarkClick = (planId: number) => {
-    console.log(planId);
-  };
+  // const handleBookmarkClick = (planId: number) => {
+  //   console.log(planId);
+  // };
 
   const halfIndex = Math.ceil(planListData.length / 2);
   const leftColumnItems = planListData.slice(0, halfIndex);
@@ -43,10 +44,7 @@ const List: React.FC<ListProps> = ({ planListData }) => {
               <S.ListItem key={index}>
                 {/* 좌측 내용 */}
                 <S.ListLeftIcon>
-                  <img
-                    src="/assets/icons/bookmark.png"
-                    onClick={() => handleBookmarkClick(item.planId)}
-                  />
+                  <CiBookmark size="30px" color="gray" />
                 </S.ListLeftIcon>
                 <S.ListItemLeft>
                   <div>
@@ -60,9 +58,10 @@ const List: React.FC<ListProps> = ({ planListData }) => {
                   </div>
                 </S.ListItemLeft>
                 <S.ListItemRight>
-                  <img src="/assets/icons/comment.png" alt="comment" />
+                  {' '}
+                  <IoEyeOutline size="25px" color="gray" />
                   {item.viewCount}
-                  <img src="/assets/icons/comment.png" alt="view" />
+                  <CiHeart size="25px" color="gray" />
                   {item.viewCount}
                 </S.ListItemRight>
                 {/* 우측 아이콘들 */}
@@ -74,10 +73,7 @@ const List: React.FC<ListProps> = ({ planListData }) => {
               <S.ListItem key={index}>
                 {/* 좌측 내용 */}
                 <S.ListLeftIcon>
-                  <img
-                    src="/assets/icons/bookmark.png"
-                    onClick={() => handleBookmarkClick(item.planId)}
-                  />
+                  <CiBookmark size="30px" color="gray" />
                 </S.ListLeftIcon>
                 <S.ListItemLeft>
                   <div>
@@ -94,9 +90,9 @@ const List: React.FC<ListProps> = ({ planListData }) => {
                   </div>
                 </S.ListItemLeft>
                 <S.ListItemRight>
-                  <img src="/assets/icons/comment.png" alt="comment" />
+                  <IoEyeOutline size="25px" color="gray" />
                   {item.viewCount}
-                  <img src="/assets/icons/comment.png" alt="view" />
+                  <CiHeart size="25px" color="gray" />
                   {item.viewCount}
                 </S.ListItemRight>
                 {/* 우측 아이콘들 */}

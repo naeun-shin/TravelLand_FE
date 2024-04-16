@@ -8,6 +8,7 @@ import { useDeleteMutation } from '@/hooks/useMutation';
 import InvitationCard from '@/components/commons/cards/InvitationCard';
 import { FaLocationDot } from 'react-icons/fa6';
 import { CiHeart, CiBookmark, CiCirclePlus } from 'react-icons/ci';
+import { Invitation } from '@/components/commons/invitation/Invitation';
 
 // 사용할 데이터 타입 정의 (예시입니다, 실제 데이터에 맞게 조정해야 합니다.)
 
@@ -42,7 +43,9 @@ const PlanDetail: React.FC<ButtonProps> = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [currentStep, setCurrentStep] = useState<number>(0);
   const [dayPlans, setDayPlans] = useState<DayPlan[]>([]);
-  const [address, setAddress] = useState<string>(''); // 예시 주소를 빈 문자열로 초기화
+  const [address, setAddress] = useState<string>(''); // 예시 주소를 빈 문자열로 초기화// ...기존의 useState와 useEffect 로직...
+  const [isInvitationModalOpen, setIsInvitationModalOpen] = useState(false); // 초대 모달 상태를 관리하는 useState
+
   0; // 현재 스텝 인덱스를 0으로 초기화
 
   // `id`를 숫자로 변환하기 전에 유효성 검사 수행
@@ -96,30 +99,31 @@ const PlanDetail: React.FC<ButtonProps> = () => {
   const closeModal = () => {
     setIsModalOpen(false);
   };
-  // 초대하기 모달 오픈 핸들러
+
+  // 초대하기 모달을 여는 함수
   const handleOpenInvitation = () => {
-    // setIsInvitationModalOpen(true);
-    alert('개발중입니다.');
+    setIsInvitationModalOpen(true); // 초대 모달 상태를 true로 설정
   };
 
-  // const closeInvitationModal = () => {
-  //   setIsInvitationModalOpen(false);
-  // };
-  // // 초대하기 버튼 클릭 시 호출될 함수
-  // const handleInvite = () => {
-  //   // 초대 로직 구현
-  //   // 초대된 사람을 invitedPeople 상태에 추가
-  //   // 모달 닫기
-  //   setIsInvitationModalOpen(false);
-  // };
+  // 초대하기 모달을 닫는 함수
+  const closeInvitationModal = () => {
+    setIsInvitationModalOpen(false); // 초대 모달 상태를 false로 설정
+  };
 
+  // 초대하기 로직
+  const handleInvite = () => {
+    // 초대 로직 구현 필요
+    console.log('초대하기 로직 실행');
+    closeInvitationModal(); // 초대 후 모달 닫기
+  };
   // 초대한 사람 삭제
-  // const handleDeleteClick = (index: number) => {
-  //   // 초대된 사람들 배열에서 해당 인덱스의 항목을 제거
-  //   // const updatedInvitedPeople = [...invitedPeople];
-  //   // updatedInvitedPeople.splice(index, 1);
-  //   // setInvitedPeople(updatedInvitedPeople);
-  // };
+  const handleDeleteClick = (index: number) => {
+    console.log(index);
+    // 초대된 사람들 배열에서 해당 인덱스의 항목을 제거
+    // const updatedInvitedPeople = [...invitedPeople];
+    // updatedInvitedPeople.splice(index, 1);
+    // setInvitedPeople(updatedInvitedPeople);
+  };
 
   if (isLoading) {
     // 데이터 로딩 중 UI
@@ -227,7 +231,7 @@ const PlanDetail: React.FC<ButtonProps> = () => {
                 함께할 동행자를 초대해주세요{' '}
                 <InvitationCard
                   src={'/assets/paris.jpg'}
-                  // onClick={() => handleDeleteClick(1)}
+                  onClick={() => handleDeleteClick(1)}
                 />
                 <CiCirclePlus size="35px" onClick={handleOpenInvitation} />
               </S.InvitationDiv>
@@ -249,11 +253,11 @@ const PlanDetail: React.FC<ButtonProps> = () => {
       {/*  지도 모달 */}
       <Map isOpen={isModalOpen} onClose={closeModal} address={address} />
       {/* 초대하기 모달 처리 */}
-      {/* <Invitation
-      // isOpen={isInvitationModalOpen}
-      // onClose={closeInvitationModal}
-      // onInvite={handleInvite} // 초대하기 버튼 클릭 시 호출될 함수 전달
-      /> */}
+      <Invitation
+        isOpen={isInvitationModalOpen}
+        onClose={closeInvitationModal}
+        onInvite={handleInvite} // 초대하기 버튼 클릭 시 호출될 함수 전달
+      />
     </>
   );
 };

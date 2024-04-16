@@ -91,10 +91,6 @@ const ListItemLeft = styled.div`
 const ListItemRight = styled.div`
   display: flex;
   align-items: center;
-
-  img {
-    padding: 0px 5px;
-  }
 `;
 
 export {
