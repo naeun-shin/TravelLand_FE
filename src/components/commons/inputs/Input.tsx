@@ -13,6 +13,7 @@ export interface InputProps {
   fontSize?: number;
   fontWeight?: string;
   readonly?: boolean;
+  required?: boolean;
 }
 export const ModernInput = (props: InputProps) => {
   return (
@@ -30,6 +31,7 @@ export const ModernInput = (props: InputProps) => {
         fontSize={props.fontSize}
         fontWeight={props.fontWeight}
         readOnly={props.readonly}
+        required={props.required}
       />
     </>
   );

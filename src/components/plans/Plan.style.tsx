@@ -19,13 +19,14 @@ const PlanBoxWithSpaceBetween = styled.div`
   display: flex;
   justify-content: space-between;
   div {
-    padding-left: 15px;
+    /* padding-left: 15px; */
   }
 `;
 
 const PlanBoxWithCalendar = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
 `;
 
 const PlanBox = styled.div`
@@ -77,13 +78,13 @@ const PlanBottomSection = styled.div`
 `;
 
 const PlanNextButton = styled.button`
-  background-color: black;
+  background-color: #5ac8ec;
   color: white;
   justify-content: center;
   border: none;
   width: 160px;
   height: 50px;
-  border-radius: 5px;
+  border-radius: 16px;
 `;
 // 두번째 플랜 페이지
 
@@ -122,7 +123,8 @@ const PlanDateButton = styled.div`
 // List 영역
 const ButtonBox = styled.div`
   padding-top: 30px;
-  width: 80%;
+  display: flex;
+  justify-content: space-between;
 `;
 
 const ButtonBoxToRight = styled.div`
@@ -135,7 +137,7 @@ const ButtonBoxToRight = styled.div`
 
 // detail 영역
 const PlanDetailContainer = styled.div`
-  width: 75%;
+  width: 85%;
 `;
 
 const PlanDetailDateBox = styled.div`
@@ -190,30 +192,19 @@ const PlanDetailContentBox = styled.div`
 
 const PlanDetailContentHeader = styled.div`
   display: flex;
-  align-items: center;
-
-  height: 50px;
-
   font-size: 16px;
+  color: gray;
+  justify-content: space-between;
+
+  padding-bottom: 30px;
 `;
 
 const DetailHeaderContent = styled.div`
-  /* background-color: gray; */
-  color: white;
-  height: 100px;
-  width: 150px;
+  color: gray;
   display: flex;
-  align-items: center;
-  justify-content: center;
   flex-direction: column;
-  border-radius: 5px;
-
   div {
-    /* border-top: 1px solid white; */
-    margin: 5px;
-  }
-  hr {
-    width: 100px;
+    padding: 5px 0px;
   }
 `;
 
@@ -232,17 +223,26 @@ const DetailHeaderSubContent = styled.div`
   padding-left: 20px;
 `;
 
-const DetailHeaderSubDate = styled.div`
+const DetailHeaderThirdContent = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
 
-  padding: 0px 15px;
-  height: 35px;
+  padding-bottom: 15px;
 
-  background-color: white;
-  border-radius: 5px;
+  div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
-  margin-right: 10px;
+  img {
+    margin-right: 5px;
+    border: 1px solid lightgray;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+  }
 `;
 
 const DetaiHeaderSubDestination = styled.div`
@@ -294,8 +294,8 @@ const DetailPlanNumber = styled.div`
 
   border-radius: 50px;
 
-  background-color: gray;
-  color: white;
+  background-color: lightgray;
+  color: black;
 
   font-size: 12px;
 
@@ -316,34 +316,16 @@ const DetailPlanContent = styled.div`
 `;
 
 const DetailPlanContentCity = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-
-  font-size: 18px;
+  color: black;
+  font-size: 22px;
   font-weight: bold;
-  padding-bottom: 15px;
-
-  div {
-    padding-left: 10px;
-    color: Gray;
-    font-weight: normal;
-  }
+  /* padding: 15px 0px; */
 `;
 
 const DetailContentItem = styled.div`
   display: flex;
   justify-content: space-between;
-
-  div {
-    justify-content: flex-start;
-    font-size: 18px;
-  }
-
-  img {
-    width: 15px;
-    height: 15px;
-  }
+  align-items: center;
 `;
 
 const DetailButtonDiv = styled.button`
@@ -351,9 +333,9 @@ const DetailButtonDiv = styled.button`
   justify-content: center;
   align-items: center;
 
-  border: 1px solid lightgray;
-  border-radius: 25px;
-  background-color: white;
+  border: none;
+  border-radius: 50%;
+  background-color: #c5f1ff;
 
   height: 40px;
 
@@ -363,6 +345,23 @@ const DetailButtonDiv = styled.button`
     padding-left: 5px;
     width: 100%;
   }
+`;
+const DetailContent = styled.div`
+  justify-content: flex-start;
+  font-size: 16px;
+  color: gray;
+
+  width: 70%;
+`;
+
+const DetailLocationBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  color: gray;
+  align-items: flex-end;
+  margin-bottom: 5px;
+  width: 100%;
 `;
 
 const InvitationDiv = styled.div`
@@ -379,6 +378,7 @@ const InvitationDiv = styled.div`
 
 const PlanInvitationBox = styled.div`
   display: flex;
+  background-color: gray;
 `;
 
 export {
@@ -409,11 +409,13 @@ export {
   DetailPlanContentCity,
   DetailContentItem,
   DetailButtonDiv,
-  DetailHeaderSubDate,
+  DetailHeaderThirdContent,
   DetaiHeaderSubDestination,
   ButtonBoxToRight,
   PlanInvitationBox,
   PlanBoxWithCalendar,
   DateDisplay,
+  DetailLocationBox,
   InvitationDiv,
+  DetailContent,
 };

@@ -61,6 +61,13 @@ const PlanList = () => {
 
   return (
     <>
+      <S.ButtonBox>
+        {' '}
+        <h1>어디로 갈랜?</h1>
+        <S.PlanNextButton onClick={handleMakePlanClick}>
+          플랜 만들기
+        </S.PlanNextButton>
+      </S.ButtonBox>
       {/* 데이터 리스트 컴포넌트 */}
       <List planListData={filteredData} />
       {/* pagination */}
@@ -87,11 +94,6 @@ const PlanList = () => {
           <button onClick={handleNextGroup}>다음</button>
         )}
       </CS.PagenationStyle>
-      <S.ButtonBox>
-        <S.PlanNextButton onClick={handleMakePlanClick}>
-          플랜 만들기
-        </S.PlanNextButton>
-      </S.ButtonBox>
     </>
   );
 };

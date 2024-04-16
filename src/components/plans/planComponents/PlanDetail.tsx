@@ -6,6 +6,8 @@ import { useParams } from 'react-router-dom';
 import Button from '@/components/commons/buttons/Button';
 import { useDeleteMutation } from '@/hooks/useMutation';
 import InvitationCard from '@/components/commons/cards/InvitationCard';
+import { FaLocationDot } from 'react-icons/fa6';
+import { CiHeart, CiBookmark, CiCirclePlus } from 'react-icons/ci';
 
 // 사용할 데이터 타입 정의 (예시입니다, 실제 데이터에 맞게 조정해야 합니다.)
 
@@ -72,6 +74,18 @@ const PlanDetail: React.FC<ButtonProps> = () => {
     setIsModalOpen(true);
   };
 
+  // 좋아요 기능
+  const handleLikeClick = () => {};
+
+  // 좋아요 기능
+  const handleScrapClick = () => {};
+
+  // 수정 기능
+  // const deleteMutaion = useDeleteMutation();
+
+  const handlePlanUpdate = () => {
+    // deleteMutaion.mutate(planId);
+  };
   // 삭제 기능
   const deleteMutaion = useDeleteMutation();
 
@@ -120,13 +134,41 @@ const PlanDetail: React.FC<ButtonProps> = () => {
   return (
     <>
       <S.PlanDetailContainer>
-        <div>
+        <S.PlanDetailContentHeader>
+          <S.DetailHeaderContent>
+            <div>
+              {planDetails.area} | {planDetails.tripStartDate} -{' '}
+              {planDetails.tripEndDate} | 예산{' '}
+              {planDetails.budget.toLocaleString()} 원
+            </div>
+            <S.DetailPlanContentCity>
+              {planDetails.title}
+            </S.DetailPlanContentCity>
+          </S.DetailHeaderContent>
           <div>
-            {planDetails.area} | {planDetails.tripStartDate} -{' '}
-            {planDetails.tripEndDate}
+            <CiHeart size="30px" onClick={handleLikeClick} />
+            <CiBookmark size="30px" onClick={handleScrapClick} />
           </div>
-          <S.DetailPlanContentCity>{planDetails.title}</S.DetailPlanContentCity>
-        </div>
+        </S.PlanDetailContentHeader>
+        <S.DetailHeaderThirdContent>
+          <div>
+            <img src={`${planDetails.profileUrl}`} />
+            {planDetails.memberNickname}
+          </div>
+          <div>
+            <Button
+              onClick={handlePlanUpdate}
+              text={'수정하기'}
+              borderColor="lightGray"
+              marginRight="5px"
+            />
+            <Button
+              onClick={handlePlanDelete}
+              text={'삭제하기'}
+              borderColor="lightGray"
+            />
+          </div>
+        </S.DetailHeaderThirdContent>
         <hr />
         {/* 여행 일자 박스 영역 */}
 
@@ -156,28 +198,27 @@ const PlanDetail: React.FC<ButtonProps> = () => {
               <S.PlanDetailContentBox>
                 <S.DetailPlanContentCity>
                   {unitPlan.title}
-                  <div>{unitPlan.address}</div>
                 </S.DetailPlanContentCity>
                 <S.DetailContentItem>
-                  <div>
+                  <S.DetailContent>
                     <div>
                       {unitPlan.time} {unitPlan.content}
                     </div>
                     <div>{unitPlan.budget.toLocaleString()}원</div>
-                  </div>
-                  <div>
+                  </S.DetailContent>
+                  <S.DetailLocationBox>
                     {/* 이 부분에 지도 버튼 추가 및 클릭 이벤트 핸들러 연결 */}
                     <S.DetailButtonDiv
                       onClick={() => handleOpenMapClick(unitPlan.address)}
                     >
-                      <img src="/assets/icons/pin.png" alt="pin" />
-                    </S.DetailButtonDiv>
-                  </div>
+                      <FaLocationDot size="25px" color="white" />{' '}
+                    </S.DetailButtonDiv>{' '}
+                    <div>{unitPlan.address}</div>
+                  </S.DetailLocationBox>
                 </S.DetailContentItem>
               </S.PlanDetailContentBox>
             </S.DetailContentBox>
           ))}
-          <Button onClick={handlePlanDelete} text={'삭제하기'} />
 
           {/*초대 */}
           <S.DetailContentBox>
@@ -188,10 +229,7 @@ const PlanDetail: React.FC<ButtonProps> = () => {
                   src={'/assets/paris.jpg'}
                   // onClick={() => handleDeleteClick(1)}
                 />
-                <img
-                  src="/assets/icons/blackBackgroundPlus.png"
-                  onClick={handleOpenInvitation}
-                />
+                <CiCirclePlus size="35px" onClick={handleOpenInvitation} />
               </S.InvitationDiv>
             </S.ButtonBox>
             <S.PlanInvitationBox>

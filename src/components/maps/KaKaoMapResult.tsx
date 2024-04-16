@@ -14,7 +14,8 @@ interface PlaceType {
 export interface MapSearchType {
   searchKeyword: string;
   onSelect: (place: PlaceType) => void; // 장소 선택 콜백 함수 추가
-  onClose: () => void;
+  onClose?: () => void;
+  onClick?: () => void;
 }
 // head에 작성한 Kakao API 불러오기
 const { kakao } = window as any;
@@ -94,7 +95,7 @@ export const KaKaoMapResult: React.FC<MapSearchType> = ({
 
       for (i = 1; i <= pagination.last; i++) {
         const el = document.createElement('a') as HTMLAnchorElement;
-        el.href = '#';
+        // el.href = '#';
         el.innerHTML = i.toString();
 
         if (i === pagination.current) {
@@ -115,10 +116,17 @@ export const KaKaoMapResult: React.FC<MapSearchType> = ({
     function displayPlaces(places: string | any[]) {
       const listEl = document.getElementById('places-list'),
         bounds = new kakao.maps.LatLngBounds();
+      const resultsContainer = document.getElementById('results-container');
 
-      // 검색 결과 목록에 추가된 항목들을 제거
-      listEl && removeAllChildNods(listEl);
-
+      if (listEl) {
+        removeAllChildNods(listEl);
+      }
+      // 검색 결과가 있으면 결과 목록 컨테이너를 표시
+      if (places && places.length > 0 && resultsContainer) {
+        resultsContainer.style.display = 'block'; // 결과 목록 보이게 처리
+      } else if (resultsContainer) {
+        resultsContainer.style.display = 'none'; // 결과 목록 숨김 처리
+      }
       // 지도에 표시되고 있는 마커를 제거
       removeMarker();
 
@@ -164,56 +172,21 @@ export const KaKaoMapResult: React.FC<MapSearchType> = ({
     function getListItem(index: number, place: PlaceType) {
       const div = document.createElement('div');
       div.onclick = () => onSelect(place);
+
+      div.onmouseover = () => div.classList.add('hover');
+      div.onmouseout = () => div.classList.remove('hover');
+
       const itemStr = `
-      <div class="marker marker_${index + 1}"
-        style=
-          " 
-            border-radius: 5px;
-            background-color: #f0f0f0;
-            padding: 5px;
-            margin: 5px;
-          "
-        >
-      <div style=
-      "
-        color: black;
-        text-decoration: none;
-        font-weight : bold;
-        cursor :pointer;
-      "
-      >${index + 1}. ${place.place_name}</div>
-
-      ${
-        place.road_address_name
-          ? `<div style=
-            "
-             color: black;
-             padding-left : 10px;
-            "
-          > ${place.road_address_name}
-          </div>
-          <a href="${place.place_url}"
-          style=
-          " 
-            background-color: #f0f0f0;
-            text-decoration-line: none;
-            color : black;
-            font-size : 12px;
-            display: flex;
-            justify-content: flex-end;
-
-          "
-            /> - 상세정보 보러가기 - 
-          </a>`
-          : `<div style=
-              "
-                color: red;
-              "
-            >
-            ${place.address_name}
-            
-          </div>`
-      }
+      <div class="info" style="display: flex; justify-content: space-between; align-items: center; padding: 10px; border-radius: 5px;">
+      <div style="font-size: 16px;">
+        <span style="font-weight: bold;">${index + 1}. ${place.place_name}</span><br/>
+        ${place.road_address_name || place.address_name}
+      </div>
+      <div>
+        <a href="${place.place_url}" target="_blank" style="text-decoration: none; color: inherit;">
+          <img src="../assets/icons/grayArrow.png" alt="Arrow Icon" style="width: 24px; height: 24px;"/>
+        </a>
+      </div>
     </div>
           `;
 
@@ -281,41 +254,54 @@ export const KaKaoMapResult: React.FC<MapSearchType> = ({
     <div
       style={{
         position: 'relative',
-        width: '100%',
-        height: '100%',
-        display: ' flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        flexDirection: 'column',
+        width: '600px', // 너비 설정
+        height: '600px', // 높이 설정
       }}
     >
       {' '}
-      <div id="map" style={{ width: '30rem', height: '30rem' }}>
-        <Button text="닫기" />
-      </div>
       <div
+        id="map"
         style={{
+          width: '600px',
+          height: '600px',
           position: 'relative',
-          bottom: '300px',
-          left: '170px',
-          width: 'fit-content',
-          maxHeight: '300px',
-          overflowY: 'auto',
-          zIndex: '1',
-          background: 'rgba(255, 255, 255, 0.9)',
-          padding: '5px',
-          borderRadius: '15px',
-          boxShadow: 'rgba(0, 0, 0, 0.2) 0px 2px 4px',
+          overflow: 'hidden',
+          borderRadius: '25px',
         }}
       >
-        <div style={{ fontWeight: 'bold' }}>
-          {/* 선택된 장소명을 출력합니다. */}
-          {/* <div>선택된 장소: {selectedPlaceInfo?.road_address_name}</div> */}
-        </div>
-        <div id="places-list" style={{ marginTop: '5px' }}></div>
+        {' '}
+        <Button text="X" />{' '}
+      </div>
+      <div
+        id="results-container"
+        style={{
+          position: 'absolute',
+          bottom: '0',
+          right: '0',
+          width: '280px',
+          maxHeight: '300px',
+          overflowY: 'auto',
+          background: 'rgba(255, 255, 255, 0.9)',
+          border: '1px solid #ddd',
+          borderRadius: '10px 0 0 0',
+          boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+          zIndex: 5,
+          paddingBottom: '30px', // 페이지네이션을 위한 하단 패딩 추가
+          display: 'none', // 기본적으로 숨김 처리
+        }}
+      >
+        <div
+          id="places-list"
+          style={{
+            marginTop: '5px',
+          }}
+        ></div>
         <div
           id="pagination"
-          style={{ textAlign: 'center', marginTop: '5px' }}
+          style={{
+            textAlign: 'center', // 텍스트 중앙 정렬
+            cursor: 'pointer',
+          }}
         ></div>
       </div>
     </div>

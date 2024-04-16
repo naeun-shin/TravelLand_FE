@@ -7,6 +7,7 @@ import { useLocation } from 'react-router-dom';
 import { ModernInput } from '@/components/commons/inputs/Input';
 import KaKaoMap from '@/components/maps/KaKaoMap';
 import { useCreatePlanMutaton } from '@/hooks/useMutation';
+import { TfiArrowCircleRight } from 'react-icons/tfi';
 
 export interface UnitPlan {
   title: string;
@@ -91,7 +92,6 @@ const PlanCreate2: React.FC = () => {
     const end = tripEndDate;
     const diff = end.getTime() - start.getTime();
     const totalDays = Math.ceil(diff / (1000 * 3600 * 24)) + 1; // 종료 날짜 포함
-    console.log(start, end, diff);
     return totalDays;
   };
   // 상태를 초기화하는 부분에서 함수를 호출
@@ -99,7 +99,6 @@ const PlanCreate2: React.FC = () => {
 
   // startDate와 currentStep을 기반으로 해당 일차의 날짜 계산
   const calculateDateForStep = (start: string | Date, step: number): string => {
-    console.log(start, step);
     const resultDate = new Date(start);
 
     resultDate.setDate(resultDate.getDate() + step + 1); // step이 0부터 시작으로 0인 경우 전일이 보여서 수정
@@ -372,9 +371,14 @@ const PlanCreate2: React.FC = () => {
                   width={750}
                 />
                 <IS.ImgBox>
-                  <img
-                    src="/assets/icons/pin.png"
-                    alt="pin"
+                  {/* <IoIosArrowDropright
+                    color="lightGray"
+                    size="2rem"
+                    onClick={() => handleOpenMapClick(index)}
+                  /> */}
+                  <TfiArrowCircleRight
+                    size="35px"
+                    color="lightGray"
                     onClick={() => handleOpenMapClick(index)}
                   />
                 </IS.ImgBox>
@@ -403,9 +407,9 @@ const PlanCreate2: React.FC = () => {
           height="50px"
           borderRadius="15px"
           fontWeight="bold"
-          textColor="black"
-          color="lightGray"
-          borderColor="transparent"
+          textColor="white"
+          color="#5AC8EC"
+          borderColor="#5AC8EC"
           marginRight="15px"
           onClick={handlePlanSubmit} // 등록하기 버튼 클릭 핸들러 추가
         />

@@ -52,6 +52,8 @@ const ListInputboxWithFlex = styled.div`
 `;
 const ImgBox = styled.div`
   padding-left: 75%;
+  display: flex;
+  align-items: center;
 `;
 const ListInputboxWithOutBorder = styled.div`
   h4 {

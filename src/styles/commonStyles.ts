@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const PagenationStyle = styled.div`
-  padding-top: 50px;
+  padding-top: 10%;
   display: flex;
   flex-direction: row;
   justify-content: center;

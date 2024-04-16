@@ -9,6 +9,10 @@ import '@/components/DatePicker.styles.css';
 import { Locale } from 'node_modules/date-fns/locale/types';
 import ko from 'date-fns/locale/ko';
 registerLocale('ko', ko as unknown as Locale);
+import { TfiArrowCircleRight } from 'react-icons/tfi';
+import { SlLocationPin } from 'react-icons/sl';
+import { BiCoinStack } from 'react-icons/bi';
+import { CiCalendar } from 'react-icons/ci';
 
 const PlanCreate = () => {
   const navigate = useNavigate();
@@ -132,18 +136,25 @@ const PlanCreate = () => {
           }}
         >
           <div>
-            <div>제목</div>
+            <div> 제목</div>
             <S.PlanBoxWithSpaceBetween>
-              <ModernInput
-                type="text"
-                placeholder="제목을 입력해주세요"
-                width={400}
-                height={50}
-                border="transparent"
-                onChange={handleTitleChange}
-                fontSize={18}
-                fontWeight={'bold'}
-              />
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <img
+                  src="/assets/icons/Rectangle.png"
+                  style={{ height: '50px' }}
+                />
+                <ModernInput
+                  type="text"
+                  placeholder="제목을 입력해주세요"
+                  width={400}
+                  height={50}
+                  border="transparent"
+                  onChange={handleTitleChange}
+                  fontSize={18}
+                  fontWeight={'bold'}
+                />
+              </div>
+
               <div>
                 <ToggleButton isChecked={!isPublic} onToggle={toggleIsPublic} />
               </div>
@@ -154,7 +165,19 @@ const PlanCreate = () => {
             <div>
               {/* 지역 */}
               <S.PlanBox>
-                <img src="/assets/icons/pinPoint.png" />
+                <div
+                  style={{
+                    backgroundColor: '#C5F1FF',
+                    width: '35px',
+                    height: '35px',
+                    borderRadius: '50%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <SlLocationPin size="25px" color="white" />
+                </div>
                 <S.PlanContent>
                   <div>지역</div>
                   <ModernInput
@@ -171,7 +194,19 @@ const PlanCreate = () => {
               <hr />
               {/*예산 */}
               <S.PlanBox>
-                <img src="/assets/icons/dolor.png" />
+                <div
+                  style={{
+                    backgroundColor: '#C5F1FF',
+                    width: '35px',
+                    height: '35px',
+                    borderRadius: '50%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <BiCoinStack size="25px" color="white" />
+                </div>
                 <S.PlanContent>
                   <div>예산</div>
                   <ModernInput
@@ -188,14 +223,26 @@ const PlanCreate = () => {
               <hr />
               {/*기간 선택*/}
               <S.PlanBox>
-                <img src="/assets/icons/calendar.png" />
+                <div
+                  style={{
+                    backgroundColor: '#C5F1FF',
+                    width: '35px',
+                    height: '35px',
+                    borderRadius: '50%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <CiCalendar size="25px" color="white" />
+                </div>
                 <S.PlanBoxWithCalendar>
                   <div style={{ paddingLeft: '15px' }}>
                     <div>여행기간</div>
                     <div> {displayDateRange()}</div>
                   </div>
                   <div style={{ paddingLeft: '200px' }}>
-                    <img src="/assets/icons/arrow_to_right.png" />
+                    <TfiArrowCircleRight size="35px" color="lightGray" />
                   </div>
                 </S.PlanBoxWithCalendar>
               </S.PlanBox>

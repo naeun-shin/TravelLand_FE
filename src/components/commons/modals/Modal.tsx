@@ -1,5 +1,10 @@
 import React from 'react';
-import { ModalDim, ModalOverlay, ModalContainer } from './Modal.style';
+import {
+  ModalDim,
+  ModalOverlay,
+  ModalContainer,
+  MapModalOverlay,
+} from './Modal.style';
 
 interface ModalProps {
   isOpen: boolean;
@@ -21,6 +26,21 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
 
 export default Modal;
 
+export const MapModal: React.FC<ModalProps> = ({
+  isOpen,
+  onClose,
+  children,
+}) => {
+  if (!isOpen) return null;
+
+  return (
+    <ModalDim onClick={onClose}>
+      <MapModalOverlay onClick={(e) => e.stopPropagation()}>
+        <ModalContainer>{children}</ModalContainer>
+      </MapModalOverlay>
+    </ModalDim>
+  );
+};
 // 모달 사용 예시로 해둔거 일단 주석처리로 둠
 
 // import Modal from '@/components/commons/modals/Modal';
