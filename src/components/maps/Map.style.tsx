@@ -22,7 +22,7 @@ const MapTitleLeft = styled.div`
     height: 50px;
   }
   div {
-    padding-left: 5px;
+    /* padding-left: 5px; */
     font-size: 18px;
     font-weight: bold;
   }

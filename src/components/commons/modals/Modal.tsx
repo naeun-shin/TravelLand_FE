@@ -5,6 +5,7 @@ import {
   ModalContainer,
   MapModalOverlay,
   InvitationModalOverlay,
+  DetailMapModalOverlay,
 } from './Modal.style';
 
 interface ModalProps {
@@ -55,6 +56,22 @@ export const InvitationModal: React.FC<ModalProps> = ({
       <InvitationModalOverlay onClick={(e) => e.stopPropagation()}>
         <ModalContainer>{children}</ModalContainer>
       </InvitationModalOverlay>
+    </ModalDim>
+  );
+};
+
+export const DetailMapModal: React.FC<ModalProps> = ({
+  isOpen,
+  onClose,
+  children,
+}) => {
+  if (!isOpen) return null;
+
+  return (
+    <ModalDim onClick={onClose}>
+      <DetailMapModalOverlay onClick={(e) => e.stopPropagation()}>
+        <ModalContainer>{children}</ModalContainer>
+      </DetailMapModalOverlay>
     </ModalDim>
   );
 };
