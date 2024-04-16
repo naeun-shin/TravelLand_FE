@@ -1,8 +1,6 @@
 import { useEffect } from 'react';
-import { instance } from '@/api/axios';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { Cookies } from 'react-cookie';
-import { AxiosResponse } from 'axios';
 
 const KakaoRedirect: React.FC = () => {
   const cookie = new Cookies();

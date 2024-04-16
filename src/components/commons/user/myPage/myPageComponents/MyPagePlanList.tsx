@@ -2,26 +2,26 @@ import { MediumButton } from '@/components/commons/buttons/Button';
 import * as S from '@/components/commons/user/myPage/MyPage.style';
 import * as CS from '@/styles/commonStyles';
 import { List } from '@/components/commons/Lists/List';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 // import { useMyPlanListQuery } from '@/hooks/useQuery';
-import { useState, useEffect } from 'react';
+// import { useState } from 'react';
 const MyPagePlanList = () => {
-  const navigate = useNavigate();
-  // const handleMakePlanClick = () => {
-  //   navigate('/planCreate/1');
-  // };
+  // const navigate = useNavigate();
+  // // const handleMakePlanClick = () => {
+  // //   navigate('/planCreate/1');
+  // // };
 
-  const [page, setPage] = useState(1); // 페이지 번호
-  const [size] = useState(8); // 한 페이지 당 받아올 겟수
-  const [pageGroup, setPageGroup] = useState(0); // 현재 페이지 그룹
-  const [totalPages, setTotalPages] = useState(0); // 전체 페이지 수
-  const pageGroupSize = 10; // 페이지 그룹 당 표시할 페이지 수
+  // const [page, setPage] = useState(1); // 페이지 번호
+  // const [size] = useState(8); // 한 페이지 당 받아올 겟수
+  // const [pageGroup, setPageGroup] = useState(0); // 현재 페이지 그룹
+  // const [totalPages, setTotalPages] = useState(0); // 전체 페이지 수
+  // const pageGroupSize = 10; // 페이지 그룹 당 표시할 페이지 수
 
-  const [sortBy] = useState('createdAt');
-  const [isAsc] = useState(true);
+  // const [sortBy] = useState('createdAt');
+  // const [isAsc] = useState(true);
 
   // 페이지네이션을 위한 파라미터 설정
-  const planListParams = { page, size, sortBy, isAsc };
+  // const planListParams = { page, size, sortBy, isAsc };
 
   // const { data, isError, isLoading } = useMyPlanListQuery(planListParams);
 

@@ -1,4 +1,4 @@
-import { getDayPlanId, getPlanDetail, getPlanList } from '@/api/planAxios';
+import { getPlanDetail, getPlanList } from '@/api/planAxios';
 import { useQuery } from '@tanstack/react-query';
 import { PlanListParams } from '@/api/interfaces/planInterface';
 // import { getMyPlanList } from '@/api/userAxios';
