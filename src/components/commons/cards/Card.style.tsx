@@ -28,6 +28,7 @@ const CardInfo = styled.div`
 
   font-weight: bold;
   font-size: 16px;
+
   img {
     width: 40px;
     height: 40px;
@@ -51,24 +52,32 @@ const CardInfoContentTop = styled.div`
 
 const InvitationCardContainer = styled.div`
   border-radius: 25px;
-  padding: 5px;
-  border: 1px solid lightgray;
-  width: 90px;
-  height: 35px;
+  border: none;
+  width: 80px;
+  height: 45px;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
-  margin: 0px 5px;
+  background-color: #f4f4f4;
+  align-content: center;
+  flex-direction: row;
 
   img {
-    width: 30px;
-    height: 30px;
-    border-radius: 50px;
-    margin-right: 20px;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    /* margin-right: 20px; */
+  }
+
+  button {
+    border-style: none;
+    font-size: 20px;
+    color: gray;
+    font-weight: light;
+    background-color: #f4f4f4;
   }
 `;
-// 이거 버튼 위에 있었는데
-// 콘솔에 자꾸 에러떠서 스타일드 컴포넌트 props형식에 맞추라해서 그냥 뺴놨어여!
+
 const StyledButton = styled.button<CardProps>`
   display: flex;
   justify-content: center;

@@ -4,6 +4,7 @@ import MyPagePlanList from './myPageComponents/MyPagePlanList';
 import * as S from '@components/commons/user/myPage/MyPage.style';
 import MyPageInvitedList from './myPageComponents/MyPageInvitedList';
 import MyPageReviewList from './myPageComponents/MyPageReviewList';
+import MyPageUserInfo from './myPageComponents/MyPageUserInfo';
 
 const MyPageIndex = () => {
   const [activeTab, setActiveTab] = useState(0);
@@ -15,6 +16,7 @@ const MyPageIndex = () => {
   return (
     <>
       {/* 탭 */}
+      <MyPageUserInfo />
       <S.MyPageTabStyle>
         <S.MyPageTabButton
           onClick={() => handleTabClick(0)}
