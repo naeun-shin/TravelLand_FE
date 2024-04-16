@@ -8,6 +8,7 @@ interface ButtonProps {
   borderRadius?: string;
   textColor?: string;
   hoverColor?: string;
+  marginRight?: string;
 }
 
 export const StyledButton = styled.button<ButtonProps>`
@@ -25,7 +26,7 @@ export const StyledButton = styled.button<ButtonProps>`
     background-color: ${(props) =>
       props.hoverColor || props.color}; // 호버 시 색상 변경
   }
-`;
+  margin-right: ${(props) => props.marginRight || '0px'};
 
 export const ButtonContainer = styled.div`
   display: flex;
