@@ -17,9 +17,11 @@ export const CardContainer = styled.div`
   height: 420px;
   border-radius: 10px;
   flex-direction: column;
+  display: flex;
   justify-content: space-between;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  /* display: inline-block;  */
+  margin-right: 20px;
+  /* display: inline-block; */
 `;
 
 export const ImageContainer = styled.div`

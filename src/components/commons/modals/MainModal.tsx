@@ -21,15 +21,57 @@ const MainModal: React.FC<IMainModalProps> = ({
     console.log('Modal opened');
   }, []);
 
+  useEffect(() => {
+    // 모달의 위치 조정 함수
+    const adjustModalPosition = () => {
+      const burgerButtonRect = document
+        .querySelector('.BurgerMenuIcon')
+        ?.getBoundingClientRect(); // 버거 버튼의 위치 정보
+
+      const modal = document.getElementById('modal-root');
+      if (burgerButtonRect && modal) {
+        modal.style.top = `${
+          burgerButtonRect.top + burgerButtonRect.height + window.scrollY
+        }px`; // 모달을 버거 버튼 아래에 위치시킴
+        modal.style.right = `${window.innerWidth - burgerButtonRect.right}px`; // 모달을 버거 버튼의 오른쪽 정렬
+      }
+    };
+
+    // 모달이 열릴 때마다 위치 조정
+    adjustModalPosition();
+
+    // 창 크기 변경 시 위치 조정
+    window.addEventListener('resize', adjustModalPosition);
+
+    return () => {
+      window.removeEventListener('resize', adjustModalPosition);
+    };
+  }, []);
+
+  // 모달 외부 클릭 시 모달 닫기
+  const handleCloseModal = (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
+  ) => {
+    if (!(event.target as HTMLElement).closest('.ModalContainer')) {
+      setSlide(false);
+      setTimeout(() => {
+        handleLogout(); // 모달 닫힌 후 로그아웃 처리
+      }, 300); // 모달 애니메이션 시간과 동일한 시간 지연 후 처리
+    }
+  };
+
   return ReactDOM.createPortal(
-    <Modaldrop style={{ opacity: slide ? 1 : 0 }}>
+    <Modaldrop
+      style={{ opacity: slide ? 1 : 0 }}
+      onClick={handleCloseModal} // 모달 외부 클릭 시 handleCloseModal 호출
+    >
       <ModalWrapper
         style={{
           opacity: slide ? 1 : 0,
           transform: slide ? 'translateY(0)' : 'translateY(-20px)',
         }}
       >
-        <ModalContainer>
+        <ModalContainer className="ModalContainer">
           {!isLoggedIn && (
             <>
               <MenuItem onClick={() => handleLogin()}>로그인</MenuItem>
@@ -79,7 +121,7 @@ const Modaldrop = styled.div`
 const ModalContainer = styled.div`
   background-color: #fff;
   border-radius: 20px;
-  overflow: hidden;
+  /* overflow: hidden; */
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   margin-bottom: 8px;
 `;

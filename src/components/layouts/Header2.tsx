@@ -45,6 +45,7 @@ const ReDesignHeader: React.FC = () => {
   const closeModal = () => {
     console.log('closeModal 실행됨');
     setIsModalOpen(false);
+    setIsMenuModalOpen(false); // 메인 모달도 닫히도록 추가
   };
   // mypage 이동
   const handleOpenMypage = () => {
@@ -71,14 +72,26 @@ const ReDesignHeader: React.FC = () => {
 
   // 로그인 상태에 따라 보여지는 컨텐츠가 달라지도록 조건부 렌더링 처리
   return (
-    <>
+    <Header>
       <StickyHeader isScrolled={isScrolled}>
         <Container>
           <Logo onClick={handleMainPage}>떠나볼까</Logo>
           {isScrolled && <SearchInput placeholder="검색어를 입력해주세요" />}
-          <BurgerMenuIcon onClick={handleBurgerIconClick}>
-            <RxHamburgerMenu />
-          </BurgerMenuIcon>
+          <MenuContainer>
+            <BurgerMenuIcon onClick={handleBurgerIconClick}>
+              <RxHamburgerMenu />
+            </BurgerMenuIcon>
+            {isMenuModalOpen && (
+              <MainModal
+                isLoggedIn={isLoggedIn}
+                handleLogout={() => {
+                  setIsLoggedIn(false);
+                  setIsMenuModalOpen(false);
+                }}
+                handleLogin={handleOpenLogin}
+              />
+            )}
+          </MenuContainer>
           {isLoggedIn ? (
             <>
               <UserAction onClick={handleOpenMypage}>마이페이지</UserAction>
@@ -91,23 +104,17 @@ const ReDesignHeader: React.FC = () => {
           )}
         </Container>
       </StickyHeader>
-      {isMenuModalOpen && (
-        <MainModal
-          isLoggedIn={isLoggedIn}
-          handleLogout={() => {
-            setIsLoggedIn(false);
-            setIsMenuModalOpen(false);
-          }}
-          handleLogin={handleOpenLogin}
-        />
-      )}
       {/* 로그인 모달 */}
       {isModalOpen && <Login isOpen={isModalOpen} onClose={closeModal} />}
-    </>
+    </Header>
   );
 };
 
 export default ReDesignHeader;
+
+const Header = styled.div`
+  padding: 0;
+`;
 
 const StickyHeader = styled.div<SearchInputContainerProps>`
   position: ${(props) => (props.isScrolled ? 'fixed' : 'relative')};
@@ -159,4 +166,9 @@ const BurgerMenuIcon = styled.div`
   cursor: pointer;
   text-align: center;
   line-height: 40px;
+`;
+
+const MenuContainer = styled.div`
+  position: relative; // 상대 위치 설정
+  display: inline-block; // 내부 요소들을 인라인 블록으로 설정
 `;

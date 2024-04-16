@@ -57,4 +57,5 @@ export const CategoryButtonStyle = styled.button`
   cursor: pointer;
   white-space: nowrap;
   overflow: hidden;
+  margin-right: 3px;
 `;
