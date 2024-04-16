@@ -27,7 +27,13 @@ const Login: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
             onClick={loginWithKakao}
           />
           <p> - "떠나볼까"는 소셜 로그인 기반으로 정보를 수집합니다. - </p>
-          <Button text="닫기" onClick={onClose} />
+          <Button
+            text="닫기"
+            onClick={() => {
+              console.log('닫기 클릭');
+              onClose();
+            }}
+          />
         </S.LoginStyle>
       </Modal>
     </>

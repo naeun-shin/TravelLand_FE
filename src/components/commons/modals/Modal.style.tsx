@@ -7,13 +7,14 @@ export const ModalDim = styled.div`
   top: 0;
   left: 0;
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: 9;
+  z-index: 10;
 `;
 
 export const ModalOverlay = styled.div`
   width: 500px;
   background-color: #fff;
   border: 2px solid #000;
+  box-sizing: border-box;
   border-radius: 10px;
   padding: 40px;
   margin: 0 auto;
