@@ -24,7 +24,17 @@ export const router = createBrowserRouter([
       />
     ),
   },
-  { path: '/search', element: <SearchPage /> },
+  {
+    path: '/search',
+    element: (
+      <SearchPage
+        isOpen={false}
+        onClose={function (): void {
+          throw new Error('Function not implemented.');
+        }}
+      />
+    ),
+  },
   { path: '/results', element: <SearchResults /> },
   { path: '/travelReview', element: <TravelReviewPage /> },
   { path: '/travelDetail/:tripId', element: <TravelDetailPage /> },
