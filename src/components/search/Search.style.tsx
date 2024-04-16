@@ -95,8 +95,9 @@ export const ResultContainer = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
-  width: 900px;
+  width: 1100px;
   margin: 0 auto;
+  padding-top: 30px;
 `;
 
 export const ResultBox = styled.div`
@@ -118,41 +119,54 @@ export const SearchTitle = styled.div`
 
 export const TabContainer = styled.div`
   display: flex;
-  justify-content: space-around;
+  /* justify-content: space-around; */
   padding: 10px 0;
 `;
 
 export const TabButton = styled.button`
   padding: 10px 15px;
   border: none;
+  margin-right: 10px;
   border-radius: 30px;
   background: #ddd;
   cursor: pointer;
   font-size: 16px;
+  font-weight: 600;
   &:hover {
-    background-color: #343434;
+    background-color: #3ab9f0;
     color: #fff;
   }
 `;
 
 export const ResultsContainer = styled.section`
-  padding-left: 10px;
+  /* padding-left: 10px; */
   background-color: #fff;
 `;
 
 export const ResultItem = styled.article`
-  border-bottom: 1px solid #000000;
-  padding: 10px 0;
+  /* border-bottom: 1px solid #000000; */
+  /* padding: 10px 0; */
+  display: flex;
+  margin-top: 30px;
+
   &:last-child {
     border-bottom: none;
   }
 `;
 
-export const ItemTitle = styled.h3`
-  font-size: 18px;
-  margin: 0 0 10px 0;
+export const ContentWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
+`;
+
+export const ItemTitle = styled.div`
+  font-size: 24px;
+  font-weight: 600;
+  margin: 10px 0 0 0;
 `;
 
 export const ItemContent = styled.p`
   color: #444;
+  max-width: 700px;
 `;

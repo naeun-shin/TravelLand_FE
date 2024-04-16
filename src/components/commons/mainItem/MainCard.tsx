@@ -31,7 +31,7 @@ const StyledSlider = styled(Slider)`
   .slick-prev,
   .slick-next {
     position: absolute;
-    top: -40px;
+    top: -27px;
     width: 50px;
     height: 50px;
     z-index: 1;

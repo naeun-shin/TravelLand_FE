@@ -3,8 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import SearchInput from '../search/Search';
 import Login from '@/pages/user/Login'; // 로그인 모달 import
-import { RxHamburgerMenu } from 'react-icons/rx';
 import MainModal from '../commons/modals/MainModal';
+import logoImage from '@/icons/logo.svg';
+import burgerIcon from '@/icons/burger.svg';
+import SearchModal from '@/pages/main/SearchPage';
 
 interface SearchInputContainerProps {
   isScrolled: boolean;
@@ -21,15 +23,26 @@ const ReDesignHeader: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false); // 로그인 모달 상태 추가
   const [isLoggedIn, setIsLoggedIn] = useState(false); // 로그인 상태를 관리하는 상태 추가
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isSearchModalOpen, setIsSearchModalOpen] = useState(false); // 검색 모달 상태 추가
 
   const navigate = useNavigate();
 
+  // 모달을 토글하는 함수
+  const toggleModal = () => setIsModalOpen((prevState) => !prevState);
+
+  // 모달을 여는 함수
+  const openSearchModal = () => {
+    setIsSearchModalOpen(true);
+  };
+
+  // 모달을 닫는 함수
+  const closeSearchModal = () => {
+    setIsSearchModalOpen(false);
+  };
+
   // 버거 메뉴 모달
   const handleBurgerIconClick = () => {
-    setIsMenuModalOpen((prevState) => {
-      console.log('모달 상태:', prevState);
-      return !prevState;
-    });
+    setIsMenuModalOpen((prevState) => !prevState);
   };
 
   // 메뉴 모달 닫기
@@ -75,11 +88,18 @@ const ReDesignHeader: React.FC = () => {
     <Header>
       <StickyHeader isScrolled={isScrolled}>
         <Container>
-          <Logo onClick={handleMainPage}>떠나볼까</Logo>
-          {isScrolled && <SearchInput placeholder="검색어를 입력해주세요" />}
+          <Logo onClick={handleMainPage}>
+            <img src={logoImage} alt="떠나볼까 로고" />
+          </Logo>
+          {isScrolled && (
+            <SearchInput
+              placeholder="검색어를 입력해주세요"
+              onIconClick={openSearchModal}
+            />
+          )}
           <MenuContainer>
             <BurgerMenuIcon onClick={handleBurgerIconClick}>
-              <RxHamburgerMenu />
+              <img src={burgerIcon} alt="메뉴 모달 열기" />
             </BurgerMenuIcon>
             {isMenuModalOpen && (
               <MainModal
@@ -106,6 +126,9 @@ const ReDesignHeader: React.FC = () => {
       </StickyHeader>
       {/* 로그인 모달 */}
       {isModalOpen && <Login isOpen={isModalOpen} onClose={closeModal} />}
+      {isSearchModalOpen && (
+        <SearchModal isOpen={isSearchModalOpen} onClose={closeSearchModal} />
+      )}
     </Header>
   );
 };
@@ -113,7 +136,8 @@ const ReDesignHeader: React.FC = () => {
 export default ReDesignHeader;
 
 const Header = styled.div`
-  padding: 0;
+  width: 100%;
+  margin: 0 auto;
 `;
 
 const StickyHeader = styled.div<SearchInputContainerProps>`
@@ -123,27 +147,26 @@ const StickyHeader = styled.div<SearchInputContainerProps>`
   right: 0;
   background: #fff;
   transition: position 0.3s ease-in-out;
-  z-index: 10;
+  z-index: 11;
   padding: 10px 0;
-  /* border-bottom: 1px solid #000; */
   box-shadow: ${(props) =>
     props.isScrolled ? '0 2px 8px rgba(0, 0, 0, 0.15)' : 'none'};
 `;
 
 const Container = styled.div`
-  max-width: 1100px;
+  max-width: 1150px;
   width: 100%;
   margin: 0 auto;
   height: 80px;
   display: flex;
   justify-content: space-between;
-  padding: 0 25px;
+  padding: 0 60px 0 10px;
   align-items: center;
 `;
 
-const Logo = styled.h1`
-  font-weight: 600;
-  font-size: 24px;
+const Logo = styled.div`
+  max-width: 80px;
+  max-height: 60px;
   cursor: pointer;
 `;
 
@@ -158,17 +181,15 @@ const UserAction = styled.div`
 // 버거 메뉴 아이콘 스타일
 const BurgerMenuIcon = styled.div`
   width: 40px;
-  height: 40px;
+  height: 60px;
   font-size: 24px;
-  border: 1px solid #000;
-  border-radius: 50%;
-  padding: 5px;
   cursor: pointer;
   text-align: center;
-  line-height: 40px;
+  line-height: 60px;
 `;
 
 const MenuContainer = styled.div`
-  position: relative; // 상대 위치 설정
-  display: inline-block; // 내부 요소들을 인라인 블록으로 설정
+  position: relative;
+  display: inline-block;
+  z-index: 12;
 `;

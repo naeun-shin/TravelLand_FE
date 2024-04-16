@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { FaRegBookmark } from 'react-icons/fa6';
-import CategoryButton from '../buttons/CategoryButton'; // CategoryButton을 임포트합니다.
+import { CiBookmark } from 'react-icons/ci';
+import CategoryButton from '../buttons/CategoryButton';
 
 interface ListItemProps {
   rank: string;
@@ -24,8 +24,8 @@ const MainList: React.FC<MainListProps> = ({ items = [] }) => {
       {items.map((item, index) => (
         <ItemContainer key={index}>
           <ImageSection>
-            <BookmarkIcon /> {/* 북마크 아이콘을 추가합니다. */}
             <Image src={item.imageUrl} alt="이미지" />
+            <BookmarkIcon />
           </ImageSection>
           <TextSection>
             <Rank>{index + 1}</Rank>
@@ -35,7 +35,6 @@ const MainList: React.FC<MainListProps> = ({ items = [] }) => {
             <MainTitle>{item.title}</MainTitle>
             <Content>{item.description}</Content>
             <CategoriesContainer>
-              {/* 아이템의 카테고리들을 출력합니다. */}
               {item.categories.map((category, categoryIndex) => (
                 <CategoryButton key={categoryIndex} title={category} />
               ))}
@@ -59,12 +58,19 @@ const MainListContainer = styled.div`
   margin-bottom: 100px;
 `;
 
-const BookmarkIcon = styled(FaRegBookmark)`
+const BookmarkIcon = styled(CiBookmark)`
   position: absolute;
-  top: 40px;
-  right: 10px;
-  font-size: 24px;
+  bottom: 20px;
+  right: 12px;
+  font-size: 18px;
   color: #666;
+  border: 2px solid #c5f1ff;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  padding: 5px;
+  z-index: 10;
+  background-color: #c5f1ff;
 `;
 
 const Rank = styled.div`
@@ -90,11 +96,11 @@ const ItemContainer = styled.div`
 `;
 
 const ImageSection = styled.div`
+  position: relative;
   flex: 2;
   display: flex;
   align-items: center;
   justify-content: center;
-  /* padding: 5px; */
 `;
 
 const TextSection = styled.div`
@@ -127,7 +133,6 @@ const Image = styled.img`
   width: 260px;
   height: 240px;
   border-radius: 10px;
-  /* margin-left: 5px; */
 `;
 
 const CategoriesContainer = styled.div`
@@ -135,7 +140,6 @@ const CategoriesContainer = styled.div`
   flex-wrap: wrap;
   justify-content: flex-start;
   align-items: flex-start;
-  /* align-items: center; */
   margin-top: 3px;
   gap: 4px;
   height: 100px;

@@ -4,7 +4,10 @@ import {
   ButtonsWrapper,
 } from '@/components/commons/buttons/Button.style';
 import Search from '@/components/search/Search';
-import Button, { TabButton } from '@/components/commons/buttons/Button';
+import Button, {
+  SmallButton,
+  TabButton,
+} from '@/components/commons/buttons/Button';
 import MainCard from '@/components/commons/mainItem/MainCard';
 import Maintitle from '@/components/commons/mainItem/MainTitle';
 import ListTitle from '@/components/commons/mainItem/ListTitle';
@@ -12,6 +15,7 @@ import MainList from '@/components/commons/mainItem/MainList';
 import ReDesignHeader from '@/components/layouts/Header2';
 import SearchModal from './SearchPage';
 import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 // import SearchModal from '@/components/SearchModal';
 
 interface MainProps {
@@ -235,10 +239,15 @@ const Main: React.FC<MainProps> = () => {
         {/* 버튼 이벤트 핸들러 로직 */}
         {/* ... */}
       </ButtonContainer>
+      <ButtonsWrapper1>
+        <Button text="떠돌이랜드" />
+        <Button text="어디 갈랜?" />
+      </ButtonsWrapper1>
       <Maintitle />
       <ButtonsWrapper>
-        <Button text="가족 여행" />
-        <Button text="커플 여행" />
+        <SmallButton text="전체" />
+        <SmallButton text="가족 여행" />
+        <SmallButton text="커플 여행" />
       </ButtonsWrapper>
       <MainCard cards={MainCardsData} />
       <ListTitle />
@@ -249,3 +258,13 @@ const Main: React.FC<MainProps> = () => {
 };
 
 export default Main;
+
+const ButtonsWrapper1 = styled.div`
+  width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  gap: 20px;
+  justify-content: center; /* 수평 가운데 정렬 */
+  align-items: center; /* 수직 가운데 정렬 */
+  height: 100px; /* 버튼을 중앙에 위치시키기 위한 높이 지정 */
+`;

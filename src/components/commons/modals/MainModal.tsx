@@ -56,7 +56,7 @@ const MainModal: React.FC<IMainModalProps> = ({
       setSlide(false);
       setTimeout(() => {
         handleLogout(); // 모달 닫힌 후 로그아웃 처리
-      }, 300); // 모달 애니메이션 시간과 동일한 시간 지연 후 처리
+      }, 300);
     }
   };
 
@@ -135,5 +135,6 @@ const MenuItem = styled.div`
   }
   &:hover {
     background-color: #f9f9f9;
+    border-radius: 15px;
   }
 `;

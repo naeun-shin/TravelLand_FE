@@ -7,6 +7,7 @@ interface ButtonProps {
   borderColor: string;
   borderRadius?: string;
   textColor?: string;
+  hoverColor?: string;
 }
 
 export const StyledButton = styled.button<ButtonProps>`
@@ -20,6 +21,10 @@ export const StyledButton = styled.button<ButtonProps>`
   font-size: 16px;
   text-align: center;
   text-decoration: none;
+  &:hover {
+    background-color: ${(props) =>
+      props.hoverColor || props.color}; // 호버 시 색상 변경
+  }
 `;
 
 export const ButtonContainer = styled.div`
@@ -42,11 +47,12 @@ export const ButtonsWrapper = styled.div`
 `;
 
 // 카테고리 버튼 스타일
-export const CategoryButtonStyle = styled.button`
+export const CategoryButtonStyle = styled.button<{ hoverColor?: string }>`
   display: flex;
   width: fit-content;
   height: 40px;
   font-weight: 600;
+  color: #444;
   border-radius: 20px;
   border: none;
   margin: 5px 0 0px;
@@ -58,4 +64,7 @@ export const CategoryButtonStyle = styled.button`
   white-space: nowrap;
   overflow: hidden;
   margin-right: 3px;
+  &:hover {
+    background-color: rgba(90, 200, 236, 0.8);
+  }
 `;

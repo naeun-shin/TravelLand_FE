@@ -1,5 +1,4 @@
-// SearchModal.tsx
-import React from 'react';
+import React, { useEffect } from 'react';
 import { IoLocationSharp } from 'react-icons/io5';
 import * as S from '@components/search/Search.style';
 import CategoryButton from '@/components/commons/buttons/CategoryButton';
@@ -13,6 +12,20 @@ interface SearchModalProps {
 }
 
 const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
+  useEffect(() => {
+    const handleScroll = (event: Event) => {
+      event.preventDefault();
+    };
+
+    if (isOpen) {
+      window.addEventListener('scroll', handleScroll, { passive: false });
+    }
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [isOpen]);
+
   if (!isOpen) return null;
 
   const handleCategoryClick = (category: string) => {
@@ -81,12 +94,12 @@ export default SearchModal;
 
 const CloseButton = styled.button`
   position: absolute;
-  top: 16px; // 적절한 위치로 조절하세요.
-  right: 16px; // 적절한 위치로 조절하세요.
+  top: 20px;
+  right: 20px;
   background: none;
   border: none;
   cursor: pointer;
-  padding: 10px; // 버튼 크기 조절을 위해 패딩 사용
+  padding: 10px;
   display: flex;
   align-items: center;
   justify-content: center;

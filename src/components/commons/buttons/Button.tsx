@@ -13,20 +13,22 @@ export interface ButtonProps {
   text: string;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   active?: any;
+  hoverColor?: string;
 }
 
 // 기본 버튼
 const Button: React.FC<ButtonProps> = ({
-  width = '100px',
-  height = '40px',
-  color = '#fff',
-  borderColor = '#ccc',
+  width = '120px',
+  height = '50px',
+  color = '#5AC8EC',
+  borderColor = '#5AC8EC',
   borderRadius,
-  textColor,
+  textColor = '#fff',
   text,
   onClick,
-  fontSize,
+  fontSize = '18px',
   fontWeight = '600',
+  hoverColor,
 }) => {
   return (
     <S.StyledButton
@@ -38,6 +40,7 @@ const Button: React.FC<ButtonProps> = ({
       onClick={onClick}
       style={{ fontSize, fontWeight }}
       textColor={textColor}
+      hoverColor={hoverColor}
     >
       {text}
     </S.StyledButton>
@@ -74,13 +77,15 @@ export const MediumButton: React.FC<{ text: string }> = ({ text }) => (
 // 스몰 버튼
 export const SmallButton: React.FC<{ text: string }> = ({ text }) => (
   <Button
-    width="100px"
+    width="90px"
     height="40px"
     color="#fff"
-    borderColor="#000"
+    borderColor="#ddd"
     borderRadius="30px"
     text={text}
-    textColor="#000"
+    textColor="#666"
+    fontSize="15px"
+    hoverColor="#5AC8EC" // 호버 시 색상 추가
   />
 );
 

@@ -21,6 +21,7 @@ export const CardContainer = styled.div`
   justify-content: space-between;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   margin-right: 20px;
+  margin-top: 10px;
   /* display: inline-block; */
 `;
 
