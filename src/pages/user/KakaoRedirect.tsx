@@ -12,13 +12,12 @@ const KakaoRedirect: React.FC = () => {
     const cookie = new Cookies();
 
     if (authorizationToken) {
-      // 쿠키 옵션을 설정할 수 있습니다. 예를 들어, secure: true로 설정할 경우 HTTPS를 통해서만 쿠키가 전송됩니다.
       const options = {
         path: '/',
-        // secure: true, //secure: true로 설정할 경우 HTTPS를 통해서만 쿠키가 전송
-        // httpOnly: true,
-        // sameSite: 'strict',
-        // expires: /* 쿠키 만료 날짜를 설정할 수 있습니다. */
+        secure: true, // HTTPS를 통해서만 쿠키가 전송됩니다.
+        httpOnly: true, // 쿠키를 HTTP(S) 요청에만 사용하고 JS에서는 접근 불가능
+        // sameSite: 'strict', // 쿠키가 같은 사이트의 요청에만 포함되도록 설정
+        expires: new Date(Date.now() + 86400 * 1000 * 7), // 1주일 후 만료
       };
 
       cookie.set('Authorization', authorizationToken, options);
@@ -26,7 +25,6 @@ const KakaoRedirect: React.FC = () => {
     } else {
       console.error('Authorization token not found in the query string.');
     }
-    // 의존성 배열에 location.search를 추가하여 해당 값이 변경될 때만 이 효과가 실행되도록 합니다.
   }, [location.search, navigate]);
 
   return null; // 이 컴포넌트는 아무것도 렌더링하지 않으므로 null을 반환합니다.
