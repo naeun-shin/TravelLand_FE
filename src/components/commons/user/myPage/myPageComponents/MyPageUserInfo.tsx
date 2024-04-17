@@ -1,4 +1,3 @@
-// import { useGetUerInfoQuery } from '@/hooks/useQuery';
 import { useGetUerInfoQuery } from '@/hooks/useQuery';
 import * as S from '@components/commons/user/myPage/MyPage.style';
 
