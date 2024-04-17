@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 // 타입 정의 추가
@@ -14,7 +15,21 @@ const MainModal: React.FC<IMainModalProps> = ({
   handleLogout,
   handleLogin,
 }) => {
+  const navigate = useNavigate();
   const [slide, setSlide] = useState<boolean>(false);
+
+  // mypage 이동
+  const handleOpenMypage = () => {
+    navigate('/user/myPage');
+  };
+  // mypage 이동
+  const handleOpenPlanCreate = () => {
+    navigate('/planCreate/1');
+  };
+  // mypage 이동
+  const handleOpenTripCreate = () => {
+    navigate('/travelCreate');
+  };
 
   useEffect(() => {
     setSlide(true);
@@ -80,9 +95,13 @@ const MainModal: React.FC<IMainModalProps> = ({
           )}
           {isLoggedIn && (
             <>
-              <MenuItem>마이페이지</MenuItem>
-              <MenuItem>여행 플랜 작성하기</MenuItem>
-              <MenuItem>여행 정보 작성하기</MenuItem>
+              <MenuItem onClick={handleOpenMypage}>마이페이지</MenuItem>
+              <MenuItem onClick={handleOpenPlanCreate}>
+                여행 플랜 작성하기
+              </MenuItem>
+              <MenuItem onClick={handleOpenTripCreate}>
+                여행 정보 작성하기
+              </MenuItem>
               <MenuItem onClick={handleLogout}>로그아웃</MenuItem>
             </>
           )}

@@ -21,7 +21,7 @@ const ReDesignHeader: React.FC = () => {
   const [isMenuModalOpen, setIsMenuModalOpen] = useState(false);
   // 로그인 모달
   const [isModalOpen, setIsModalOpen] = useState(false); // 로그인 모달 상태 추가
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // 로그인 상태를 관리하는 상태 추가
+  const [isLoggedIn, setIsLoggedIn] = useState(true); // 로그인 상태를 관리하는 상태 추가
   const [isScrolled, setIsScrolled] = useState(false);
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false); // 검색 모달 상태 추가
 
@@ -60,10 +60,7 @@ const ReDesignHeader: React.FC = () => {
     setIsModalOpen(false);
     setIsMenuModalOpen(false); // 메인 모달도 닫히도록 추가
   };
-  // mypage 이동
-  const handleOpenMypage = () => {
-    navigate('/user/myPage');
-  };
+
   // 로고 클릭 시 메인 페이지 이동
   const handleMainPage = () => {
     navigate('/');
@@ -112,7 +109,7 @@ const ReDesignHeader: React.FC = () => {
               />
             )}
           </MenuContainer>
-          {isLoggedIn ? (
+          {/* {isLoggedIn ? (
             <>
               <UserAction onClick={handleOpenMypage}>마이페이지</UserAction>
               <UserAction onClick={() => setIsLoggedIn(false)}>
@@ -121,7 +118,7 @@ const ReDesignHeader: React.FC = () => {
             </>
           ) : (
             <></>
-          )}
+          )} */}
         </Container>
       </StickyHeader>
       {/* 로그인 모달 */}
@@ -170,13 +167,13 @@ const Logo = styled.div`
   cursor: pointer;
 `;
 
-const UserAction = styled.div`
-  font-size: 16px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 20px;
-`;
+// const UserAction = styled.div`
+//   font-size: 16px;
+//   cursor: pointer;
+//   display: flex;
+//   align-items: center;
+//   gap: 20px;
+// `;
 
 // 버거 메뉴 아이콘 스타일
 const BurgerMenuIcon = styled.div`

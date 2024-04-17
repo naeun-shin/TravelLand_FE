@@ -1,20 +1,25 @@
 import { useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Cookies } from 'react-cookie';
 
 const KakaoRedirect: React.FC = () => {
   const cookie = new Cookies();
   const navigate = useNavigate();
-  const params = useParams();
-  const { Authorization } = params;
+  const location = useLocation();
 
-  console.log('params >> ', params);
-  console.log('param Authorization >> ', Authorization);
+  const queryParams = new URLSearchParams(location.search);
+  const authorizationToken = queryParams.get('Authorization');
+
+  // const params = useParams();
+  // const { Authorization } = params;
+
+  console.log('params >> ', queryParams);
+  console.log('param Authorization >> ', authorizationToken);
 
   useEffect(() => {
     // const authToken = res.headers['authorization']; // Headers are generally case-insensitive but depend on server configuration
-    if (params) {
-      cookie.set('Authorization', params.Authorization);
+    if (authorizationToken) {
+      cookie.set('Authorization', authorizationToken);
     } else {
       console.log('Authorization token not found in the response headers.');
     }
