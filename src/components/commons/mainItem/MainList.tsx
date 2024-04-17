@@ -69,7 +69,7 @@ const BookmarkIcon = styled(CiBookmark)`
   height: 20px;
   border-radius: 50%;
   padding: 5px;
-  z-index: 10;
+  z-index: 9;
   background-color: #c5f1ff;
 `;
 
