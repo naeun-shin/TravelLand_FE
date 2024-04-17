@@ -1,13 +1,13 @@
 // import { useGetUerInfoQuery } from '@/hooks/useQuery';
-import { useGetUerInfoQuery } from '@/hooks/useQuery';
+// import { useGetUerInfoQuery } from '@/hooks/useQuery';
 import * as S from '@components/commons/user/myPage/MyPage.style';
 
 const MyPageUserInfo = () => {
-  const { data, isLoading, isError } = useGetUerInfoQuery();
-  console.log(data);
+  // const { data, isLoading, isError } = useGetUerInfoQuery();
+  // console.log(data);
 
-  if (isLoading) return <div>Data is Loading</div>;
-  if (isError) return <div>Error occurred during fetching</div>;
+  // if (isLoading) return <div>Data is Loading</div>;
+  // if (isError) return <div>Error occurred during fetching</div>;
   return (
     <>
       <S.MyPageContainer>
