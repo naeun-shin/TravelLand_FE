@@ -87,6 +87,13 @@ const MyPageTabButton = styled.button<{ isActive: boolean }>`
   }
 `;
 
+const MyPlanListContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding-top: 30px;
+`;
+
 const MyPageInvitedContainer = styled.div`
   padding: 10px;
   display: grid;
@@ -117,5 +124,6 @@ export {
   MyPageButton,
   MyPageTabButton,
   MyPageInvitedContainer,
+  MyPlanListContainer,
   UserOtherInfoContainer,
 };
