@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios';
-import { instance, instanceWithToken } from './axios';
+import { instanceWithToken } from './axios';
 import { PlanListParams } from './interfaces/planInterface';
 import { TripListParams } from './interfaces/reviewInterface';
 
