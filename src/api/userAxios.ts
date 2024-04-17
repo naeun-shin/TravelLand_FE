@@ -19,7 +19,7 @@ export const getMyPlanList = async (
 ): Promise<AxiosResponse<any>> => {
   const { page, size, sortBy, isAsc } = paramData;
   try {
-    return await instance.get('/v1/users/plans', {
+    return await instanceWithToken.get('/v1/users/plans', {
       params: { page, size, sortBy, isAsc },
     });
   } catch (error) {
@@ -34,7 +34,7 @@ export const getScrapPlanList = async (
 ): Promise<AxiosResponse<any>> => {
   const { page, size, sortBy, isAsc } = paramData;
   try {
-    return await instance.get('/v1/plans/scrap', {
+    return await instanceWithToken.get('/v1/plans/scrap', {
       params: { page, size, sortBy, isAsc },
     });
   } catch (error) {
@@ -49,7 +49,7 @@ export const getMyTripList = async (
 ): Promise<AxiosResponse<any>> => {
   const { page, size, isAsc, sortBy } = tripListparam;
   try {
-    return await instance.get('/v1/users/trips', {
+    return await instanceWithToken.get('/v1/users/trips', {
       params: { page, size, isAsc, sortBy },
     });
   } catch (error) {
@@ -62,7 +62,7 @@ export const getMyTripList = async (
 export const getScrapTripList = async (tripListparam: TripListParams) => {
   const { page, size } = tripListparam;
   try {
-    const response = await instance.get('/v1/trips/scrap', {
+    const response = await instanceWithToken.get('/v1/trips/scrap', {
       params: { page, size },
     });
     return response;
