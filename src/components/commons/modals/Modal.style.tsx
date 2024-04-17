@@ -84,3 +84,21 @@ export const DetailMapModalOverlay = styled.div`
   z-index: 10;
   /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); // 모달에 그림자 효과 추가 */
 `;
+
+export const LoginModalOverlay = styled.div`
+  width: 500px; // 모달의 너비
+  height: 300px; // 모달의 높이를 화면의 80%로 설정
+  padding: 25px;
+  background-color: #fff;
+  border-style: 1px solid transparent;
+  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  position: fixed; // 모달을 화면에 고정
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  overflow: hidden; // 내부 컨텐츠가 넘치면 숨김
+  z-index: 10;
+  /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); // 모달에 그림자 효과 추가 */
+`;

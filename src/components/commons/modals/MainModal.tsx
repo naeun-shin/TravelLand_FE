@@ -119,7 +119,7 @@ const ModalWrapper = styled.div`
   width: 150px;
   right: 20%;
   top: 110px;
-  /* z-index: 1000; */
+  z-index: 10;
   opacity: 0;
   transition:
     opacity 0.3s,
