@@ -1,9 +1,7 @@
-// import * as S from './List.style';
 import { CiHeart } from 'react-icons/ci';
 import { IoEyeOutline } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
 import * as S from './List.style';
-// import Button from '../buttons/Button';
 
 interface PlanListItem {
   tripStartDate: string;
@@ -76,6 +74,11 @@ export const MyPlanList: React.FC<MyPlanListProps> = ({
                 <img src="/assets/paris.jpg" alt="Invitee" />
                 <img src="/assets/paris.jpg" alt="Invitee" />
                 <img src="/assets/paris.jpg" alt="Invitee" />
+                <img src="/assets/paris.jpg" alt="Invitee" />
+                <img src="/assets/paris.jpg" alt="Invitee" />
+                <S.MyPlanListInviteeCount>
+                  <div>+5</div>
+                </S.MyPlanListInviteeCount>
               </S.MyPlanListInviteeBox>
             </S.MyPlanListItems>
           ))
