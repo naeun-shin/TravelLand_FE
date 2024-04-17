@@ -9,6 +9,8 @@ const KakaoRedirect: React.FC = () => {
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
     const authorizationToken = queryParams.get('Authorization');
+    console.log(queryParams);
+    console.log(authorizationToken);
     const cookie = new Cookies();
 
     if (authorizationToken) {
@@ -24,9 +26,10 @@ const KakaoRedirect: React.FC = () => {
       navigate('/'); // 메인 페이지로 이동
     } else {
       console.error('Authorization token not found in the query string.');
+      navigate('/');
     }
   }, [location.search, navigate]);
-
+  navigate('/');
   return null; // 이 컴포넌트는 아무것도 렌더링하지 않으므로 null을 반환합니다.
 };
 
