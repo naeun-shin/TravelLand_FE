@@ -25,25 +25,6 @@ const PlanCreate = () => {
   const [totalPlanTitle, setTotalPlanTitle] = useState<String>('');
   const [totalBudget, setTotalBudget] = useState<number>(0);
   const [area, setArea] = useState<String>('');
-  // const [title, setTitle] = useState<String>('');
-
-  // const [isCalendarOpen, setIsCalendarOpen] = useState(false);
-
-  // 이 컴포넌트는 달력 포탈을 열기 위한 버튼을 렌더링합니다.
-  // const CalendarButton = React.forwardRef<
-  //   HTMLImageElement,
-  //   { onClick: () => void }
-  // >(({ onClick }, ref) => (
-  //   <img
-  //     ref={ref}
-  //     src="/assets/icons/arrow_to_right.png"
-  //     onClick={onClick}
-  //     alt="Calendar"
-  //     style={{ cursor: 'pointer' }}
-  //   />
-  // ));
-
-  // CalendarButton.displayName = 'CalendarButton';
 
   // 날짜 범위 변경 핸들러
   const handleDateRangeChange = (update: [Date, Date]) => {
@@ -58,7 +39,7 @@ const PlanCreate = () => {
       return (
         <ModernInput
           type="text"
-          placeholder="지역을 입력해주세요"
+          placeholder="기간을 입력해주세요"
           width={400}
           height={30}
           border="transparent"
@@ -266,21 +247,6 @@ const PlanCreate = () => {
             inline
             dateFormat={dateFormat}
             onChange={handleDateRangeChange}
-
-            // customInput={
-            //   <CalendarButton
-            //     onClick={function (): void {
-            //       throw new Error('Function not implemented.');
-            //     }}
-            //   />
-            // }
-            // 이제 여기서 ref와 onClick 모두 처리 가능
-            // excludeDates={[addDays(new Date(), 1), addDays(new Date(), 5)]}
-
-            // open={isCalendarOpen}
-            // shouldCloseOnSelect={true}
-            // onCalendarOpen={() => setIsCalendarOpen(true)}
-            // onCalendarClose={() => setIsCalendarOpen(false)} // 달력이 닫힐 때 상태를 업데이트하는 콜백 추가
           />
         </div>
       </div>
