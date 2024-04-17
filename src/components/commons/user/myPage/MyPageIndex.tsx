@@ -6,10 +6,10 @@ import MyPageReviewList from './myPageComponents/MyPageReviewList';
 import MyPageUserInfo from './myPageComponents/MyPageUserInfo';
 
 const MyPageIndex = () => {
-  const [activeTab, setActiveTab] = useState(0);
+  const [isActive, setIsActive] = useState(0);
 
   const handleTabClick = (index: number) => {
-    setActiveTab(index);
+    setIsActive(index);
   };
 
   return (
@@ -19,13 +19,13 @@ const MyPageIndex = () => {
       <S.MyPageTabStyle>
         <S.MyPageTabButton
           onClick={() => handleTabClick(0)}
-          isActive={activeTab === 0}
+          isActive={isActive === 0}
         >
           여행 정보
         </S.MyPageTabButton>
         <S.MyPageTabButton
           onClick={() => handleTabClick(1)}
-          isActive={activeTab === 1}
+          isActive={isActive === 1}
         >
           여행 플랜
         </S.MyPageTabButton>
@@ -39,8 +39,8 @@ const MyPageIndex = () => {
       {/* <MyPageTab /> */}
 
       {/* 목록 */}
-      {activeTab === 0 ? <MyPagePlanList /> : null}
-      {activeTab === 1 ? <MyPageReviewList /> : null}
+      {isActive === 0 ? <MyPagePlanList /> && 'active' : null}
+      {isActive === 1 ? <MyPageReviewList /> && 'active' : null}
       {/* {activeTab === 2 ? <MyPageInvitedList /> : null} */}
     </>
   );

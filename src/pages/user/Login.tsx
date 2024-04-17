@@ -2,8 +2,9 @@ import Button from '@/components/commons/buttons/Button';
 import Modal from '@/components/commons/modals/Modal';
 import * as S from './User.styles';
 
-const key = import.meta.env.VITE_APP_KAKAO_REST_KEY;
-const redirect = import.meta.env.VITE_APP_REDIRECT;
+// const key = import.meta.env.VITE_APP_KAKAO_REST_KEY;
+// const redirect = import.meta.env.VITE_APP_REDIRECT;
+const base_url = import.meta.env.VITE_APP_BASE_URL;
 
 interface LoginModalProps {
   isOpen: boolean;
@@ -11,10 +12,10 @@ interface LoginModalProps {
 }
 
 const Login: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
-  const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${key}&redirect_uri=${redirect}&response_type=code`;
+  // const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${key}&redirect_uri=${redirect}&response_type=code`;
 
   const loginWithKakao = () => {
-    window.location.href = kakaoURL;
+    window.location.href = `${base_url}/oauth2/authorization/kakao`;
   };
 
   return (
