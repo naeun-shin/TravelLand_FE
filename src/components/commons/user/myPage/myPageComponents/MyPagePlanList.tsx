@@ -45,8 +45,6 @@ const MyPagePlanList = () => {
   const content = data?.data.content; // 실제 항목이 포함된 배열
   console.log(content);
 
-  // 현재 입력 값 public이 true 저장 불가한 상태로 false로 임시 목록 보여주기
-
   if (isLoading) return <div>Data is Loading</div>;
   if (isError) return <div>Error occurred during fetching</div>;
   return (
