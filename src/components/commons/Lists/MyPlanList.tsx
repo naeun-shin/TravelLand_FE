@@ -3,7 +3,7 @@ import { CiHeart } from 'react-icons/ci';
 import { IoEyeOutline } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
 import * as S from './List.style';
-import Button from '../buttons/Button';
+// import Button from '../buttons/Button';
 
 interface PlanListItem {
   tripStartDate: string;
@@ -20,59 +20,37 @@ interface PlanListItem {
 
 interface MyPlanListProps {
   planListData: PlanListItem[];
+  isLoading?: boolean;
+  error?: string;
 }
 
-export const MyPlanList: React.FC<MyPlanListProps> = ({ planListData }) => {
+export const MyPlanList: React.FC<MyPlanListProps> = ({
+  planListData,
+  isLoading,
+  error,
+}) => {
   const navigate = useNavigate();
-
   const handleReadContent = (planId: number) => {
     navigate(`/planDetail/${planId}`);
   };
-  const handlePlanCreate = () => {
-    navigate('/planCreate/1');
-  };
-  // const handleBookmarkClick = (planId: number) => {
-  //   console.log(planId);
-  // };
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
 
   return (
-    <>
-      <S.MyPlanListWrapper>
-        {/* 버튼 영역 */}
-        <S.MyPlanListButtons>
-          <div>
-            <Button
-              text="나의 여행 플랜"
-              color="white"
-              textColor="gray"
-              width="150px"
-              borderColor="gray"
-              marginRight="5px"
-            />
-            <Button
-              text="초대된 여행 플랜"
-              color="white"
-              textColor="gray"
-              width="150px"
-              borderColor="gray"
-            />
-          </div>
-          <Button
-            text="작성하기"
-            width="150px"
-            borderRadius="15px"
-            onClick={handlePlanCreate}
-          />
-        </S.MyPlanListButtons>
-        {/*  목록 */}
-        <S.MyPlanListItemWrapper>
-          {planListData.map((item) => (
-            <S.MyPlanListItems>
-              {/* 공개 비공개 칸 */}
+    <S.MyPlanListWrapper>
+      <S.MyPlanListItemWrapper>
+        {planListData.length > 0 ? (
+          planListData.map((item) => (
+            <S.MyPlanListItems key={item.planId}>
               <S.MyPlanIsPublic isPublic={item.isPublic}>
                 {item.isPublic ? '공개' : '비공개'}
               </S.MyPlanIsPublic>
-              {/* 지역 & 날짜 & 제목 */}
               <S.MyPlanListContentBox>
                 <div>
                   {item.area} | {item.tripStartDate} -{' '}
@@ -84,7 +62,6 @@ export const MyPlanList: React.FC<MyPlanListProps> = ({ planListData }) => {
                   {item.title}
                 </S.MyPlanListTitle>
               </S.MyPlanListContentBox>
-              {/* 조회수, 하트, 댓글 */}
               <S.MyPlanListCountBox>
                 <div>
                   <IoEyeOutline color="gray" />
@@ -94,22 +71,18 @@ export const MyPlanList: React.FC<MyPlanListProps> = ({ planListData }) => {
                   <CiHeart color="gray" />
                   {item.likeCount}
                 </div>
-
-                {/* <div>
-                  <CiHeart />
-                  12
-                </div> */}
               </S.MyPlanListCountBox>
-              {/* 초대 사람 사진 영역   */}
               <S.MyPlanListInviteeBox>
-                <img src="/assets/paris.jpg" />
-                <img src="/assets/paris.jpg" />
-                <img src="/assets/paris.jpg" />
+                <img src="/assets/paris.jpg" alt="Invitee" />
+                <img src="/assets/paris.jpg" alt="Invitee" />
+                <img src="/assets/paris.jpg" alt="Invitee" />
               </S.MyPlanListInviteeBox>
             </S.MyPlanListItems>
-          ))}
-        </S.MyPlanListItemWrapper>
-      </S.MyPlanListWrapper>
-    </>
+          ))
+        ) : (
+          <div>No plans available.</div>
+        )}
+      </S.MyPlanListItemWrapper>
+    </S.MyPlanListWrapper>
   );
 };
