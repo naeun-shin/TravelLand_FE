@@ -144,7 +144,7 @@ const StickyHeader = styled.div<SearchInputContainerProps>`
   right: 0;
   background: #fff;
   transition: position 0.3s ease-in-out;
-  z-index: 11;
+  z-index: 10;
   padding: 10px 0;
   box-shadow: ${(props) =>
     props.isScrolled ? '0 2px 8px rgba(0, 0, 0, 0.15)' : 'none'};
@@ -188,5 +188,5 @@ const BurgerMenuIcon = styled.div`
 const MenuContainer = styled.div`
   position: relative;
   display: inline-block;
-  z-index: 12;
+  z-index: 10;
 `;
