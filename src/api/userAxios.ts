@@ -1,12 +1,12 @@
 import { AxiosResponse } from 'axios';
-import { instance } from './axios';
+import { instance, instanceWithToken } from './axios';
 import { PlanListParams } from './interfaces/planInterface';
 import { TripListParams } from './interfaces/reviewInterface';
 
 // 유저 정보
 export const getUserInfo = async () => {
   try {
-    return await instance.get('/users/memberInfo');
+    return await instanceWithToken.get('/users/memberInfo');
   } catch (error) {
     console.error(error);
     throw error;
