@@ -15,7 +15,7 @@ const Login: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
   // const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${key}&redirect_uri=${redirect}&response_type=code`;
 
   const loginWithKakao = () => {
-    window.location.href = `${base_url}/oauth2/authorization/kakao`;
+    window.location.href = `${base_url}oauth2/authorization/kakao`;
   };
 
   return (
