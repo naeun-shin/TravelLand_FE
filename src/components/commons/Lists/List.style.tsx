@@ -182,15 +182,36 @@ const MyPlanListInviteeBox = styled.div`
     border: 2px solid white; // Adds a white border to distinguish overlapping images
     position: absolute;
 
-    &:first-child {
-      left: 0;
+    &:nth-child(5) {
+      left: calc(80px);
     }
-    &:nth-child(n + 2) {
-      left: calc(
-        25px * (n - 1)
-      ); // Adjust the overlay by changing 25px to the desired value
+    &:nth-child(4) {
+      left: calc(60px);
+    }
+    &:nth-child(3) {
+      left: calc(40px);
+    }
+    &:nth-child(2) {
+      left: calc(20px);
+    }
+    &:nth-child(1) {
+      left: calc(0px);
     }
   }
+`;
+
+const MyPlanListInviteeCount = styled.div`
+  position: absolute;
+  left: 100px;
+  background-color: black;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  color: white;
+  display: inline-flex;
+  justify-content: center;
+  font-size: 14px;
+  align-items: center;
 `;
 
 export {
@@ -215,4 +236,5 @@ export {
   MyPlanListTitle,
   MyPlanListInviteeBox,
   MyPlanListContentBox,
+  MyPlanListInviteeCount,
 };
