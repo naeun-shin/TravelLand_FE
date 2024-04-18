@@ -35,7 +35,7 @@ const TravelReviewPage = () => {
     try {
       const response: AxiosResponse<Trip[]> = await getTripList({
         page,
-        size: 8,
+        size: 4,
         sortBy: 'createdAt',
         isAsc: false,
       });
@@ -123,19 +123,34 @@ const TravelReviewPage = () => {
         >
           <S.TravelReviewCardSection>
             {trips.map((trip) => (
-              <ListCard
-                key={trip.tripId}
-                tripId={trip.tripId}
-                area={trip.area}
-                title={trip.title}
-                tripStartDate={trip.tripStartDate}
-                tripEndDate={trip.tripEndDate}
-                thumbnailUrl={trip.thumbnailUrl}
-                hashtagList={trip.hashtagList}
-                isScrap={trip.isScrap}
-                viewCount={trip.viewCount}
-                onClick={() => handleCardClick(trip.tripId)}
-              />
+              <>
+                <ListCard
+                  key={trip.tripId}
+                  tripId={trip.tripId}
+                  area={trip.area}
+                  title={trip.title}
+                  tripStartDate={trip.tripStartDate}
+                  tripEndDate={trip.tripEndDate}
+                  thumbnailUrl={trip.thumbnailUrl}
+                  hashtagList={trip.hashtagList}
+                  isScrap={trip.isScrap}
+                  viewCount={trip.viewCount}
+                  onClick={() => handleCardClick(trip.tripId)}
+                />
+                <ListCard
+                  key={trip.tripId}
+                  tripId={trip.tripId}
+                  area={trip.area}
+                  title={trip.title}
+                  tripStartDate={trip.tripStartDate}
+                  tripEndDate={trip.tripEndDate}
+                  thumbnailUrl={trip.thumbnailUrl}
+                  hashtagList={trip.hashtagList}
+                  isScrap={trip.isScrap}
+                  viewCount={trip.viewCount}
+                  onClick={() => handleCardClick(trip.tripId)}
+                />
+              </>
             ))}
           </S.TravelReviewCardSection>
         </InfiniteScroll>

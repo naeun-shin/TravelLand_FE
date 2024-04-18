@@ -13,7 +13,7 @@ export const CardContainerWrapper = styled.div`
 
 export const CardContainer = styled.div`
   width: calc(25% - 25px);
-  max-width: 300px;
+  max-width: 280px;
   min-width: 230px;
   height: 420px;
   border-radius: 10px;
@@ -37,7 +37,7 @@ export const ImageContainer = styled.div`
     width: 100%;
     height: 100%;
     /* object-fit: cover; */
-    border-radius: 1px;
+    border-radius: 10px;
   }
 `;
 

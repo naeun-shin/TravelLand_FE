@@ -1,4 +1,12 @@
-import { useState } from 'react';
+import React, {
+  useState,
+  useRef,
+  forwardRef,
+  ButtonHTMLAttributes,
+} from 'react';
+import DatePicker, { registerLocale, setDefaultLocale } from 'react-datepicker';
+import { ko } from 'date-fns/locale';
+import 'react-datepicker/dist/react-datepicker.css';
 import { useNavigate } from 'react-router-dom';
 import ToggleButton from '@/components/commons/buttons/ToggleButton';
 import { ModernInput } from '@/components/commons/inputs/Input';
@@ -12,6 +20,29 @@ const ReviewCreate = () => {
   const [totalBudget, setTotalBudget] = useState<number>(0);
   const [area, setArea] = useState<string>('');
   const [step, setStep] = useState<number>(1);
+  const datePickerRef = useRef<DatePicker>(null);
+  const [startDate, setStartDate] = useState<Date | null>(new Date());
+
+  // 달력을 표시할 버튼 컴포넌트
+  const CalendarButton = forwardRef<
+    HTMLButtonElement,
+    ButtonHTMLAttributes<HTMLButtonElement>
+  >(({ onClick }, ref) => (
+    <button
+      onClick={onClick}
+      ref={ref}
+      style={{ border: 'none', background: 'none' }}
+    >
+      <TfiArrowCircleRight size="35px" color="lightGray" />
+    </button>
+  ));
+  CalendarButton.displayName = 'CalendarButton';
+
+  const openCalendar = () => {
+    if (datePickerRef.current) {
+      datePickerRef.current.setOpen(true);
+    }
+  };
 
   const handleAreaChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setArea(e.target.value);
@@ -134,27 +165,21 @@ const ReviewCreate = () => {
                 </ReviewContent>
               </ReviewBox>
               <hr />
-              <ReviewBox>
-                <ReviewContent>
+              <div style={{ padding: '30px 0' }}>
+                <ReviewContentRow>
                   <div>여행기간</div>
-                  <ModernInput
-                    type="text"
-                    placeholder="여행기간을 입력해주세요"
-                    width={400}
-                    height={30}
-                    border="transparent"
-                    fontSize={16}
-                    onChange={handleBudgetChange}
-                  />
-                </ReviewContent>
-                <IconContainer>
-                  <TfiArrowCircleRight
-                    size="35px"
-                    color="lightGray"
-                    cursor="pointer"
-                  />
-                </IconContainer>
-              </ReviewBox>
+                  <DatePickerContainer>
+                    <DatePicker
+                      ref={datePickerRef}
+                      selected={startDate}
+                      onChange={(date: Date) => setStartDate(date)}
+                      dateFormat="yyyy/MM/dd"
+                      locale={ko}
+                      customInput={<CalendarButton />} // 커스텀 인풋 사용
+                    />
+                  </DatePickerContainer>
+                </ReviewContentRow>
+              </div>
               <hr />
             </div>
           </div>
@@ -217,8 +242,6 @@ const ReviewNextButton = styled.button`
 const IconContainer = styled.div`
   display: flex;
   align-items: center;
-  margin-top: 25px;
-  margin-left: 240px;
 `;
 
 const Title = styled.div`
@@ -238,21 +261,16 @@ const BringPlanBtn = styled.button`
   cursor: pointer;
 `;
 
-// const Step = ({ active }: { active?: boolean }) => {
-//   // active prop 추가
-//   return (
-//     <StepCircle $active={active}>
-//     </StepCircle>
-//   );
-// };
+const ReviewContentRow = styled(ReviewContent)`
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between; // 요소들 사이에 공간을 동등하게 배분합니다.
+`;
 
-// const StepCircle = styled.div<{ $active?: boolean }>`
-//   // $active로 수정
-//   width: 30px;
-//   height: 30px;
-//   border-radius: 50%;
-//   background-color: ${({ $active }) =>
-//     $active ? '#5ac8ec' : '#e0e0e0'}; // $active로 수정
-// `;
+// DatePicker와 아이콘을 가로로 나열하기 위해 새로운 컨테이너를 만듭니다.
+const DatePickerContainer = styled.div`
+  display: flex;
+  align-items: center;
+`;
 
 // #F43B3B 나중에 제목들 옆에 색깔 쪼꼬만 원 모양 넣어야함

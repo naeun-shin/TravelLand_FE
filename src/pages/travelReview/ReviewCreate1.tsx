@@ -31,7 +31,6 @@ const CenteredContainer = styled.div`
   align-items: center;
   flex-direction: column;
   width: 100%;
-  max-width: 1100px;
   margin: 0 auto;
 
   h2 {
