@@ -7,6 +7,7 @@ import {
   InvitationModalOverlay,
   DetailMapModalOverlay,
   LoginModalOverlay,
+  VoteModalOverlay,
 } from './Modal.style';
 
 interface ModalProps {
@@ -92,6 +93,23 @@ export const LoginModal: React.FC<ModalProps> = ({
     </ModalDim>
   );
 };
+
+export const VoteModal: React.FC<ModalProps> = ({
+  isOpen,
+  onClose,
+  children,
+}) => {
+  if (!isOpen) return null;
+
+  return (
+    <ModalDim onClick={onClose}>
+      <VoteModalOverlay onClick={(e) => e.stopPropagation()}>
+        <ModalContainer>{children}</ModalContainer>
+      </VoteModalOverlay>
+    </ModalDim>
+  );
+};
+
 // 모달 사용 예시로 해둔거 일단 주석처리로 둠
 
 // import Modal from '@/components/commons/modals/Modal';

@@ -10,18 +10,22 @@ const GlobalStyle = createGlobalStyle`
         src: url(${PretendardBlack}) format('truetype');
   }
   @font-face {
+    font-family: 'LotteriaChab';
+    font-weight: normal;
+    font-style: normal;
+    src: url('https://cdn.jsdelivr.net/gh/webfontworld/LotteriaChab/LotteriaChab.eot');
+    src: url('https://cdn.jsdelivr.net/gh/webfontworld/LotteriaChab/LotteriaChab.eot?#iefix') format('embedded-opentype'),
+         url('https://cdn.jsdelivr.net/gh/webfontworld/LotteriaChab/LotteriaChab.woff2') format('woff2'),
+         url('https://cdn.jsdelivr.net/gh/webfontworld/LotteriaChab/LotteriaChab.woff') format('woff'),
+         url('https://cdn.jsdelivr.net/gh/webfontworld/LotteriaChab/LotteriaChab.ttf') format("truetype");
+    font-display: swap;
+} 
+  /* @font-face {
         font-family: 'chab';
         src: local('chab'), local('chab');
         font-style: normal;
         src: url(${chab}) format('truetype');
-  }
-  /* @font-face {
-    font-family: 'LOTTERIACHAB';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/LOTTERIACHAB.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
-} */
-
+  } */
   
   html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
