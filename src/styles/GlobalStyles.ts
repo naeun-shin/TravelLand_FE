@@ -1,25 +1,8 @@
 import { createGlobalStyle } from 'styled-components';
-import PretendardBlack from '../fonts/Pretendard-Black.otf';
 import chab from '../fonts/chab.otf';
 
 const GlobalStyle = createGlobalStyle`
-  @font-face {
-        font-family: 'PretendardBlack';
-        src: local('PretendardBlack'), local('PretendardBlack');
-        font-style: normal;
-        src: url(${PretendardBlack}) format('truetype');
-  }
-  @font-face {
-    font-family: 'LotteriaChab';
-    font-weight: normal;
-    font-style: normal;
-    src: url('https://cdn.jsdelivr.net/gh/webfontworld/LotteriaChab/LotteriaChab.eot');
-    src: url('https://cdn.jsdelivr.net/gh/webfontworld/LotteriaChab/LotteriaChab.eot?#iefix') format('embedded-opentype'),
-         url('https://cdn.jsdelivr.net/gh/webfontworld/LotteriaChab/LotteriaChab.woff2') format('woff2'),
-         url('https://cdn.jsdelivr.net/gh/webfontworld/LotteriaChab/LotteriaChab.woff') format('woff'),
-         url('https://cdn.jsdelivr.net/gh/webfontworld/LotteriaChab/LotteriaChab.ttf') format("truetype");
-    font-display: swap;
-} 
+
   /* @font-face {
         font-family: 'chab';
         src: local('chab'), local('chab');

@@ -8,6 +8,8 @@ import {
   DetailMapModalOverlay,
   LoginModalOverlay,
   VoteModalOverlay,
+  CreateVoteModalOverlay,
+  CreateVoteModalContainer,
 } from './Modal.style';
 
 interface ModalProps {
@@ -106,6 +108,22 @@ export const VoteModal: React.FC<ModalProps> = ({
       <VoteModalOverlay onClick={(e) => e.stopPropagation()}>
         <ModalContainer>{children}</ModalContainer>
       </VoteModalOverlay>
+    </ModalDim>
+  );
+};
+
+export const CreateVoteModal: React.FC<ModalProps> = ({
+  isOpen,
+  onClose,
+  children,
+}) => {
+  if (!isOpen) return null;
+
+  return (
+    <ModalDim onClick={onClose}>
+      <CreateVoteModalOverlay onClick={(e) => e.stopPropagation()}>
+        <CreateVoteModalContainer>{children}</CreateVoteModalContainer>
+      </CreateVoteModalOverlay>
     </ModalDim>
   );
 };

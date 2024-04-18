@@ -9,8 +9,37 @@ export const NoticeModal = () => {
   const [isVoteModalOpen, setIsVoteModalOpen] = useState(false);
 
   // 모달 애니메이션 효과를 위한 상태 설정
+
   useEffect(() => {
     setSlide(true);
+    console.log('Modal opened');
+  }, []);
+
+  useEffect(() => {
+    // 모달의 위치 조정 함수
+    const adjustModalPosition = () => {
+      const burgerButtonRect = document
+        .querySelector('.BurgerMenuIcon')
+        ?.getBoundingClientRect(); // 버거 버튼의 위치 정보
+
+      const modal = document.getElementById('notice-modal-root');
+      if (burgerButtonRect && modal) {
+        modal.style.top = `${
+          burgerButtonRect.top + burgerButtonRect.height + window.scrollY
+        }px`; // 모달을 버거 버튼 아래에 위치시킴
+        modal.style.right = `${window.innerWidth - burgerButtonRect.right}px`; // 모달을 버거 버튼의 오른쪽 정렬
+      }
+    };
+
+    // 모달이 열릴 때마다 위치 조정
+    adjustModalPosition();
+
+    // 창 크기 변경 시 위치 조정
+    window.addEventListener('resize', adjustModalPosition);
+
+    return () => {
+      window.removeEventListener('resize', adjustModalPosition);
+    };
   }, []);
 
   // 투표 모달을 여는 함수

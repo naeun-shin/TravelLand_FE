@@ -16,6 +16,10 @@ import ReDesignHeader from '@/components/layouts/Header2';
 import SearchModal from './SearchPage';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import {
+  useGetMainHashtagListQuery,
+  useGetMainRankListQuery,
+} from '@/hooks/useQuery';
 // import SearchModal from '@/components/SearchModal';
 
 interface MainProps {
@@ -29,6 +33,16 @@ const Main: React.FC<MainProps> = () => {
 
   // 모달을 토글하는 함수
   const toggleSearchModal = () => setSearchModalOpen(!isSearchModalOpen);
+
+  // TopTen
+  const { data: TopTenData, isLoading, isError } = useGetMainRankListQuery();
+
+  console.log(TopTenData);
+
+  // 해시태그
+  const { data: hashTagData } = useGetMainHashtagListQuery();
+
+  console.log(hashTagData);
 
   // 모달을 여는 함수
   // const openSearchModal = () => {
@@ -228,6 +242,14 @@ const Main: React.FC<MainProps> = () => {
     },
   ];
 
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError) {
+    return <div>error occured</div>;
+  }
+
   return (
     <>
       <ReDesignHeader />
@@ -249,8 +271,10 @@ const Main: React.FC<MainProps> = () => {
         <SmallButton text="가족 여행" />
         <SmallButton text="커플 여행" />
       </ButtonsWrapper>
+      {/* 해시태그 영역 */}
       <MainCard cards={MainCardsData} />
       <ListTitle />
+      {/* 탑텐 데이터 전달 */}
       <MainList items={items} />
       <SearchModal isOpen={isSearchModalOpen} onClose={toggleSearchModal} />
     </>

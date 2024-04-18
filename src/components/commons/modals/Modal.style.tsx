@@ -121,3 +121,26 @@ export const VoteModalOverlay = styled.div`
   z-index: 10;
   /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); // 모달에 그림자 효과 추가 */
 `;
+
+export const CreateVoteModalOverlay = styled.div`
+  width: 650px;
+  /* height: 400px; */
+  /* padding: 30px; */
+  background-color: #fff;
+  border-style: 1px solid transparent;
+  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  position: fixed; // 모달을 화면에 고정
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  overflow: hidden; // 내부 컨텐츠가 넘치면 숨김
+  z-index: 10;
+  /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); // 모달에 그림자 효과 추가 */
+`;
+
+export const CreateVoteModalContainer = styled.div`
+  padding: 30px 45px;
+`;

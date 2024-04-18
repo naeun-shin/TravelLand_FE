@@ -1,6 +1,9 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 interface IsPublicTitleProps {
   isPublic: boolean;
+}
+interface VoteOptionProps {
+  isSelected: boolean;
 }
 
 const ListContainer = styled.div`
@@ -170,9 +173,9 @@ const MyPlanListCountBox = styled.div`
 `;
 
 const MyPlanListInviteeBox = styled.div`
-  display: flex;
+  margin-left: 15px;
   position: relative;
-  height: 50px; // This should be the height of the largest image
+  height: 30%;
   width: 20%;
 
   img {
@@ -213,6 +216,62 @@ const MyPlanListInviteeCount = styled.div`
   font-size: 14px;
   align-items: center;
 `;
+const MyPlanVoteSelectContainer = styled.div`
+  position: relative; /* 절대 위치를 위해 필요 */
+  width: 150px;
+  border-radius: 25px;
+  background-color: #c5f1ff;
+  cursor: pointer;
+  text-align: center;
+  line-height: 50px; /* 텍스트를 세로로 가운데에 위치시킴 */
+`;
+
+const MyPlanVoteOption = styled.div<VoteOptionProps>`
+  /* box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px; */
+
+  background-color: #fff;
+  padding: 10px 20px;
+  cursor: pointer;
+  text-align: center;
+  position: relative;
+  z-index: 0; // Keep the option below the pseudo-element
+
+  // Adjust the following CSS based on your actual needs:
+  ${(props) =>
+    props.isSelected &&
+    css`
+      &:after {
+        content: '';
+        position: absolute;
+        top: 5px;
+        bottom: 0px;
+        left: 10px;
+        right: 0px;
+        background-color: #f6f6f6;
+        z-index: -1;
+        border-radius: 25px;
+        width: 85%;
+        height: 85%;
+      }
+    `}
+`;
+
+const MyPlanVoteOptionA = styled(MyPlanVoteOption)`
+  border-radius: 25px 25px 0 0px; // Adjust to your desired corner rounding
+  border-bottom: 1px solid lightgray;
+`;
+
+const MyPlanVoteOptionB = styled(MyPlanVoteOption)`
+  border-radius: 0px 0px 25px 25px; // Adjust to your desired corner rounding
+`;
+
+const MyPlanVoteOptionsContainer = styled.div`
+  position: absolute;
+  width: 100%;
+  top: 55px; /* 메인 컨테이너 아래에 위치시킴 */
+  left: 0;
+  z-index: 2; /* 다른 아이템보다 위에 표시되도록 함 */
+`;
 
 export {
   ListContainer,
@@ -237,4 +296,8 @@ export {
   MyPlanListInviteeBox,
   MyPlanListContentBox,
   MyPlanListInviteeCount,
+  MyPlanVoteSelectContainer,
+  MyPlanVoteOptionA,
+  MyPlanVoteOptionB,
+  MyPlanVoteOptionsContainer,
 };

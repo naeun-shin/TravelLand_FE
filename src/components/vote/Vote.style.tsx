@@ -57,3 +57,39 @@ export const VoteContentBox = styled.div`
     height: 25px;
   }
 `;
+
+// 투표 작성하기
+export const CreateVoteTitleBox = styled.div`
+  display: flex;
+  border-bottom: 1px solid gray;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0px;
+`;
+
+export const CreateVoteTitle = styled.div`
+  font-size: 24px;
+`;
+
+export const CreateVoteContentBox = styled.div`
+  padding: 25px 0px;
+`;
+
+export const CreateVoteContentInput = styled.div`
+  font-size: 16px;
+  padding: 15px 0px;
+`;
+
+export const CreateVoteButtonBox = styled.div`
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+`;
+
+export const CreateVoteDateButtons = styled.div`
+  padding: 15px 0px;
+  font-size: 20px;
+  div {
+    padding-top: 10px;
+  }
+`;

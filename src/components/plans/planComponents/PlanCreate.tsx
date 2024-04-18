@@ -5,7 +5,6 @@ import { ModernInput } from '@/components/commons/inputs/Input';
 import * as S from '@/components/plans/Plan.style';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import '@/components/DatePicker.styles.css';
-// import 'react-datepicker/dist/react-datepicker.min.css';
 import { Locale } from 'node_modules/date-fns/locale/types';
 import ko from 'date-fns/locale/ko';
 registerLocale('ko', ko as unknown as Locale);
@@ -16,7 +15,6 @@ import { CiCalendar } from 'react-icons/ci';
 
 const PlanCreate = () => {
   const navigate = useNavigate();
-  // 로컬 상태 훅 대신 Zustand 스토어 사용
   const [isPublic, setIsPublic] = useState<boolean>(false);
   const [dateRange, setDateRange] = useState<(Date | undefined)[]>([
     undefined,
@@ -82,7 +80,7 @@ const PlanCreate = () => {
   };
 
   // 토글
-  const toggleIsPublic = () => setIsPublic(!isPublic);
+  const toggleIsPublic = () => setIsPublic(isPublic);
 
   // 다음 페이지 넘어가기
   const handleNextClick = () => {
@@ -137,7 +135,7 @@ const PlanCreate = () => {
               </div>
 
               <div>
-                <ToggleButton isChecked={!isPublic} onToggle={toggleIsPublic} />
+                <ToggleButton isChecked={isPublic} onToggle={toggleIsPublic} />
               </div>
             </S.PlanBoxWithSpaceBetween>
           </div>

@@ -1,7 +1,7 @@
 import * as S from './Vote.style';
 import { VoteModal } from '../commons/modals/Modal';
 import Button from '@/components/commons/buttons/Button';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 interface VoteModalProps {
   isOpen: boolean;

@@ -1,4 +1,4 @@
-import React, { Children } from 'react';
+import React from 'react';
 import * as S from './Button.style';
 
 export interface ButtonProps {
