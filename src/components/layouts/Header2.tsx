@@ -154,7 +154,7 @@ const StickyHeader = styled.div<SearchInputContainerProps>`
 `;
 
 const Container = styled.div`
-  max-width: 1150px;
+  max-width: 80%;
   width: 100%;
   margin: 0 auto;
   height: 80px;

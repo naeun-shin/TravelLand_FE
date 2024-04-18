@@ -22,7 +22,11 @@ const TReviewCreate3 = () => {
 
   const toggleIsPublic = () => setIsPublic(!isPublic);
 
-  const handleNextClick = () => {
+  // const handleNextClick = () => {
+  //   navigate('/reviewCreate/2');
+  // };
+
+  const handleBackClick = () => {
     navigate('/reviewCreate/2');
   };
 
@@ -83,14 +87,38 @@ const TReviewCreate3 = () => {
           </div>
         </div>
       </div>
-      <ReviewBottomSection>
-        <ReviewNextButton onClick={handleNextClick}>다음</ReviewNextButton>
-      </ReviewBottomSection>
+      <ReviewBtnBox>
+        <ReviewBottomSection>
+          <ReviewBackButton onClick={handleBackClick}>뒤로</ReviewBackButton>
+        </ReviewBottomSection>
+        <ReviewBottomSection>
+          <ReviewNextButton>작성하기</ReviewNextButton>
+        </ReviewBottomSection>
+      </ReviewBtnBox>
     </>
   );
 };
 
 export default TReviewCreate3;
+const ReviewBtnBox = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+const ReviewBackButton = styled.button`
+  background-color: #5ac8ec;
+  color: white;
+  justify-content: center;
+  border: none;
+  width: 160px;
+  height: 50px;
+  border-radius: 16px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #cff4ff;
+  }
+`;
 
 const HashTagContainer = styled.div`
   display: flex;
@@ -173,17 +201,4 @@ const ReviewNextButton = styled.button`
 
 const Title = styled.div`
   margin-left: 10px;
-`;
-
-const BringPlanBtn = styled.button`
-  width: 700px;
-  height: 60px;
-  margin: 0 auto;
-  border-radius: 20px;
-  border: none;
-  font-size: 18px;
-  background-color: #cff4ff;
-  color: #238bad;
-  margin: 25px 0;
-  cursor: pointer;
 `;
