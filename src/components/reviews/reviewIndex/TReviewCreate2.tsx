@@ -12,8 +12,8 @@ const ReviewCreate2 = () => {
   const [totalPlanTitleState, setTotalPlanTitleState] = useState<string>(
     totalPlanTitle || '',
   ); // 상태 이름 수정
-  const [totalBudget, setTotalBudget] = useState<number>(0);
-  const [area, setArea] = useState<string>('');
+  // const [totalBudget, setTotalBudget] = useState<number>(0);
+  // const [area, setArea] = useState<string>('');
   const [step, setStep] = useState<number>(1);
   const [imageFiles, setImageFiles] = useState<File[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null); // Ref for file input
