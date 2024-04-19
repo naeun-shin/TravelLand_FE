@@ -12,7 +12,7 @@ import TravelPlanList from '@/pages/travelPlan/TravelPlanList';
 import TravelPlanDetail from '@/pages/travelPlan/TravelPlanDetail';
 import SearchResults from '@/pages/main/SearchResults';
 import TravelCreateForm from '@/pages/travelReview/TravelCreatePage';
-import PrivateRoute from '@/components/PrivateRoute';
+// import PrivateRoute from '@/components/PrivateRoute';
 
 export const router = createBrowserRouter([
   {
@@ -43,9 +43,9 @@ export const router = createBrowserRouter([
   {
     path: '/user/myPage',
     element: (
-      <PrivateRoute>
-        <MyPage />
-      </PrivateRoute>
+      // <PrivateRoute>
+      <MyPage />
+      // </PrivateRoute>
     ),
   },
   {
@@ -62,17 +62,17 @@ export const router = createBrowserRouter([
   {
     path: '/planCreate/1',
     element: (
-      <PrivateRoute>
-        <TravelPlanCreate1 />
-      </PrivateRoute>
+      // <PrivateRoute>
+      <TravelPlanCreate1 />
+      // </PrivateRoute>
     ),
   },
   {
     path: '/planCreate/2',
     element: (
-      <PrivateRoute>
-        <TravelPlanCreate2 />
-      </PrivateRoute>
+      // <PrivateRoute>
+      <TravelPlanCreate2 />
+      // </PrivateRoute>
     ),
   },
   { path: '/planList', element: <TravelPlanList /> },
@@ -81,21 +81,21 @@ export const router = createBrowserRouter([
   {
     path: '/travelCreate',
     element: (
-      <PrivateRoute>
-        <TravelCreateForm
-          tripData={{
-            title: '',
-            content: '',
-            tripStartDate: '',
-            tripEndDate: '',
-            cost: 0,
-            hashTag: [],
-            address: '',
-            isPublic: true,
-          }}
-          imageList={[]}
-        />
-      </PrivateRoute>
+      // <PrivateRoute>
+      <TravelCreateForm
+        tripData={{
+          title: '',
+          content: '',
+          tripStartDate: '',
+          tripEndDate: '',
+          cost: 0,
+          hashTag: [],
+          address: '',
+          isPublic: true,
+        }}
+        imageList={[]}
+      />
+      // </PrivateRoute>
     ),
   },
 ]);
