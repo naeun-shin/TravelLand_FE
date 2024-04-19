@@ -1,5 +1,5 @@
 export interface VoteData {
-  voteTitle: string;
+  title: string;
   planAId: number;
   planBId: number;
   planVoteDuration: string;

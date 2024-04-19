@@ -3,6 +3,7 @@ import { CreateVoteModal } from '../commons/modals/Modal';
 import Button from '@/components/commons/buttons/Button';
 import { ModernInput } from '../commons/inputs/Input';
 import { SetStateAction, useState } from 'react';
+import { useCreateVoteMutation } from '@/hooks/useMutation';
 
 interface CreateVoteModalProps {
   isOpen: boolean;
@@ -19,6 +20,7 @@ enum Duration {
   '3일' = 'THREE_DAY',
   '7일' = 'SEVEN_DAY',
 }
+
 const CreateVote: React.FC<CreateVoteModalProps> = ({
   isOpen,
   onClose,
@@ -29,7 +31,7 @@ const CreateVote: React.FC<CreateVoteModalProps> = ({
     onClose();
   };
 
-  const [voteTitle, setVoteTitle] = useState<string>('');
+  const [title, setTitle] = useState<string>('');
   const [planVoteDuration, setPlanVoteDuration] = useState<string>(
     Duration['1분'],
   );
@@ -37,21 +39,22 @@ const CreateVote: React.FC<CreateVoteModalProps> = ({
   const hadleVoteTitleChange = (e: {
     target: { value: SetStateAction<string> };
   }) => {
-    setVoteTitle(e.target.value);
+    setTitle(e.target.value);
   };
 
   const handleDurationChange = (duration: Duration) => {
     setPlanVoteDuration(duration);
   };
+  const createPlanVote = useCreateVoteMutation();
+
   const handleCreateVote = () => {
     const voteData = {
       planAId,
       planBId,
-      voteTitle,
+      title,
       planVoteDuration,
     };
-    console.log('Creating vote with data:', voteData);
-    // Here you might want to send this data to an API or handle it otherwise
+    createPlanVote.mutate(voteData);
   };
   return (
     <CreateVoteModal isOpen={isOpen} onClose={onClose}>
