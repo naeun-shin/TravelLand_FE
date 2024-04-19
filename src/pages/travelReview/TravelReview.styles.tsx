@@ -3,30 +3,32 @@ import styled, { css } from 'styled-components';
 import { FaCamera, FaTimes } from 'react-icons/fa';
 
 const TravelReviewCardSection = styled.div`
-  padding: 0 60px;
+  padding: 20px 30px;
   display: flex;
+  max-width: 1400px;
   flex-wrap: wrap;
-  margin: -15px;
+  margin: 0 auto;
 
   > * {
-    flex: 1 0 calc(33.33% - 30px);
+    flex: 1 0 calc(25% - 30px);
     margin: 15px;
-    box-sizing: border-box; // 추가된 스타일
-    max-width: calc(33.33% - 30px); // 추가된 스타일
+    min-width: 230px;
+    box-sizing: border-box;
   }
 
   @media (max-width: 768px) {
     padding: 0 20px;
 
     > * {
-      flex: 1 0 calc(100% - 30px);
+      flex: 1 0 calc(25% - 30px);
     }
   }
 `;
 
 const TravelReviewstyle = styled.div`
   padding: 50px; // 수정된 패딩
-  max-width: 1200px;
+  /* max-width: 1200px; */
+  max-width: 1400px;
   margin: 0 auto;
   box-sizing: border-box; // 추가된 스타일
   overflow-x: hidden; // 가로 스크롤 숨김
@@ -142,7 +144,7 @@ export const ReviewListTitle = styled.div`
 export const ReviewInvitedContainer = styled.div`
   padding: 10px;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   grid-gap: 25px;
 `;
 
@@ -162,7 +164,8 @@ export const FieldContainer = styled.div`
 
 export const Label = styled.label`
   margin-bottom: 5px;
-  font-weight: bold;
+  /* font-weight: bold; */
+  margin-left: 5px;
 `;
 
 export const DateFieldsContainer = styled.div`
@@ -328,16 +331,17 @@ export const ErrorContainer = styled.div``;
 
 // 작성버튼
 export const ReviewBtn = styled.button`
-  width: 100px;
-  height: 40px;
-  border: 1px solid #2b2b2b;
+  width: 130px;
+  height: 50px;
+  border: none;
   border-radius: 20px;
-  color: #000;
-  background-color: #fff;
+  color: #fff;
+  background-color: #5ac8ec;
   font-size: 15px;
   font-weight: 600;
+  /* margin-left: 330px; */
   &:hover {
-    background-color: #3c3c3c;
+    background-color: #cff4ff;
     color: #fff;
   }
 `;
@@ -346,6 +350,8 @@ export const ReviewBox = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin: 0 auto;
+  width: 1210px;
 `;
 
 export const LoadingText = styled.span`

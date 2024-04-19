@@ -69,8 +69,8 @@ const Results = [
 const ResultsContent: React.FC = () => {
   const [activeTab, setActiveTab] = useState(0); // 선택된 탭의 인덱스를 추적
 
-  const placeName = '인사동';
-  const place = ['조계사', '경인미술관', '숭례문', '카페봄봄'];
+  const placeName = '고성시';
+  const place = ['조계사', '경인미술관', '숭례문'];
 
   return (
     <S.ResultContainer>
@@ -176,6 +176,9 @@ const Location = styled.div`
 
 const CategoriesContainer = styled.div`
   display: flex;
+  position: absolute;
+  right: 0;
+  bottom: 0;
 `;
 
 const Sort = styled.div`
