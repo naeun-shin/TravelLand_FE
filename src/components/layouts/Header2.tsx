@@ -7,6 +7,8 @@ import MainModal from '../commons/modals/MainModal';
 import logoImage from '@/icons/logo.svg';
 import burgerIcon from '@/icons/burger.svg';
 import SearchModal from '@/pages/main/SearchPage';
+// import Notice from '../notice/Notice';
+import { NoticeModal } from '../commons/modals/NoticeModal';
 
 interface SearchInputContainerProps {
   isScrolled: boolean;
@@ -24,6 +26,8 @@ const ReDesignHeader: React.FC = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(true); // 로그인 상태를 관리하는 상태 추가
   const [isScrolled, setIsScrolled] = useState(false);
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false); // 검색 모달 상태 추가
+
+  const [isNoticeModalOpen, setIsNoticeModalOpen] = useState(false); // 알림 모달 상태 관리
 
   const navigate = useNavigate();
 
@@ -66,6 +70,16 @@ const ReDesignHeader: React.FC = () => {
     navigate('/');
   };
 
+  // 모달 토글 함수
+  const handleNoticeClick = () => {
+    setIsNoticeModalOpen((prevState) => !prevState); // 현재 상태의 반대로 설정
+  };
+
+  // 모달을 닫는 함수
+  // const closeNoticeModal = () => {
+  //   setIsNoticeModalOpen(false);
+  // };
+
   // 스크롤에 따라 상태 변경
   useEffect(() => {
     const handleScroll = () => {
@@ -95,8 +109,14 @@ const ReDesignHeader: React.FC = () => {
             />
           )}
           <MenuContainer>
-            <BurgerMenuIcon onClick={handleBurgerIconClick}>
-              <img src={burgerIcon} alt="메뉴 모달 열기" />
+            {/* 알림 */}
+            <BurgerMenuIcon>
+              <img src="/assets/icons/bell.svg" onClick={handleNoticeClick} />
+              <img
+                src={burgerIcon}
+                alt="메뉴 모달 열기"
+                onClick={handleBurgerIconClick}
+              />
             </BurgerMenuIcon>
             {isMenuModalOpen && (
               <MainModal
@@ -108,6 +128,7 @@ const ReDesignHeader: React.FC = () => {
                 handleLogin={handleOpenLogin}
               />
             )}
+            {isNoticeModalOpen && <NoticeModal />}
           </MenuContainer>
           {/* {isLoggedIn ? (
             <>
@@ -123,6 +144,7 @@ const ReDesignHeader: React.FC = () => {
       </StickyHeader>
       {/* 로그인 모달 */}
       {isModalOpen && <Login isOpen={isModalOpen} onClose={closeModal} />}
+      {/* 검색 모달 */}
       {isSearchModalOpen && (
         <SearchModal isOpen={isSearchModalOpen} onClose={closeSearchModal} />
       )}
@@ -177,12 +199,17 @@ const Logo = styled.div`
 
 // 버거 메뉴 아이콘 스타일
 const BurgerMenuIcon = styled.div`
-  width: 40px;
-  height: 60px;
   font-size: 24px;
   cursor: pointer;
   text-align: center;
   line-height: 60px;
+  display: flex;
+  align-items: center;
+
+  img {
+    width: 40px;
+    padding: 0px 5px;
+  }
 `;
 
 const MenuContainer = styled.div`
