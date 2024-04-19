@@ -1,22 +1,25 @@
 import { useState, useEffect } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useNavigate } from 'react-router-dom';
-import Header from '@/components/layouts/Header';
 import * as S from './TravelReview.styles';
-import ReviewPageTab from '@/components/commons/user/TravelReview/ReviewTab';
-import Card from '@/components/commons/cards/Card';
+
 import { getTripList } from '@/api/reviewAxios';
 import { AxiosResponse } from 'axios';
 import styled from 'styled-components';
+import ListCard from '@/components/commons/mainItem/ListCard';
+import ReDesignHeader from '@/components/layouts/Header2';
+import CategoryButton from '@/components/commons/buttons/CategoryButton';
 
 interface Trip {
   tripId: number;
-  title: string;
-  nickname: string;
-  thumbnailUrl: string;
-  tripPeriod: string;
-  viewCount: number;
-  createdAt: string;
+  area?: string;
+  title?: string;
+  tripStartDate?: string;
+  tripEndDate?: string;
+  thumbnailUrl?: string;
+  hashtagList?: string[];
+  isScrap?: boolean;
+  viewCount?: number;
 }
 
 const TravelReviewPage = () => {
@@ -32,13 +35,13 @@ const TravelReviewPage = () => {
     try {
       const response: AxiosResponse<Trip[]> = await getTripList({
         page,
-        size: 3,
+        size: 4,
         sortBy: 'createdAt',
         isAsc: false,
       });
       const responseData: Trip[] = response.data;
       setTrips((prevTrips) => [...prevTrips, ...responseData]);
-      if (responseData.length === 0 && responseData.length < 3) {
+      if (responseData.length === 0 && responseData.length < 4) {
         setHasMore(false);
       }
     } catch (error) {
@@ -53,7 +56,7 @@ const TravelReviewPage = () => {
     console.log('현재페이지', page);
   }, [page]);
 
-  const handleCardClick = (tripId: number) => {
+  const handleCardClick = (tripId?: number) => {
     navigate(`/travelDetail/${tripId}`);
   };
 
@@ -75,15 +78,36 @@ const TravelReviewPage = () => {
 
   return (
     <ScrollDiv id="scrollableDiv">
-      <Header />
+      <ReDesignHeader />
       <S.TravelReviewstyle>
-        <S.ReviewBox>
-          <h2>여행 후기</h2>
-          <S.ReviewBtn style={{ cursor: 'pointer' }} onClick={handleTextClick}>
-            작성하기
-          </S.ReviewBtn>
-        </S.ReviewBox>
-        <ReviewPageTab />
+        <div>
+          <S.ReviewBox>
+            <h2 style={{ fontSize: '28px' }}>떠돌이 랜드</h2>
+            <S.ReviewBtn
+              style={{ cursor: 'pointer' }}
+              onClick={handleTextClick}
+            >
+              정보 작성하기
+            </S.ReviewBtn>
+          </S.ReviewBox>
+          <ReviewCateBox>
+            <h2>지역별 여행 후기</h2>
+            <div style={{ display: 'flex' }}>
+              <CategoryButton title="전체" />
+              <CategoryButton title="서울" />
+              <CategoryButton title="경기" />
+              <CategoryButton title="인천" />
+              <CategoryButton title="강원" />
+              <CategoryButton title="대전" />
+              <CategoryButton title="충북충남" />
+              <CategoryButton title="경북경남" />
+              <CategoryButton title="부산" />
+              <CategoryButton title="울산" />
+              <CategoryButton title="전북전남" />
+              <CategoryButton title="제주" />
+            </div>
+          </ReviewCateBox>
+        </div>
         <InfiniteScroll
           style={{ overflow: 'hidden' }}
           dataLength={trips.length}
@@ -99,32 +123,34 @@ const TravelReviewPage = () => {
         >
           <S.TravelReviewCardSection>
             {trips.map((trip) => (
-              <div key={trip.tripId}>
-                <Card
-                  // key={trip.tripId}
+              <>
+                <ListCard
+                  key={trip.tripId}
+                  tripId={trip.tripId}
+                  area={trip.area}
                   title={trip.title}
-                  writer={trip.nickname}
-                  date={`♥${trip.viewCount}`}
-                  imageUrl={trip.thumbnailUrl}
+                  tripStartDate={trip.tripStartDate}
+                  tripEndDate={trip.tripEndDate}
+                  thumbnailUrl={trip.thumbnailUrl}
+                  hashtagList={trip.hashtagList}
+                  isScrap={trip.isScrap}
+                  viewCount={trip.viewCount}
                   onClick={() => handleCardClick(trip.tripId)}
                 />
-                <Card
-                  // key={trip.tripId}
+                <ListCard
+                  key={trip.tripId}
+                  tripId={trip.tripId}
+                  area={trip.area}
                   title={trip.title}
-                  writer={trip.nickname}
-                  date={`♥${trip.viewCount}`}
-                  imageUrl={trip.thumbnailUrl}
+                  tripStartDate={trip.tripStartDate}
+                  tripEndDate={trip.tripEndDate}
+                  thumbnailUrl={trip.thumbnailUrl}
+                  hashtagList={trip.hashtagList}
+                  isScrap={trip.isScrap}
+                  viewCount={trip.viewCount}
                   onClick={() => handleCardClick(trip.tripId)}
                 />
-                <Card
-                  // key={trip.tripId}
-                  title={trip.title}
-                  writer={trip.nickname}
-                  date={`♥${trip.viewCount}`}
-                  imageUrl={trip.thumbnailUrl}
-                  onClick={() => handleCardClick(trip.tripId)}
-                />
-              </div>
+              </>
             ))}
           </S.TravelReviewCardSection>
         </InfiniteScroll>
@@ -141,4 +167,10 @@ const ScrollDiv = styled.div`
   overflow-x: hidden;
   width: 100%;
   box-sizing: border-box;
+`;
+
+const ReviewCateBox = styled.div`
+  max-width: 1300px;
+  margin: 0 auto;
+  padding-left: 45px;
 `;
