@@ -11,7 +11,7 @@ import TravelPlanCreate2 from '@/pages/travelPlan/TravelPlanCreate2';
 import TravelPlanList from '@/pages/travelPlan/TravelPlanList';
 import TravelPlanDetail from '@/pages/travelPlan/TravelPlanDetail';
 import SearchResults from '@/pages/main/SearchResults';
-import TravelCreateForm from '@/pages/travelReview/TravelCreatePage';
+// import TravelCreateForm from '@/pages/travelReview/TravelCreatePage';
 import ReviewCreatePage1 from '@/pages/travelReview/ReviewCreate1';
 import ReviewCreate2 from '@/pages/travelReview/ReviewCreate2';
 import ReviewCreate3 from '@/pages/travelReview/ReviewCreate3';
@@ -81,11 +81,14 @@ export const router = createBrowserRouter([
   { path: '/planList', element: <TravelPlanList /> },
   { path: '/planDetail/:id', element: <TravelPlanDetail /> },
   { path: '/TravelDetailPage/:tripId', element: <TravelDetailPage /> },
-  { path: '/travelCreate',
-    element:
-    // <PrivateRoute>
-      <ReviewCreatePage1 /> 
+  {
+    path: '/travelCreate',
+    element: (
+      // <PrivateRoute>
+      <ReviewCreatePage1 />
+    ),
     // </PrivateRoute>},
+  },
   { path: '/reviewCreate/2', element: <ReviewCreate2 /> },
   { path: '/reviewCreate/3', element: <ReviewCreate3 /> },
 ]);
