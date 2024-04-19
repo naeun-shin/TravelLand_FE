@@ -26,7 +26,7 @@ const ReDesignHeader: React.FC = () => {
   const [isMenuModalOpen, setIsMenuModalOpen] = useState(false);
   // 로그인 모달
   const [isModalOpen, setIsModalOpen] = useState(false); // 로그인 모달 상태 추가
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // 로그인 상태를 관리하는 상태 추가
+  // const [isLoggedIn, setIsLoggedIn] = useState(false); // 로그인 상태를 관리하는 상태 추가
   const [isScrolled, setIsScrolled] = useState(false);
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false); // 검색 모달 상태 추가
 
@@ -63,7 +63,6 @@ const ReDesignHeader: React.FC = () => {
   };
 
   const handleLogoutClick = () => {
-    setIsLoggedIn(false);
     setIsMenuModalOpen(false);
     logout();
     cookie.remove('Authorization');
@@ -129,7 +128,7 @@ const ReDesignHeader: React.FC = () => {
             </BurgerMenuIcon>
             {isMenuModalOpen && (
               <MainModal
-                isLoggedIn={isLoggedIn}
+                // isLoggedIn={isLoggedIn}
                 handleLogout={handleLogoutClick}
                 handleLogin={handleOpenLogin}
               />
