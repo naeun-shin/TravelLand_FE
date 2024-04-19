@@ -10,11 +10,12 @@ export interface ButtonProps {
   textColor?: string;
   fontSize?: any;
   fontWeight?: any;
-  text: string;
+  text?: string;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   active?: any;
   hoverColor?: string;
   marginRight?: string;
+  children?: React.ReactNode; // children prop 추가
 }
 
 // 기본 버튼
@@ -31,6 +32,7 @@ const Button: React.FC<ButtonProps> = ({
   fontWeight = '600',
   hoverColor,
   marginRight,
+  children,
 }) => {
   return (
     <S.StyledButton
@@ -45,7 +47,7 @@ const Button: React.FC<ButtonProps> = ({
       hoverColor={hoverColor}
       marginRight={marginRight}
     >
-      {text}
+      {text} {children}
     </S.StyledButton>
   );
 };
