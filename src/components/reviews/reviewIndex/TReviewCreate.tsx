@@ -26,8 +26,8 @@ const ReviewCreate = () => {
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
   };
-  const handleCostChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCost(parseFloat(e.target.value) || 0);
+  const toggleIsPublic = () => {
+    setIsPublic((prev) => !prev);
   };
   const handleAddressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAddress(e.target.value);
@@ -35,14 +35,14 @@ const ReviewCreate = () => {
   const handlePlaceNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPlaceName(e.target.value);
   };
+  const handleCostChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCost(parseFloat(e.target.value) || 0);
+  };
   const handleStartDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTripStartDate(e.target.value);
   };
   const handleEndDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTripEndDate(e.target.value);
-  };
-  const toggleIsPublic = () => {
-    setIsPublic((prev) => !prev);
   };
 
   // '여행 플랜 불러오기' 버튼 클릭 처리

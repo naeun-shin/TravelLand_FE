@@ -5,10 +5,10 @@ import {
   TripDetail,
   TripListParams,
 } from './interfaces/reviewInterface';
-import { CreateTripRequest } from '@/pages/travelReview/TravelCreatePage';
+// import { CreateTripRequest } from '@/pages/travelReview/TravelCreatePage';
 
 // 여행 정보 등록
-export const createTrip = async ({ formData }: CreateTripRequest) => {
+export const createTrip = async (formData: FormData): Promise<TripData> => {
   try {
     const response = await instanceWithToken.post('/v1/trips', formData, {
       headers: {
