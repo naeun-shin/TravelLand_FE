@@ -69,7 +69,7 @@ const BookmarkIcon = styled(CiBookmark)`
   height: 20px;
   border-radius: 50%;
   padding: 5px;
-  z-index: 10;
+  z-index: 9;
   background-color: #c5f1ff;
 `;
 
@@ -80,7 +80,10 @@ const Rank = styled.div`
   background: #fff;
   padding: 5px 10px;
   margin-top: 20px;
+  color: #5ac8ec;
+  font-family: 'LotteriaChab', sans-serif; /* 다른 폰트 적용 */
   font-size: 30px;
+  /* font-size: 3rem; */
   font-weight: bold;
 `;
 
