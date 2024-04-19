@@ -7,8 +7,9 @@ import MainModal from '../commons/modals/MainModal';
 import logoImage from '@/icons/logo.svg';
 import burgerIcon from '@/icons/burger.svg';
 import SearchModal from '@/pages/main/SearchPage';
-// import Notice from '../notice/Notice';
+import { useAuthStore } from '@/store/useAuthStore';
 import { NoticeModal } from '../commons/modals/NoticeModal';
+import { Cookies } from 'react-cookie';
 
 interface SearchInputContainerProps {
   isScrolled: boolean;
@@ -19,11 +20,13 @@ interface SearchInputContainerProps {
 // }
 
 const ReDesignHeader: React.FC = () => {
+  const { logout } = useAuthStore(); // 로그인 함수를 가져옵니다.
+  const cookie = new Cookies();
   // 메뉴 모달
   const [isMenuModalOpen, setIsMenuModalOpen] = useState(false);
   // 로그인 모달
   const [isModalOpen, setIsModalOpen] = useState(false); // 로그인 모달 상태 추가
-  const [isLoggedIn, setIsLoggedIn] = useState(true); // 로그인 상태를 관리하는 상태 추가
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // 로그인 상태를 관리하는 상태 추가
   const [isScrolled, setIsScrolled] = useState(false);
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false); // 검색 모달 상태 추가
 
@@ -59,6 +62,12 @@ const ReDesignHeader: React.FC = () => {
     setIsModalOpen(true); // 로그인 모달 상태를 true로 변경
   };
 
+  const handleLogoutClick = () => {
+    setIsLoggedIn(false);
+    setIsMenuModalOpen(false);
+    logout();
+    cookie.remove('Authorization');
+  };
   const closeModal = () => {
     console.log('closeModal 실행됨');
     setIsModalOpen(false);
@@ -121,10 +130,7 @@ const ReDesignHeader: React.FC = () => {
             {isMenuModalOpen && (
               <MainModal
                 isLoggedIn={isLoggedIn}
-                handleLogout={() => {
-                  setIsLoggedIn(false);
-                  setIsMenuModalOpen(false);
-                }}
+                handleLogout={handleLogoutClick}
                 handleLogin={handleOpenLogin}
               />
             )}

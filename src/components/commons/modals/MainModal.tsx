@@ -69,9 +69,9 @@ const MainModal: React.FC<IMainModalProps> = ({
   ) => {
     if (!(event.target as HTMLElement).closest('.ModalContainer')) {
       setSlide(false);
-      setTimeout(() => {
-        handleLogout(); // 모달 닫힌 후 로그아웃 처리
-      }, 300);
+      // setTimeout(() => {
+      //   handleLogout(); // 모달 닫힌 후 로그아웃 처리
+      // }, 300);
     }
   };
 
