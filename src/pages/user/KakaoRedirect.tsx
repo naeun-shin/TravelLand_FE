@@ -6,31 +6,26 @@ import { useAuthStore } from '@/store/useAuthStore';
 const KakaoRedirect: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { login } = useAuthStore(); // 로그인 함수를 여기에서 가져옵니다.
 
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
     const authorizationToken = queryParams.get('Authorization');
     const cookie = new Cookies();
-    const { login } = useAuthStore(); // 로그인 함수를 가져옵니다.
 
     if (authorizationToken) {
-      // 쿠키 옵션을 설정할 수 있습니다. 예를 들어, secure: true로 설정할 경우 HTTPS를 통해서만 쿠키가 전송됩니다.
       const options = {
         path: '/',
-        // secure: true, //secure: true로 설정할 경우 HTTPS를 통해서만 쿠키가 전송
-        // httpOnly: true,
-        // sameSite: 'strict',
-        // expires: /* 쿠키 만료 날짜를 설정할 수 있습니다. */
+        // 추가 옵션: secure, httpOnly, sameSite, expires 등
       };
 
       cookie.set('Authorization', authorizationToken, options);
-      login(); // 여기에서 login 함수를 호출하여 로그인 상태를 true로 설정
+      login(); // 로그인 상태를 true로 설정
       navigate('/'); // 메인 페이지로 이동
     } else {
       console.error('Authorization token not found in the query string.');
     }
-    // 의존성 배열에 location.search를 추가하여 해당 값이 변경될 때만 이 효과가 실행되도록 합니다.
-  }, [location.search, navigate]);
+  }, [location.search, navigate, login]); // login을 의존성 배열에 추가합니다.
 
   return null; // 이 컴포넌트는 아무것도 렌더링하지 않으므로 null을 반환합니다.
 };
