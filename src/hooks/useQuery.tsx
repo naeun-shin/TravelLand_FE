@@ -3,6 +3,7 @@ import { getPlanDetail, getPlanList } from '@/api/planAxios';
 import { getMyPlanList, getMyTripList, getUserInfo } from '@/api/userAxios';
 import { PlanListParams } from '@/api/interfaces/planInterface';
 import { TripListParams } from '../api/interfaces/reviewInterface';
+import { getMainHashTagRankList, getMainTopTenRankList } from '@/api/mainAxios';
 // import { UserInfoData } from '@/api/interfaces/userInterface';
 
 export const usePlanListQuery = (planListParams: PlanListParams) => {
@@ -45,6 +46,22 @@ export const useGetUerInfoQuery = () => {
   return useQuery({
     queryKey: ['myPage'],
     queryFn: getUserInfo,
+    staleTime: 0,
+  });
+};
+
+export const useGetMainRankListQuery = () => {
+  return useQuery({
+    queryKey: ['mainRank'],
+    queryFn: getMainTopTenRankList,
+    staleTime: 0,
+  });
+};
+
+export const useGetMainHashtagListQuery = () => {
+  return useQuery({
+    queryKey: ['mainHashTag'],
+    queryFn: getMainHashTagRankList,
     staleTime: 0,
   });
 };

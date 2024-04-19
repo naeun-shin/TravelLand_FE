@@ -80,7 +80,10 @@ const Rank = styled.div`
   background: #fff;
   padding: 5px 10px;
   margin-top: 20px;
+  color: #5ac8ec;
+  font-family: 'LotteriaChab', sans-serif; /* 다른 폰트 적용 */
   font-size: 30px;
+  /* font-size: 3rem; */
   font-weight: bold;
 `;
 

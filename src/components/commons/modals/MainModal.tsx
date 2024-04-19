@@ -116,7 +116,7 @@ export default MainModal;
 
 const ModalWrapper = styled.div`
   position: fixed;
-  width: 150px;
+  width: 180px;
   right: 20%;
   top: 110px;
   z-index: 10;
