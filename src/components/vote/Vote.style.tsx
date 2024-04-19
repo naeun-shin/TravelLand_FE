@@ -93,3 +93,10 @@ export const CreateVoteDateButtons = styled.div`
     padding-top: 10px;
   }
 `;
+
+// 상세보기 내 투표창
+export const CheckVoteContainer = styled.div`
+  width: 800px;
+  height: 300px;
+  background-color: #f3fcff;
+`;

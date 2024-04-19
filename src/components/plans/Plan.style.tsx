@@ -138,6 +138,8 @@ const ButtonBoxToRight = styled.div`
 // detail 영역
 const PlanDetailContainer = styled.div`
   width: 85%;
+  display: flex;
+  flex-direction: column;
 `;
 
 const PlanDetailDateBox = styled.div`
@@ -179,7 +181,7 @@ const PlanDetailContentBox = styled.div`
   border: 1px solid lightgray;
   border-radius: 35px;
 
-  width: 75%;
+  width: 100%;
   height: 100%;
 
   padding: 15px;
@@ -229,6 +231,7 @@ const DetailHeaderThirdContent = styled.div`
   justify-content: space-between;
 
   padding-bottom: 15px;
+  border-bottom: 1px solid #dddddd;
 
   div {
     display: flex;
@@ -268,8 +271,9 @@ const DetaiHeaderSubDestination = styled.div`
 `;
 
 const DetailContentSection = styled.div`
-  padding: 15px 10px;
-  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const DetailContentBox = styled.div`
@@ -278,7 +282,7 @@ const DetailContentBox = styled.div`
   padding: 5px 0px;
   display: flex;
   align-items: center;
-  width: 100%;
+  width: 800px;
 `;
 
 const DetailPlanNumber = styled.div`

@@ -9,6 +9,8 @@ import InvitationCard from '@/components/commons/cards/InvitationCard';
 import { FaLocationDot } from 'react-icons/fa6';
 import { CiHeart, CiBookmark, CiCirclePlus } from 'react-icons/ci';
 import { Invitation } from '@/components/commons/invitation/Invitation';
+import { VoteCheck } from '@/components/vote/VoteCheck';
+import { VoteResult } from '@/components/vote/VoteResult';
 
 // 사용할 데이터 타입 정의 (예시입니다, 실제 데이터에 맞게 조정해야 합니다.)
 
@@ -45,20 +47,24 @@ const PlanDetail: React.FC<ButtonProps> = () => {
   const [dayPlans, setDayPlans] = useState<DayPlan[]>([]);
   const [address, setAddress] = useState<string>(''); // 예시 주소를 빈 문자열로 초기화// ...기존의 useState와 useEffect 로직...
   const [isInvitationModalOpen, setIsInvitationModalOpen] = useState(false); // 초대 모달 상태를 관리하는 useState
-
-  0; // 현재 스텝 인덱스를 0으로 초기화
+  const [hasVoted, setHasVoted] = useState(false); // 투표 여부
+  const [votedId, setVotedId] = useState<number>(0); // 투표 번호
 
   // `id`를 숫자로 변환하기 전에 유효성 검사 수행
   const planId = Number(id);
   const { data, isLoading, isError } = usePlanDetailQuery(planId);
 
   const planDetails = data?.data;
+  const planVotes = data?.data.planVotes;
+
   useEffect(() => {
     if (planDetails?.dayPlans) {
       setDayPlans(planDetails.dayPlans);
     }
   }, [planDetails]);
   console.log('planDetails > ', planDetails);
+  console.log('planVotes', planVotes);
+
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleDateString('ko-KR', {
@@ -173,82 +179,94 @@ const PlanDetail: React.FC<ButtonProps> = () => {
             />
           </div>
         </S.DetailHeaderThirdContent>
-        <hr />
-        {/* 여행 일자 박스 영역 */}
+        <S.DetailContentSection>
+          {/* 투표 영역 */}
+          {!hasVoted ? (
+            <VoteCheck
+              voteData={planVotes}
+              onVote={(hasVoted, votedId) => {
+                setHasVoted(hasVoted);
+                setVotedId(votedId || 0); // Set votedId to 0 or a specific value if undefined
+              }}
+            />
+          ) : (
+            <VoteResult votedId={votedId} />
+          )}
+          {/* 스태퍼 박스 영역 */}
+          <S.PlanDetailDateBox>
+            {dayPlans.map((dayPlan, index) => (
+              <S.PlanDetailDateButton
+                key={index}
+                onClick={() => handleStepClick(index)}
+                isActive={currentStep === index}
+              >
+                {`${index + 1}일차`}
+                {currentStep === index && (
+                  <>
+                    <hr />
+                    <div>{formatDate(dayPlan.date)}</div>
+                  </>
+                )}
+              </S.PlanDetailDateButton>
+            ))}
+          </S.PlanDetailDateBox>
+          {/* 스태퍼 박스 영역 */}
+          <div>
+            {dayPlans[currentStep]?.unitPlans.map((unitPlan, index) => (
+              <S.DetailContentBox key={index}>
+                {/* 순서 */}{' '}
+                <S.DetailPlanNumber>{index + 1}</S.DetailPlanNumber>
+                <S.PlanDetailContentBox>
+                  <S.DetailPlanContentCity>
+                    {unitPlan.title}
+                  </S.DetailPlanContentCity>
+                  <S.DetailContentItem>
+                    <S.DetailContent>
+                      <div>
+                        {unitPlan.time} {unitPlan.content}
+                      </div>
+                      <div>{unitPlan.budget.toLocaleString()}원</div>
+                    </S.DetailContent>
+                    <S.DetailLocationBox>
+                      {/* 이 부분에 지도 버튼 추가 및 클릭 이벤트 핸들러 연결 */}
+                      <S.DetailButtonDiv
+                        onClick={() => handleOpenMapClick(unitPlan.address)}
+                      >
+                        <FaLocationDot size="25px" color="white" />{' '}
+                      </S.DetailButtonDiv>{' '}
+                      <div>{unitPlan.address}</div>
+                    </S.DetailLocationBox>
+                  </S.DetailContentItem>
+                </S.PlanDetailContentBox>
+              </S.DetailContentBox>
+            ))}
 
-        {/* 스태퍼 박스 영역 */}
-        <S.PlanDetailDateBox>
-          {dayPlans.map((dayPlan, index) => (
-            <S.PlanDetailDateButton
-              key={index}
-              onClick={() => handleStepClick(index)}
-              isActive={currentStep === index}
-            >
-              {`${index + 1}일차`}
-              {currentStep === index && (
-                <>
-                  <hr />
-                  <div>{formatDate(dayPlan.date)}</div>
-                </>
-              )}
-            </S.PlanDetailDateButton>
-          ))}
-        </S.PlanDetailDateBox>
-        {/* 스태퍼 박스 영역 */}
-        <div>
-          {dayPlans[currentStep]?.unitPlans.map((unitPlan, index) => (
-            <S.DetailContentBox key={index}>
-              {/* 순서 */} <S.DetailPlanNumber>{index + 1}</S.DetailPlanNumber>
-              <S.PlanDetailContentBox>
-                <S.DetailPlanContentCity>
-                  {unitPlan.title}
-                </S.DetailPlanContentCity>
-                <S.DetailContentItem>
-                  <S.DetailContent>
-                    <div>
-                      {unitPlan.time} {unitPlan.content}
-                    </div>
-                    <div>{unitPlan.budget.toLocaleString()}원</div>
-                  </S.DetailContent>
-                  <S.DetailLocationBox>
-                    {/* 이 부분에 지도 버튼 추가 및 클릭 이벤트 핸들러 연결 */}
-                    <S.DetailButtonDiv
-                      onClick={() => handleOpenMapClick(unitPlan.address)}
-                    >
-                      <FaLocationDot size="25px" color="white" />{' '}
-                    </S.DetailButtonDiv>{' '}
-                    <div>{unitPlan.address}</div>
-                  </S.DetailLocationBox>
-                </S.DetailContentItem>
-              </S.PlanDetailContentBox>
-            </S.DetailContentBox>
-          ))}
+            {/*초대 */}
+            <S.DetailContentBox>
+              <S.ButtonBox>
+                <S.InvitationDiv>
+                  함께할 동행자를 초대해주세요{' '}
+                  <InvitationCard
+                    src={'/assets/paris.jpg'}
+                    onClick={() => handleDeleteClick(1)}
+                  />
+                  <CiCirclePlus size="35px" onClick={handleOpenInvitation} />
+                </S.InvitationDiv>
+              </S.ButtonBox>
+              <S.PlanInvitationBox>
+                {/* 초대된 사람들 노출 및 삭제 구간 */}
 
-          {/*초대 */}
-          <S.DetailContentBox>
-            <S.ButtonBox>
-              <S.InvitationDiv>
-                함께할 동행자를 초대해주세요{' '}
-                <InvitationCard
-                  src={'/assets/paris.jpg'}
-                  onClick={() => handleDeleteClick(1)}
-                />
-                <CiCirclePlus size="35px" onClick={handleOpenInvitation} />
-              </S.InvitationDiv>
-            </S.ButtonBox>
-            <S.PlanInvitationBox>
-              {/* 초대된 사람들 노출 및 삭제 구간 */}
-
-              {/* {invitedPeople.map((person, index) => (
+                {/* {invitedPeople.map((person, index) => (
                 <InvitationCard
                   key={index}
                   src={person.src}
                   onClick={() => handleDeleteClick(index)}
                 />
               ))} */}
-            </S.PlanInvitationBox>
-          </S.DetailContentBox>
-        </div>
+              </S.PlanInvitationBox>
+            </S.DetailContentBox>
+          </div>
+        </S.DetailContentSection>
       </S.PlanDetailContainer>
       {/*  지도 모달 */}
       <Map isOpen={isModalOpen} onClose={closeModal} address={address} />

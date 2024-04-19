@@ -6,7 +6,7 @@ import { MyPlanList } from '@/components/commons/Lists/MyPlanList';
 import { useMyPlanListQuery } from '@/hooks/useQuery';
 import Button from '@/components/commons/buttons/Button';
 import { useNavigate } from 'react-router-dom';
-import CreateVote from '@/components/vote/CreateVote';
+import VoteCreate from '@/components/vote/VoteCreate';
 
 const MyPagePlanList = () => {
   const navigate = useNavigate();
@@ -135,7 +135,7 @@ const MyPagePlanList = () => {
       </S.MyPlanListContainer>
       {/* Vote 모달 */}
       {isCreateVoteModalOpen && (
-        <CreateVote
+        <VoteCreate
           isOpen={isCreateVoteModalOpen}
           onClose={closeCreateVoteModal}
           planAId={planAId} // 여기에 planAId 전달
