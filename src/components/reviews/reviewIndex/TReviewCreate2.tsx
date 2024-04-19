@@ -1,21 +1,32 @@
-import React, { useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useRef, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import ToggleButton from '@/components/commons/buttons/ToggleButton';
 import { ModernInput } from '@/components/commons/inputs/Input';
 import styled from 'styled-components';
+import { TitleWithCircle } from './TReviewCreate';
 
 const ReviewCreate2 = () => {
   const navigate = useNavigate();
+  const { totalPlanTitle } = useParams(); // URL 매개변수에서 데이터 읽기
   const [isPublic, setIsPublic] = useState<boolean>(false);
-  const [totalPlanTitle, setTotalPlanTitle] = useState<string>('');
+  const [totalPlanTitleState, setTotalPlanTitleState] = useState<string>(
+    totalPlanTitle || '',
+  ); // 상태 이름 수정
   const [totalBudget, setTotalBudget] = useState<number>(0);
   const [area, setArea] = useState<string>('');
   const [step, setStep] = useState<number>(1);
   const [imageFiles, setImageFiles] = useState<File[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null); // Ref for file input
 
+  // totalPlanTitle이 변경될 때마다 해당 값을 설정
+  useEffect(() => {
+    if (totalPlanTitle) {
+      setTotalPlanTitleState(totalPlanTitle);
+    }
+  }, [totalPlanTitle]);
+
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTotalPlanTitle(e.target.value);
+    setTotalPlanTitleState(e.target.value); // 상태 업데이트 함수 수정
   };
 
   const toggleIsPublic = () => setIsPublic(!isPublic);
@@ -59,7 +70,9 @@ const ReviewCreate2 = () => {
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
         <div style={{ width: '100%' }}>
           <div style={{ width: '100%', maxWidth: '700px', margin: '0 auto' }}>
-            <Title> 제목</Title>
+            <Title>
+              <TitleWithCircle>제목</TitleWithCircle>
+            </Title>
             <ReviewBoxWithSpaceBetween>
               <div style={{ display: 'flex', alignItems: 'center' }}>
                 <img
@@ -72,6 +85,7 @@ const ReviewCreate2 = () => {
                   width={400}
                   height={35}
                   border="transparent"
+                  value={totalPlanTitleState} // 첫 번째 페이지에서 전달된 값 사용
                   onChange={handleTitleChange}
                   fontSize={16}
                   fontWeight={'bold'}

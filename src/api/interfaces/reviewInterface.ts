@@ -9,10 +9,7 @@ export interface TripData {
   hashTag: string[];
   address: string;
   isPublic: boolean;
-  // area: string;
-  // x: string;
-  // y: string;
-  // placeName: string;
+  placeName: string;
 }
 
 // 여행 정보 목록 조회

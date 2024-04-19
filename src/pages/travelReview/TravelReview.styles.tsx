@@ -164,7 +164,8 @@ export const FieldContainer = styled.div`
 
 export const Label = styled.label`
   margin-bottom: 5px;
-  font-weight: bold;
+  /* font-weight: bold; */
+  margin-left: 5px;
 `;
 
 export const DateFieldsContainer = styled.div`

@@ -1,91 +1,71 @@
-import React, {
-  useState,
-  useRef,
-  forwardRef,
-  ButtonHTMLAttributes,
-} from 'react';
-import DatePicker, { registerLocale, setDefaultLocale } from 'react-datepicker';
-import { ko } from 'date-fns/locale';
-import 'react-datepicker/dist/react-datepicker.css';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ToggleButton from '@/components/commons/buttons/ToggleButton';
 import { ModernInput } from '@/components/commons/inputs/Input';
 import styled from 'styled-components';
-import { TfiArrowCircleRight } from 'react-icons/tfi';
+import {
+  DateFieldsContainer,
+  FieldContainer,
+  Input,
+  Label,
+} from '@/pages/travelReview/TravelReview.styles';
+// import { TripData } from '@/api/interfaces/reviewInterface';
 
 const ReviewCreate = () => {
   const navigate = useNavigate();
+  // 상태 관리 변수들
   const [isPublic, setIsPublic] = useState<boolean>(false);
-  const [totalPlanTitle, setTotalPlanTitle] = useState<string>('');
-  const [totalBudget, setTotalBudget] = useState<number>(0);
-  const [area, setArea] = useState<string>('');
-  const [step, setStep] = useState<number>(1);
-  const datePickerRef = useRef<DatePicker>(null);
-  const [startDate, setStartDate] = useState<Date | null>(new Date());
+  const [title, setTitle] = useState<string>('');
+  const [cost, setCost] = useState<number>(0);
+  const [address, setAddress] = useState<string>('');
+  const [tripStartDate, setTripStartDate] = useState<string>('');
+  const [tripEndDate, setTripEndDate] = useState<string>('');
+  const [placeName, setPlaceName] = useState<string>('');
 
-  // 달력을 표시할 버튼 컴포넌트
-  const CalendarButton = forwardRef<
-    HTMLButtonElement,
-    ButtonHTMLAttributes<HTMLButtonElement>
-  >(({ onClick }, ref) => (
-    <button
-      onClick={onClick}
-      ref={ref}
-      style={{ border: 'none', background: 'none' }}
-    >
-      <TfiArrowCircleRight size="35px" color="lightGray" />
-    </button>
-  ));
-  CalendarButton.displayName = 'CalendarButton';
-
-  const openCalendar = () => {
-    if (datePickerRef.current) {
-      datePickerRef.current.setOpen(true);
-    }
-  };
-
-  const handleAreaChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setArea(e.target.value);
-  };
-
+  // 각 입력 필드의 변화를 다루는 함수들
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTotalPlanTitle(e.target.value);
+    setTitle(e.target.value);
+  };
+  const handleCostChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCost(parseFloat(e.target.value) || 0);
+  };
+  const handleAddressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setAddress(e.target.value);
+  };
+  const handlePlaceNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPlaceName(e.target.value);
+  };
+  const handleStartDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTripStartDate(e.target.value);
+  };
+  const handleEndDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTripEndDate(e.target.value);
+  };
+  const toggleIsPublic = () => {
+    setIsPublic((prev) => !prev);
   };
 
-  const handleBudgetChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTotalBudget(parseInt(e.target.value, 10) || 0);
+  // '여행 플랜 불러오기' 버튼 클릭 처리
+  const handleBringPlanClick = () => {
+    alert('여행 플랜 불러오기 기능은 아직 개발 중입니다!');
   };
 
-  const toggleIsPublic = () => setIsPublic(!isPublic);
-
-  // const handleNextClick = () => {
-  //   navigate('/reviewCreate/2', {
-  //     state: {
-  //       isPublic,
-  //       totalPlanTitle,
-  //       totalBudget,
-  //       area,
-  //     },
-  //   });
-  // };
-
-  // 스텝퍼 바 컴포넌트 정의
-  // const StepperBar = () => {
-  //     return (
-  //       <StepperContainer>
-  //         <Step active /> {/* active 속성 추가 */}
-  //         <Step />
-  //         <Step />
-  //       </StepperContainer>
-  //     );
-  //   };
-  // 다음 버튼을 클릭할 때 실행되는 함수
+  // '다음' 버튼 클릭을 처리
   const handleNextClick = () => {
-    if (step < 3) {
-      setStep(step + 1); // 다음 단계로 이동
-    } else {
-      navigate('/reviewCreate/2');
-    }
+    // 입력된 데이터를 객체로 생성하여 2단계 페이지로 넘김!
+    const tripData = {
+      title,
+      isPublic,
+      address,
+      placeName,
+      cost,
+      tripStartDate,
+      tripEndDate,
+      // 2단계에서 입력받을 나머지 데이터들 일단 빈값으로 둠
+      content: '',
+      hashTag: [],
+    };
+    navigate('/reviewCreate/2', { state: tripData });
   };
 
   return (
@@ -93,7 +73,9 @@ const ReviewCreate = () => {
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
         <div style={{ width: '100%' }}>
           <div>
-            <Title> 제목</Title>
+            <Title>
+              <TitleWithCircle>제목</TitleWithCircle>
+            </Title>
             <ReviewBoxWithSpaceBetween>
               <div style={{ display: 'flex', alignItems: 'center' }}>
                 <img
@@ -119,40 +101,52 @@ const ReviewCreate = () => {
           </div>
           <div>
             <div>
-              <BringPlanBtn> + 여행 플랜 불러오기</BringPlanBtn>
+              <BringPlanBtn onClick={handleBringPlanClick}>
+                {' '}
+                + 여행 플랜 불러오기
+              </BringPlanBtn>
+              {/* 지역 입력 */}
               <ReviewBox>
                 <ReviewContent>
-                  <div>지역</div>
+                  <div>
+                    <TitleWithCircle>지역</TitleWithCircle>
+                  </div>
                   <ModernInput
                     type="text"
-                    placeholder="지역을 입력해주세요"
+                    placeholder="지역을 입력해주세요 (예: 서울시 강남구 역삼동)"
                     width={400}
                     height={30}
                     border="transparent"
                     fontSize={16}
-                    onChange={handleAreaChange}
+                    onChange={handleAddressChange}
                   />
                 </ReviewContent>
               </ReviewBox>
               <hr />
+              {/* 위치 입력 */}
               <ReviewBox>
                 <ReviewContent>
-                  <div>위치</div>
+                  <div>
+                    <TitleWithCircle>위치</TitleWithCircle>
+                  </div>
                   <ModernInput
                     type="text"
-                    placeholder="위치을 입력해주세요"
+                    placeholder="위치를 입력해주세요 (예: 메가박스, CGV)"
                     width={400}
                     height={30}
                     border="transparent"
                     fontSize={16}
-                    onChange={handleBudgetChange}
+                    onChange={handlePlaceNameChange}
                   />
                 </ReviewContent>
               </ReviewBox>
               <hr />
+              {/* 예산 입력 */}
               <ReviewBox>
                 <ReviewContent>
-                  <div>예산</div>
+                  <div>
+                    <TitleWithCircle>예산</TitleWithCircle>
+                  </div>
                   <ModernInput
                     type="text"
                     placeholder="예산을 입력해주세요"
@@ -160,26 +154,36 @@ const ReviewCreate = () => {
                     height={30}
                     border="transparent"
                     fontSize={16}
-                    onChange={handleBudgetChange}
+                    onChange={handleCostChange}
                   />
                 </ReviewContent>
               </ReviewBox>
               <hr />
-              <div style={{ padding: '30px 0' }}>
-                <ReviewContentRow>
-                  <div>여행기간</div>
-                  <DatePickerContainer>
-                    <DatePicker
-                      ref={datePickerRef}
-                      selected={startDate}
-                      onChange={(date: Date) => setStartDate(date)}
-                      dateFormat="yyyy/MM/dd"
-                      locale={ko}
-                      customInput={<CalendarButton />} // 커스텀 인풋 사용
+              {/* 여행 날짜 입력 */}
+              <ReviewBox>
+                <DateFieldsContainer>
+                  <FieldContainer>
+                    <Label>
+                      <TitleWithCircle>여행 시작일</TitleWithCircle>
+                    </Label>
+                    <Input
+                      type="date"
+                      value={tripStartDate}
+                      onChange={handleStartDateChange}
                     />
-                  </DatePickerContainer>
-                </ReviewContentRow>
-              </div>
+                  </FieldContainer>
+                  <FieldContainer>
+                    <Label>
+                      <TitleWithCircle>여행 종료일</TitleWithCircle>
+                    </Label>
+                    <Input
+                      type="date"
+                      value={tripEndDate}
+                      onChange={handleEndDateChange}
+                    />
+                  </FieldContainer>
+                </DateFieldsContainer>
+              </ReviewBox>
               <hr />
             </div>
           </div>
@@ -214,7 +218,7 @@ const ReviewContent = styled.div`
   flex-direction: column;
   padding: 5px;
   div {
-    padding-left: 5px;
+    /* padding-left: 5px; */
   }
 `;
 
@@ -239,11 +243,6 @@ const ReviewNextButton = styled.button`
   }
 `;
 
-const IconContainer = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
 const Title = styled.div`
   margin-left: 10px;
 `;
@@ -261,16 +260,35 @@ const BringPlanBtn = styled.button`
   cursor: pointer;
 `;
 
-const ReviewContentRow = styled(ReviewContent)`
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between; // 요소들 사이에 공간을 동등하게 배분합니다.
+export const TitleWithCircle = styled.span`
+  position: relative;
+  margin-right: 5px;
+
+  &::before {
+    content: '';
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background-color: #f43b3b;
+    border-radius: 50%;
+    top: -3px;
+    right: -10px;
+  }
 `;
 
-// DatePicker와 아이콘을 가로로 나열하기 위해 새로운 컨테이너를 만듭니다.
-const DatePickerContainer = styled.div`
-  display: flex;
-  align-items: center;
-`;
+// const Step = ({ active }: { active?: boolean }) => {
+//   // active prop 추가
+//   return (
+//     <StepCircle $active={active}>
+//     </StepCircle>
+//   );
+// };
 
-// #F43B3B 나중에 제목들 옆에 색깔 쪼꼬만 원 모양 넣어야함
+// const StepCircle = styled.div<{ $active?: boolean }>`
+//   // $active로 수정
+//   width: 30px;
+//   height: 30px;
+//   border-radius: 50%;
+//   background-color: ${({ $active }) =>
+//     $active ? '#5ac8ec' : '#e0e0e0'}; // $active로 수정
+// `;
