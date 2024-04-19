@@ -1816,10 +1816,10 @@ react-date-range@^2.0.0-alpha.4:
     react-list "^0.8.13"
     shallow-equal "^1.2.1"
 
-react-datepicker@^6.6.0:
-  version "6.7.0"
-  resolved "https://registry.yarnpkg.com/react-datepicker/-/react-datepicker-6.7.0.tgz#6d09be572591551e6760317e37e5fc4fecc8da8f"
-  integrity sha512-ysdHvNWyAiDidJmseAPteygwXrCrdE3kK7tVraL3Dqln50ltT8f8V6rSTJuscpeVns3zeFovXMku2YqEzs4QvA==
+react-datepicker@^6.9.0:
+  version "6.9.0"
+  resolved "https://registry.yarnpkg.com/react-datepicker/-/react-datepicker-6.9.0.tgz#0ad234dad81d567ae64cad79697bbad69c95490b"
+  integrity sha512-QTxuzeem7BUfVFWv+g5WuvzT0c5BPo+XTCNbMTZKSZQLU+cMMwSUHwspaxuIcDlwNcOH0tiJ+bh1fJ2yxOGYWA==
   dependencies:
     "@floating-ui/react" "^0.26.2"
     clsx "^2.1.0"

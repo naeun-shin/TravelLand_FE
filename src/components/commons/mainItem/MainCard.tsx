@@ -9,12 +9,14 @@ import styled from 'styled-components';
 
 // 메인 헤더 카드 인터페이스 업데이트
 interface CardProps {
-  title: string;
-  categories: string[];
-  imageUrl: string;
-  location: string;
-  startDate: string;
-  endDate: string;
+  tripId?: number;
+  area?: string;
+  title?: string;
+  tripStartDate?: string;
+  tripEndDate?: string;
+  thumbnailUrl?: string;
+  hashtagList?: string[];
+  isScrap?: boolean;
 }
 
 interface MainCardProps {
@@ -25,7 +27,7 @@ interface MainCardProps {
 const StyledSlider = styled(Slider)`
   position: relative;
   margin: auto;
-  width: 1100px;
+  width: 1260px;
   display: flex;
 
   .slick-prev,
@@ -76,24 +78,26 @@ const MainCard: React.FC<MainCardProps> = ({ cards = [] }) => {
 
   return (
     <StyledSlider {...settings}>
-      {cards.map((card, index) => (
-        <S.CardContainer key={index}>
+      {cards.map((card) => (
+        <S.CardContainer key={card.tripId}>
           <S.ImageContainer>
-            <img src={card.imageUrl} alt={card.title} />
+            <img src={card.thumbnailUrl} alt={card.title} />
           </S.ImageContainer>
           <S.TextContainer>
             <div>
               <S.Title>
-                {card.location} | {card.startDate} - {card.endDate}
+                {card.area} | {card.tripStartDate} - {card.tripEndDate}
               </S.Title>
             </div>
             <div>
               <S.Price>{card.title}</S.Price>
             </div>
             <S.CategoriesContainer>
-              {card.categories.map((category, index) => (
-                <CategoryButton key={index} title={category} />
-              ))}
+              {card.hashtagList
+                ? card.hashtagList.map((category, idx) => (
+                    <CategoryButton key={idx} title={category} />
+                  ))
+                : null}
             </S.CategoriesContainer>
           </S.TextContainer>
         </S.CardContainer>
