@@ -53,7 +53,7 @@ const MainListContainer = styled.div`
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: auto;
   gap: 20px;
-  width: 1100px;
+  width: 1250px;
   margin: 0 auto;
   margin-bottom: 100px;
 `;

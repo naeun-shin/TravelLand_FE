@@ -26,7 +26,7 @@ const ReDesignHeader: React.FC = () => {
   const [isMenuModalOpen, setIsMenuModalOpen] = useState(false);
   // 로그인 모달
   const [isModalOpen, setIsModalOpen] = useState(false); // 로그인 모달 상태 추가
-  // const [isLoggedIn, setIsLoggedIn] = useState(false); // 로그인 상태를 관리하는 상태 추가
+  // const [isLoggedIn, _] = useState(false); // 로그인 상태를 관리하는 상태 추가
   const [isScrolled, setIsScrolled] = useState(false);
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false); // 검색 모달 상태 추가
 
@@ -63,7 +63,7 @@ const ReDesignHeader: React.FC = () => {
   };
 
   const handleLogoutClick = () => {
-    console.log(cookie.getAll());
+    // console.log(cookie.getAll());
     setIsMenuModalOpen(false);
     logout();
     cookie.remove('Authorization', { path: '/' }); // Adjust the path and domain as needed.
@@ -181,7 +181,7 @@ const StickyHeader = styled.div<SearchInputContainerProps>`
 `;
 
 const Container = styled.div`
-  max-width: 1150px;
+  max-width: 80%;
   width: 100%;
   margin: 0 auto;
   height: 80px;

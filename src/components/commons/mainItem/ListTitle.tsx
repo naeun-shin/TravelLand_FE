@@ -20,7 +20,7 @@ const ListTitle: React.FC<ListTitleProps> = () => {
 export default ListTitle;
 
 const TitleContainer = styled.div`
-  width: 1100px;
+  width: 1240px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
