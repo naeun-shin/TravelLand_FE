@@ -91,7 +91,7 @@ export const deleteTrip = async (
   tripId: number,
 ): Promise<AxiosResponse<any>> => {
   try {
-    const response = await instanceWithToken.delete(`/v1/trips/${tripId}`);
+    const response = await instance.delete(`/v1/trips/${tripId}`);
     return response;
   } catch (error) {
     console.error(error);
