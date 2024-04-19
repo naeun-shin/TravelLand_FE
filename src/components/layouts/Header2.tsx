@@ -63,10 +63,13 @@ const ReDesignHeader: React.FC = () => {
   };
 
   const handleLogoutClick = () => {
+    console.log(cookie.getAll());
     setIsMenuModalOpen(false);
     logout();
-    cookie.remove('Authorization');
+    cookie.remove('Authorization', { path: '/' }); // Adjust the path and domain as needed.
+    navigate('/');
   };
+
   const closeModal = () => {
     console.log('closeModal 실행됨');
     setIsModalOpen(false);
