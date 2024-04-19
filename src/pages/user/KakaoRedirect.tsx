@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Cookies } from 'react-cookie';
+import { useAuthStore } from '@/store/useAuthStore';
 
 const KakaoRedirect: React.FC = () => {
   const navigate = useNavigate();
@@ -10,6 +11,7 @@ const KakaoRedirect: React.FC = () => {
     const queryParams = new URLSearchParams(location.search);
     const authorizationToken = queryParams.get('Authorization');
     const cookie = new Cookies();
+    const { login } = useAuthStore(); // 로그인 함수를 가져옵니다.
 
     if (authorizationToken) {
       // 쿠키 옵션을 설정할 수 있습니다. 예를 들어, secure: true로 설정할 경우 HTTPS를 통해서만 쿠키가 전송됩니다.
@@ -22,6 +24,7 @@ const KakaoRedirect: React.FC = () => {
       };
 
       cookie.set('Authorization', authorizationToken, options);
+      login(); // 여기에서 login 함수를 호출하여 로그인 상태를 true로 설정
       navigate('/'); // 메인 페이지로 이동
     } else {
       console.error('Authorization token not found in the query string.');
