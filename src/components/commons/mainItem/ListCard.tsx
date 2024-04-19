@@ -25,8 +25,8 @@ export const ListCard: React.FC<ListCardProps> = ({
   tripEndDate,
   thumbnailUrl,
   hashtagList,
-  isScrap,
-  viewCount,
+  // isScrap,
+  // viewCount,
   onClick,
 }) => {
   return (

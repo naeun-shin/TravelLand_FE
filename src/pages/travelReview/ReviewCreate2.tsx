@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import ReDesignHeader from '@/components/layouts/Header2';
 import TReviewCreate2 from '@/components/reviews/reviewIndex/TReviewCreate2';
 import styled from 'styled-components';
 
 const ReviewCreate2 = () => {
-  const [step, setStep] = useState<number>(2); // 현재 단계를 2로 설정
+  const [step, _] = useState<number>(2); // 현재 단계를 2로 설정
 
   return (
     <>

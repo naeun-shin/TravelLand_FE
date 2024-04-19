@@ -16,7 +16,7 @@ import ReDesignHeader from '@/components/layouts/Header2';
 import SearchModal from './SearchPage';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import ReviewCreatePage1 from '../travelReview/ReviewCreate1';
+// import ReviewCreatePage1 from '../travelReview/ReviewCreate1';
 import {
   useGetMainHashtagListQuery,
   useGetMainRankListQuery,
