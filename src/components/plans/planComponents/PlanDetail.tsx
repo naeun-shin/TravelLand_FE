@@ -51,7 +51,7 @@ const PlanDetail: React.FC<ButtonProps> = () => {
   const [dayPlans, setDayPlans] = useState<DayPlan[]>([]);
   const [address, setAddress] = useState<string>(''); // 예시 주소를 빈 문자열로 초기화// ...기존의 useState와 useEffect 로직...
   const [isInvitationModalOpen, setIsInvitationModalOpen] = useState(false); // 초대 모달 상태를 관리하는 useState
-  const [invitedPeople, setInvitedPeople] = useState<string[]>([]); // 초대된 사람 목록을 저장할 상태
+  const [invitedPeople, _] = useState<string[]>([]); // 초대된 사람 목록을 저장할 상태
 
   const [isLike, setIsLike] = useState<boolean>(false);
   const [isScraped, setIsScraped] = useState<boolean>(false);
