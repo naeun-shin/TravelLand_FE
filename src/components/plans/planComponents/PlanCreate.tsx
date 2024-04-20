@@ -23,6 +23,25 @@ const PlanCreate = () => {
   const [totalPlanTitle, setTotalPlanTitle] = useState<String>('');
   const [totalBudget, setTotalBudget] = useState<number>(0);
   const [area, setArea] = useState<String>('');
+  const [focusState, setFocusState] = useState({
+    title: false,
+    area: false,
+    budget: false,
+  });
+
+  // Handle field focus and blur to toggle image display
+  const handleFocus = (field: keyof typeof focusState) =>
+    setFocusState({ ...focusState, [field]: true });
+  const handleBlur = (field: keyof typeof focusState) =>
+    setFocusState({ ...focusState, [field]: false });
+
+  // 입력 값
+  const canProceed =
+    totalPlanTitle.trim() !== '' &&
+    totalBudget > 0 &&
+    area.trim() !== '' &&
+    dateRange[0] !== undefined &&
+    dateRange[1] !== undefined;
 
   // 날짜 범위 변경 핸들러
   const handleDateRangeChange = (update: [Date, Date]) => {
@@ -35,16 +54,18 @@ const PlanCreate = () => {
     const end = dateRange[1] ? dateRange[1].toLocaleDateString() : '';
     if (!start && !end) {
       return (
-        <ModernInput
-          type="text"
-          placeholder="기간을 입력해주세요"
-          width={400}
-          height={30}
-          border="transparent"
-          fontSize={16}
-          readonly={true}
-          // onChange={handleAreaChange}
-        />
+        <>
+          <ModernInput
+            type="text"
+            placeholder="기간"
+            width={400}
+            height={30}
+            border="transparent"
+            fontSize={16}
+            readonly={true}
+            // onChange={handleAreaChange}
+          />
+        </>
       );
     }
 
@@ -80,10 +101,23 @@ const PlanCreate = () => {
   };
 
   // 토글
-  const toggleIsPublic = () => setIsPublic(isPublic);
+  const toggleIsPublic = () => {
+    setIsPublic((prev) => !prev); // 이전 상태를 참조하여 반전
+  };
 
   // 다음 페이지 넘어가기
   const handleNextClick = () => {
+    if (
+      !totalPlanTitle ||
+      !totalBudget ||
+      !area ||
+      !dateRange[0] ||
+      !dateRange[1]
+    ) {
+      alert('모든 입력을 완료해야 다음으로 진행할 수 있습니다.');
+      return;
+    }
+
     // dateRange 값 확인
     if (dateRange[0] && dateRange[1]) {
       // 날짜 범위가 모두 선택되었다면, 처리 로직 추가
@@ -112,22 +146,40 @@ const PlanCreate = () => {
         <div
           style={{
             width: '100%',
+            paddingRight: '10%',
           }}
         >
           <div>
-            <div> 제목</div>
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'flex-start',
+                justifyContent: 'flex-start',
+              }}
+            >
+              {' '}
+              제목 &nbsp; <img src="/assets/icons/requiredPoint.svg" />
+            </div>
             <S.PlanBoxWithSpaceBetween>
-              <div style={{ display: 'flex', alignItems: 'center' }}>
-                <img
-                  src="/assets/icons/Rectangle.png"
-                  style={{ height: '50px' }}
-                />
+              <div
+                style={{
+                  display: 'flex',
+                }}
+              >
+                {focusState.title && (
+                  <img
+                    src="/assets/icons/Rectangle.png"
+                    style={{ height: '50px' }}
+                  />
+                )}
                 <ModernInput
                   type="text"
-                  placeholder="제목을 입력해주세요"
+                  placeholder="제목"
                   width={400}
                   height={50}
                   border="transparent"
+                  onFocus={() => handleFocus('title')}
+                  onBlur={() => handleBlur('title')}
                   onChange={handleTitleChange}
                   fontSize={18}
                   fontWeight={'bold'}
@@ -158,10 +210,26 @@ const PlanCreate = () => {
                   <SlLocationPin size="25px" color="white" />
                 </div>
                 <S.PlanContent>
-                  <div>지역</div>
+                  <div
+                    style={{
+                      display: 'flex',
+                      alignItems: 'flex-start',
+                      justifyContent: 'flex-start',
+                    }}
+                  >
+                    지역 &nbsp; <img src="/assets/icons/requiredPoint.svg" />
+                  </div>
+                  {focusState.area && (
+                    <img
+                      src="/assets/icons/Rectangle.png"
+                      style={{ height: '30px' }}
+                    />
+                  )}
                   <ModernInput
                     type="text"
-                    placeholder="지역을 입력해주세요"
+                    placeholder="지역"
+                    onFocus={() => handleFocus('area')}
+                    onBlur={() => handleBlur('area')}
                     width={400}
                     height={30}
                     border="transparent"
@@ -187,10 +255,26 @@ const PlanCreate = () => {
                   <BiCoinStack size="25px" color="white" />
                 </div>
                 <S.PlanContent>
-                  <div>예산</div>
+                  <div
+                    style={{
+                      display: 'flex',
+                      alignItems: 'flex-start',
+                      justifyContent: 'flex-start',
+                    }}
+                  >
+                    예산 &nbsp; <img src="/assets/icons/requiredPoint.svg" />
+                  </div>
+                  {focusState.budget && (
+                    <img
+                      src="/assets/icons/Rectangle.png"
+                      style={{ height: '30px' }}
+                    />
+                  )}
                   <ModernInput
                     type="text"
-                    placeholder="예산을 입력해주세요"
+                    placeholder="예산"
+                    onFocus={() => handleFocus('budget')}
+                    onBlur={() => handleBlur('budget')}
                     width={400}
                     height={30}
                     border="transparent"
@@ -217,7 +301,16 @@ const PlanCreate = () => {
                 </div>
                 <S.PlanBoxWithCalendar>
                   <div style={{ paddingLeft: '15px' }}>
-                    <div>여행기간</div>
+                    <div
+                      style={{
+                        display: 'flex',
+                        alignItems: 'flex-start',
+                        justifyContent: 'flex-start',
+                      }}
+                    >
+                      여행기간 &nbsp;{' '}
+                      <img src="/assets/icons/requiredPoint.svg" />
+                    </div>
                     <div> {displayDateRange()}</div>
                   </div>
                   <div style={{ paddingLeft: '200px' }}>
@@ -250,7 +343,9 @@ const PlanCreate = () => {
       </div>
       <S.PlanBottomSection>
         {/* 다음 버튼 */}
-        <S.PlanNextButton onClick={handleNextClick}>다음</S.PlanNextButton>
+        <S.PlanNextButton onClick={handleNextClick} disabled={!canProceed}>
+          다음
+        </S.PlanNextButton>
       </S.PlanBottomSection>
     </>
   );
