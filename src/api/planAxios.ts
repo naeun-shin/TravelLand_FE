@@ -65,7 +65,7 @@ export const deletePlan = async (planId: Number) => {
 // 플랜 좋아요 등록
 export const createLikePlan = async (planId: number) => {
   try {
-    return await instance.post(`/v1/plans/${planId}/like`);
+    return await instanceWithToken.post(`/v1/plans/${planId}/like`);
   } catch (error) {
     console.error(error);
     throw error;
@@ -75,7 +75,7 @@ export const createLikePlan = async (planId: number) => {
 //플랜 좋아요 취소
 export const cancelLikePlan = async (planId: number) => {
   try {
-    return await instance.delete(`/v1/plans/${planId}/like`);
+    return await instanceWithToken.delete(`/v1/plans/${planId}/like`);
   } catch (error) {
     console.error(error);
     throw error;
@@ -85,7 +85,7 @@ export const cancelLikePlan = async (planId: number) => {
 // 플랜 스크랩 등록
 export const createScrapPlan = async (planId: number) => {
   try {
-    return await instance.post(`/v1/plans/${planId}/scrap`);
+    return await instanceWithToken.post(`/v1/plans/${planId}/scrap`);
   } catch (error) {
     console.error(error);
     throw error;
@@ -95,7 +95,7 @@ export const createScrapPlan = async (planId: number) => {
 // 플랜 스크랩 취소
 export const cancelScrapPlan = async (planId: number) => {
   try {
-    return await instance.delete(`/v1/plans/${planId}/scrap`);
+    return await instanceWithToken.delete(`/v1/plans/${planId}/scrap`);
   } catch (error) {
     console.error(error);
     throw error;
