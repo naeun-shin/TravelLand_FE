@@ -69,8 +69,7 @@ export const CategoryButtonStyle = styled.button<{
   white-space: nowrap;
   overflow: hidden;
   margin-right: 3px;
-  background-color: ${(props) =>
-    props.selected ? '#5ac8ec' : '#ddd'}; // 선택된 경우 특정 색상을 적용
+  background-color: ${(props) => (props.selected ? '#5ac8ec' : '#eee')};
   &:hover {
     background-color: ${(props) =>
       props.hoverColor || 'rgba(90, 200, 236, 0.8)'};

@@ -44,7 +44,6 @@ const ReviewDetailHeader = ({ tripDetail }: ReviewDetailHeaderProps) => {
   return (
     <S.Container>
       <S.HeaderBox>
-        <S.Title>상세보기</S.Title>
         <S.ButtonBox>
           <Button
             text="삭제하기"

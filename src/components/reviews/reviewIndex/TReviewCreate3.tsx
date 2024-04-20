@@ -79,19 +79,16 @@ const TReviewCreate3 = () => {
         isPublic: isPublic,
       }),
     );
+    // FormData에 이미지가 제대로 추가되었는지 확인
 
     // 'thumbnail' 이미지 추가 (배열의 첫 번째 이미지)
     if (state.imageFiles.length > 0) {
-      formData.append(
-        'thumbnail',
-        state.imageFiles[0],
-        state.imageFiles[0].name,
-      );
-      // imageList 항목 추가
-      state.imageFiles.slice(1).forEach((file: File, index: number) => {
-        formData.append(`imageList[${index}]`, file, file.name);
-      });
+      formData.append('thumbnail', state.imageFiles[0]);
     }
+    // 나머지 이미지 파일들을 'imageList'로 추가
+    state.imageFiles.slice(1).forEach((file: File) => {
+      formData.append('imageList', file);
+    });
 
     mutation.mutate(formData); // FormData 객체를 직접 전달
   };

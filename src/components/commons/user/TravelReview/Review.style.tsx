@@ -78,9 +78,9 @@ export const ReviewListTitle = styled.div`
 
 // 여행 후기 상세보기 페이지
 
-interface DotProps {
-  active?: boolean;
-}
+// interface DotProps {
+//   active?: boolean;
+// }
 
 export const Container = styled.div`
   width: 900px;
@@ -96,7 +96,7 @@ export const Title = styled.div`
 
 export const UserSection = styled.div`
   display: flex;
-  margin: 30px 0 10px 0;
+  margin: 15px 0 10px 0;
 `;
 
 export const UserImage = styled.img`
@@ -127,7 +127,7 @@ export const SliderDots = styled.div`
   display: flex;
 `;
 
-export const Dot = styled.div<DotProps>`
+export const Dot = styled.div<{ active: boolean }>`
   height: 15px;
   width: 15px;
   background-color: #bbb;
