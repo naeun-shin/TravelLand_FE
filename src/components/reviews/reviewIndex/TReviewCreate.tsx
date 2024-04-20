@@ -23,6 +23,7 @@ const ReviewCreate = () => {
   const [placeName, setPlaceName] = useState<string>('');
 
   // 각 입력 필드의 변화를 다루는 함수들
+
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
   };

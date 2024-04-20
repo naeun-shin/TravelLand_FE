@@ -10,7 +10,7 @@ const ReviewCreate2 = () => {
   const location = useLocation(); // useLocation을 사용하여 이전 페이지의 데이터 접근
   const { state } = location;
   const { totalReviewTitle } = useParams(); // URL 매개변수에서 데이터 읽기
-  const [isPublic, setIsPublic] = useState<boolean>(false);
+  const [isPublic, setIsPublic] = useState<boolean>(state?.isPublic || false);
   const [title, setTitle] = useState<string>(state?.title || ''); // 상태 이름 수정
   const [imageFiles, setImageFiles] = useState<File[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);

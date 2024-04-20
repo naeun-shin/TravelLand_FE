@@ -4,10 +4,6 @@ import ToggleButton from '@/components/commons/buttons/ToggleButton';
 import { ModernInput } from '@/components/commons/inputs/Input';
 import styled from 'styled-components';
 import CategoryButton from '@/components/commons/buttons/CategoryButton';
-// import { createTrip } from '@/api/reviewAxios';
-// import { useMutation } from '@tanstack/react-query';
-// import { TripData } from '@/api/interfaces/reviewInterface';
-// import { AxiosError } from 'axios';
 import { TitleWithCircle } from './TReviewCreate';
 // import { instanceWithToken } from '@/api/axios';
 import { AxiosError } from 'axios';
@@ -108,17 +104,23 @@ const TReviewCreate3 = () => {
             <TitleWithCircle>제목</TitleWithCircle>
           </Title>
           <ReviewBoxWithSpaceBetween>
-            <ModernInput
-              type="text"
-              value={state?.title || ''}
-              readonly
-              placeholder="제목"
-              width={570}
-              height={35}
-              border="transparent"
-              fontSize={16}
-              fontWeight={'bold'}
-            />
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <img
+                src="/assets/icons/Rectangle.png"
+                style={{ height: '40px' }}
+              />
+              <ModernInput
+                type="text"
+                value={state?.title || ''}
+                readonly
+                placeholder="제목"
+                width={560}
+                height={35}
+                border="transparent"
+                fontSize={16}
+                fontWeight={'bold'}
+              />
+            </div>
             <ToggleButton
               isChecked={!isPublic}
               onToggle={() => setIsPublic(!isPublic)}
@@ -147,7 +149,7 @@ const TReviewCreate3 = () => {
             </div>
           </HashTagContainer>
           <div>
-            <div style={{ display: 'flex', marginTop: '20px' }}>
+            <CategoryButtonContainer>
               {[
                 '데이트',
                 '가족여행',
@@ -165,7 +167,7 @@ const TReviewCreate3 = () => {
                   selected={selectedTags.includes(tag)}
                 />
               ))}
-            </div>
+            </CategoryButtonContainer>
           </div>
           <ReviewBtnBox>
             <ReviewBottomSection>
@@ -220,13 +222,13 @@ const HashTagDescription = styled.div`
   color: #238bad;
   font-weight: 600;
 `;
-// const CategoryButtonContainer = styled.div`
-//   display: flex;
-//   width: 400px;
-//   flex-wrap: wrap;
-//   gap: 10px;
-//   margin: 20px 0 80px 90px;
-// `;
+const CategoryButtonContainer = styled.div`
+  display: flex;
+  width: 400px;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 20px 0 80px 90px;
+`;
 
 const ContentTextarea = styled.textarea`
   width: 700px;

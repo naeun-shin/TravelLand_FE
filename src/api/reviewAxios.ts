@@ -75,10 +75,6 @@ export const getTripDetail = async (
   tripId: number,
 ): Promise<AxiosResponse<TripDetail>> => {
   try {
-    // const response = await axios.get<TripDetail>(`/v1/trips/${tripId}`);
-    // 아래 코드 -> <TripDetail> 타입 선언 삭제처리 후 get
-    // const response =
-    // console.log('response 데이터 연결 확인 >>> ', response);
     return await instance.get(`/v1/trips/${tripId}`);
   } catch (error) {
     console.error(error);
