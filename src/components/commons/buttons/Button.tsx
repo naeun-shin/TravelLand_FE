@@ -17,6 +17,9 @@ export interface ButtonProps {
   marginRight?: string;
   children?: React.ReactNode; // children prop 추가
   disabled?: any;
+  display?: string;
+  alignItems?: string;
+  justifyContent?: string;
 }
 
 // 기본 버튼
@@ -35,6 +38,9 @@ const Button: React.FC<ButtonProps> = ({
   marginRight,
   children,
   disabled,
+  display,
+  alignItems,
+  justifyContent,
 }) => {
   return (
     <S.StyledButton
@@ -49,6 +55,9 @@ const Button: React.FC<ButtonProps> = ({
       hoverColor={hoverColor}
       marginRight={marginRight}
       disabled={disabled}
+      display={display}
+      alignItems={alignItems}
+      justifyContent={justifyContent}
     >
       {text} {children}
     </S.StyledButton>

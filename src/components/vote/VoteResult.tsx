@@ -1,26 +1,25 @@
 // import { useEffect, useState } from 'react';
-import { useGetVoteResultQuery } from '@/hooks/useQuery';
 import * as S from './Vote.style';
 
+interface PlanVotes {
+  planVoteId: number;
+  planAId: number;
+  planBId: number;
+  planACount: number;
+  planBCount: number;
+  isClosed: boolean;
+  title: string;
+  planVoteDuration: string;
+  createdAt: string;
+  modifiedAt: string;
+  nickname: string;
+  profileImage: string;
+}
 interface VoteResultProps {
-  votedId: number; // Optional, as it might not be set initially
+  voteData: PlanVotes[];
 }
 
-export const VoteResult: React.FC<VoteResultProps> = ({ votedId }) => {
-  console.log(votedId);
-  const { data, isLoading, isError } = useGetVoteResultQuery(votedId);
-  console.log(data);
-
-  if (isLoading) {
-    // 데이터 로딩 중 UI
-    return <div>Loading...</div>;
-  }
-
-  if (isError) {
-    // 에러 발생 시 UI
-    return <div>Error</div>;
-  }
-
+export const VoteResult: React.FC<VoteResultProps> = ({ voteData }) => {
   return (
     <>
       <S.CheckVoteContainer>

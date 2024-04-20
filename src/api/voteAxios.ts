@@ -1,4 +1,3 @@
-import { AxiosResponse } from 'axios';
 import { instance } from './axios';
 import { VoteData, checkVoteData } from './interfaces/voteInterface';
 
@@ -22,13 +21,13 @@ export const checkVote = async (checkVote: checkVoteData) => {
 };
 
 // 투표 결과보기
-export const getVoteResult = async (
-  planVoteId: number,
-): Promise<AxiosResponse<any>> => {
-  try {
-    return await instance.get(`/v1/votes/${planVoteId}`);
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
-};
+// export const getVoteResult = async (
+//   planVoteId: number,
+// ): Promise<AxiosResponse<any>> => {
+//   try {
+//     return await instance.get(`/v1/votes/${planVoteId}`);
+//   } catch (error) {
+//     console.error(error);
+//     throw error;
+//   }
+// };
