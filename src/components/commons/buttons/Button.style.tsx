@@ -9,9 +9,15 @@ interface ButtonProps {
   textColor?: string;
   hoverColor?: string;
   marginRight?: string;
+  display?: string;
+  alignItems?: string;
+  justifyContent?: string;
 }
 
 export const StyledButton = styled.button<ButtonProps>`
+  display: ${(props) => props.display};
+  justify-content: ${(props) => props.justifyContent};
+  align-items: ${(props) => props.alignItems};
   width: ${(props) => props.width};
   height: ${(props) => props.height};
   background-color: ${(props) => props.color};
@@ -27,6 +33,11 @@ export const StyledButton = styled.button<ButtonProps>`
       props.hoverColor || props.color}; // 호버 시 색상 변경
   }
   margin-right: ${(props) => props.marginRight || '0px'};
+
+  button:disabled {
+    background-color: #c5f1ff; // 연한 하늘색
+    color: #ffffff; // 텍스트 색상을 흰색으로 변경
+  }
 `;
 
 export const ButtonContainer = styled.div`
