@@ -65,17 +65,17 @@ export const router = createBrowserRouter([
   {
     path: '/planCreate/1',
     element: (
-      // <PrivateRoute>
-      <TravelPlanCreate1 />
-      // </PrivateRoute>
+      <PrivateRoute>
+        <TravelPlanCreate1 />
+      </PrivateRoute>
     ),
   },
   {
     path: '/planCreate/2',
     element: (
-      // <PrivateRoute>
-      <TravelPlanCreate2 />
-      // </PrivateRoute>
+      <PrivateRoute>
+        <TravelPlanCreate2 />
+      </PrivateRoute>
     ),
   },
   { path: '/planList', element: <TravelPlanList /> },
