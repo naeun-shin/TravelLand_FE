@@ -46,9 +46,9 @@ export const router = createBrowserRouter([
   {
     path: '/user/myPage',
     element: (
-      // <PrivateRoute>
-      <MyPage />
-      // </PrivateRoute>
+      <PrivateRoute>
+        <MyPage />
+      </PrivateRoute>
     ),
   },
   {
