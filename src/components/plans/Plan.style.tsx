@@ -5,7 +5,7 @@ type PlanDetailDateButtonProps = {
 };
 
 interface ButtonProps {
-  disabled: boolean;
+  disabled?: boolean;
 }
 
 const PlanFirstSection = styled.div`
