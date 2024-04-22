@@ -12,16 +12,14 @@ import MainCard from '@/components/commons/mainItem/MainCard';
 import Maintitle from '@/components/commons/mainItem/MainTitle';
 import ListTitle from '@/components/commons/mainItem/ListTitle';
 import MainList from '@/components/commons/mainItem/MainList';
-import Header3 from '@/components/layouts/Header3';
-import SearchModal from './SearchPage';
+import ReDesignHeader from '@/components/layouts/Header2';
 import { useNavigate } from 'react-router-dom';
+import SearchModal from './SearchPage';
 import styled from 'styled-components';
-// import ReviewCreatePage1 from '../travelReview/ReviewCreate1';
 import {
   useGetMainHashtagListQuery,
   useGetMainRankListQuery,
 } from '@/hooks/useQuery';
-// import SearchModal from '@/components/SearchModal';
 
 interface MainProps {
   onClick?: () => void;
@@ -269,7 +267,7 @@ const Main: React.FC<MainProps> = () => {
 
   return (
     <>
-      <Header3 />
+      <ReDesignHeader />
       <Search
         placeholder="검색어를 입력해주세요."
         onIconClick={toggleSearchModal}
