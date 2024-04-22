@@ -214,6 +214,7 @@ const DateRange = styled.div`
 const ContentBox = styled.div`
   min-height: 250px;
   overflow: auto;
+  /* height: 75vh; */
 `;
 
 const ContentDiv = styled.p`
@@ -224,8 +225,8 @@ const ContentDiv = styled.p`
   margin-bottom: 1em;
   white-space: pre-line;
   word-wrap: break-word;
-  max-height: 200px;
-  overflow: hidden;
+  max-height: 100vh;
+  overflow: auto;
 `;
 
 // const ButtonSection = styled.div`
