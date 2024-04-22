@@ -10,9 +10,9 @@ interface ButtonProps {
 
 const PlanFirstSection = styled.div`
   display: flex;
-  /* padding: 20px 5px; */
   align-items: center;
   flex-direction: row;
+
   h3 {
     padding-right: 25px;
   }

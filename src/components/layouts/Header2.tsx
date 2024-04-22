@@ -129,12 +129,26 @@ const ReDesignHeader: React.FC = () => {
                 onClick={handleBurgerIconClick}
               />
             </BurgerMenuIcon>
-            {isMenuModalOpen && (
-              <MainModal
+            {isMenuModalOpen ? (
+              <>
+                {/* <MainModal
                 isLoggedIn={isLoggedIn}
                 handleLogout={handleLogoutClick}
                 handleLogin={handleOpenLogin}
-              />
+              /> */}
+                <div>
+                  <div>로그인</div>
+                </div>
+              </>
+            ) : (
+              <>
+                <div>
+                  <div>마이페이지</div>
+                  <div>여행 플렌 작성하기</div>
+                  <div>여행 정보 작성하기</div>
+                  <div>로그아웃</div>
+                </div>
+              </>
             )}
             {isNoticeModalOpen && <NoticeModal />}
           </MenuContainer>
