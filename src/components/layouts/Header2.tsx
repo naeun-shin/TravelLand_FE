@@ -8,7 +8,7 @@ import littleLogo from '/assets/icons/littleLogo.svg';
 import burgerIcon from '@/icons/burger.svg';
 import SearchModal from '@/pages/main/SearchPage';
 import { useAuthStore } from '@/store/useAuthStore';
-import { NoticeModal } from '../commons/modals/NoticeModal';
+// import { NoticeModal } from '../commons/modals/NoticeModal';
 import { Cookies } from 'react-cookie';
 import Button from '../commons/buttons/Button';
 import Vote from '../vote/Vote';
