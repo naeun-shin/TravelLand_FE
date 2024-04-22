@@ -83,7 +83,7 @@ export const ReviewListTitle = styled.div`
 // }
 
 export const Container = styled.div`
-  width: 900px;
+  width: 800px;
   margin: 0 auto;
   padding: 16px 0;
   margin-top: 150px;
@@ -134,11 +134,18 @@ export const Dot = styled.div<{ active: boolean }>`
   border-radius: 50%;
   margin: 0 5px;
   cursor: pointer;
+  transition:
+    background-color 0.3s ease,
+    width 0.3s ease,
+    border-radius 0.3s ease;
+
   // active prop에 따라 스타일 적용
   ${(props) =>
     props.active &&
     css`
       background-color: #000; // active 상태일 때의 색상
+      width: 30px;
+      border-radius: 10px;
     `}
 `;
 

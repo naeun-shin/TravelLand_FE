@@ -9,9 +9,15 @@ import scrapIcon from '@/icons/bookmark.svg';
 import { useMutation } from '@tanstack/react-query';
 import { deleteTrip } from '@/api/reviewAxios';
 import { AxiosError } from 'axios';
+import CategoryButton from '../../buttons/CategoryButton';
+import {
+  CategoriesContainer,
+  HashTagContainer,
+} from '../../mainItem/MainCard.style';
 
 interface ReviewDetailListProps {
   tripDetail: TripDetail;
+  hashtagList?: string[];
 }
 
 const ReviewDetailList = ({ tripDetail }: ReviewDetailListProps) => {
@@ -20,13 +26,16 @@ const ReviewDetailList = ({ tripDetail }: ReviewDetailListProps) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [likeActive, setLikeActive] = useState(false);
   const [scrapActive, setScrapActive] = useState(false);
-  // type ActiveButtonState = 'like' | 'scrap' | null;
 
   // tripDetail로부터 초기 like 및 scrap 상태를 설정
   useEffect(() => {
     setLikeActive(tripDetail.like);
     setScrapActive(tripDetail.scrap);
   }, [tripDetail.like, tripDetail.scrap]);
+
+  useEffect(() => {
+    console.log('tripDetail 전체 데이터:', tripDetail); // 해시태그 데이터 로깅
+  }, [tripDetail]);
 
   const toggleLike = () => {
     setLikeActive(!likeActive);
@@ -124,7 +133,7 @@ const ReviewDetailList = ({ tripDetail }: ReviewDetailListProps) => {
         <UserBox>
           <div>
             <S.UserSection>
-              <S.UserImage src={imageUrl} alt="사진" /> {/* 수정된 부분 */}
+              <S.UserImage src={imageUrl} alt="사진" />
               <S.UserName>{tripDetail.nickname}님</S.UserName>
             </S.UserSection>
           </div>
@@ -141,6 +150,21 @@ const ReviewDetailList = ({ tripDetail }: ReviewDetailListProps) => {
           </div>
         </UserBox>
       </Container>
+      <Container2>
+        <ContentBox>
+          {/* 여기에  리뷰 내용을 렌더링 */}
+          <ContentDiv>{tripDetail.content}</ContentDiv>
+          <HashTagContainer>
+            {tripDetail.hashtagList && tripDetail.hashtagList.length > 0 ? (
+              tripDetail.hashtagList.map((category, idx) => (
+                <CategoryButton key={idx} title={category} />
+              ))
+            ) : (
+              <p>해시태그가 없습니다.</p>
+            )}
+          </HashTagContainer>
+        </ContentBox>
+      </Container2>
     </>
   );
 };
@@ -148,26 +172,35 @@ const ReviewDetailList = ({ tripDetail }: ReviewDetailListProps) => {
 export default ReviewDetailList;
 
 const Container = styled.div`
-  width: 870px;
+  width: 790px;
   margin: 0 auto;
   padding: 16px;
-  border: 1px solid #eee;
-  border-radius: 8px;
+  border-bottom: 2px solid #ddd;
+  /* border-radius: 8px; */
   margin-bottom: 40px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
+`;
+const Container2 = styled.div`
+  width: 800px;
+  margin: 0 auto;
+  padding: 16px;
+  /* border: 1px solid #eee; */
+  /* border-radius: 8px; */
+  margin-bottom: 40px;
+  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
 `;
 
 const ReviewHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 3px 0 12px 0;
+  margin: 3px 0 30px 0;
   height: 40px;
   line-height: 40px;
 `;
 
 const LocationTag = styled.div`
-  padding: 4px 4px;
+  padding: 4px 0;
   font-size: 20px;
   font-weight: 600;
 `;
@@ -175,7 +208,24 @@ const LocationTag = styled.div`
 const DateRange = styled.div`
   font-size: 15px;
   color: #666;
-  margin-left: 6px;
+  margin-left: 2px;
+`;
+
+const ContentBox = styled.div`
+  min-height: 250px;
+  overflow: auto;
+`;
+
+const ContentDiv = styled.p`
+  width: 85%;
+  font-size: 18px;
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 1em;
+  white-space: pre-line;
+  word-wrap: break-word;
+  max-height: 200px;
+  overflow: hidden;
 `;
 
 // const ButtonSection = styled.div`

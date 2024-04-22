@@ -30,6 +30,10 @@ const ReviewCreate2 = () => {
   const toggleIsPublic = () => setIsPublic(!isPublic);
 
   const handleNextClick = () => {
+    if (imageFiles.length === 0) {
+      alert('이미지를 한 장 이상 첨부해주세요!');
+      return;
+    }
     navigate('/reviewCreate/3', {
       state: { ...state, imageFiles, isPublic },
     });

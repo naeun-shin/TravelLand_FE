@@ -45,16 +45,15 @@ export interface TripDetail {
   area: string;
   address: string;
   placeName: string;
-  x: string;
-  y: string;
   tripStartDate: string;
   tripEndDate: string;
   viewCount: number;
   likeCount: number;
   nickname: string;
   createdAt: string;
-  hashTag: string[];
+  hashTag?: string[];
   imageUrlList: string[];
   like: boolean;
   scrap: boolean;
+  hashtagList?: string[];
 }

@@ -1,13 +1,11 @@
 // import React from 'react'
 import ReviewCard from '@/components/commons/cards/ReviewCard';
-// import ReviewDetailHeader from '@/components/commons/user/TravelReview/ReviewDetail';
 import ReviewContent from '@/components/commons/user/TravelReview/ReviewDetailContent';
 import ReviewDetailList from '@/components/commons/user/TravelReview/ReviewDetailList';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { getTripDetail } from '@api/reviewAxios';
 import ReDesignHeader2 from '@/components/layouts/Header3';
-import ReviewDetailHeader from '@/components/commons/user/TravelReview/ReviewDetail';
 
 const TravelDetailPage = () => {
   // useParam으로 들어오는 값은 string이라서 const tripId를 Number로 강제 치환 진행
@@ -38,7 +36,7 @@ const TravelDetailPage = () => {
       <ReDesignHeader2 />
       {/* <ReviewDetailHeader tripDetail={tripDetail.data} /> */}
       <ReviewDetailList tripDetail={tripDetail.data} />
-      <ReviewContent tripDetail={tripDetail.data} />
+      <ReviewContent />
       <ReviewCard />
     </>
   );

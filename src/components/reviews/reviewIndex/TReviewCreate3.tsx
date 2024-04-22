@@ -1,11 +1,10 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import ToggleButton from '@/components/commons/buttons/ToggleButton';
 import { ModernInput } from '@/components/commons/inputs/Input';
 import styled from 'styled-components';
 import CategoryButton from '@/components/commons/buttons/CategoryButton';
 import { TitleWithCircle } from './TReviewCreate';
-// import { instanceWithToken } from '@/api/axios';
 import { AxiosError } from 'axios';
 import { TripData } from '@/api/interfaces/reviewInterface';
 import { useMutation } from '@tanstack/react-query';
@@ -14,16 +13,15 @@ import { createTrip } from '@/api/reviewAxios';
 const TReviewCreate3 = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
-  // const [title, setTitle] = useState<string>(state?.title || '');
   const [isPublic, setIsPublic] = useState<boolean>(state?.isPublic || false);
-  const [content, setContent] = useState<string>(''); // 내용 state
+  const [content, setContent] = useState<string>('');
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [hasAttemptedSubmit, setHasAttemptedSubmit] = useState<boolean>(false);
 
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value);
   };
 
-  // 해시태그
   const handleTagClick = (
     tag: string,
     event: React.MouseEvent<HTMLButtonElement>,
@@ -40,12 +38,11 @@ const TReviewCreate3 = () => {
       }
     }
   };
-  //뒤로가기
+
   const handleBackClick = () => {
     navigate(-1);
   };
 
-  // Form 제출 핸들러
   const mutation = useMutation<TripData, AxiosError, FormData>({
     mutationFn: createTrip,
     onSuccess: (data) => {
@@ -64,6 +61,11 @@ const TReviewCreate3 = () => {
     event: React.FormEvent<HTMLFormElement>,
   ): Promise<void> => {
     event.preventDefault();
+    setHasAttemptedSubmit(true);
+    if (content.trim() === '' || selectedTags.length === 0) {
+      alert('필수 입력 사항을 입력해주세요!');
+      return;
+    }
 
     const formData = new FormData();
     formData.append(
@@ -79,18 +81,15 @@ const TReviewCreate3 = () => {
         isPublic: isPublic,
       }),
     );
-    // FormData에 이미지가 제대로 추가되었는지 확인
 
-    // 'thumbnail' 이미지 추가 (배열의 첫 번째 이미지)
     if (state.imageFiles.length > 0) {
       formData.append('thumbnail', state.imageFiles[0]);
     }
-    // 나머지 이미지 파일들을 'imageList'로 추가
     state.imageFiles.slice(1).forEach((file: File) => {
       formData.append('imageList', file);
     });
 
-    mutation.mutate(formData); // FormData 객체를 직접 전달
+    mutation.mutate(formData);
   };
 
   return (
@@ -128,6 +127,9 @@ const TReviewCreate3 = () => {
               <div>
                 <TitleWithCircle>내용</TitleWithCircle>
               </div>
+              {hasAttemptedSubmit && content.trim() === '' && (
+                <ErrorMessage>내용을 입력해주세요</ErrorMessage>
+              )}
               <ContentTextarea
                 placeholder="내용을 입력해주세요"
                 value={content}
@@ -145,6 +147,9 @@ const TReviewCreate3 = () => {
               </HashTagDescription>
             </div>
           </HashTagContainer>
+          {hasAttemptedSubmit && selectedTags.length === 0 && (
+            <ErrorMessage>1개이상 선택해주세요</ErrorMessage>
+          )}
           <div>
             <CategoryButtonContainer>
               {[
@@ -183,6 +188,11 @@ const TReviewCreate3 = () => {
 };
 
 export default TReviewCreate3;
+
+const ErrorMessage = styled.div`
+  color: #ff0000;
+  font-size: 14px;
+`;
 
 const ReviewBtnBox = styled.div`
   display: flex;
