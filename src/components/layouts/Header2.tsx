@@ -23,7 +23,7 @@ interface HeaderProps {
 }
 
 const ReDesignHeader: React.FC<HeaderProps> = ({ needSearchInput }) => {
-  const { logout, isLoggedIn } = useAuthStore(); // 로그인 함수를 가져옵니다.
+  const { logout, isLoggedIn, login } = useAuthStore(); // 로그인 함수를 가져옵니다.
   const cookie = new Cookies();
   // 메뉴 모달
   const [isMenuModalOpen, setIsMenuModalOpen] = useState(false);
@@ -109,6 +109,12 @@ const ReDesignHeader: React.FC<HeaderProps> = ({ needSearchInput }) => {
 
   // 스크롤에 따라 상태 변경
   useEffect(() => {
+    // 로그인 상태 쿠키 확인
+    const token = cookie.get('Authorization');
+    if (token) {
+      login(); // Zustand의 로그인 상태를 true로 설정
+    }
+
     const handleScroll = () => {
       const shouldBeScrolled = window.scrollY > 50;
       setIsScrolled(shouldBeScrolled);
