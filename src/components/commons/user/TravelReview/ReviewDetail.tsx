@@ -32,6 +32,7 @@ const ReviewDetailHeader = ({ tripDetail }: ReviewDetailHeaderProps) => {
 
   const handleDelete = (tripId: number) => {
     deleteReviewMutation.mutate(tripId);
+    console.log('아이디', tripId);
   };
 
   // 여기자나여 => 여기가 썸네일 이미지 구간
@@ -43,7 +44,6 @@ const ReviewDetailHeader = ({ tripDetail }: ReviewDetailHeaderProps) => {
   return (
     <S.Container>
       <S.HeaderBox>
-        <S.Title>상세보기</S.Title>
         <S.ButtonBox>
           <Button
             text="삭제하기"

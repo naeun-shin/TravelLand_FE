@@ -13,15 +13,13 @@ import Maintitle from '@/components/commons/mainItem/MainTitle';
 import ListTitle from '@/components/commons/mainItem/ListTitle';
 import MainList from '@/components/commons/mainItem/MainList';
 import ReDesignHeader from '@/components/layouts/Header2';
-import SearchModal from './SearchPage';
 import { useNavigate } from 'react-router-dom';
+import SearchModal from './SearchPage';
 import styled from 'styled-components';
-// import ReviewCreatePage1 from '../travelReview/ReviewCreate1';
 import {
   useGetMainHashtagListQuery,
   useGetMainRankListQuery,
 } from '@/hooks/useQuery';
-// import SearchModal from '@/components/SearchModal';
 
 interface MainProps {
   onClick?: () => void;
