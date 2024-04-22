@@ -36,7 +36,7 @@ const Main: React.FC<MainProps> = () => {
   // TopTen
   const { data: TopTenData, isLoading, isError } = useGetMainRankListQuery();
 
-  console.log(TopTenData);
+  console.log('topTenData', TopTenData?.data);
 
   // 해시태그
   const { data: hashTagData } = useGetMainHashtagListQuery();

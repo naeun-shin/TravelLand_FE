@@ -320,7 +320,15 @@ const PlanCreate2: React.FC = () => {
           <IS.PlanListInputContainer key={index}>
             {/* 출발지 영역 */}
             <IS.ListInputbox>
-              <div>제목</div>
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'flex-start',
+                  justifyContent: 'flex-start',
+                }}
+              >
+                제목 &nbsp; <img src="/assets/icons/requiredPoint.svg" />
+              </div>
               <input
                 placeholder="서울시 강남구"
                 value={input.title}
@@ -331,7 +339,15 @@ const PlanCreate2: React.FC = () => {
             </IS.ListInputbox>
             {/* 시간 영역 */}
             <IS.ListInputbox>
-              <div>시간</div>
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'flex-start',
+                  justifyContent: 'flex-start',
+                }}
+              >
+                시간 &nbsp; <img src="/assets/icons/requiredPoint.svg" />
+              </div>
               <input
                 placeholder="09:30"
                 value={input.time}
@@ -342,7 +358,15 @@ const PlanCreate2: React.FC = () => {
             </IS.ListInputbox>
             {/* 일정 영역 */}
             <IS.ListInputbox>
-              <div>일정 *</div>
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'flex-start',
+                  justifyContent: 'flex-start',
+                }}
+              >
+                일정 &nbsp; <img src="/assets/icons/requiredPoint.svg" />
+              </div>
               <ModernInput
                 placeholder="가이드 만나기"
                 value={input.content}
@@ -355,7 +379,15 @@ const PlanCreate2: React.FC = () => {
             </IS.ListInputbox>
             {/* 경비 영역 */}
             <IS.ListInputbox>
-              <div>경비 *</div>
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'flex-start',
+                  justifyContent: 'flex-start',
+                }}
+              >
+                경비 &nbsp; <img src="/assets/icons/requiredPoint.svg" />
+              </div>
               <ModernInput
                 placeholder="경비"
                 value={input.budget}
@@ -368,7 +400,15 @@ const PlanCreate2: React.FC = () => {
             </IS.ListInputbox>
             {/* 위치 영역 */}
             <IS.ListInputboxWithFlex>
-              <div>위치</div>
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'flex-start',
+                  justifyContent: 'flex-start',
+                }}
+              >
+                위치 &nbsp; <img src="/assets/icons/requiredPoint.svg" />
+              </div>
               <IS.ListContent>
                 <ModernInput
                   placeholder="서울특별시 중구 을지로 201"

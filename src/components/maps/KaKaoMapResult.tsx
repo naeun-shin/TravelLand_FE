@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import Button from '../commons/buttons/Button';
+import './map.style.css';
 
 interface PlaceType {
   place_name: string;
@@ -174,17 +175,17 @@ export const KaKaoMapResult: React.FC<MapSearchType> = ({
       const div = document.createElement('div');
       div.onclick = () => onSelect(place);
 
-      div.onmouseover = () => div.classList.add('hover');
-      div.onmouseout = () => div.classList.remove('hover');
+      // div.onmouseover = () => div.classList.add('hover');
+      // div.onmouseout = () => div.classList.remove('hover');
 
       const itemStr = `
       <div
         class="info"
-        style="display: flex; justify-content: space-between; align-items: center; padding: 10px; border-radius: 5px; width: 300px; height : 100px;"
+        style="display: flex; justify-content: space-between; align-items: center; padding: 15px; width: auto; height : 100px; border-bottom: 1px solid gray; margin:5px;"
       >
-        <div style="font-size: 20px; border-bottom: 1px solid gray">
-          <span style="font-weight: bold; display:flex; align-items: center;">
-            ${index + 1}. ${place.place_name} <div style="font-size:14px; color:gray; margin-left : 5px;">${place.category_group_name}</div>
+        <div style="font-size: 20px; ">
+          <span style="font-weight: 400; display:flex; align-items: center; padding:5px 0px; cursor: pointer;">
+            ${index + 1}. ${place.place_name} <div style="font-size:16px; color:#999999; margin-left : 10px;">${place.category_group_name}</div>
           </span>
           <div style="font-size:16px; color:gray;">${place.road_address_name || place.address_name} </div>
         </div>
@@ -293,7 +294,7 @@ export const KaKaoMapResult: React.FC<MapSearchType> = ({
           bottom: '20px',
           right: '20px',
           width: '310px',
-          maxHeight: '300px',
+          maxHeight: '360px',
           overflowY: 'auto',
           backgroundColor: 'white',
           border: '1px solid #ddd',
@@ -305,18 +306,13 @@ export const KaKaoMapResult: React.FC<MapSearchType> = ({
           display: 'none', // 기본적으로 숨김 처리
         }}
       >
-        <div
-          id="places-list"
-          style={{
-            marginTop: '5px',
-          }}
-        ></div>
+        <div id="places-list"></div>
         <div
           id="pagination"
           style={{
             textAlign: 'center', // 텍스트 중앙 정렬
             cursor: 'pointer',
-            padding: '5px',
+            margin: '15px',
           }}
         ></div>
       </div>

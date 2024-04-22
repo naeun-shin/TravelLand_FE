@@ -164,12 +164,13 @@ const PlanCreate = () => {
               <div
                 style={{
                   display: 'flex',
+                  alignItems: 'center',
                 }}
               >
                 {focusState.title && (
                   <img
                     src="/assets/icons/Rectangle.png"
-                    style={{ height: '50px' }}
+                    style={{ height: '30px' }}
                   />
                 )}
                 <ModernInput
@@ -219,23 +220,25 @@ const PlanCreate = () => {
                   >
                     지역 &nbsp; <img src="/assets/icons/requiredPoint.svg" />
                   </div>
-                  {focusState.area && (
-                    <img
-                      src="/assets/icons/Rectangle.png"
-                      style={{ height: '30px' }}
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                    {focusState.area && (
+                      <img
+                        src="/assets/icons/Rectangle.png"
+                        style={{ height: '25px' }}
+                      />
+                    )}
+                    <ModernInput
+                      type="text"
+                      placeholder="지역"
+                      onFocus={() => handleFocus('area')}
+                      onBlur={() => handleBlur('area')}
+                      width={400}
+                      height={30}
+                      border="transparent"
+                      fontSize={16}
+                      onChange={handleAreaChange}
                     />
-                  )}
-                  <ModernInput
-                    type="text"
-                    placeholder="지역"
-                    onFocus={() => handleFocus('area')}
-                    onBlur={() => handleBlur('area')}
-                    width={400}
-                    height={30}
-                    border="transparent"
-                    fontSize={16}
-                    onChange={handleAreaChange}
-                  />
+                  </div>
                 </S.PlanContent>
               </S.PlanBox>
               <hr />
@@ -264,23 +267,25 @@ const PlanCreate = () => {
                   >
                     예산 &nbsp; <img src="/assets/icons/requiredPoint.svg" />
                   </div>
-                  {focusState.budget && (
-                    <img
-                      src="/assets/icons/Rectangle.png"
-                      style={{ height: '30px' }}
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                    {focusState.budget && (
+                      <img
+                        src="/assets/icons/Rectangle.png"
+                        style={{ height: '30px' }}
+                      />
+                    )}
+                    <ModernInput
+                      type="text"
+                      placeholder="예산"
+                      onFocus={() => handleFocus('budget')}
+                      onBlur={() => handleBlur('budget')}
+                      width={400}
+                      height={30}
+                      border="transparent"
+                      fontSize={16}
+                      onChange={handleBudgetChange}
                     />
-                  )}
-                  <ModernInput
-                    type="text"
-                    placeholder="예산"
-                    onFocus={() => handleFocus('budget')}
-                    onBlur={() => handleBlur('budget')}
-                    width={400}
-                    height={30}
-                    border="transparent"
-                    fontSize={16}
-                    onChange={handleBudgetChange}
-                  />
+                  </div>
                 </S.PlanContent>
               </S.PlanBox>
               <hr />
@@ -311,7 +316,9 @@ const PlanCreate = () => {
                       여행기간 &nbsp;{' '}
                       <img src="/assets/icons/requiredPoint.svg" />
                     </div>
-                    <div> {displayDateRange()}</div>
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                      <div> {displayDateRange()}</div>
+                    </div>
                   </div>
                   <div style={{ paddingLeft: '400px' }}>
                     <TfiArrowCircleRight size="35px" color="lightGray" />
