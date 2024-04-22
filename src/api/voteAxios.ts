@@ -1,5 +1,5 @@
 import { instance } from './axios';
-import { VoteData } from './interfaces/voteInterface';
+import { VoteData, checkVoteData } from './interfaces/voteInterface';
 
 export const createVote = async (voteData: VoteData) => {
   try {
@@ -9,3 +9,25 @@ export const createVote = async (voteData: VoteData) => {
     throw error;
   }
 };
+
+// 투표하기
+export const checkVote = async (checkVote: checkVoteData) => {
+  try {
+    return await instance.post('/v1/votePapers', checkVote);
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+// 투표 결과보기
+// export const getVoteResult = async (
+//   planVoteId: number,
+// ): Promise<AxiosResponse<any>> => {
+//   try {
+//     return await instance.get(`/v1/votes/${planVoteId}`);
+//   } catch (error) {
+//     console.error(error);
+//     throw error;
+//   }
+// };

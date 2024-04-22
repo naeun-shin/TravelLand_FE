@@ -2,20 +2,21 @@ import { useState } from 'react';
 import MyPagePlanList from './MyPagePlanList';
 import MyPageReviewList from './MyPageReviewList';
 import styled from 'styled-components';
+import MyPageVoteList from './MyPageVoteList';
 
 const MyPageTab = () => {
   const [isActive, setIsActive] = useState<number>(0);
   return (
     <>
       <DivWrapper>
-        <div>
+        <Sort>
           <SearchTitle
             className={isActive === 0 ? 'active' : ''}
             onClick={() => setIsActive(0)}
           >
             여행 정보
           </SearchTitle>
-        </div>
+        </Sort>
         <Sort>
           <SearchTitle
             className={isActive === 1 ? 'active' : ''}
@@ -24,12 +25,20 @@ const MyPageTab = () => {
             여행 플랜
           </SearchTitle>
         </Sort>
+        <Sort>
+          <SearchTitle
+            className={isActive === 2 ? 'active' : ''}
+            onClick={() => setIsActive(2)}
+          >
+            투표 관리
+          </SearchTitle>
+        </Sort>
       </DivWrapper>
 
       {/* 목록 */}
       {isActive === 0 ? <MyPageReviewList /> : null}
       {isActive === 1 ? <MyPagePlanList /> : null}
-      {/* {activeTab === 2 ? <MyPageInvitedList /> : null} */}
+      {isActive === 2 ? <MyPageVoteList /> : null}
     </>
   );
 };

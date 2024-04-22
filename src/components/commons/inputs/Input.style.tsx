@@ -10,6 +10,7 @@ const modernInput = styled.input<InputProps>`
   height: ${(props) => props.height + 'px'};
   font-size: ${(props) => props.fontSize + 'px'};
   font-weight: ${(props) => props.fontWeight};
+  outline: none;
 `;
 
 const PlanListInputContainer = styled.div`

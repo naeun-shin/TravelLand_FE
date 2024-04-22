@@ -63,6 +63,7 @@ const TravelCreateForm: React.FC<TravelCreateFormProps> = () => {
       hashTag: hashtags,
       address: 'string',
       isPublic,
+      placeName: '',
     };
 
     const formData = new FormData();

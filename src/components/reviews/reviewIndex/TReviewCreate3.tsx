@@ -3,18 +3,18 @@ import { useNavigate } from 'react-router-dom';
 import ToggleButton from '@/components/commons/buttons/ToggleButton';
 import { ModernInput } from '@/components/commons/inputs/Input';
 import styled from 'styled-components';
-import { TfiArrowCircleRight } from 'react-icons/tfi';
+// import { TfiArrowCircleRight } from 'react-icons/tfi';
 import CategoryButton from '@/components/commons/buttons/CategoryButton';
 
 const TReviewCreate3 = () => {
   const navigate = useNavigate();
   const [isPublic, setIsPublic] = useState<boolean>(false);
-  const [totalPlanTitle, setTotalPlanTitle] = useState<string>('');
-  const [area, setArea] = useState<string>('');
+  const [_, setTotalPlanTitle] = useState<string>('');
+  // const [area, setArea] = useState<string>('');
 
-  const handleAreaChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setArea(e.target.value);
-  };
+  // const handleAreaChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setArea(e.target.value);
+  // };
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTotalPlanTitle(e.target.value);
