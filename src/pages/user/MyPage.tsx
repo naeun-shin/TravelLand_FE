@@ -1,11 +1,11 @@
-import Header3 from '@/components/layouts/Header3';
+import ReDesignHeader from '@/components/layouts/Header2';
 import * as S from './User.styles';
 import MyPageIndex from '@/components/commons/user/myPage/MyPageIndex';
 
 const MyPage = () => {
   return (
     <>
-      <Header3 />
+      <ReDesignHeader needSearchInput={true} />
       <S.MyPageStyle>
         {/* 타이틀 */}
         <h1>마이 페이지</h1>

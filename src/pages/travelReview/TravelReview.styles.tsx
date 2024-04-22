@@ -32,6 +32,7 @@ const TravelReviewstyle = styled.div`
   margin: 120px auto;
   box-sizing: border-box; // 추가된 스타일
   overflow-x: hidden; // 가로 스크롤 숨김
+  margin-top: 120px;
 
   @media (max-width: 768px) {
     padding: 20px;
