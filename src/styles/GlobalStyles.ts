@@ -83,7 +83,7 @@ time, mark, audio, video {
 	font-size: 100%;
 	font: 'Pretendard';
 	vertical-align: baseline;
-  max-width: 1300px;
+	max-width: 1400px;
 }
 
 /* HTML5 display-role reset for older browsers */

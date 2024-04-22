@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import SearchInput from '../search/Search';
-import MainModal from '../commons/modals/MainModal';
+
 import logoImage from '@/icons/logo.svg';
 import burgerIcon from '@/icons/burger.svg';
 import SearchModal from '@/pages/main/SearchPage';
 import { NoticeModal } from '../commons/modals/NoticeModal';
 import Login from '@/pages/user/Login';
 import { useNavigate } from 'react-router-dom';
+
+interface UsersProps {
+  isLoggedIn: boolean;
+}
 
 const ReDesignHeader2: React.FC = () => {
   const navigate = useNavigate();
@@ -45,6 +49,18 @@ const ReDesignHeader2: React.FC = () => {
 
   const handleMainPage = () => {
     navigate('/');
+  };
+  // mypage 이동
+  const handleOpenMypage = () => {
+    navigate('/user/myPage');
+  };
+  // 플랜 작성하기 이동
+  const handleOpenPlanCreate = () => {
+    navigate('/planCreate/1');
+  };
+  // 여행 정보 작성하기 이동
+  const handleOpenTripCreate = () => {
+    navigate('/travelCreate');
   };
 
   const handleNoticeClick = () => {
@@ -120,11 +136,70 @@ const Logo = styled.div`
 `;
 
 const BurgerMenuIcon = styled.div`
+  position: relative;
   font-size: 24px;
   cursor: pointer;
 
   img {
     width: 40px;
     padding: 0px 5px;
+  }
+`;
+
+const BurgerMenuList = styled.div<UsersProps>`
+  position: absolute;
+  z-index: 8;
+
+  padding: 15px 5px;
+  width: 160px;
+  height: ${(props) => (props.isLoggedIn ? '200px' : '60px')};
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  border-radius: 25px;
+  background-color: white;
+
+  margin-top: 5px;
+
+  button {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+
+    cursor: pointer;
+
+    background-color: white;
+    border: none;
+
+    font-size: 16px;
+    z-index: 8;
+    width: 160px;
+    height: ${(props) => (props.isLoggedIn ? '160px' : '')};
+
+    &:hover {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+
+      background-color: #f6f6f6;
+      /* border: none; */
+      border-radius: 20px;
+      width: 100%;
+      height: ${(props) => (props.isLoggedIn ? '160px' : '80px')};
+    }
+  }
+
+  hr {
+    border: none;
+    height: 1px; /* Set the height of the hr line */
+    background-color: #c4c4c4; /* The color of the hr line */
+    margin: 8px 0; /* Adjust the space around the hr to your design */
+    width: 100%; /* Ensure the line goes full width */
   }
 `;

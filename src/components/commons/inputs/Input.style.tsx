@@ -53,7 +53,9 @@ const ListInputboxWithFlex = styled.div`
   /* flex-direction: row; */
 `;
 const ImgBox = styled.div`
-  padding-left: 75%;
+  /* padding-left: 90%;
+   */
+  /* margin-left: 70%; */
   display: flex;
   align-items: center;
 `;
