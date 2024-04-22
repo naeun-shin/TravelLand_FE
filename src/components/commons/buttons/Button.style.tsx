@@ -50,7 +50,7 @@ export const ButtonContainer = styled.div`
 `;
 
 export const ButtonsWrapper = styled.div`
-  width: 1250px;
+  width: 1400px;
   margin: 0 auto;
   margin-top: 10px;
   padding-bottom: 10px;

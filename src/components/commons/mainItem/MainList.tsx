@@ -53,7 +53,7 @@ const MainListContainer = styled.div`
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: auto;
   gap: 20px;
-  width: 1250px;
+  width: 1400px;
   margin: 0 auto;
   margin-bottom: 100px;
 `;
@@ -82,9 +82,9 @@ const Rank = styled.div`
   margin-top: 20px;
   color: #5ac8ec;
   font-family: 'Chab'; /* 다른 폰트 적용 */
-  font-size: 30px;
+  font-size: 48px;
   /* font-size: 3rem; */
-  font-weight: bold;
+  font-weight: lighter;
 `;
 
 const ItemContainer = styled.div`

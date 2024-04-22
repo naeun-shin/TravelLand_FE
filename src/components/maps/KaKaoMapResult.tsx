@@ -9,6 +9,7 @@ interface PlaceType {
   address_name: string;
   phone: string;
   place_url: string;
+  category_group_name?: string;
 }
 
 export interface MapSearchType {
@@ -177,17 +178,30 @@ export const KaKaoMapResult: React.FC<MapSearchType> = ({
       div.onmouseout = () => div.classList.remove('hover');
 
       const itemStr = `
-      <div class="info" style="display: flex; justify-content: space-between; align-items: center; padding: 10px; border-radius: 5px;">
-      <div style="font-size: 16px;">
-        <span style="font-weight: bold;">${index + 1}. ${place.place_name}</span><br/>
-        ${place.road_address_name || place.address_name}
+      <div
+        class="info"
+        style="display: flex; justify-content: space-between; align-items: center; padding: 10px; border-radius: 5px; width: 300px; height : 100px;"
+      >
+        <div style="font-size: 20px; border-bottom: 1px solid gray">
+          <span style="font-weight: bold; display:flex; align-items: center;">
+            ${index + 1}. ${place.place_name} <div style="font-size:14px; color:gray; margin-left : 5px;">${place.category_group_name}</div>
+          </span>
+          <div style="font-size:16px; color:gray;">${place.road_address_name || place.address_name} </div>
+        </div>
+        <div>
+          <a
+            href="${place.place_url}"
+            target="_blank"
+            style="text-decoration: none; color: inherit;"
+          >
+            <img
+              src="../assets/icons/grayArrow.png"
+              alt="Arrow Icon"
+              style="width: 36px; height: 36px;"
+            />
+          </a>
+        </div>
       </div>
-      <div>
-        <a href="${place.place_url}" target="_blank" style="text-decoration: none; color: inherit;">
-          <img src="../assets/icons/grayArrow.png" alt="Arrow Icon" style="width: 24px; height: 24px;"/>
-        </a>
-      </div>
-    </div>
           `;
 
       div.innerHTML = itemStr;
@@ -276,16 +290,17 @@ export const KaKaoMapResult: React.FC<MapSearchType> = ({
         id="results-container"
         style={{
           position: 'absolute',
-          bottom: '0',
-          right: '0',
-          width: '280px',
+          bottom: '20px',
+          right: '20px',
+          width: '310px',
           maxHeight: '300px',
           overflowY: 'auto',
-          background: 'rgba(255, 255, 255, 0.9)',
+          backgroundColor: 'white',
           border: '1px solid #ddd',
-          borderRadius: '10px 0 0 0',
+          borderRadius: '10px',
           boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-          zIndex: 5,
+          zIndex: '5',
+          padding: '8px',
           paddingBottom: '30px', // 페이지네이션을 위한 하단 패딩 추가
           display: 'none', // 기본적으로 숨김 처리
         }}
@@ -301,6 +316,7 @@ export const KaKaoMapResult: React.FC<MapSearchType> = ({
           style={{
             textAlign: 'center', // 텍스트 중앙 정렬
             cursor: 'pointer',
+            padding: '5px',
           }}
         ></div>
       </div>

@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import SearchInput from '../search/Search';
 import Login from '@/pages/user/Login'; // 로그인 모달 import
 import logoImage from '@/icons/logo.svg';
+import littleLogo from '/assets/icons/littleLogo.svg';
 import burgerIcon from '@/icons/burger.svg';
 import SearchModal from '@/pages/main/SearchPage';
 import { useAuthStore } from '@/store/useAuthStore';
@@ -132,9 +133,19 @@ const ReDesignHeader: React.FC<HeaderProps> = ({ needSearchInput }) => {
     <Header needSearchInput={needSearchInput}>
       <StickyHeader isScrolled={isScrolled}>
         <Container>
-          <Logo onClick={handleMainPage}>
-            <img src={logoImage} alt="떠나볼까 로고" />
-          </Logo>
+          {isScrolled ? (
+            <>
+              <Logo onClick={handleMainPage}>
+                <img src={littleLogo} alt="떠나볼까 작은 로고" />
+              </Logo>
+            </>
+          ) : (
+            <>
+              <Logo onClick={handleMainPage}>
+                <img src={logoImage} alt="떠나볼까 로고" />
+              </Logo>
+            </>
+          )}
           {needSearchInput ? (
             <>
               <SearchInput
@@ -226,7 +237,7 @@ export default ReDesignHeader;
 
 const Header = styled.div<HeaderProps>`
   /* max-width: 1400px; */
-  width: 100%;
+  /* width: 1400[]; */
   margin: 0 auto;
 
   box-shadow: ${(props) =>
@@ -247,13 +258,13 @@ const StickyHeader = styled.div<SearchInputContainerProps>`
 `;
 
 const Container = styled.div`
-  max-width: 80%;
-  width: 100%;
+  max-width: 1400px;
+  /* width: 100%; */
   margin: 0 auto;
   height: 80px;
   display: flex;
   justify-content: space-between;
-  padding: 0 60px 0 10px;
+  /* padding: 0 60px 0 10px; */
   align-items: center;
 `;
 
