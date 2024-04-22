@@ -3,6 +3,11 @@ type PlanDetailDateButtonProps = {
   isActive?: boolean;
   date?: any;
 };
+
+interface ButtonProps {
+  disabled?: boolean;
+}
+
 const PlanFirstSection = styled.div`
   display: flex;
   /* padding: 20px 5px; */
@@ -52,6 +57,7 @@ const PlanContentTitle = styled.div`
   padding-bottom: 10px;
   font-weight: bold;
   font-size: 18px;
+  font-family: 'pretendard';
 `;
 
 const PlanHorizontalContent = styled.div`
@@ -77,15 +83,21 @@ const PlanBottomSection = styled.div`
   padding: 20px 15px;
 `;
 
-const PlanNextButton = styled.button`
-  background-color: #5ac8ec;
+const PlanNextButton = styled.button<ButtonProps>`
+  background-color: ${(props) =>
+    props.disabled ? '#C5F1FF' : '#5AC8EC'}; // 비활성화 상태에 따라 색상 변경
   color: white;
   justify-content: center;
   border: none;
   width: 160px;
   height: 50px;
   border-radius: 16px;
+  cursor: ${(props) =>
+    props.disabled
+      ? 'default'
+      : 'pointer'}; // 비활성화 상태에 따라 커서 스타일 변경
 `;
+
 // 두번째 플랜 페이지
 
 const PlanDetailCreateBox = styled.div`
@@ -137,7 +149,9 @@ const ButtonBoxToRight = styled.div`
 
 // detail 영역
 const PlanDetailContainer = styled.div`
-  width: 85%;
+  /* width: 85%; */
+  display: flex;
+  flex-direction: column;
 `;
 
 const PlanDetailDateBox = styled.div`
@@ -179,7 +193,7 @@ const PlanDetailContentBox = styled.div`
   border: 1px solid lightgray;
   border-radius: 35px;
 
-  width: 75%;
+  width: 100%;
   height: 100%;
 
   padding: 15px;
@@ -229,6 +243,7 @@ const DetailHeaderThirdContent = styled.div`
   justify-content: space-between;
 
   padding-bottom: 15px;
+  border-bottom: 1px solid #dddddd;
 
   div {
     display: flex;
@@ -268,8 +283,9 @@ const DetaiHeaderSubDestination = styled.div`
 `;
 
 const DetailContentSection = styled.div`
-  padding: 15px 10px;
-  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const DetailContentBox = styled.div`
@@ -278,7 +294,7 @@ const DetailContentBox = styled.div`
   padding: 5px 0px;
   display: flex;
   align-items: center;
-  width: 100%;
+  width: 800px;
 `;
 
 const DetailPlanNumber = styled.div`
@@ -364,13 +380,21 @@ const DetailLocationBox = styled.div`
   width: 100%;
 `;
 
+const InvitationBox = styled.div`
+  padding: 5px 0px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: center;
+`;
+
 const InvitationDiv = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
   padding: 0px 20px;
-  height: 60px;
+  height: 80px;
   color: gray;
   border: 1px solid lightgray;
   border-radius: 25px;
@@ -379,6 +403,11 @@ const InvitationDiv = styled.div`
 const PlanInvitationBox = styled.div`
   display: flex;
   background-color: gray;
+`;
+
+const DetailButtonsBox = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 export {
@@ -417,5 +446,7 @@ export {
   DateDisplay,
   DetailLocationBox,
   InvitationDiv,
+  InvitationBox,
   DetailContent,
+  DetailButtonsBox,
 };

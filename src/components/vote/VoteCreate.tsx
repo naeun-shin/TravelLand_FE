@@ -21,7 +21,7 @@ enum Duration {
   '7일' = 'SEVEN_DAY',
 }
 
-const CreateVote: React.FC<CreateVoteModalProps> = ({
+const VoteCreate: React.FC<CreateVoteModalProps> = ({
   isOpen,
   onClose,
   planAId,
@@ -125,4 +125,4 @@ const CreateVote: React.FC<CreateVoteModalProps> = ({
   );
 };
 
-export default CreateVote;
+export default VoteCreate;

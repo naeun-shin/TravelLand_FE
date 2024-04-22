@@ -1,5 +1,5 @@
-import React, { useState, forwardRef, ButtonHTMLAttributes } from 'react';
-import DatePicker, { ReactDatePickerProps } from 'react-datepicker';
+import { useState, forwardRef, ButtonHTMLAttributes } from 'react';
+import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { TfiArrowCircleRight } from 'react-icons/tfi';
 

@@ -5,7 +5,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 
 const ReviewCreate3 = () => {
-  const [step, setStep] = useState<number>(3);
+  const [step, _] = useState<number>(3);
 
   return (
     <>
