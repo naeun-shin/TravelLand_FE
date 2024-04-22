@@ -86,9 +86,23 @@ export const router = createBrowserRouter([
     element: (
       // <PrivateRoute>
       <ReviewCreatePage1 />
+      // </PrivateRoute>
     ),
-    // </PrivateRoute>},
   },
-  { path: '/reviewCreate/2', element: <ReviewCreate2 /> },
-  { path: '/reviewCreate/3', element: <ReviewCreate3 /> },
+  {
+    path: '/reviewCreate/2',
+    element: (
+      // <PrivateRoute>
+      <ReviewCreate2 />
+      // </PrivateRoute>
+    ),
+  },
+  {
+    path: '/reviewCreate/3',
+    element: (
+      // <PrivateRoute>
+      <ReviewCreate3 />
+      // </PrivateRoute>
+    ),
+  },
 ]);

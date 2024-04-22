@@ -7,7 +7,7 @@ import styled from 'styled-components';
 
 const ReviewCreate1 = () => {
   // const navigate = useNavigate();
-  const [step, setStep] = useState<number>(1);
+  const [step, _] = useState<number>(1);
 
   return (
     <>

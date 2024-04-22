@@ -1,15 +1,69 @@
 import { createGlobalStyle } from 'styled-components';
-import chab from '../fonts/chab.otf';
+// import chab from '/assets/fonts/chab.otf';
 
 const GlobalStyle = createGlobalStyle`
+	@font-face {
+	font-family: 'Pretendard';
+	src: url('/assets/fonts/Pretendard-Black.woff2') format('woff2');
+	font-weight: 900; /* Black */
+	}
 
-  /* @font-face {
-        font-family: 'chab';
-        src: local('chab'), local('chab');
+	@font-face {
+	font-family: 'Pretendard';
+	src: url('/assets/fonts/Pretendard-Bold.woff2') format('woff2');
+	font-weight: 700; /* Bold */
+	}
+
+	@font-face {
+	font-family: 'Pretendard';
+	src: url('/assets/fonts/Pretendard-ExtraBold.woff2') format('woff2');
+	font-weight: 800; /* ExtraBold */
+	}
+
+	@font-face {
+	font-family: 'Pretendard';
+	src: url('/assets/fonts/Pretendard-ExtraLight.woff2') format('woff2');
+	font-weight: 200; /* ExtraLight */
+	}
+
+	@font-face {
+	font-family: 'Pretendard';
+	src: url('/assets/fonts/Pretendard-Light.woff2') format('woff2');
+	font-weight: 300; /* Light */
+	}
+
+	@font-face {
+	font-family: 'Pretendard';
+	src: url('/assets/fonts/Pretendard-Medium.woff2') format('woff2');
+	font-weight: 500; /* Medium */
+	}
+
+	@font-face {
+	font-family: 'Pretendard';
+	src: url('/assets/fonts/Pretendard-Regular.woff2') format('woff2');
+	font-weight: 400; /* Regular */
+	}
+
+	@font-face {
+	font-family: 'Pretendard';
+	src: url('/assets/fonts/Pretendard-SemiBold.woff2') format('woff2');
+	font-weight: 600; /* SemiBold */
+	}
+
+	@font-face {
+	font-family: 'Pretendard';
+	src: url('/assets/fonts/Pretendard-Thin.woff2') format('woff2');
+	font-weight: 100; /* Thin */
+	}
+
+
+  @font-face {
+        font-family: 'Chab';
         font-style: normal;
-        src: url(${chab}) format('truetype');
-  } */
+        src: url('/assets/fonts/chab.otf') format('opentype');
+  }
   
+
   html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -27,10 +81,11 @@ time, mark, audio, video {
 	padding: 0;
 	border: 0;
 	font-size: 100%;
-	font: inherit;
+	font: 'Pretendard';
 	vertical-align: baseline;
-  max-width: 1100px;
+  max-width: 1300px;
 }
+
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure, 
 footer, header, hgroup, menu, nav, section {
@@ -53,6 +108,10 @@ q:before, q:after {
 table {
 	border-collapse: collapse;
 	border-spacing: 0;
+} */
+
+button{
+	cursor: pointer;
 }
 `;
 
