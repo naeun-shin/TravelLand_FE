@@ -24,11 +24,11 @@ const MainModal: React.FC<IMainModalProps> = ({
   const handleOpenMypage = () => {
     navigate('/user/myPage');
   };
-  // mypage 이동
+  // 플랜 작성하기 이동
   const handleOpenPlanCreate = () => {
     navigate('/planCreate/1');
   };
-  // mypage 이동
+  // 여행 정보 작성하기 이동
   const handleOpenTripCreate = () => {
     navigate('/travelCreate');
   };

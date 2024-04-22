@@ -267,7 +267,7 @@ const Main: React.FC<MainProps> = () => {
 
   return (
     <>
-      <ReDesignHeader />
+      <ReDesignHeader needSearchInput={false} />
       <Search
         placeholder="검색어를 입력해주세요."
         onIconClick={toggleSearchModal}

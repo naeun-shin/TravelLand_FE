@@ -1,11 +1,11 @@
 import PlanList from '@/components/plans/planComponents/PlanList';
 import * as S from './TravelPlanMain.style';
-import Header3 from '@/components/layouts/Header3';
+import ReDesignHeader from '@/components/layouts/Header2';
 
 const TravelPlanList = () => {
   return (
     <>
-      <Header3 />
+      <ReDesignHeader needSearchInput={true} />
       <S.TravelPlanMainStyle>
         <PlanList />
       </S.TravelPlanMainStyle>
