@@ -35,7 +35,7 @@ const SearchContainer = styled.div`
   align-items: center;
   line-height: 50px;
   position: relative;
-  width: 550px; // 550px로 변경가능하면 변경!
+  width: 650px; // 550px로 변경가능하면 변경!
   height: 50px;
   padding: 5px;
   border-radius: 50px;

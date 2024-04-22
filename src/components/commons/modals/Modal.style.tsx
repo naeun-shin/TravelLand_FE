@@ -50,7 +50,7 @@ export const MapModalOverlay = styled.div`
 `;
 
 export const InvitationModalOverlay = styled.div`
-  width: 500px; // 모달의 너비
+  width: 600px; // 모달의 너비
   height: 600px; // 모달의 높이를 화면의 80%로 설정
   padding: 25px;
   background-color: #fff;
@@ -68,8 +68,8 @@ export const InvitationModalOverlay = styled.div`
 `;
 
 export const DetailMapModalOverlay = styled.div`
-  width: 500px; // 모달의 너비
-  height: 600px; // 모달의 높이를 화면의 80%로 설정
+  width: 600px; // 모달의 너비
+  height: 700px; // 모달의 높이를 화면의 80%로 설정
   padding: 25px;
   background-color: #fff;
   border-style: 1px solid transparent;
