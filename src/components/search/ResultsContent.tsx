@@ -3,6 +3,8 @@ import { IoLocationSharp } from 'react-icons/io5';
 import * as S from './Search.style';
 import styled from 'styled-components';
 import CategoryButton from '../commons/buttons/CategoryButton';
+import { searchTripsByText } from '@/api/searchAxios'; // 검색 API 함수를 import
+import SearchInput from './Search';
 
 interface IPlaceNameProps {
   name: string;
@@ -12,65 +14,28 @@ const PlaceName: React.FC<IPlaceNameProps> = ({ name }) => (
   <div style={{ color: '#3AB9F0' }}>{name}</div>
 );
 
-// 예시 데이터
-const Results = [
-  {
-    imageUrl: '/assets/jejudo_720.jpg',
-    location: '고성시',
-    startDate: '2022-05-01',
-    endDate: '2022-05-05',
-    title: '봄날의 고성, 1박 2일',
-    content:
-      '매우 만족했던 경남 고성 여행 1박 2일 코스, 경남 고성 가볼만한 곳, 고성 드라이브 코스, 고성 투어 1편시작합니다!, 매우 만족했던 경남 고성 여행 1박 2일맞 코스,여행 1박  1박 경남 고성 가볼만한 곳, 고성 드라이브 코스, 경남 고성 가볼만한 곳, 고성 드라이브 코스, 고성 투어 1편시작합니다!',
-    categories: ['자연', '문화', '역사'],
-  },
-  {
-    imageUrl: '/assets/jejudo_720.jpg',
-    location: '고성시',
-    startDate: '2022-05-01',
-    endDate: '2022-05-05',
-    title: '봄날의 고성, 1박 2일',
-    content:
-      '매우 만족했던 경남 고성 여행 1박 2일 코스, 경남 고성 가볼만한 곳, 고성 드라이브 코스, 고성 투어 1편시작합니다!',
-    categories: ['자연', '문화', '역사'],
-  },
-  {
-    imageUrl: '/assets/jejudo_720.jpg',
-    location: '고성시',
-    startDate: '2022-05-01',
-    endDate: '2022-05-05',
-    title: '봄날의 고성, 1박 2일',
-    content:
-      '매우 만족했던 경남 고성 여행 1박 2일 코스, 경남 고성 가볼만한 곳, 고성 드라이브 코스, 고성 투어 1편시작합니다!',
-    categories: ['자연', '문화', '역사'],
-  },
-  {
-    imageUrl: '/assets/jejudo_720.jpg',
-    location: '고성시',
-    startDate: '2022-05-01',
-    endDate: '2022-05-05',
-    title: '봄날의 고성, 1박 2일',
-    content:
-      '매우 만족했던 경남 고성 여행 1박 2일 코스, 경남 고성 가볼만한 곳, 고성 드라이브 코스, 고성 투어 1편시작합니다!',
-    categories: ['자연', '문화', '역사'],
-  },
-  {
-    imageUrl: '/assets/jejudo_720.jpg',
-    location: '고성시',
-    startDate: '2022-05-01',
-    endDate: '2022-05-05',
-    title: '봄날의 고성, 1박 2일',
-    content:
-      '매우 만족했던 경남 고성 여행 1박 2일 코스, 경남 고성 가볼만한 곳, 고성 드라이브 코스, 고성 투어 1편시작합니다!',
-    categories: ['자연', '문화', '역사'],
-  },
-];
-
 const ResultsContent: React.FC = () => {
-  const [activeTab, setActiveTab] = useState(0); // 선택된 탭의 인덱스를 추적
+  const [activeTab, setActiveTab] = useState(0);
+  const [searchResults, setSearchResults] = useState<any[]>([]); // 검색 결과를 저장할 상태
 
   const placeName = '고성시';
   const place = ['조계사', '경인미술관', '숭례문'];
+
+  // 검색 결과 처리 함수
+  // const handleSearchResults = async (inputValue: string) => {
+  //   try {
+  //     const results = await searchTripsByText(
+  //       inputValue,
+  //       1,
+  //       9,
+  //       'startDate',
+  //       true,
+  //     );
+  //     setSearchResults(results); // 검색 결과 상태 업데이트
+  //   } catch (error) {
+  //     console.error('Search failed:', error);
+  //   }
+  // };
 
   return (
     <S.ResultContainer>
@@ -108,25 +73,36 @@ const ResultsContent: React.FC = () => {
           </SearchTitle>
         </Sort>
       </DivWrapper>
+
+      {/* 검색 결과를 화면에 표시 */}
       <S.ResultsContainer>
-        {Results.map((data, index) => (
-          <S.ResultItem key={index}>
-            <ThumbnailImage src={data.imageUrl} alt="썸네일" />
-            <S.ContentWrapper>
-              <Location>
-                {data.location} | {`${data.startDate} - ${data.endDate}`}
-              </Location>
-              {/* <DateRange>{`${data.startDate} - ${data.endDate}`}</DateRange> */}
-              <S.ItemTitle>{data.title}</S.ItemTitle>
-              <S.ItemContent>{data.content}</S.ItemContent>
-              <CategoriesContainer>
-                {data.categories.map((category, categoryIndex) => (
-                  <CategoryButton key={categoryIndex} title={category} />
-                ))}
-              </CategoriesContainer>
-            </S.ContentWrapper>
-          </S.ResultItem>
-        ))}
+        {searchResults.length === 0 ? (
+          <div>해당하는 게시물을 찾을 수 없습니다.</div>
+        ) : (
+          searchResults.map((data, index) => (
+            <S.ResultItem key={index}>
+              <ThumbnailImage src={data.imageUrl} alt="썸네일" />
+              <S.ContentWrapper>
+                <Location>
+                  {data.location} | {`${data.startDate} - ${data.endDate}`}
+                </Location>
+                {/* <DateRange>{`${data.startDate} - ${data.endDate}`}</DateRange> */}
+                <S.ItemTitle>{data.title}</S.ItemTitle>
+                <S.ItemContent>{data.content}</S.ItemContent>
+                <CategoriesContainer>
+                  {data.categories.map(
+                    (
+                      category: string,
+                      categoryIndex: number, // 타입 지정
+                    ) => (
+                      <CategoryButton key={categoryIndex} title={category} />
+                    ),
+                  )}
+                </CategoriesContainer>
+              </S.ContentWrapper>
+            </S.ResultItem>
+          ))
+        )}
       </S.ResultsContainer>
     </S.ResultContainer>
   );

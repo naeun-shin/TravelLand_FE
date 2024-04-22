@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { IoLocationSharp } from 'react-icons/io5';
 import * as S from '@components/search/Search.style';
 import CategoryButton from '@/components/commons/buttons/CategoryButton';
@@ -14,17 +14,22 @@ interface SearchModalProps {
 
 const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
   const navigate = useNavigate();
+  const [isSearchModalOpen, setSearchModalOpen] = useState<boolean>(false);
+
+  const toggleSearchModal = () => {
+    setSearchModalOpen(!isSearchModalOpen);
+  };
   useEffect(() => {
-    const handleScroll = (event: Event) => {
+    const handleScroll = (event: WheelEvent) => {
       event.preventDefault();
     };
 
     if (isOpen) {
-      window.addEventListener('scroll', handleScroll, { passive: false });
+      window.addEventListener('wheel', handleScroll, { passive: false });
     }
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('wheel', handleScroll);
     };
   }, [isOpen]);
 
@@ -49,7 +54,17 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
             {/* 아이콘 크기는 예시이므로 원하는 대로 조절하세요. */}
           </CloseButton>
           <S.SearchSection>
-            <SearchInput placeholder="검색어를 입력해주세요." />
+            <SearchInput
+              placeholder="검색어를 입력해주세요."
+              onIconClick={(query: string) => {
+                if (query.trim()) {
+                  // 검색어가 있는 경우 검색 결과 페이지로 이동
+                  navigate('/results');
+                } else {
+                  toggleSearchModal();
+                }
+              }}
+            />
           </S.SearchSection>
           <S.LocalContainer>
             <S.LocalTitle>지역별 인기</S.LocalTitle>

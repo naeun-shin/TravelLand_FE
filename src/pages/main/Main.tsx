@@ -20,6 +20,7 @@ import {
   useGetMainHashtagListQuery,
   useGetMainRankListQuery,
 } from '@/hooks/useQuery';
+import { searchTripsByText } from '@/api/searchAxios';
 
 interface MainProps {
   onClick?: () => void;
@@ -27,11 +28,14 @@ interface MainProps {
 
 const Main: React.FC<MainProps> = () => {
   const navigate = useNavigate();
-
+  const [searchQuery, setSearchQuery] = useState(''); // 검색어 상태
   const [isSearchModalOpen, setSearchModalOpen] = useState<boolean>(false);
 
   // 모달을 토글하는 함수
-  const toggleSearchModal = () => setSearchModalOpen(!isSearchModalOpen);
+  const toggleSearchModal = () => {
+    console.log('Toggling search modal');
+    setSearchModalOpen(!isSearchModalOpen);
+  };
 
   // TopTen
   const { data: TopTenData, isLoading, isError } = useGetMainRankListQuery();
@@ -43,10 +47,32 @@ const Main: React.FC<MainProps> = () => {
 
   console.log(hashTagData);
 
+  // 검색 아이콘 클릭 시 호출될 함수
+  const handleSearchIconClick = async (query: string) => {
+    if (query.trim()) {
+      try {
+        // 검색어가 있으면 검색 결과를 가져옴
+        const results = await searchTripsByText(query, 1, 9, 'startDate', true);
+        // 검색 결과가 있으면 검색 결과 페이지로 이동
+        if (results.length > 0) {
+          navigate('/results');
+        } else {
+          // 검색 결과가 없을 때 처리
+          console.log('No search results found.');
+        }
+      } catch (error) {
+        console.error('Error searching:', error);
+      }
+    } else {
+      // 검색어가 없으면 검색 모달 토글
+      openSearchModal();
+    }
+  };
+
   // 모달을 여는 함수
-  // const openSearchModal = () => {
-  //   setSearchModalOpen(true);
-  // };
+  const openSearchModal = () => {
+    setSearchModalOpen(true);
+  };
 
   // // 모달을 닫는 함수
   // const closeSearchModal = () => {
@@ -270,7 +296,8 @@ const Main: React.FC<MainProps> = () => {
       <ReDesignHeader needSearchInput={false} />
       <Search
         placeholder="검색어를 입력해주세요."
-        onIconClick={toggleSearchModal}
+        openSearchModal={toggleSearchModal}
+        onIconClick={() => handleSearchIconClick(searchQuery)}
       />
       <ButtonContainer>
         {/* 버튼 이벤트 핸들러 로직 */}
@@ -299,7 +326,7 @@ const Main: React.FC<MainProps> = () => {
 export default Main;
 
 const ButtonsWrapper1 = styled.div`
-  width: 1400px;
+  width: 1100px;
   margin: 0 auto;
   display: flex;
   gap: 20px;
