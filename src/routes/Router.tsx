@@ -16,7 +16,7 @@ import ReviewCreate2 from '@/pages/travelReview/ReviewCreate2';
 import ReviewCreate3 from '@/pages/travelReview/ReviewCreate3';
 import GlobalStyle from '@/styles/GlobalStyles';
 import App from '@/App';
-// import PrivateRoute from '@/components/PrivateRoute';
+import PrivateRoute from '@/components/PrivateRoute';
 
 export const router = createBrowserRouter([
   {
@@ -55,9 +55,9 @@ export const router = createBrowserRouter([
       {
         path: '/user/myPage',
         element: (
-          // <PrivateRoute>
-          <MyPage />
-          // </PrivateRoute>
+          <PrivateRoute>
+            <MyPage />
+          </PrivateRoute>
         ),
       },
       {
@@ -74,17 +74,17 @@ export const router = createBrowserRouter([
       {
         path: '/planCreate/1',
         element: (
-          // <PrivateRoute>
-          <TravelPlanCreate1 />
-          // </PrivateRoute>
+          <PrivateRoute>
+            <TravelPlanCreate1 />
+          </PrivateRoute>
         ),
       },
       {
         path: '/planCreate/2',
         element: (
-          // <PrivateRoute>
-          <TravelPlanCreate2 />
-          // </PrivateRoute>
+          <PrivateRoute>
+            <TravelPlanCreate2 />
+          </PrivateRoute>
         ),
       },
       { path: '/planList', element: <TravelPlanList /> },
@@ -93,25 +93,25 @@ export const router = createBrowserRouter([
       {
         path: '/travelCreate',
         element: (
-          // <PrivateRoute>
-          <ReviewCreatePage1 />
-          // </PrivateRoute>
+          <PrivateRoute>
+            <ReviewCreatePage1 />
+          </PrivateRoute>
         ),
       },
       {
         path: '/reviewCreate/2',
         element: (
-          // <PrivateRoute>
-          <ReviewCreate2 />
-          // </PrivateRoute>
+          <PrivateRoute>
+            <ReviewCreate2 />
+          </PrivateRoute>
         ),
       },
       {
         path: '/reviewCreate/3',
         element: (
-          // <PrivateRoute>
-          <ReviewCreate3 />
-          // </PrivateRoute>
+          <PrivateRoute>
+            <ReviewCreate3 />
+          </PrivateRoute>
         ),
       },
     ],
