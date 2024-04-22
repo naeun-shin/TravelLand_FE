@@ -56,8 +56,8 @@ const DoubleColumnContainer = styled.div`
 `;
 
 const Column = styled.div`
-  width: 500px; // 각 컬럼이 전체 너비의 약 절반을 차지하도록 설정
-  height: 500px;
+  width: 600px; // 각 컬럼이 전체 너비의 약 절반을 차지하도록 설정
+  height: 00px;
 `;
 
 const ListItem = styled.div`

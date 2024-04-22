@@ -1,11 +1,11 @@
 import PlanDetail from '@/components/plans/planComponents/PlanDetail';
 import * as S from './TravelPlanMain.style';
-import Header3 from '@/components/layouts/Header3';
+import ReDesignHeader from '@/components/layouts/Header2';
 
 const TravelPlanDetail = () => {
   return (
     <>
-      <Header3 />
+      <ReDesignHeader needSearchInput={true} />
       <S.TravelPlanMainStyle>
         {/* 타이틀 */}
         <PlanDetail

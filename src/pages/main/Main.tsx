@@ -267,7 +267,7 @@ const Main: React.FC<MainProps> = () => {
 
   return (
     <>
-      <ReDesignHeader />
+      <ReDesignHeader needSearchInput={false} />
       <Search
         placeholder="검색어를 입력해주세요."
         onIconClick={toggleSearchModal}
@@ -299,7 +299,7 @@ const Main: React.FC<MainProps> = () => {
 export default Main;
 
 const ButtonsWrapper1 = styled.div`
-  width: 1100px;
+  width: 1400px;
   margin: 0 auto;
   display: flex;
   gap: 20px;

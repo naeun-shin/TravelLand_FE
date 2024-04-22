@@ -7,7 +7,7 @@ import SearchInput from '@/components/search/Search';
 const SearchResults = () => {
   return (
     <>
-      <ReDesignHeader2 />
+      <ReDesignHeader2 needSearchInput={false} />
       <SearchInput placeholder="검색어를 입력해주세요." />
       <ResultsContent />
       {/* <ResultsContent /> */}

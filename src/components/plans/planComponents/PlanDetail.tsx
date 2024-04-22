@@ -110,6 +110,7 @@ const PlanDetail: React.FC<ButtonProps> = () => {
 
   // 수정 기능
   const handlePlanUpdate = () => {
+    alert('기능 개발 중입니다!');
     // deleteMutaion.mutate(planId);
   };
   // 삭제 기능
