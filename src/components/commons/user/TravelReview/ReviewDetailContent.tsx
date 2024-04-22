@@ -1,20 +1,15 @@
 // import React from 'react';
-import { TripDetail } from '@/api/interfaces/reviewInterface';
+// import { TripDetail } from '@/api/interfaces/reviewInterface';
 import styled from 'styled-components';
 
-interface ReviewContentProps {
-  tripDetail: TripDetail;
-}
+// interface ReviewContentProps {
+//   tripDetail: TripDetail;
+// }
 
-const ReviewContent = ({ tripDetail }: ReviewContentProps) => {
+const ReviewContent = () => {
   return (
     <>
       <Container>
-        <ContentBox>
-          <ContentDiv>
-            {tripDetail.content} {/* 여기에  리뷰 내용을 렌더링 */}
-          </ContentDiv>
-        </ContentBox>
         <CommentsList>
           <Comment>
             <UserAvatar />
@@ -54,27 +49,27 @@ const ReviewContent = ({ tripDetail }: ReviewContentProps) => {
 export default ReviewContent;
 
 const Container = styled.div`
-  width: 880px;
+  width: 1100px;
   margin: 0 auto;
   padding: 16px;
   border-radius: 8px;
   background: #fff;
 `;
 
-const ContentBox = styled.div`
-  min-height: 350px;
-  overflow: auto;
-`;
+// const ContentBox = styled.div`
+//   min-height: 350px;
+//   overflow: auto;
+// `;
 
-const ContentDiv = styled.p`
-  width: 85%;
-  font-size: 16px;
-  font-size: 16px;
-  line-height: 1.6;
-  margin-bottom: 1em;
-  white-space: pre-line;
-  word-wrap: break-word;
-`;
+// const ContentDiv = styled.p`
+//   width: 85%;
+//   font-size: 16px;
+//   font-size: 16px;
+//   line-height: 1.6;
+//   margin-bottom: 1em;
+//   white-space: pre-line;
+//   word-wrap: break-word;
+// `;
 
 const CommentsList = styled.ul`
   list-style: none;

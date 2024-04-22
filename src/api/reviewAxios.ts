@@ -5,10 +5,10 @@ import {
   TripDetail,
   TripListParams,
 } from './interfaces/reviewInterface';
-import { CreateTripRequest } from '@/pages/travelReview/TravelCreatePage';
+// import { CreateTripRequest } from '@/pages/travelReview/TravelCreatePage';
 
 // 여행 정보 등록
-export const createTrip = async ({ formData }: CreateTripRequest) => {
+export const createTrip = async (formData: FormData): Promise<TripData> => {
   try {
     const response = await instanceWithToken.post('/v1/trips', formData, {
       headers: {
@@ -75,10 +75,6 @@ export const getTripDetail = async (
   tripId: number,
 ): Promise<AxiosResponse<TripDetail>> => {
   try {
-    // const response = await axios.get<TripDetail>(`/v1/trips/${tripId}`);
-    // 아래 코드 -> <TripDetail> 타입 선언 삭제처리 후 get
-    // const response =
-    // console.log('response 데이터 연결 확인 >>> ', response);
     return await instance.get(`/v1/trips/${tripId}`);
   } catch (error) {
     console.error(error);
@@ -91,7 +87,7 @@ export const deleteTrip = async (
   tripId: number,
 ): Promise<AxiosResponse<any>> => {
   try {
-    const response = await instanceWithToken.delete(`/v1/trips/${tripId}`);
+    const response = await instance.delete(`/v1/trips/${tripId}`);
     return response;
   } catch (error) {
     console.error(error);

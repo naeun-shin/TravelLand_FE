@@ -78,14 +78,15 @@ export const ReviewListTitle = styled.div`
 
 // 여행 후기 상세보기 페이지
 
-interface DotProps {
-  active?: boolean;
-}
+// interface DotProps {
+//   active?: boolean;
+// }
 
 export const Container = styled.div`
-  width: 900px;
+  width: 800px;
   margin: 0 auto;
   padding: 16px 0;
+  margin-top: 150px;
 `;
 
 export const Title = styled.div`
@@ -95,7 +96,7 @@ export const Title = styled.div`
 
 export const UserSection = styled.div`
   display: flex;
-  margin: 30px 0 10px 0;
+  margin: 15px 0 10px 0;
 `;
 
 export const UserImage = styled.img`
@@ -126,18 +127,25 @@ export const SliderDots = styled.div`
   display: flex;
 `;
 
-export const Dot = styled.div<DotProps>`
+export const Dot = styled.div<{ active: boolean }>`
   height: 15px;
   width: 15px;
   background-color: #bbb;
   border-radius: 50%;
   margin: 0 5px;
   cursor: pointer;
+  transition:
+    background-color 0.3s ease,
+    width 0.3s ease,
+    border-radius 0.3s ease;
+
   // active prop에 따라 스타일 적용
   ${(props) =>
     props.active &&
     css`
       background-color: #000; // active 상태일 때의 색상
+      width: 30px;
+      border-radius: 10px;
     `}
 `;
 

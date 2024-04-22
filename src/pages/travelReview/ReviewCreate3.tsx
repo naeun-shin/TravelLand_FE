@@ -1,4 +1,4 @@
-import ReDesignHeader from '@/components/layouts/Header2';
+import ReDesignHeader2 from '@/components/layouts/Header3';
 import TReviewCreate3 from '@/components/reviews/reviewIndex/TReviewCreate3';
 import { useState } from 'react';
 // import React from 'react';
@@ -9,7 +9,7 @@ const ReviewCreate3 = () => {
 
   return (
     <>
-      <ReDesignHeader />
+      <ReDesignHeader2 />
       <CenteredContainer>
         <h2>여행 정보 작성하기</h2>
         <StepperContainer>
@@ -31,6 +31,7 @@ const CenteredContainer = styled.div`
   width: 100%;
   max-width: 1100px;
   margin: 0 auto;
+  margin-top: 120px;
 
   h2 {
     font-size: 24px;
