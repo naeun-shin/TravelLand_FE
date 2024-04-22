@@ -17,7 +17,7 @@ const ReDesignHeader2: React.FC = () => {
   const navigate = useNavigate();
   const [isMenuModalOpen, setIsMenuModalOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isLoggedIn, _] = useState(false);
+  // const [isLoggedIn, _] = useState(false);
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
   const [isNoticeModalOpen, setIsNoticeModalOpen] = useState(false);
 
@@ -85,34 +85,12 @@ const ReDesignHeader2: React.FC = () => {
             onClick={handleBurgerIconClick}
           />
         </BurgerMenuIcon>
-        {isMenuModalOpen ? (
-          <>
-            {!isLoggedIn ? (
-              <>
-                <BurgerMenuList isLoggedIn={isLoggedIn}>
-                  <button onClick={handleOpenLogin}>로그인</button>
-                </BurgerMenuList>
-              </>
-            ) : (
-              <>
-                <BurgerMenuList isLoggedIn={isLoggedIn}>
-                  <button onClick={handleOpenMypage}>마이페이지</button>
-                  <hr />
-                  <button onClick={handleOpenPlanCreate}>
-                    여행 플랜 작성하기
-                  </button>
-                  <hr />
-                  <button onClick={handleOpenTripCreate}>
-                    여행 정보 작성하기
-                  </button>
-                  <hr />
-                  <button onClick={handleLogoutClick}>로그아웃</button>
-                </BurgerMenuList>
-              </>
-            )}
-          </>
-        ) : (
-          ''
+        {isMenuModalOpen && (
+          <MainModal
+            // isLoggedIn={isLoggedIn}
+            handleLogout={handleLogoutClick}
+            handleLogin={handleOpenLogin}
+          />
         )}
         {isNoticeModalOpen && <NoticeModal />}
       </Container>
