@@ -77,85 +77,87 @@ const TravelReviewPage = () => {
   if (error) return <S.ErrorContainer>Error: {error}</S.ErrorContainer>;
 
   return (
-    <ScrollDiv id="scrollableDiv">
+    <>
       <ReDesignHeader needSearchInput={true} />
-      <S.TravelReviewstyle>
-        <div>
-          <S.ReviewBox>
-            <h2 style={{ fontSize: '28px' }}>떠돌이 랜드</h2>
-            <S.ReviewBtn
-              style={{ cursor: 'pointer' }}
-              onClick={handleTextClick}
-            >
-              정보 작성하기
-            </S.ReviewBtn>
-          </S.ReviewBox>
-          <ReviewCateBox>
-            <h2>지역별 여행 후기</h2>
-            <div style={{ display: 'flex' }}>
-              <CategoryButton title="전체" />
-              <CategoryButton title="서울" />
-              <CategoryButton title="경기" />
-              <CategoryButton title="인천" />
-              <CategoryButton title="강원" />
-              <CategoryButton title="대전" />
-              <CategoryButton title="충북충남" />
-              <CategoryButton title="경북경남" />
-              <CategoryButton title="부산" />
-              <CategoryButton title="울산" />
-              <CategoryButton title="전북전남" />
-              <CategoryButton title="제주" />
-            </div>
-          </ReviewCateBox>
-        </div>
-        <InfiniteScroll
-          style={{ overflow: 'hidden' }}
-          dataLength={trips.length}
-          next={fetchMoreData}
-          hasMore={hasMore}
-          loader={
-            <div className="loader" key={0}>
-              Loading ...
-            </div>
-          }
-          endMessage={<p>더 이상 로드할 내용이 없습니다.</p>}
-          scrollableTarget="scrollableDiv"
-        >
-          <S.TravelReviewCardSection>
-            {trips.map((trip) => (
-              <>
-                <ListCard
-                  key={trip.tripId}
-                  tripId={trip.tripId}
-                  area={trip.area}
-                  title={trip.title}
-                  tripStartDate={trip.tripStartDate}
-                  tripEndDate={trip.tripEndDate}
-                  thumbnailUrl={trip.thumbnailUrl}
-                  hashtagList={trip.hashtagList}
-                  isScrap={trip.isScrap}
-                  viewCount={trip.viewCount}
-                  onClick={() => handleCardClick(trip.tripId)}
-                />
-                <ListCard
-                  key={trip.tripId}
-                  tripId={trip.tripId}
-                  area={trip.area}
-                  title={trip.title}
-                  tripStartDate={trip.tripStartDate}
-                  tripEndDate={trip.tripEndDate}
-                  thumbnailUrl={trip.thumbnailUrl}
-                  hashtagList={trip.hashtagList}
-                  isScrap={trip.isScrap}
-                  viewCount={trip.viewCount}
-                  onClick={() => handleCardClick(trip.tripId)}
-                />
-              </>
-            ))}
-          </S.TravelReviewCardSection>
-        </InfiniteScroll>
-      </S.TravelReviewstyle>
-    </ScrollDiv>
+      <ScrollDiv id="scrollableDiv">
+        <S.TravelReviewstyle>
+          <div>
+            <S.ReviewBox>
+              <h2 style={{ fontSize: '28px' }}>떠돌이 랜드</h2>
+              <S.ReviewBtn
+                style={{ cursor: 'pointer' }}
+                onClick={handleTextClick}
+              >
+                정보 작성하기
+              </S.ReviewBtn>
+            </S.ReviewBox>
+            <ReviewCateBox>
+              <h2>지역별 여행 후기</h2>
+              <div style={{ display: 'flex' }}>
+                <CategoryButton title="전체" />
+                <CategoryButton title="서울" />
+                <CategoryButton title="경기" />
+                <CategoryButton title="인천" />
+                <CategoryButton title="강원" />
+                <CategoryButton title="대전" />
+                <CategoryButton title="충북충남" />
+                <CategoryButton title="경북경남" />
+                <CategoryButton title="부산" />
+                <CategoryButton title="울산" />
+                <CategoryButton title="전북전남" />
+                <CategoryButton title="제주" />
+              </div>
+            </ReviewCateBox>
+          </div>
+          <InfiniteScroll
+            style={{ overflow: 'hidden' }}
+            dataLength={trips.length}
+            next={fetchMoreData}
+            hasMore={hasMore}
+            loader={
+              <div className="loader" key={0}>
+                Loading ...
+              </div>
+            }
+            endMessage={<p>더 이상 로드할 내용이 없습니다.</p>}
+            scrollableTarget="scrollableDiv"
+          >
+            <S.TravelReviewCardSection>
+              {trips.map((trip) => (
+                <>
+                  <ListCard
+                    key={trip.tripId}
+                    tripId={trip.tripId}
+                    area={trip.area}
+                    title={trip.title}
+                    tripStartDate={trip.tripStartDate}
+                    tripEndDate={trip.tripEndDate}
+                    thumbnailUrl={trip.thumbnailUrl}
+                    hashtagList={trip.hashtagList}
+                    isScrap={trip.isScrap}
+                    viewCount={trip.viewCount}
+                    onClick={() => handleCardClick(trip.tripId)}
+                  />
+                  <ListCard
+                    key={trip.tripId}
+                    tripId={trip.tripId}
+                    area={trip.area}
+                    title={trip.title}
+                    tripStartDate={trip.tripStartDate}
+                    tripEndDate={trip.tripEndDate}
+                    thumbnailUrl={trip.thumbnailUrl}
+                    hashtagList={trip.hashtagList}
+                    isScrap={trip.isScrap}
+                    viewCount={trip.viewCount}
+                    onClick={() => handleCardClick(trip.tripId)}
+                  />
+                </>
+              ))}
+            </S.TravelReviewCardSection>
+          </InfiniteScroll>
+        </S.TravelReviewstyle>
+      </ScrollDiv>
+    </>
   );
 };
 
