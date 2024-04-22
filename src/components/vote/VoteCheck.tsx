@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import { useCheckVoteMutation } from '@/hooks/useMutation';
 
 interface PlanVotes {
+  planATitle: string;
+  planBTitle: string;
   planVoteId: number;
   planAId: number;
   planBId: number;
@@ -21,13 +23,9 @@ interface PlanVotes {
 
 interface CheckVoteProps {
   voteData: PlanVotes[]; // PlanVotes 타입을 사용하여 voteData 프롭스를 정의합니다
-  planTitle: string;
 }
 
-export const VoteCheck: React.FC<CheckVoteProps> = ({
-  voteData,
-  planTitle,
-}) => {
+export const VoteCheck: React.FC<CheckVoteProps> = ({ voteData }) => {
   const navigate = useNavigate();
   //   console.log(voteData.planAId, voteData.planBId);
   const [selectedVote, setSelectedVote] = useState<PlanVotes | undefined>();
@@ -159,7 +157,7 @@ export const VoteCheck: React.FC<CheckVoteProps> = ({
                     <S.VoteContentBox
                       onClick={() => handleGotoDetail(selectedVote.planAId)}
                     >
-                      {planTitle}
+                      {selectedVote.planATitle}
                       <img src="/assets/icons/GrayRightArrow.svg" />
                     </S.VoteContentBox>
                   </S.VoteChoiceBox>
@@ -178,7 +176,7 @@ export const VoteCheck: React.FC<CheckVoteProps> = ({
                     <S.VoteContentBox
                       onClick={() => handleGotoDetail(selectedVote.planBId)}
                     >
-                      {planTitle}
+                      {selectedVote.planBTitle}
                       <img src="/assets/icons/GrayRightArrow.svg" />
                     </S.VoteContentBox>
                   </S.VoteChoiceBox>

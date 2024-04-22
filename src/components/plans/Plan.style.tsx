@@ -57,6 +57,7 @@ const PlanContentTitle = styled.div`
   padding-bottom: 10px;
   font-weight: bold;
   font-size: 18px;
+  font-family: 'pretendard';
 `;
 
 const PlanHorizontalContent = styled.div`
