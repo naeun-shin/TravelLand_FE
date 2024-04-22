@@ -15,7 +15,7 @@ import { CiCalendar } from 'react-icons/ci';
 
 const PlanCreate = () => {
   const navigate = useNavigate();
-  const [isPublic, setIsPublic] = useState<boolean>(false);
+  const [isPublic, setIsPublic] = useState<boolean>(true);
   const [dateRange, setDateRange] = useState<(Date | undefined)[]>([
     undefined,
     undefined,
@@ -137,7 +137,7 @@ const PlanCreate = () => {
   };
 
   const dateFormat = 'yyyy-MM';
-
+  console.log(isPublic);
   return (
     <>
       {/* 전체 컨테이너 */}
