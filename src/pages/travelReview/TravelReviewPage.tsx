@@ -7,7 +7,7 @@ import { getTripList } from '@/api/reviewAxios';
 import { AxiosResponse } from 'axios';
 import styled from 'styled-components';
 import ListCard from '@/components/commons/mainItem/ListCard';
-import ReDesignHeader from '@/components/layouts/Header2';
+import Header3 from '@/components/layouts/Header3';
 import CategoryButton from '@/components/commons/buttons/CategoryButton';
 
 interface Trip {
@@ -78,7 +78,7 @@ const TravelReviewPage = () => {
 
   return (
     <ScrollDiv id="scrollableDiv">
-      <ReDesignHeader />
+      <Header3 />
       <S.TravelReviewstyle>
         <div>
           <S.ReviewBox>

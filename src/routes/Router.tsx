@@ -93,7 +93,7 @@ export const router = createBrowserRouter([
     path: '/reviewCreate/2',
     element: (
       <PrivateRoute>
-        <ReviewCreate2 />{' '}
+        <ReviewCreate2 />
       </PrivateRoute>
     ),
   },
