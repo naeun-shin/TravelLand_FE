@@ -10,6 +10,8 @@ import SearchModal from '@/pages/main/SearchPage';
 import { useAuthStore } from '@/store/useAuthStore';
 import { NoticeModal } from '../commons/modals/NoticeModal';
 import { Cookies } from 'react-cookie';
+import Button from '../commons/buttons/Button';
+import Vote from '../vote/Vote';
 
 interface SearchInputContainerProps {
   isScrolled: boolean;
@@ -35,6 +37,7 @@ const ReDesignHeader: React.FC<HeaderProps> = ({ needSearchInput }) => {
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false); // 검색 모달 상태 추가
 
   const [isNoticeModalOpen, setIsNoticeModalOpen] = useState(false); // 알림 모달 상태 관리
+  const [isVoteModalOpen, setIsVoteModalOpen] = useState(false); // 투표 모달
 
   const navigate = useNavigate();
 
@@ -53,6 +56,9 @@ const ReDesignHeader: React.FC<HeaderProps> = ({ needSearchInput }) => {
 
   // 버거 메뉴 모달
   const handleBurgerIconClick = () => {
+    if (isNoticeModalOpen) {
+      setIsNoticeModalOpen(false);
+    }
     setIsMenuModalOpen((prevState) => !prevState);
   };
 
@@ -88,9 +94,10 @@ const ReDesignHeader: React.FC<HeaderProps> = ({ needSearchInput }) => {
   };
 
   const closeModal = () => {
-    console.log('closeModal 실행됨');
+    // console.log('closeModal 실행됨');
     setIsModalOpen(false);
-    setIsMenuModalOpen(false); // 메인 모달도 닫히도록 추가
+    setIsMenuModalOpen(false);
+    setIsNoticeModalOpen(false); // Make sure to reset all modal states
   };
 
   // 로고 클릭 시 메인 페이지 이동
@@ -100,13 +107,31 @@ const ReDesignHeader: React.FC<HeaderProps> = ({ needSearchInput }) => {
 
   // 모달 토글 함수
   const handleNoticeClick = () => {
+    if (isMenuModalOpen) {
+      setIsMenuModalOpen(false);
+    }
     setIsNoticeModalOpen((prevState) => !prevState); // 현재 상태의 반대로 설정
   };
 
-  // 모달을 닫는 함수
-  // const closeNoticeModal = () => {
-  //   setIsNoticeModalOpen(false);
-  // };
+  // 투표 모달을 여는 함수
+  const handleOpenVoteModal = () => {
+    setIsVoteModalOpen(true);
+  };
+
+  // 투표 모달을 닫는 함수
+  const handleCloseVoteModal = () => {
+    setIsVoteModalOpen(false);
+  };
+
+  // 초대 수락 함수
+  const handleAcceptClick = () => {
+    alert('현재 개발 중입니다!');
+  };
+
+  // 초대 거절 함수
+  const handleDenyClick = () => {
+    alert('현재 개발 중입니다!');
+  };
 
   // 스크롤에 따라 상태 변경
   useEffect(() => {
@@ -208,19 +233,65 @@ const ReDesignHeader: React.FC<HeaderProps> = ({ needSearchInput }) => {
             ) : (
               ''
             )}
-
-            {isNoticeModalOpen && <NoticeModal />}
+            {/* {isNoticeModalOpen && <NoticeModal />} */}
+            {isNoticeModalOpen ? (
+              <>
+                <ModalContainer>
+                  <MenuItem>
+                    <TitleBox>
+                      <Title>
+                        {' '}
+                        <img src="/assets/icons/blueDot.svg" />
+                        봄날의 고성
+                      </Title>{' '}
+                      플랜에 초대되었습니다. 수락하시겠습니까?
+                    </TitleBox>
+                    <div>
+                      <Button
+                        text="거절"
+                        color="#F6F6F6"
+                        textColor="gray"
+                        borderRadius="15px"
+                        width="100px"
+                        borderColor="#F6F6F6"
+                        marginRight="5px"
+                        onClick={handleDenyClick}
+                      />
+                      <Button
+                        text="수락"
+                        borderRadius="15px"
+                        width="100px"
+                        onClick={handleAcceptClick}
+                      />
+                    </div>
+                  </MenuItem>
+                  <MenuItem>
+                    <TitleBox>
+                      <Title>
+                        {' '}
+                        <img src="/assets/icons/blueDot.svg" />
+                        비가 안온다면 어떤 플랜이 나을까요?
+                      </Title>{' '}
+                      에 투표할 수 있습니다.
+                    </TitleBox>
+                    <div>
+                      <Button
+                        text="투표하러 가기"
+                        color="#F6F6F6"
+                        textColor="black"
+                        borderRadius="15px"
+                        width="130px"
+                        borderColor="#F6F6F6"
+                        onClick={handleOpenVoteModal}
+                      />
+                    </div>
+                  </MenuItem>
+                </ModalContainer>
+              </>
+            ) : (
+              <></>
+            )}
           </MenuContainer>
-          {/* {isLoggedIn ? (
-            <>
-              <UserAction onClick={handleOpenMypage}>마이페이지</UserAction>
-              <UserAction onClick={() => setIsLoggedIn(false)}>
-                로그아웃
-              </UserAction>
-            </>
-          ) : (
-            <></>
-          )} */}
         </Container>
       </StickyHeader>
       {/* 로그인 모달 */}
@@ -228,6 +299,10 @@ const ReDesignHeader: React.FC<HeaderProps> = ({ needSearchInput }) => {
       {/* 검색 모달 */}
       {isSearchModalOpen && (
         <SearchModal isOpen={isSearchModalOpen} onClose={closeSearchModal} />
+      )}
+      {/* 투표 모달이 열렸을 때, Vote 컴포넌트를 렌더링합니다. */}
+      {isVoteModalOpen && (
+        <Vote isOpen={isVoteModalOpen} onClose={handleCloseVoteModal} />
       )}
     </Header>
   );
@@ -354,4 +429,49 @@ const MenuContainer = styled.div`
   position: relative;
   display: inline-block;
   z-index: 10;
+`;
+
+const ModalContainer = styled.div`
+  position: absolute;
+  margin: 8px;
+  border-radius: 20px;
+
+  background-color: #fff;
+
+  right: 50px;
+
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+`;
+
+const MenuItem = styled.div`
+  cursor: pointer;
+  padding: 30px 16px;
+  border-bottom: 1px solid #eee;
+  width: 550px;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &:hover {
+    background-color: #f9f9f9;
+    border-radius: 15px;
+  }
+`;
+
+const TitleBox = styled.div`
+  display: flex;
+  padding: 5px 0px;
+`;
+
+const Title = styled.div`
+  color: #5ac8ec;
+  font-size: 18px;
+  display: flex;
+  align-items: flex-start;
+  padding-bottom: 15px;
+
+  img {
+    padding: 0px 5px;
+  }
 `;

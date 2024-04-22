@@ -19,6 +19,10 @@ const Vote: React.FC<VoteModalProps> = ({ isOpen, onClose }) => {
     setSelectedOption(option); // 선택한 옵션을 상태로 저장
   };
 
+  const handleGoToVoteClick = () => {
+    alert('모달 투표하기 기능이 개발중입니다! 조만간 오픈하겠습니다!');
+  };
+
   return (
     <VoteModal isOpen={isOpen} onClose={onClose}>
       {/* 상단 */}
@@ -88,7 +92,12 @@ const Vote: React.FC<VoteModalProps> = ({ isOpen, onClose }) => {
       </S.VoteButtonBox>
       {/* 투표하기 */}
       <div>
-        <Button text="투표하기" borderRadius="15px" width="100px" />
+        <Button
+          text="투표하기"
+          borderRadius="15px"
+          width="100px"
+          onClick={handleGoToVoteClick}
+        />
       </div>
     </VoteModal>
   );
