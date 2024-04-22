@@ -27,7 +27,7 @@ interface MainCardProps {
 const StyledSlider = styled(Slider)`
   position: relative;
   margin: auto;
-  width: 1260px;
+  width: 1400px;
   display: flex;
 
   .slick-prev,
@@ -62,9 +62,9 @@ const StyledSlider = styled(Slider)`
     /* width: 250px; */
     /* display: flex; */
     /* justify-content: center; */
+    width: auto;
   }
 `;
-
 const MainCard: React.FC<MainCardProps> = ({ cards = [] }) => {
   const settings = {
     dots: false,

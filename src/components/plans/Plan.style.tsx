@@ -92,6 +92,7 @@ const PlanNextButton = styled.button<ButtonProps>`
   width: 160px;
   height: 50px;
   border-radius: 16px;
+  font-size: 18px;
   cursor: ${(props) =>
     props.disabled
       ? 'default'
@@ -104,6 +105,8 @@ const PlanDetailCreateBox = styled.div`
   background-color: white;
   border: 1px solid lightgray;
   border-radius: 35px;
+
+  font-size: 18px;
 
   width: 75%;
   height: 100%;
@@ -137,6 +140,12 @@ const ButtonBox = styled.div`
   padding-top: 30px;
   display: flex;
   justify-content: space-between;
+
+  font-size: 16px;
+
+  h1 {
+    font-size: 24px;
+  }
 `;
 
 const ButtonBoxToRight = styled.div`

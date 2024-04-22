@@ -172,7 +172,7 @@ const ScrollDiv = styled.div`
 `;
 
 const ReviewCateBox = styled.div`
-  max-width: 1300px;
+  max-width: 1400px;
   margin: 0 auto;
   padding-left: 45px;
 `;

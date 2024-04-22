@@ -66,10 +66,12 @@ const ListItem = styled.div`
   border-bottom: 1px solid #eaeaea; // 아이템 사이의 구분선
   padding: 20px 0; // 아이템 내부의 패딩
   justify-content: space-between;
+
+  font-size: 18px;
 `;
 
 const ListTitle = styled.div`
-  font-size: 18px;
+  font-size: 20px;
   font-weight: bold;
   align-content: center;
   cursor: pointer;
@@ -78,6 +80,8 @@ const ListTitle = styled.div`
 
 const ListLeftIcon = styled.div`
   padding-right: 15px;
+  font-size: 18px;
+
   img {
     width: 15px;
     height: 20px;
@@ -97,6 +101,8 @@ const ListItemLeft = styled.div`
 const ListItemRight = styled.div`
   display: flex;
   align-items: center;
+
+  font-size: 18px;
 `;
 
 const MyPlanListWrapper = styled.div`
@@ -139,6 +145,7 @@ const MyPlanIsPublic = styled.div<IsPublicTitleProps>`
   cursor: pointer;
 
   font-size: 18px;
+
   color: ${(props: { isPublic: any }) => (props.isPublic ? '#5AC8EC' : 'gray')};
 `;
 
@@ -151,8 +158,7 @@ const MyPlanListContentBox = styled.div`
 
 const MyPlanListTitle = styled.span`
   padding-top: 15px;
-  font-size: 22px;
-  /* font-weight: bold; */
+  font-size: 24px;
   color: black;
 `;
 

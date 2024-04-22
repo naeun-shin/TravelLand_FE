@@ -78,10 +78,10 @@ const Map: React.FC<MapModalProps> = ({ isOpen, onClose, address }) => {
         <div
           id="map"
           style={{
-            width: '480px',
-            height: '480px',
-            borderRadius: '5px',
-            marginBottom: '5px',
+            width: '600px',
+            height: '600px',
+            borderRadius: '25px',
+            // marginBottom: '5px',
             borderStyle: 'none',
           }}
         />
