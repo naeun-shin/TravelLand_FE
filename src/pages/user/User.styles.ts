@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const MyPageStyle = styled.div`
   max-width: 1100px;
-  margin: 120px auto;
+  margin: 0 auto;
   padding: 0px 20px;
 
   h2 {

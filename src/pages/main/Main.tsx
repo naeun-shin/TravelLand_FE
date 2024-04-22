@@ -299,7 +299,7 @@ const Main: React.FC<MainProps> = () => {
 export default Main;
 
 const ButtonsWrapper1 = styled.div`
-  width: 1100px;
+  width: 1400px;
   margin: 0 auto;
   display: flex;
   gap: 20px;

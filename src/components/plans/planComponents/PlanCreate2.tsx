@@ -376,7 +376,8 @@ const PlanCreate2: React.FC = () => {
                   readonly={true}
                   type={'text'}
                   border="transparent"
-                  width={750}
+                  width={1000}
+                  fontSize={18}
                 />
                 <IS.ImgBox>
                   {/* <IoIosArrowDropright
@@ -398,7 +399,7 @@ const PlanCreate2: React.FC = () => {
       <PS.ButtonBox>
         <Button
           text="+"
-          width="100%"
+          width="78%"
           height="60px"
           color="white"
           borderColor="lightGray"

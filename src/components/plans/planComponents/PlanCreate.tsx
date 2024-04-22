@@ -313,7 +313,7 @@ const PlanCreate = () => {
                     </div>
                     <div> {displayDateRange()}</div>
                   </div>
-                  <div style={{ paddingLeft: '200px' }}>
+                  <div style={{ paddingLeft: '400px' }}>
                     <TfiArrowCircleRight size="35px" color="lightGray" />
                   </div>
                 </S.PlanBoxWithCalendar>

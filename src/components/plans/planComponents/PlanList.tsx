@@ -26,6 +26,7 @@ const PlanList = () => {
 
   const { data, isError, isLoading } = usePlanListQuery(planListParams);
 
+  console.log(data);
   useEffect(() => {
     if (data) {
       setTotalPages(data?.data.totalPages); // 전체 페이지 수 업데이트
