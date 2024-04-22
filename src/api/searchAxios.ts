@@ -1,5 +1,5 @@
 import { instance } from './axios';
-import { AxiosResponse, AxiosError } from 'axios';
+// import { AxiosResponse, AxiosError } from 'axios';
 
 // 여행 정보 검색 응답 인터페이스
 export interface TripSearch {
