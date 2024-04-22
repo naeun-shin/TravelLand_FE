@@ -14,7 +14,7 @@ import {
 const ReviewCreate = () => {
   const navigate = useNavigate();
   // 상태 관리 변수들
-  const [isPublic, setIsPublic] = useState<boolean>(false);
+  const [isPublic, setIsPublic] = useState<boolean>(true);
   const [title, setTitle] = useState<string>('');
   const [cost, setCost] = useState<number>(0);
   const [address, setAddress] = useState<string>('');

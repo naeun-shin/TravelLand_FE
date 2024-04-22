@@ -7,6 +7,7 @@ interface PlanListItem {
   title: string;
   budget: string;
   createdAt: string;
+  likeCount: number;
   viewCount: number;
   planId: number;
   public: boolean;
@@ -62,7 +63,7 @@ const List: React.FC<ListProps> = ({ planListData }) => {
                   <IoEyeOutline size="25px" color="gray" />
                   {item.viewCount}
                   <CiHeart size="25px" color="gray" />
-                  {item.viewCount}
+                  {item.likeCount}
                 </S.ListItemRight>
                 {/* 우측 아이콘들 */}
               </S.ListItem>
@@ -93,7 +94,7 @@ const List: React.FC<ListProps> = ({ planListData }) => {
                   <IoEyeOutline size="25px" color="gray" />
                   {item.viewCount}
                   <CiHeart size="25px" color="gray" />
-                  {item.viewCount}
+                  {item.likeCount}
                 </S.ListItemRight>
                 {/* 우측 아이콘들 */}
               </S.ListItem>

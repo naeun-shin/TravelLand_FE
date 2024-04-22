@@ -1,5 +1,5 @@
 // import Header from '@/components/layouts/Header';
-import ReDesignHeader2 from '@/components/layouts/Header3';
+import ReDesignHeader from '@/components/layouts/Header2';
 import ReviewCreate from '@/components/reviews/reviewIndex/TReviewCreate';
 import { useState } from 'react';
 // import { useNavigate } from 'react-router-dom';
@@ -11,7 +11,7 @@ const ReviewCreate1 = () => {
 
   return (
     <>
-      <ReDesignHeader2 />
+      <ReDesignHeader needSearchInput={true} />
       <CenteredContainer>
         <h2>여행 정보 작성하기</h2>
         <StepperContainer>
