@@ -13,7 +13,7 @@ const ReDesignHeader2: React.FC = () => {
   const navigate = useNavigate();
   const [isMenuModalOpen, setIsMenuModalOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isLoggedIn, _] = useState(false);
+  // const [isLoggedIn, _] = useState(false);
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
   const [isNoticeModalOpen, setIsNoticeModalOpen] = useState(false);
 
@@ -71,7 +71,7 @@ const ReDesignHeader2: React.FC = () => {
         </BurgerMenuIcon>
         {isMenuModalOpen && (
           <MainModal
-            isLoggedIn={isLoggedIn}
+            // isLoggedIn={isLoggedIn}
             handleLogout={handleLogoutClick}
             handleLogin={handleOpenLogin}
           />
