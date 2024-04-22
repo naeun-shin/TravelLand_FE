@@ -11,7 +11,7 @@ import { deleteTrip } from '@/api/reviewAxios';
 import { AxiosError } from 'axios';
 import CategoryButton from '../../buttons/CategoryButton';
 import {
-  CategoriesContainer,
+  // CategoriesContainer,
   HashTagContainer,
 } from '../../mainItem/MainCard.style';
 

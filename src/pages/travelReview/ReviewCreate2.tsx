@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import ReDesignHeader from '@/components/layouts/Header2';
 import TReviewCreate2 from '@/components/reviews/reviewIndex/TReviewCreate2';
 import styled from 'styled-components';
 import ReDesignHeader2 from '@/components/layouts/Header3';
