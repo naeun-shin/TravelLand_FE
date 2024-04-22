@@ -1,46 +1,46 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import ToggleButton from '@/components/commons/buttons/ToggleButton';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { ModernInput } from '@/components/commons/inputs/Input';
 import styled from 'styled-components';
 import { TitleWithCircle } from './TReviewCreate';
+import ToggleButton from '@/components/commons/buttons/ToggleButton';
 
 const ReviewCreate2 = () => {
   const navigate = useNavigate();
-  const { totalPlanTitle } = useParams(); // URL 매개변수에서 데이터 읽기
-  const [isPublic, setIsPublic] = useState<boolean>(false);
-  const [totalPlanTitleState, setTotalPlanTitleState] = useState<string>(
-    totalPlanTitle || '',
-  ); // 상태 이름 수정
-  const [totalBudget, setTotalBudget] = useState<number>(0);
-  const [area, setArea] = useState<string>('');
-  const [step, setStep] = useState<number>(1);
+  const location = useLocation(); // useLocation을 사용하여 이전 페이지의 데이터 접근
+  const { state } = location;
+  const { totalReviewTitle } = useParams(); // URL 매개변수에서 데이터 읽기
+  const [isPublic, setIsPublic] = useState<boolean>(state?.isPublic || false);
+  const [title, setTitle] = useState<string>(state?.title || ''); // 상태 이름 수정
   const [imageFiles, setImageFiles] = useState<File[]>([]);
-  const fileInputRef = useRef<HTMLInputElement>(null); // Ref for file input
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  // const [step, setStep] = useState<number>(1);
 
   // totalPlanTitle이 변경될 때마다 해당 값을 설정
   useEffect(() => {
-    if (totalPlanTitle) {
-      setTotalPlanTitleState(totalPlanTitle);
+    if (totalReviewTitle) {
+      setTitle(totalReviewTitle);
     }
-  }, [totalPlanTitle]);
+  }, [totalReviewTitle]);
 
-  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTotalPlanTitleState(e.target.value); // 상태 업데이트 함수 수정
-  };
+  // const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setTitle(e.target.value); // 상태 업데이트 함수 수정
+  // };
 
   const toggleIsPublic = () => setIsPublic(!isPublic);
 
   const handleNextClick = () => {
-    if (step < 3) {
-      setStep(step + 1);
-    } else {
-      navigate('/reviewCreate/3');
+    if (imageFiles.length === 0) {
+      alert('이미지를 한 장 이상 첨부해주세요!');
+      return;
     }
+    navigate('/reviewCreate/3', {
+      state: { ...state, imageFiles, isPublic },
+    });
   };
-
+  // 뒤로가기
   const handleBackClick = () => {
-    navigate('/travelCreate');
+    navigate(-1);
   };
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -55,7 +55,7 @@ const ReviewCreate2 = () => {
 
   const handleAddImageClick = () => {
     if (fileInputRef.current) {
-      fileInputRef.current.click(); // Trigger file input click
+      fileInputRef.current.click();
     }
   };
 
@@ -81,24 +81,22 @@ const ReviewCreate2 = () => {
                 />
                 <ModernInput
                   type="text"
+                  readonly
+                  value={title}
                   placeholder="제목을 입력해주세요"
                   width={400}
                   height={35}
                   border="transparent"
-                  value={totalPlanTitleState} // 첫 번째 페이지에서 전달된 값 사용
-                  onChange={handleTitleChange}
                   fontSize={16}
                   fontWeight={'bold'}
                 />
               </div>
-
               <div>
                 <ToggleButton isChecked={!isPublic} onToggle={toggleIsPublic} />
               </div>
             </ReviewBoxWithSpaceBetween>
           </div>
           <PhotoBox>
-            {/* 이미지 미리보기 코드 */}
             {imageFiles.map((file, index) => (
               <ImagePreview key={index}>
                 <img
@@ -119,12 +117,10 @@ const ReviewCreate2 = () => {
           <div>
             <div style={{ textAlign: 'center', marginBottom: '25px' }}>
               <BringPlanBtn onClick={handleAddImageClick}>
-                {' '}
                 + 사진 추가하기
               </BringPlanBtn>
               <input
                 ref={fileInputRef}
-                id="image-upload"
                 type="file"
                 multiple
                 onChange={handleImageChange}
@@ -132,7 +128,7 @@ const ReviewCreate2 = () => {
                 style={{ display: 'none' }}
               />
             </div>
-            <PhotoText>사진은 최대 5장 까지 추가할 수 있어요</PhotoText>
+            <PhotoText>사진은 최대 5장까지 추가할 수 있어요</PhotoText>
           </div>
         </div>
       </div>

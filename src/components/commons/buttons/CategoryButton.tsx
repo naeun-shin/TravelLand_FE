@@ -3,11 +3,12 @@ import * as S from './Button.style';
 
 interface CategoryButtonProps {
   width?: string;
-  heigth?: string;
+  height?: string;
   title?: string;
-  onClick?: () => void;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
   icon?: React.ReactNode;
-  hoverColor?: string; // hoverColor props 추가
+  hoverColor?: string;
+  selected?: boolean; // 선택된 상태를 처리하기 위해 추가
 }
 
 const CategoryButton: React.FC<CategoryButtonProps> = ({
@@ -16,9 +17,15 @@ const CategoryButton: React.FC<CategoryButtonProps> = ({
   onClick,
   icon,
   hoverColor,
+  selected = false,
 }) => {
   return (
-    <S.CategoryButtonStyle onClick={onClick} hoverColor={hoverColor}>
+    <S.CategoryButtonStyle
+      type="button"
+      onClick={onClick}
+      hoverColor={hoverColor}
+      selected={selected}
+    >
       {icon}
       {title}
       {width}
