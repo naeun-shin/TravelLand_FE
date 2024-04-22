@@ -72,3 +72,15 @@ export const CategoriesContainer = styled.div`
   height: 100px;
   overflow: hidden;
 `;
+export const HashTagContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  /* align-items: center; */
+  margin-top: 3px;
+  gap: 4px;
+  height: 100px;
+  overflow: hidden;
+  padding-top: 40px;
+`;

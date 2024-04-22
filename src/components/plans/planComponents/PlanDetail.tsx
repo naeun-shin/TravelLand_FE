@@ -219,7 +219,7 @@ const PlanDetail: React.FC<ButtonProps> = () => {
         </S.DetailHeaderThirdContent>
         <S.DetailContentSection>
           {/* 투표 영역 */}
-          <VoteCheck voteData={planVotes} planTitle={planDetails.title} />
+          <VoteCheck voteData={planVotes} />
           {/* 스태퍼 박스 영역 */}
           <S.PlanDetailDateBox>
             {dayPlans.map((dayPlan, index) => (
