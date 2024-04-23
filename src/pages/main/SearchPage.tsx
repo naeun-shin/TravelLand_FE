@@ -10,15 +10,21 @@ import { useNavigate } from 'react-router-dom';
 interface SearchModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onSearch: () => void; // 수정된 부분
 }
 
-const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
+const SearchModal: React.FC<SearchModalProps> = ({
+  isOpen,
+  onClose,
+  onSearch,
+}) => {
   const navigate = useNavigate();
   const [isSearchModalOpen, setSearchModalOpen] = useState<boolean>(false);
 
   const toggleSearchModal = () => {
     setSearchModalOpen(!isSearchModalOpen);
   };
+
   useEffect(() => {
     const handleScroll = (event: WheelEvent) => {
       event.preventDefault();
@@ -45,6 +51,18 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
   //   navigate('/results');
   // }
 
+  /*
+  1. 지역별 인기 검색 & 해시태그 검색 get API 호출
+    1-1. /v1/trips/rank/area - get (useQuery)
+    1-2. /v1/trips/rank/hashtag - get (useQuery)
+
+  2. 해당 검색 버튼 누를 때,
+    2-1. 지역별 인기 검색 호출
+        /v1/trips/search/area - get (useQuery)
+    2-2. 해시태그 검색 호출
+        /v1/trips/search/hashtag get (useQuery)
+*/
+
   return (
     <>
       <S.ModalOverlay onClick={onClose}>
@@ -54,17 +72,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
             {/* 아이콘 크기는 예시이므로 원하는 대로 조절하세요. */}
           </CloseButton>
           <S.SearchSection>
-            <SearchInput
-              placeholder="검색어를 입력해주세요."
-              onIconClick={(query: string) => {
-                if (query.trim()) {
-                  // 검색어가 있는 경우 검색 결과 페이지로 이동
-                  navigate('/results');
-                } else {
-                  toggleSearchModal();
-                }
-              }}
-            />
+            <SearchInput placeholder="검색어를 입력해주세요." />
           </S.SearchSection>
           <S.LocalContainer>
             <S.LocalTitle>지역별 인기</S.LocalTitle>

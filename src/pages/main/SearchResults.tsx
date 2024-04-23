@@ -19,17 +19,19 @@ const SearchResults = () => {
     }
   };
 
+  // 검색어 입력 시 호출될 함수
+  const handleSearchInputChange = (query: string) => {
+    setSearchQuery(query);
+  };
+
   return (
     <>
       <ReDesignHeader2 needSearchInput={false} />
       {/* value, onChange 속성 추가 */}
       <SearchInput
         placeholder="검색어를 입력해주세요."
-        value={searchQuery}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-          setSearchQuery(e.target.value)
-        }
         onIconClick={handleSearchIconClick}
+        onInputChange={handleSearchInputChange}
       />
       <ResultsContent />
     </>

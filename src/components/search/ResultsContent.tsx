@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { IoLocationSharp } from 'react-icons/io5';
 import * as S from './Search.style';
 import styled from 'styled-components';
 import CategoryButton from '../commons/buttons/CategoryButton';
-import { searchTripsByText } from '@/api/searchAxios'; // 검색 API 함수를 import
-import SearchInput from './Search';
-
+import { useNavigate, useLocation } from 'react-router-dom';
 interface IPlaceNameProps {
   name: string;
 }
@@ -15,27 +13,31 @@ const PlaceName: React.FC<IPlaceNameProps> = ({ name }) => (
 );
 
 const ResultsContent: React.FC = () => {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState(0);
+  const location = useLocation();
   const [searchResults, setSearchResults] = useState<any[]>([]); // 검색 결과를 저장할 상태
 
   const placeName = '고성시';
   const place = ['조계사', '경인미술관', '숭례문'];
 
-  // 검색 결과 처리 함수
-  // const handleSearchResults = async (inputValue: string) => {
-  //   try {
-  //     const results = await searchTripsByText(
-  //       inputValue,
-  //       1,
-  //       9,
-  //       'startDate',
-  //       true,
-  //     );
-  //     setSearchResults(results); // 검색 결과 상태 업데이트
-  //   } catch (error) {
-  //     console.error('Search failed:', error);
-  //   }
-  // };
+  // 게시물 클릭 핸들러
+  const handleItemClick = (tripId: number) => {
+    navigate(`/travelDetail/${tripId}`); // 여기에 경로를 설정하세요. 경로는 실제 라우트 설정에 따라 달라질 수 있습니다.
+  };
+
+  useEffect(() => {
+    // location.state에서 searchData를 확인하고 상태를 설정합니다.
+    const data = location.state?.searchData || [];
+    setSearchResults(data);
+  }, [location]);
+
+  //
+  useEffect(() => {
+    if (location.state?.searchData) {
+      setSearchResults(location.state.searchData);
+    }
+  }, [location]);
 
   return (
     <S.ResultContainer>
@@ -77,27 +79,28 @@ const ResultsContent: React.FC = () => {
       {/* 검색 결과를 화면에 표시 */}
       <S.ResultsContainer>
         {searchResults.length === 0 ? (
-          <div>해당하는 게시물을 찾을 수 없습니다.</div>
+          <Notfound>해당하는 게시물을 찾을 수 없습니다.</Notfound>
         ) : (
           searchResults.map((data, index) => (
-            <S.ResultItem key={index}>
-              <ThumbnailImage src={data.imageUrl} alt="썸네일" />
+            <S.ResultItem
+              key={index}
+              onClick={() => handleItemClick(data.tripId)}
+            >
+              <ThumbnailImage src={data.thumbnailUrl} alt="썸네일" />
               <S.ContentWrapper>
                 <Location>
-                  {data.location} | {`${data.startDate} - ${data.endDate}`}
+                  {data.area} | {`${data.tripStartDate} - ${data.tripEndDate}`}
                 </Location>
-                {/* <DateRange>{`${data.startDate} - ${data.endDate}`}</DateRange> */}
                 <S.ItemTitle>{data.title}</S.ItemTitle>
                 <S.ItemContent>{data.content}</S.ItemContent>
+                {/* 여기서 map 함수를 호출하기 전에 data.categories가 존재하고 배열인지 확인합니다. */}
                 <CategoriesContainer>
-                  {data.categories.map(
-                    (
-                      category: string,
-                      categoryIndex: number, // 타입 지정
-                    ) => (
-                      <CategoryButton key={categoryIndex} title={category} />
-                    ),
-                  )}
+                  {Array.isArray(data.hashtagList) &&
+                    data.hashtagList.map(
+                      (category: string, categoryIndex: number) => (
+                        <CategoryButton key={categoryIndex} title={category} />
+                      ),
+                    )}
                 </CategoriesContainer>
               </S.ContentWrapper>
             </S.ResultItem>
@@ -109,6 +112,11 @@ const ResultsContent: React.FC = () => {
 };
 
 export default ResultsContent;
+
+const Notfound = styled.div`
+  font-size: 24px;
+  margin-top: 20px;
+`;
 
 const ThumbnailImage = styled.img`
   width: 280px;

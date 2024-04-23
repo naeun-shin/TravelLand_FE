@@ -19,6 +19,7 @@ import styled from 'styled-components';
 import {
   useGetMainHashtagListQuery,
   useGetMainRankListQuery,
+  useGetMainSearchQuery,
 } from '@/hooks/useQuery';
 import { searchTripsByText } from '@/api/searchAxios';
 
@@ -38,46 +39,95 @@ const Main: React.FC<MainProps> = () => {
   };
 
   // TopTen
-  const { data: TopTenData, isLoading, isError } = useGetMainRankListQuery();
+  // const { data: TopTenData, isLoading, isError } = useGetMainRankListQuery();
 
-  console.log(TopTenData);
+  // console.log(TopTenData);
 
-  // 해시태그
-  const { data: hashTagData } = useGetMainHashtagListQuery();
+  // // 해시태그
+  // const { data: hashTagData } = useGetMainHashtagListQuery();
 
-  console.log(hashTagData);
+  // console.log(hashTagData);
 
   // 검색 아이콘 클릭 시 호출될 함수
-  const handleSearchIconClick = async (query: string) => {
-    if (query.trim()) {
-      try {
-        // 검색어가 있으면 검색 결과를 가져옴
-        const results = await searchTripsByText(query, 1, 9, 'startDate', true);
-        // 검색 결과가 있으면 검색 결과 페이지로 이동
-        if (results.length > 0) {
-          navigate('/results');
-        } else {
-          // 검색 결과가 없을 때 처리
-          console.log('No search results found.');
-        }
-      } catch (error) {
-        console.error('Error searching:', error);
-      }
+  const handleSearchIconClick = () => {
+    if (searchQuery.trim()) {
+      // 검색어가 있으면 검색 결과 페이지로 이동
+      navigate('/results', { state: searchQuery });
     } else {
       // 검색어가 없으면 검색 모달 토글
-      openSearchModal();
+      toggleSearchModal();
     }
   };
+
+  // 검색어 입력 시 호출될 함수
+  const handleSearchInputChange = (query: string) => {
+    setSearchQuery(query);
+  };
+
+  // 검색어를 사용하여 검색 API를 호출
+  const {
+    isLoading,
+    isError,
+    data: searchData,
+  } = useGetMainSearchQuery(searchQuery);
+
+  // API 호출 상태에 따라 로딩 또는 에러 처리
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError) {
+    return <div>Error occurred</div>;
+  }
+  const handleSearchResult = () => {
+    if (searchData) {
+      navigate('/search-results', { state: searchData });
+    } else {
+      closeSearchModal();
+    }
+  };
+
+  // 검색 아이콘 클릭 시 호출될 함수
+  /**
+ > planList.tsx 파일 -> 15 ~ 27줄 참고해서 아래 코드 적용 필요!!
+
+ * 1. useQuery -> useSearchQuery(); : 폴더 : hooks
+ *    - export const useMyTripListQuery = (tripListParams: TripListParams) => {
+  return useQuery({
+    queryKey: ['myTripList', tripListParams],
+    queryFn: () => getMyTripList(tripListParams),
+    staleTime: 0,
+  });
+};
+
+  2. handleSearchIconClick 함수에서 실행
+
+  const handleSearchIconClick = (query : string) => {
+    console.log(query);
+
+  메인 -> const {data : searchData} = useSearchQuery();
+ console.log(searchData);
+  
+ 3. navigate -> state -> searchData 담아서 전달
+    if(query.trim()) {
+      navigate("결과페이지",searchData)
+    }else{
+     검색모달로 navigate("검색 모달 페이지")
+    }
+
+
+  }
+  */
 
   // 모달을 여는 함수
   const openSearchModal = () => {
     setSearchModalOpen(true);
   };
 
-  // // 모달을 닫는 함수
-  // const closeSearchModal = () => {
-  //   setSearchModalOpen(false);
-  // };
+  // 모달을 닫는 함수
+  const closeSearchModal = () => {
+    setSearchModalOpen(false);
+  };
 
   const handleMakePlanClick = () => {
     navigate('/planList');
@@ -170,15 +220,6 @@ const Main: React.FC<MainProps> = () => {
       isScrap: true,
     },
   ];
-
-  // 메인 TOP 10 리스트 임시 데이터
-  // const tempData: ListItemProps[] = [...Array(10)].map((_, index) => ({
-  //   title: `${index + 1} 서울`,
-  //   location: '서울 > 남산타워( N서울타워)',
-  //   description: '멋진 도시 전망을 볼 수 있는 곳',
-  //   likes: 77,
-  //   imageUrl: '/assets/namsantower_720.jpg',
-  // }));
 
   const items = [
     {
@@ -297,7 +338,8 @@ const Main: React.FC<MainProps> = () => {
       <Search
         placeholder="검색어를 입력해주세요."
         openSearchModal={toggleSearchModal}
-        onIconClick={() => handleSearchIconClick(searchQuery)}
+        onIconClick={handleSearchIconClick}
+        onInputChange={handleSearchInputChange}
       />
       <ButtonContainer>
         {/* 버튼 이벤트 핸들러 로직 */}
@@ -318,7 +360,11 @@ const Main: React.FC<MainProps> = () => {
       <ListTitle />
       {/* 탑텐 데이터 전달 */}
       <MainList items={items} />
-      <SearchModal isOpen={isSearchModalOpen} onClose={toggleSearchModal} />
+      <SearchModal
+        isOpen={isSearchModalOpen}
+        onClose={toggleSearchModal}
+        onSearch={handleSearchResult}
+      />
     </>
   );
 };

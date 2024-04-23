@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import SearchIcon from '@/icons/search2.svg';
 import { searchTripsByText } from '@/api/searchAxios';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useGetMainSearchQuery } from '@/hooks/useQuery';
 
 interface SearchInputProps {
   placeholder?: string;
@@ -11,6 +12,7 @@ interface SearchInputProps {
   openSearchModal?: () => void;
   needSearchInput?: boolean;
   value?: string;
+  onInputChange?: (query: string) => void;
 }
 
 const SearchInput: React.FC<SearchInputProps> = ({
@@ -19,42 +21,40 @@ const SearchInput: React.FC<SearchInputProps> = ({
   onIconClick,
   value,
   openSearchModal,
+  // onInputChange,
   needSearchInput = true,
 }) => {
   const [inputValue, setInputValue] = useState('');
+  const {
+    data: searchData,
+    isLoading,
+    error,
+    refetch,
+  } = useGetMainSearchQuery(inputValue);
   const navigate = useNavigate();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  // useEffect(() => {
+  //   console.log('API Call Status:');
+  //   console.log('Loading:', isLoading);
+  //   console.log('Error:', error);
+  //   console.log('Data:', searchData);
+  // }, [searchData, isLoading, error]);
+
+  const handleChange = (e: any) => {
     setInputValue(e.target.value);
-    if (onChange) {
-      onChange(e);
-    }
   };
 
-  const handleSearchIconClick = async (searchQuery: string) => {
-    if (searchQuery.trim()) {
-      try {
-        // 검색어가 있으면 검색 결과를 가져옴
-        const results = await searchTripsByText(
-          searchQuery,
-          1,
-          9,
-          'startDate',
-          true,
-        );
-        // 검색 결과가 있으면 검색 결과 페이지로 이동
-        if (results.length > 0) {
-          navigate('/results');
-        } else {
-          // 검색 결과가 없을 때 처리
-          console.log('No search results found.');
-        }
-      } catch (error) {
-        console.error('Error searching:', error);
+  const handleSearchIconClick = async () => {
+    if (inputValue.trim()) {
+      await refetch(); // 검색 요청
+      if (searchData && searchData.length > 0) {
+        navigate('/results', { state: { searchData } }); // 결과 페이지로 이동, 검색 데이터 전달
+      } else {
+        navigate('/results', { state: { searchData: [] } }); // 결과 페이지로 이동, 빈 배열 전달
       }
     } else {
-      // 검색어가 없으면 검색 모달 토글
-      openSearchModal && openSearchModal();
+      // 사용자가 검색어를 입력하지 않았을 때 결과 페이지로 이동하고 빈 결과를 보여줍니다.
+      navigate('/results', { state: { searchData: [] } });
     }
   };
 
@@ -67,11 +67,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
         value={value}
       />
       {needSearchInput && (
-        <Icon
-          src={SearchIcon}
-          alt="Search"
-          onClick={() => handleSearchIconClick(inputValue)}
-        />
+        <Icon src={SearchIcon} alt="Search" onClick={handleSearchIconClick} />
       )}
     </SearchContainer>
   );
@@ -84,7 +80,7 @@ const SearchContainer = styled.div`
   align-items: center;
   line-height: 50px;
   position: relative;
-  width: 550px; // 550px로 변경가능하면 변경!
+  width: 550px;
   height: 50px;
   padding: 5px;
   border-radius: 50px;

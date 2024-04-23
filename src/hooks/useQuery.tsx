@@ -4,6 +4,7 @@ import { getMyPlanList, getMyTripList, getUserInfo } from '@/api/userAxios';
 import { PlanListParams } from '@/api/interfaces/planInterface';
 import { TripListParams } from '../api/interfaces/reviewInterface';
 import { getMainHashTagRankList, getMainTopTenRankList } from '@/api/mainAxios';
+import { searchTripsByText } from '@/api/searchAxios';
 // import { getVoteResult } from '@/api/voteAxios';
 // import { UserInfoData } from '@/api/interfaces/userInterface';
 
@@ -63,6 +64,15 @@ export const useGetMainHashtagListQuery = () => {
   return useQuery({
     queryKey: ['mainHashTag'],
     queryFn: getMainHashTagRankList,
+    staleTime: 0,
+  });
+};
+
+// 쿼리추가
+export const useGetMainSearchQuery = (text: string) => {
+  return useQuery({
+    queryKey: ['tripSearch', text],
+    queryFn: () => searchTripsByText(text, 1, 9, '', true),
     staleTime: 0,
   });
 };
