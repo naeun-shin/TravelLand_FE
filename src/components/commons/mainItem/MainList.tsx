@@ -2,43 +2,58 @@ import React from 'react';
 import styled from 'styled-components';
 import { CiBookmark } from 'react-icons/ci';
 import CategoryButton from '../buttons/CategoryButton';
+import { useNavigate } from 'react-router-dom';
 
 interface ListItemProps {
-  rank: string;
+  // rank: string;
+  tripId: number;
+  placeName?: string;
+  area: string;
+  content: string;
   title: string;
   location: string;
-  description: string;
-  categories: string[];
-  imageUrl: string;
-  startDate: string;
-  endDate: string;
+  hashtagList: string[];
+  thumbnailUrl: string;
+  tripStartDate: string;
+  tripEndDate: string;
 }
 
 interface MainListProps {
   items: ListItemProps[];
 }
 
-const MainList: React.FC<MainListProps> = ({ items = [] }) => {
+const MainList: React.FC<MainListProps> = ({ items }) => {
+  const navigate = useNavigate();
+
+  const handleGoToDetail = (tripId: number) => {
+    navigate(`/travelDetail/${tripId}`);
+  };
+
   return (
     <MainListContainer>
       {items.map((item, index) => (
         <ItemContainer key={index}>
           <ImageSection>
-            <Image src={item.imageUrl} alt="이미지" />
+            <Image src={item.thumbnailUrl} alt="이미지" />
             <BookmarkIcon />
           </ImageSection>
           <TextSection>
-            <Rank>{index + 1}</Rank>
-            <Title>
-              {item.location} | {item.startDate} - {item.endDate}
-            </Title>
-            <MainTitle>{item.title}</MainTitle>
-            <Content>{item.description}</Content>
             <CategoriesContainer>
-              {item.categories.map((category, categoryIndex) => (
+              {item.hashtagList.map((category, categoryIndex) => (
                 <CategoryButton key={categoryIndex} title={category} />
               ))}
             </CategoriesContainer>
+            <Rank>{index + 1}</Rank>
+            <Title>
+              {item.area} | {item.tripStartDate} - {item.tripEndDate}
+            </Title>
+            <MainTitle onClick={() => handleGoToDetail(item.tripId)}>
+              {item.title}
+            </MainTitle>
+            <Content>
+              {item.content}...{' '}
+              <span onClick={() => handleGoToDetail(item.tripId)}>더보기</span>{' '}
+            </Content>
           </TextSection>
         </ItemContainer>
       ))}
@@ -74,15 +89,15 @@ const BookmarkIcon = styled(CiBookmark)`
 `;
 
 const Rank = styled.div`
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  background: #fff;
+  /* position: absolute; */
+  /* top: 10px; */
+  /* left: 10px; */
+  /* background: #fff; */
   padding: 5px 10px;
-  margin-top: 20px;
+  /* margin-top: 20px; */
   color: #5ac8ec;
   font-family: 'Chab'; /* 다른 폰트 적용 */
-  font-size: 48px;
+  font-size: 36px;
   /* font-size: 3rem; */
   font-weight: lighter;
 `;
@@ -109,27 +124,36 @@ const ImageSection = styled.div`
 const TextSection = styled.div`
   flex: 3;
   position: relative;
-  padding: 20px;
+  padding: 15px;
 `;
 
 const Title = styled.div`
-  margin-top: 70px;
+  /* margin-top: 70px; */
+  padding: 5px 10px;
   color: #333;
   font-size: 14px;
   font-weight: 600;
 `;
 
 const MainTitle = styled.div`
+  padding: 5px 10px;
   margin-top: 10px;
   color: #000;
   font-size: 22px;
   font-weight: 600;
+
+  cursor: pointer;
 `;
 
 const Content = styled.div`
+  padding: 5px 10px;
   margin: 10px 0 10px;
   color: #000;
   font-size: 17px;
+
+  span {
+    cursor: pointer;
+  }
 `;
 
 const Image = styled.img`
@@ -143,8 +167,8 @@ const CategoriesContainer = styled.div`
   flex-wrap: wrap;
   justify-content: flex-start;
   align-items: flex-start;
-  margin-top: 3px;
-  gap: 4px;
-  height: 100px;
-  overflow: hidden;
+  /* margin-top: 3px; */
+  gap: 2px;
+  /* height: 100px;
+  overflow: hidden;*/
 `;

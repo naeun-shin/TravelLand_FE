@@ -1,95 +1,97 @@
 import React, { useState } from 'react';
-import { IoLocationSharp } from 'react-icons/io5';
+// import { IoLocationSharp } from 'react-icons/io5';
 import * as S from './Search.style';
 import styled from 'styled-components';
 import CategoryButton from '../commons/buttons/CategoryButton';
+import {
+  useGetSearchResultAreaQuery,
+  useGetSearchResultHashtagQuery,
+} from '@/hooks/useQuery';
+import { useLocation, useNavigate } from 'react-router-dom';
 
-interface IPlaceNameProps {
-  name: string;
+// interface IPlaceNameProps {
+//   name: string;
+// }
+
+interface SearchResult {
+  tripId: number;
+  thumbnailUrl: string;
+  area: string;
+  tripStartDate: string;
+  tripEndDate: string;
+  title: string;
+  content: string;
+  placeName: string;
+  hashtagList: string[]; // 카테고리는 문자열 배열로 가정합니다.
 }
 
-const PlaceName: React.FC<IPlaceNameProps> = ({ name }) => (
-  <div style={{ color: '#3AB9F0' }}>{name}</div>
-);
+// const PlaceName: React.FC<IPlaceNameProps> = ({ name }) => (
+//   <div style={{ color: '#3AB9F0' }}>{name}</div>
+// );
 
-// 예시 데이터
-const Results = [
-  {
-    imageUrl: '/assets/jejudo_720.jpg',
-    location: '고성시',
-    startDate: '2022-05-01',
-    endDate: '2022-05-05',
-    title: '봄날의 고성, 1박 2일',
-    content:
-      '매우 만족했던 경남 고성 여행 1박 2일 코스, 경남 고성 가볼만한 곳, 고성 드라이브 코스, 고성 투어 1편시작합니다!, 매우 만족했던 경남 고성 여행 1박 2일맞 코스,여행 1박  1박 경남 고성 가볼만한 곳, 고성 드라이브 코스, 경남 고성 가볼만한 곳, 고성 드라이브 코스, 고성 투어 1편시작합니다!',
-    categories: ['자연', '문화', '역사'],
-  },
-  {
-    imageUrl: '/assets/jejudo_720.jpg',
-    location: '고성시',
-    startDate: '2022-05-01',
-    endDate: '2022-05-05',
-    title: '봄날의 고성, 1박 2일',
-    content:
-      '매우 만족했던 경남 고성 여행 1박 2일 코스, 경남 고성 가볼만한 곳, 고성 드라이브 코스, 고성 투어 1편시작합니다!',
-    categories: ['자연', '문화', '역사'],
-  },
-  {
-    imageUrl: '/assets/jejudo_720.jpg',
-    location: '고성시',
-    startDate: '2022-05-01',
-    endDate: '2022-05-05',
-    title: '봄날의 고성, 1박 2일',
-    content:
-      '매우 만족했던 경남 고성 여행 1박 2일 코스, 경남 고성 가볼만한 곳, 고성 드라이브 코스, 고성 투어 1편시작합니다!',
-    categories: ['자연', '문화', '역사'],
-  },
-  {
-    imageUrl: '/assets/jejudo_720.jpg',
-    location: '고성시',
-    startDate: '2022-05-01',
-    endDate: '2022-05-05',
-    title: '봄날의 고성, 1박 2일',
-    content:
-      '매우 만족했던 경남 고성 여행 1박 2일 코스, 경남 고성 가볼만한 곳, 고성 드라이브 코스, 고성 투어 1편시작합니다!',
-    categories: ['자연', '문화', '역사'],
-  },
-  {
-    imageUrl: '/assets/jejudo_720.jpg',
-    location: '고성시',
-    startDate: '2022-05-01',
-    endDate: '2022-05-05',
-    title: '봄날의 고성, 1박 2일',
-    content:
-      '매우 만족했던 경남 고성 여행 1박 2일 코스, 경남 고성 가볼만한 곳, 고성 드라이브 코스, 고성 투어 1편시작합니다!',
-    categories: ['자연', '문화', '역사'],
-  },
-];
+// 타입 안전성을 위한 추가적인 검사를 할 수 있습니다.
+const validateData = (data: any): data is SearchResult[] => {
+  return (
+    Array.isArray(data) && data.every((item) => item.hasOwnProperty('tripId'))
+  );
+};
 
 const ResultsContent: React.FC = () => {
-  const [activeTab, setActiveTab] = useState(0); // 선택된 탭의 인덱스를 추적
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { area, hashtag } = location.state || {}; // Assume location.state could be undefined
 
-  const placeName = '고성시';
-  const place = ['조계사', '경인미술관', '숭례문'];
+  const [activeTab, setActiveTab] = useState(0); // 선택된 탭의 인덱스를 추적
+  const [page, _] = useState<number>(1);
+  const [size] = useState<number>(9);
+  const [sortBy] = useState<string>('createdAt');
+  const [isAsc] = useState<boolean>(false);
+
+  console.log('area ', area);
+  console.log('hashtag ', hashtag);
+
+  const searchAreaParams = { area, page, size, sortBy, isAsc };
+  const searchHashtagParams = { hashtag, page, size, sortBy, isAsc };
+
+  // Custom hooks for fetching data
+  const {
+    data: areaResults,
+    isLoading: areaLoading,
+    isError: areaError,
+  } = useGetSearchResultAreaQuery(searchAreaParams);
+  const {
+    data: hashtagResults,
+    isLoading: hashtagLoading,
+    isError: hashtagError,
+  } = useGetSearchResultHashtagQuery(searchHashtagParams);
+
+  const handleGoToDetail = (tripId: number) => {
+    navigate(`/travelDetail/${tripId}`);
+  };
+  if (areaLoading || hashtagLoading) return <div>Loading...</div>;
+  if (areaError || hashtagError) return <div>Error loading data</div>;
+
+  const results = area ? areaResults : hashtagResults;
+  console.log(results);
+  if (!results || !validateData(results)) return <div>데이터가 없습니다!</div>; // 데이터가 유효한 배열인지 확인
 
   return (
     <S.ResultContainer>
-      <S.ResultBox>
+      {/* <S.ResultBox>
         <S.ResultTitle>
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <PlaceName name={placeName} />
             <span style={{ marginLeft: '0.3rem' }}>주변에 가볼만한 곳</span>
           </div>
         </S.ResultTitle>
-      </S.ResultBox>
-      <S.TabContainer>
+      </S.ResultBox> */}
+      {/* <S.TabContainer>
         {place.map((tab) => (
           <S.TabButton key={tab}>
             <IoLocationSharp /> {tab}
           </S.TabButton>
         ))}
-      </S.TabContainer>
-
+      </S.TabContainer> */}
       <DivWrapper>
         <div>
           <SearchTitle
@@ -100,28 +102,35 @@ const ResultsContent: React.FC = () => {
           </SearchTitle>
         </div>
         <Sort>
-          <SearchTitle
+          {/* <SearchTitle
             className={activeTab === 1 ? 'active' : ''}
             onClick={() => setActiveTab(1)}
           >
             여행 플랜
-          </SearchTitle>
+          </SearchTitle> */}
         </Sort>
       </DivWrapper>
       <S.ResultsContainer>
-        {Results.map((data, index) => (
+        {results.map((result: SearchResult, index: number) => (
           <S.ResultItem key={index}>
-            <ThumbnailImage src={data.imageUrl} alt="썸네일" />
+            <ThumbnailImage src={result.thumbnailUrl} alt={result.title} />
             <S.ContentWrapper>
               <Location>
-                {data.location} | {`${data.startDate} - ${data.endDate}`}
+                {result.area} |{' '}
+                {`${result.tripStartDate} - ${result.tripEndDate}`}
               </Location>
-              {/* <DateRange>{`${data.startDate} - ${data.endDate}`}</DateRange> */}
-              <S.ItemTitle>{data.title}</S.ItemTitle>
-              <S.ItemContent>{data.content}</S.ItemContent>
+              <S.ItemTitle onClick={() => handleGoToDetail(result.tripId)}>
+                {result.title}
+              </S.ItemTitle>
+              <S.ItemContent>
+                {result.content}...
+                <span onClick={() => handleGoToDetail(result.tripId)}>
+                  더보기
+                </span>
+              </S.ItemContent>
               <CategoriesContainer>
-                {data.categories.map((category, categoryIndex) => (
-                  <CategoryButton key={categoryIndex} title={category} />
+                {result.hashtagList.map((hashTag: string, idx: number) => (
+                  <CategoryButton key={idx} title={hashTag} />
                 ))}
               </CategoriesContainer>
             </S.ContentWrapper>

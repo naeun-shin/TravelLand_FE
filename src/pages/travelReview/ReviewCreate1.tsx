@@ -1,12 +1,9 @@
-// import Header from '@/components/layouts/Header';
 import ReDesignHeader from '@/components/layouts/Header2';
 import ReviewCreate from '@/components/reviews/reviewIndex/TReviewCreate';
 import { useState } from 'react';
-// import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 const ReviewCreate1 = () => {
-  // const navigate = useNavigate();
   const [step, _] = useState<number>(1);
 
   return (
@@ -32,7 +29,7 @@ const CenteredContainer = styled.div`
   flex-direction: column;
   width: 100%;
   margin: 0 auto;
-  margin-top: 120px;
+  /* margin-top: 120px; */
 
   h2 {
     font-size: 24px;

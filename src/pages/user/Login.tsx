@@ -19,26 +19,29 @@ const Login: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
       <LoginModal isOpen={isOpen} onClose={onClose}>
         <S.LoginStyle>
           <div>
-            <h2>SNS 계정으로 로그인 하기</h2>
             <Button
-              text="X"
               onClick={() => {
                 onClose();
               }}
               borderColor="transparent"
-              borderRadius="50%"
               width="50px"
               height="50px"
               color="white"
               textColor="black"
-            />
+            >
+              <img src="/assets/icons/grayEsc.svg" />
+            </Button>
           </div>
+          <h1>SNS 계정으로 로그인 하기</h1>
           <img
-            src="/assets/kakao/kakao_login_medium_wide.png"
+            src="/assets/icons/kakaoLoginButton.svg"
             onClick={loginWithKakao}
-            style={{ borderRadius: '25px' }}
+            style={{ borderRadius: '25px', width: '400px' }}
           />
-          <p> "떠나볼까"는 소셜 로그인 기반으로 정보를 수집합니다.</p>
+          <h4>
+            {' '}
+            <span>"떠나볼까"</span>는 소셜 로그인 기반으로 정보를 수집합니다.
+          </h4>
         </S.LoginStyle>
       </LoginModal>
     </>
