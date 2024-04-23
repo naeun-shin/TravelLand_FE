@@ -77,21 +77,21 @@ const ResultsContent: React.FC = () => {
 
   return (
     <S.ResultContainer>
-      {/* <S.ResultBox>
+      <S.ResultBox>
         <S.ResultTitle>
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            <PlaceName name={placeName} />
+          {/* <div style={{ display: 'flex', alignItems: 'center' }}>
+            <PlaceName name={results.placeName} />
             <span style={{ marginLeft: '0.3rem' }}>주변에 가볼만한 곳</span>
-          </div>
+          </div> */}
         </S.ResultTitle>
-      </S.ResultBox> */}
-      {/* <S.TabContainer>
-        {place.map((tab) => (
+      </S.ResultBox>
+      <S.TabContainer>
+        {/* {place.map((tab) => (
           <S.TabButton key={tab}>
             <IoLocationSharp /> {tab}
           </S.TabButton>
-        ))}
-      </S.TabContainer> */}
+        ))} */}
+      </S.TabContainer>
       <DivWrapper>
         <div>
           <SearchTitle
