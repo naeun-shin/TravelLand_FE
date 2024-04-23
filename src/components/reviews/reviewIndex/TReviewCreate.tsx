@@ -33,7 +33,7 @@ const ReviewCreate = () => {
   const [hasAttemptedSubmit, setHasAttemptedSubmit] = useState<boolean>(false);
 
   useEffect(() => {
-    // 상태가 바뀔 때마다 로컬 스토리지를 업데이트하지 않고, 다음 버튼 클릭 시에만 업데이트합니다.
+    // 상태가 바뀔 때마다 업데이트 X / 다음 버튼 클릭 시에만 업데이트됨
     const tripData = {
       title,
       isPublic,
@@ -62,7 +62,7 @@ const ReviewCreate = () => {
   const handleCostChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value; // 입력값
     const parsedValue = parseFloat(value); // 입력값을 숫자로 변환
-    // 입력값이 숫자가 아니거나 빈 문자열이 아닌 경우에만 예산 값을 설정합니다.
+    // 입력값이 숫자가 아니거나 빈 문자열이 아닌 경우에만 예산 값을 설정
     if (!isNaN(parsedValue) || value === '') {
       setCost(value); // 입력값을 예산 상태 변수에 설정
     }
@@ -82,7 +82,7 @@ const ReviewCreate = () => {
   // '다음' 버튼 클릭을 처리
   const handleNextClick = () => {
     setHasAttemptedSubmit(true);
-    // 필수 입력 사항이 모두 작성되었는지 확인
+    // 필수 입력 사항 확인
     if (
       title === '' ||
       address === '' ||
@@ -102,7 +102,7 @@ const ReviewCreate = () => {
       cost: parseFloat(cost),
       tripStartDate,
       tripEndDate,
-      // 2단계에서 입력받을 나머지 데이터들 일단 빈값으로 둠
+      // 2단계에서 입력받을 나머지 데이터들 일단 빈값으로 둠!
       content: '',
       hashTag: [],
     };
