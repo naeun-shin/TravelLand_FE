@@ -48,6 +48,7 @@ const TReviewCreate3 = () => {
     onSuccess: (data) => {
       console.log('여행 정보가 성공적으로 등록되었습니다.', data);
       alert('여행 정보 작성 성공!');
+      localStorage.removeItem('reviewState');
       navigate('/travelReview');
     },
     onError: (error) => {
@@ -118,7 +119,7 @@ const TReviewCreate3 = () => {
               />
             </div>
             <ToggleButton
-              isChecked={!isPublic}
+              isChecked={isPublic}
               onToggle={() => setIsPublic(!isPublic)}
             />
           </ReviewBoxWithSpaceBetween>

@@ -21,13 +21,13 @@ const ResultsContent: React.FC = () => {
   const placeName = '고성시';
   const place = ['조계사', '경인미술관', '숭례문'];
 
-  // 게시물 클릭 핸들러
+  // 게시물 클릭 (상세보기이동)
   const handleItemClick = (tripId: number) => {
-    navigate(`/travelDetail/${tripId}`); // 여기에 경로를 설정하세요. 경로는 실제 라우트 설정에 따라 달라질 수 있습니다.
+    navigate(`/travelDetail/${tripId}`);
   };
 
   useEffect(() => {
-    // location.state에서 searchData를 확인하고 상태를 설정합니다.
+    // location.state에서 searchData를 확인하고 상태를 설정
     const data = location.state?.searchData || [];
     setSearchResults(data);
   }, [location]);

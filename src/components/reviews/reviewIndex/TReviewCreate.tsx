@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ToggleButton from '@/components/commons/buttons/ToggleButton';
 import { ModernInput } from '@/components/commons/inputs/Input';
@@ -9,22 +9,44 @@ import {
   Input,
   Label,
 } from '@/pages/travelReview/TravelReview.styles';
-// import { TripData } from '@/api/interfaces/reviewInterface';
 
 const ReviewCreate = () => {
   const navigate = useNavigate();
+  const savedState = JSON.parse(localStorage.getItem('reviewState') || '{}');
+
   // 상태 관리 변수들
-  const [isPublic, setIsPublic] = useState<boolean>(true);
-  const [title, setTitle] = useState<string>('');
-  const [cost, setCost] = useState<number>(0);
-  const [address, setAddress] = useState<string>('');
-  const [tripStartDate, setTripStartDate] = useState<string>('');
-  const [tripEndDate, setTripEndDate] = useState<string>('');
-  const [placeName, setPlaceName] = useState<string>('');
+  const [title, setTitle] = useState<string>(savedState.title || '');
+  const [isPublic, setIsPublic] = useState<boolean>(
+    savedState.isPublic ?? true,
+  );
+  const [cost, setCost] = useState<string>(savedState.cost?.toString() || '');
+  const [address, setAddress] = useState<string>(savedState.address || '');
+  const [tripStartDate, setTripStartDate] = useState<string>(
+    savedState.tripStartDate || '',
+  );
+  const [tripEndDate, setTripEndDate] = useState<string>(
+    savedState.tripEndDate || '',
+  );
+  const [placeName, setPlaceName] = useState<string>(
+    savedState.placeName || '',
+  );
   const [hasAttemptedSubmit, setHasAttemptedSubmit] = useState<boolean>(false);
 
-  // 각 입력 필드의 변화를 다루는 함수들
+  useEffect(() => {
+    // 상태가 바뀔 때마다 로컬 스토리지를 업데이트하지 않고, 다음 버튼 클릭 시에만 업데이트합니다.
+    const tripData = {
+      title,
+      isPublic,
+      address,
+      placeName,
+      cost,
+      tripStartDate,
+      tripEndDate,
+    };
+    localStorage.setItem('reviewState', JSON.stringify(tripData));
+  }, [title, isPublic, address, placeName, cost, tripStartDate, tripEndDate]);
 
+  // 각 입력 필드의 변화를 다루는 함수들
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
   };
@@ -38,7 +60,12 @@ const ReviewCreate = () => {
     setPlaceName(e.target.value);
   };
   const handleCostChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCost(parseFloat(e.target.value) || 0);
+    const value = e.target.value; // 입력값
+    const parsedValue = parseFloat(value); // 입력값을 숫자로 변환
+    // 입력값이 숫자가 아니거나 빈 문자열이 아닌 경우에만 예산 값을 설정합니다.
+    if (!isNaN(parsedValue) || value === '') {
+      setCost(value); // 입력값을 예산 상태 변수에 설정
+    }
   };
   const handleStartDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTripStartDate(e.target.value);
@@ -60,7 +87,6 @@ const ReviewCreate = () => {
       title === '' ||
       address === '' ||
       placeName === '' ||
-      cost === 0 ||
       tripStartDate === '' ||
       tripEndDate === ''
     ) {
@@ -73,13 +99,14 @@ const ReviewCreate = () => {
       isPublic,
       address,
       placeName,
-      cost,
+      cost: parseFloat(cost),
       tripStartDate,
       tripEndDate,
       // 2단계에서 입력받을 나머지 데이터들 일단 빈값으로 둠
       content: '',
       hashTag: [],
     };
+    localStorage.setItem('reviewState', JSON.stringify(tripData));
     navigate('/reviewCreate/2', { state: tripData });
   };
 
@@ -106,6 +133,7 @@ const ReviewCreate = () => {
                   onChange={handleTitleChange}
                   fontSize={16}
                   fontWeight={'bold'}
+                  value={title}
                 />
                 {hasAttemptedSubmit && title === '' && (
                   <ErrorMessage>제목을 입력해주세요</ErrorMessage>
@@ -113,7 +141,7 @@ const ReviewCreate = () => {
               </div>
 
               <div>
-                <ToggleButton isChecked={!isPublic} onToggle={toggleIsPublic} />
+                <ToggleButton isChecked={isPublic} onToggle={toggleIsPublic} />
               </div>
             </ReviewBoxWithSpaceBetween>
           </div>
@@ -141,6 +169,7 @@ const ReviewCreate = () => {
                     border="transparent"
                     fontSize={16}
                     onChange={handleAddressChange}
+                    value={address}
                   />
                 </ReviewContent>
               </ReviewBox>
@@ -163,6 +192,7 @@ const ReviewCreate = () => {
                     border="transparent"
                     fontSize={16}
                     onChange={handlePlaceNameChange}
+                    value={placeName}
                   />
                 </ReviewContent>
               </ReviewBox>
@@ -174,7 +204,7 @@ const ReviewCreate = () => {
                     <TitleWithCircle>예산</TitleWithCircle>
                   </div>
                   {/* 예산 입력 여부 확인 */}
-                  {hasAttemptedSubmit && cost === 0 && (
+                  {hasAttemptedSubmit && cost === '' && (
                     <ErrorMessage>예산을 입력해주세요</ErrorMessage>
                   )}
                   <ModernInput
@@ -185,6 +215,7 @@ const ReviewCreate = () => {
                     border="transparent"
                     fontSize={16}
                     onChange={handleCostChange}
+                    value={cost}
                   />
                 </ReviewContent>
               </ReviewBox>

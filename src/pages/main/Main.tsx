@@ -21,7 +21,6 @@ import {
   useGetMainRankListQuery,
   useGetMainSearchQuery,
 } from '@/hooks/useQuery';
-import { searchTripsByText } from '@/api/searchAxios';
 
 interface MainProps {
   onClick?: () => void;
@@ -43,10 +42,10 @@ const Main: React.FC<MainProps> = () => {
 
   // console.log(TopTenData);
 
-  // // 해시태그
-  // const { data: hashTagData } = useGetMainHashtagListQuery();
+  // 해시태그
+  const { data: hashTagData } = useGetMainHashtagListQuery();
 
-  // console.log(hashTagData);
+  console.log(hashTagData);
 
   // 검색 아이콘 클릭 시 호출될 함수
   const handleSearchIconClick = () => {
@@ -86,38 +85,6 @@ const Main: React.FC<MainProps> = () => {
       closeSearchModal();
     }
   };
-
-  // 검색 아이콘 클릭 시 호출될 함수
-  /**
- > planList.tsx 파일 -> 15 ~ 27줄 참고해서 아래 코드 적용 필요!!
-
- * 1. useQuery -> useSearchQuery(); : 폴더 : hooks
- *    - export const useMyTripListQuery = (tripListParams: TripListParams) => {
-  return useQuery({
-    queryKey: ['myTripList', tripListParams],
-    queryFn: () => getMyTripList(tripListParams),
-    staleTime: 0,
-  });
-};
-
-  2. handleSearchIconClick 함수에서 실행
-
-  const handleSearchIconClick = (query : string) => {
-    console.log(query);
-
-  메인 -> const {data : searchData} = useSearchQuery();
- console.log(searchData);
-  
- 3. navigate -> state -> searchData 담아서 전달
-    if(query.trim()) {
-      navigate("결과페이지",searchData)
-    }else{
-     검색모달로 navigate("검색 모달 페이지")
-    }
-
-
-  }
-  */
 
   // 모달을 여는 함수
   const openSearchModal = () => {
