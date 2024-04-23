@@ -92,8 +92,48 @@ export const deleteTrip = async (
   tripId: number,
 ): Promise<AxiosResponse<any>> => {
   try {
-    const response = await instance.delete(`/v1/trips/${tripId}`);
+    const response = await instanceWithToken.delete(`/v1/trips/${tripId}`);
     return response;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+// 여행정보 좋아요 등록
+export const createLikeTrip = async (tripId: number) => {
+  try {
+    return await instanceWithToken.post(`/v1/trips/${tripId}/like`);
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+//여행정보 좋아요 취소
+export const cancelLikeTrip = async (tripId: number) => {
+  try {
+    return await instanceWithToken.delete(`/v1/trips/${tripId}/like`);
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+// 여행정보 스크랩 등록
+export const createScrapTrip = async (tripId: number) => {
+  try {
+    return await instanceWithToken.post(`/v1/trips/${tripId}/scrap`);
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+// 여행정보 스크랩 취소
+export const cancelScrapTrip = async (tripId: number) => {
+  try {
+    return await instanceWithToken.delete(`/v1/trips/${tripId}/scrap`);
   } catch (error) {
     console.error(error);
     throw error;

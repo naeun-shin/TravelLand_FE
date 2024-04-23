@@ -15,4 +15,19 @@ const PagenationStyle = styled.div`
   }
 `;
 
-export { PagenationStyle };
+const PlanPagenationStyle = styled.div`
+  padding-top: 50%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+
+  button {
+    padding: 10px;
+    cursor: pointer;
+
+    background-color: white;
+    border: none;
+  }
+`;
+
+export { PagenationStyle, PlanPagenationStyle };

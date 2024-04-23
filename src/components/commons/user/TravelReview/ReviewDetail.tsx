@@ -7,6 +7,7 @@ import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { deleteTrip } from '@/api/reviewAxios';
 import { useNavigate } from 'react-router-dom';
+// import ReDesignHeader from '@/components/layouts/Header2';
 
 interface ReviewDetailHeaderProps {
   tripDetail: TripDetail;
@@ -42,46 +43,49 @@ const ReviewDetailHeader = ({ tripDetail }: ReviewDetailHeaderProps) => {
       : '기본이미지URL';
 
   return (
-    <S.Container>
-      <S.HeaderBox>
-        <S.ButtonBox>
-          <Button
-            text="삭제하기"
-            onClick={() => handleDelete(tripDetail.tripId)}
-          />
-          <Button text="수정하기" />
-        </S.ButtonBox>
-      </S.HeaderBox>
-      <S.UserSection>
-        <S.UserImage src={imageUrl} alt="사진" /> {/* 수정된 부분 */}
-        <S.UserName>{tripDetail.nickname}님</S.UserName>
-      </S.UserSection>
-      <S.ImageBox>
-        {tripDetail.imageUrlList &&
-          tripDetail.imageUrlList.map((url, index) => (
-            <img
-              key={index}
-              src={url}
-              alt={`리뷰 이미지 ${index + 1}`}
-              style={{
-                display: activeIndex === index ? 'block' : 'none',
-                width: '100%',
-                height: '450px',
-              }}
+    <>
+      {/* <ReDesignHeader needSearchInput={true} /> */}
+      <S.Container>
+        <S.HeaderBox>
+          <S.ButtonBox>
+            <Button
+              text="삭제하기"
+              onClick={() => handleDelete(tripDetail.tripId)}
             />
-          ))}
-        <S.SliderDots>
+            <Button text="수정하기" />
+          </S.ButtonBox>
+        </S.HeaderBox>
+        <S.UserSection>
+          <S.UserImage src={imageUrl} alt="사진" /> {/* 수정된 부분 */}
+          <S.UserName>{tripDetail.nickname}님</S.UserName>
+        </S.UserSection>
+        <S.ImageBox>
           {tripDetail.imageUrlList &&
-            tripDetail.imageUrlList.map((_, index) => (
-              <S.Dot
+            tripDetail.imageUrlList.map((url, index) => (
+              <img
                 key={index}
-                active={index === activeIndex}
-                onClick={() => setActiveIndex(index)}
+                src={url}
+                alt={`리뷰 이미지 ${index + 1}`}
+                style={{
+                  display: activeIndex === index ? 'block' : 'none',
+                  width: '100%',
+                  height: '450px',
+                }}
               />
             ))}
-        </S.SliderDots>
-      </S.ImageBox>
-    </S.Container>
+          <S.SliderDots>
+            {tripDetail.imageUrlList &&
+              tripDetail.imageUrlList.map((_, index) => (
+                <S.Dot
+                  key={index}
+                  active={index === activeIndex}
+                  onClick={() => setActiveIndex(index)}
+                />
+              ))}
+          </S.SliderDots>
+        </S.ImageBox>
+      </S.Container>
+    </>
   );
 };
 
