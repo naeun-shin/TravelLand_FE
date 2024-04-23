@@ -3,9 +3,13 @@ import { getPlanDetail, getPlanList } from '@/api/planAxios';
 import { getMyPlanList, getMyTripList, getUserInfo } from '@/api/userAxios';
 import { PlanListParams } from '@/api/interfaces/planInterface';
 import { TripListParams } from '../api/interfaces/reviewInterface';
-import { getMainHashTagRankList, getMainTopTenRankList } from '@/api/mainAxios';
-// import { getVoteResult } from '@/api/voteAxios';
-// import { UserInfoData } from '@/api/interfaces/userInterface';
+import { getMainRandomList, getMainTopTenRankList } from '@/api/mainAxios';
+import {
+  getSearchTopArea,
+  getTopHashtags,
+  searchTripsByArea,
+  searchTripsByHashtag,
+} from '@/api/searchAxios';
 
 export const usePlanListQuery = (planListParams: PlanListParams) => {
   return useQuery({
@@ -51,6 +55,7 @@ export const useGetUerInfoQuery = () => {
   });
 };
 
+// 상위 10개
 export const useGetMainRankListQuery = () => {
   return useQuery({
     queryKey: ['mainRank'],
@@ -59,10 +64,53 @@ export const useGetMainRankListQuery = () => {
   });
 };
 
-export const useGetMainHashtagListQuery = () => {
+// 메인 랜덤 8개
+export const useGetMainRandomListQuery = () => {
   return useQuery({
-    queryKey: ['mainHashTag'],
-    queryFn: getMainHashTagRankList,
+    queryKey: ['mainRandom'],
+    queryFn: getMainRandomList,
     staleTime: 0,
+  });
+};
+
+// 인기 해시태그 TOP 5
+export const useGetHahtagListQuery = () => {
+  return useQuery({
+    queryKey: ['topHashTag'],
+    queryFn: getTopHashtags,
+    staleTime: 0,
+  });
+};
+
+// 인기 지역 TOP 5
+export const useGetAreaListQuery = () => {
+  return useQuery({
+    queryKey: ['topArea'],
+    queryFn: getSearchTopArea,
+    staleTime: 0,
+  });
+};
+
+// 지역 검색
+export const useGetSearchResultAreaQuery = (
+  searchAreaParams: SearchAreaParams,
+) => {
+  return useQuery({
+    queryKey: ['resultArea', searchAreaParams],
+    queryFn: () => searchTripsByArea(searchAreaParams),
+    staleTime: 0,
+    enabled: Boolean(searchAreaParams.area),
+  });
+};
+
+// 지역 검색
+export const useGetSearchResultHashtagQuery = (
+  searchHashtagParams: SearchHashtagParams,
+) => {
+  return useQuery({
+    queryKey: ['resultHashtag', searchHashtagParams],
+    queryFn: () => searchTripsByHashtag(searchHashtagParams),
+    staleTime: 0,
+    enabled: Boolean(searchHashtagParams.hashtag),
   });
 };

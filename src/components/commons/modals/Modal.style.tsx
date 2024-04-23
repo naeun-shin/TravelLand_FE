@@ -101,6 +101,27 @@ export const LoginModalOverlay = styled.div`
   overflow: hidden; // 내부 컨텐츠가 넘치면 숨김
   z-index: 10;
   /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); // 모달에 그림자 효과 추가 */
+
+  div {
+    width: 500px;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  h1 {
+    font-size: 28px;
+    font-weight: 400;
+    padding-bottom: 25px;
+  }
+
+  h4 {
+    font-size: 16px;
+    font-weight: 400;
+  }
+
+  span {
+    font-weight: 600;
+  }
 `;
 
 export const VoteModalOverlay = styled.div`
