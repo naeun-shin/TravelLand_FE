@@ -11,7 +11,7 @@ const ReviewContent = () => {
     <>
       <Container>
         <CommentsList>
-          <Comment>
+          {/* <Comment>
             <UserAvatar />
             <div>
               <CommentName>신*은님</CommentName>
@@ -38,10 +38,10 @@ const ReviewContent = () => {
               <CommentName>김*원님</CommentName>
               <CommentText>좋은 정보 감사합니다~😊</CommentText>
             </div>
-          </Comment>
+          </Comment> */}
         </CommentsList>
       </Container>
-      <ViewMore>댓글 더보기</ViewMore>
+      {/* <ViewMore>댓글 더보기</ViewMore> */}
     </>
   );
 };
@@ -49,7 +49,7 @@ const ReviewContent = () => {
 export default ReviewContent;
 
 const Container = styled.div`
-  width: 1100px;
+  width: 1400px;
   margin: 0 auto;
   padding: 16px;
   border-radius: 8px;
@@ -77,37 +77,37 @@ const CommentsList = styled.ul`
   padding: 0;
 `;
 
-const Comment = styled.li`
-  display: flex;
-  align-items: center;
-  padding: 15px 0;
-  border-top: 1px solid #bbb;
-`;
+// const Comment = styled.li`
+//   display: flex;
+//   align-items: center;
+//   padding: 15px 0;
+//   border-top: 1px solid #bbb;
+// `;
 
-const UserAvatar = styled.div`
-  width: 40px;
-  height: 40px;
-  border-radius: 20px;
-  background: #ddd;
-  margin-right: 8px;
-`;
+// const UserAvatar = styled.div`
+//   width: 40px;
+//   height: 40px;
+//   border-radius: 20px;
+//   background: #ddd;
+//   margin-right: 8px;
+// `;
 
-const CommentName = styled.div`
-  font-size: 16px;
-  font-weight: 600;
-`;
+// const CommentName = styled.div`
+//   font-size: 16px;
+//   font-weight: 600;
+// `;
 
-const CommentText = styled.div`
-  padding-top: 5px;
-  color: #4a4a4a;
-`;
+// const CommentText = styled.div`
+//   padding-top: 5px;
+//   color: #4a4a4a;
+// `;
 
-const ViewMore = styled.div`
-  text-align: center;
-  margin-top: 10px;
-  width: 100%;
-  padding: 8px 0;
-  cursor: pointer;
-  padding-bottom: 40px;
-  border-bottom: 4px solid #ddd;
-`;
+// const ViewMore = styled.div`
+//   text-align: center;
+//   margin-top: 10px;
+//   width: 100%;
+//   padding: 8px 0;
+//   cursor: pointer;
+//   padding-bottom: 40px;
+//   border-bottom: 4px solid #ddd;
+// `;

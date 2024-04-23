@@ -61,13 +61,15 @@ const Column = styled.div`
 `;
 
 const ListItem = styled.div`
-  display: flex; // 수평 정렬
-  align-items: center; // 세로 중앙 정렬
-  border-bottom: 1px solid #eaeaea; // 아이템 사이의 구분선
-  padding: 20px 0; // 아이템 내부의 패딩
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #eaeaea;
+  padding: 20px 15px;
   justify-content: space-between;
-
+  box-shadow: 2px 2px 4px rgb(0 0 0 / 19%);
   font-size: 18px;
+  margin: 5px 0px;
+  border-radius: 10px;
 `;
 
 const ListTitle = styled.div`

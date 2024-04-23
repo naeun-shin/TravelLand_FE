@@ -72,7 +72,7 @@ const PlanList = () => {
       {/* 데이터 리스트 컴포넌트 */}
       <List planListData={filteredData} />
       {/* pagination */}
-      <CS.PagenationStyle>
+      <CS.PlanPagenationStyle>
         {pageGroup > 0 && <button onClick={handlePrevGroup}>이전</button>}
         {Array.from(
           {
@@ -94,7 +94,7 @@ const PlanList = () => {
         {(pageGroup + 1) * pageGroupSize < totalPages && (
           <button onClick={handleNextGroup}>다음</button>
         )}
-      </CS.PagenationStyle>
+      </CS.PlanPagenationStyle>
     </>
   );
 };
