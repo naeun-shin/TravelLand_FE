@@ -40,7 +40,7 @@ const Slider = styled.span<{ $isChecked: boolean }>`
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: ${(props) => (props.$isChecked ? '#5AC8EC' : '#5AC8EC')};
+  background-color: ${(props) => (props.$isChecked ? '#5AC8EC' : '#E9E9E9')};
   transition: 0.4s;
   border-radius: 50px;
   /* border: 1px solid black; */

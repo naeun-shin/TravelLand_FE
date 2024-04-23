@@ -5,7 +5,7 @@ import {
   TripDetail,
   TripListParams,
 } from './interfaces/reviewInterface';
-// import { CreateTripRequest } from '@/pages/travelReview/TravelCreatePage';
+import { Cookies } from 'react-cookie';
 
 // 여행 정보 등록
 export const createTrip = async (formData: FormData): Promise<TripData> => {
@@ -74,8 +74,13 @@ export const updateTrip = async (
 export const getTripDetail = async (
   tripId: number,
 ): Promise<AxiosResponse<TripDetail>> => {
+  const cookie = new Cookies();
   try {
-    return await instance.get(`/v1/trips/${tripId}`);
+    if (cookie.get('Authorization')) {
+      return await instanceWithToken.get(`/v1/trips/${tripId}`);
+    } else {
+      return await instance.get(`/v1/trips/${tripId}`);
+    }
   } catch (error) {
     console.error(error);
     throw error;
