@@ -11,10 +11,10 @@ export const getMainTopTenRankList = async (): Promise<AxiosResponse<any>> => {
   }
 };
 
-// 인기 해쉬태그 Top5
-export const getMainHashTagRankList = async (): Promise<AxiosResponse<any>> => {
+// 무작위 추천 8개 조회
+export const getMainRandomList = async (): Promise<AxiosResponse<any>> => {
   try {
-    return await instance.get('v1/trips/rank/hashtag');
+    return await instance.get('v1/trips/random');
   } catch (error) {
     throw error;
   }
