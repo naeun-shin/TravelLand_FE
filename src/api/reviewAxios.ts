@@ -8,9 +8,24 @@ import {
 import { Cookies } from 'react-cookie';
 
 // 여행 정보 등록
+// export const createTrip = async (formData: FormData): Promise<TripData> => {
+//   try {
+//     const response = await instanceWithToken.post('/v1/trips', formData, {
+//       headers: {
+//         'Content-Type': 'multipart/form-data',
+//       },
+//     });
+//     return response.data as TripData;
+//   } catch (error) {
+//     console.error(error);
+//     throw error;
+//   }
+// };
+
+// 여행 정보 등록
 export const createTrip = async (formData: FormData): Promise<TripData> => {
   try {
-    const response = await instanceWithToken.post('/v1/trips', formData, {
+    const response = await instance.post('/v1/trips', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },

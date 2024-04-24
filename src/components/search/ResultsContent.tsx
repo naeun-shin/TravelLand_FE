@@ -9,10 +9,10 @@ import {
 } from '@/hooks/useQuery';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-// interface IPlaceNameProps {
-//   name: string;
-// }
-
+interface IPlaceNameProps {
+  name: string;
+}
+        
 interface SearchResult {
   tripId: number;
   thumbnailUrl: string;
@@ -25,10 +25,6 @@ interface SearchResult {
   hashtagList: string[]; // 카테고리는 문자열 배열로 가정합니다.
 }
 
-// const PlaceName: React.FC<IPlaceNameProps> = ({ name }) => (
-//   <div style={{ color: '#3AB9F0' }}>{name}</div>
-// );
-
 // 타입 안전성을 위한 추가적인 검사를 할 수 있습니다.
 const validateData = (data: any): data is SearchResult[] => {
   return (
@@ -36,6 +32,10 @@ const validateData = (data: any): data is SearchResult[] => {
   );
 };
 
+const PlaceName: React.FC<IPlaceNameProps> = ({ name }) => (
+  <div style={{ color: '#3AB9F0' }}>{name}</div>
+);
+  
 const ResultsContent: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -46,9 +46,8 @@ const ResultsContent: React.FC = () => {
   const [size] = useState<number>(9);
   const [sortBy] = useState<string>('createdAt');
   const [isAsc] = useState<boolean>(false);
+  const [searchResults, setSearchResults] = useState<any[]>([]); // 검색 결과를 저장할 상태
 
-  console.log('area ', area);
-  console.log('hashtag ', hashtag);
 
   const searchAreaParams = { area, page, size, sortBy, isAsc };
   const searchHashtagParams = { hashtag, page, size, sortBy, isAsc };
@@ -74,6 +73,24 @@ const ResultsContent: React.FC = () => {
   const results = area ? areaResults : hashtagResults;
   console.log(results);
   if (!results || !validateData(results)) return <div>데이터가 없습니다!</div>; // 데이터가 유효한 배열인지 확인
+
+  // 게시물 클릭 (상세보기이동)
+  const handleItemClick = (tripId: number) => {
+    navigate(`/travelDetail/${tripId}`);
+  };
+
+  useEffect(() => {
+    // location.state에서 searchData를 확인하고 상태를 설정
+    const data = location.state?.searchData || [];
+    setSearchResults(data);
+  }, [location]);
+
+  //
+  useEffect(() => {
+    if (location.state?.searchData) {
+      setSearchResults(location.state.searchData);
+    }
+  }, [location]);
 
   return (
     <S.ResultContainer>
@@ -110,38 +127,48 @@ const ResultsContent: React.FC = () => {
           </SearchTitle> */}
         </Sort>
       </DivWrapper>
+
+      {/* 검색 결과를 화면에 표시 */}
       <S.ResultsContainer>
-        {results.map((result: SearchResult, index: number) => (
-          <S.ResultItem key={index}>
-            <ThumbnailImage src={result.thumbnailUrl} alt={result.title} />
-            <S.ContentWrapper>
-              <Location>
-                {result.area} |{' '}
-                {`${result.tripStartDate} - ${result.tripEndDate}`}
-              </Location>
-              <S.ItemTitle onClick={() => handleGoToDetail(result.tripId)}>
-                {result.title}
-              </S.ItemTitle>
-              <S.ItemContent>
-                {result.content}...
-                <span onClick={() => handleGoToDetail(result.tripId)}>
-                  더보기
-                </span>
-              </S.ItemContent>
-              <CategoriesContainer>
-                {result.hashtagList.map((hashTag: string, idx: number) => (
-                  <CategoryButton key={idx} title={hashTag} />
-                ))}
-              </CategoriesContainer>
-            </S.ContentWrapper>
-          </S.ResultItem>
-        ))}
+        {searchResults.length === 0 ? (
+          <Notfound>해당하는 게시물을 찾을 수 없습니다.</Notfound>
+        ) : (
+          searchResults.map((data, index) => (
+            <S.ResultItem
+              key={index}
+              onClick={() => handleItemClick(data.tripId)}
+            >
+              <ThumbnailImage src={data.thumbnailUrl} alt="썸네일" />
+              <S.ContentWrapper>
+                <Location>
+                  {data.area} | {`${data.tripStartDate} - ${data.tripEndDate}`}
+                </Location>
+                <S.ItemTitle>{data.title}</S.ItemTitle>
+                <S.ItemContent>{data.content}</S.ItemContent>
+                {/* 여기서 map 함수를 호출하기 전에 data.categories가 존재하고 배열인지 확인합니다. */}
+                <CategoriesContainer>
+                  {Array.isArray(data.hashtagList) &&
+                    data.hashtagList.map(
+                      (category: string, categoryIndex: number) => (
+                        <CategoryButton key={categoryIndex} title={category} />
+                      ),
+                    )}
+                </CategoriesContainer>
+              </S.ContentWrapper>
+            </S.ResultItem>
+          ))
+        )}
       </S.ResultsContainer>
     </S.ResultContainer>
   );
 };
 
 export default ResultsContent;
+
+const Notfound = styled.div`
+  font-size: 24px;
+  margin-top: 20px;
+`;
 
 const ThumbnailImage = styled.img`
   width: 280px;

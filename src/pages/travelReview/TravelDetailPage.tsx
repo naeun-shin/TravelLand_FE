@@ -1,6 +1,6 @@
 // import React from 'react'
 import ReviewCard from '@/components/commons/cards/ReviewCard';
-import ReviewContent from '@/components/commons/user/TravelReview/ReviewDetailContent';
+// import ReviewContent from '@/components/commons/user/TravelReview/ReviewDetailContent';
 import ReviewDetailList from '@/components/commons/user/TravelReview/ReviewDetailList';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
@@ -35,7 +35,7 @@ const TravelDetailPage = () => {
     <>
       {/* <ReviewDetailHeader tripDetail={tripDetail.data} /> */}
       <ReviewDetailList tripDetail={tripDetail.data} />
-      <ReviewContent />
+      {/* <ReviewContent /> */}
       <ReviewCard />
     </>
   );

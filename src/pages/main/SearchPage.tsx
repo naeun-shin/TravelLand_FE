@@ -11,9 +11,14 @@ import { useGetAreaListQuery, useGetHahtagListQuery } from '@/hooks/useQuery';
 interface SearchModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onSearch: () => void; // 수정된 부분
 }
 
-const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
+const SearchModal: React.FC<SearchModalProps> = ({
+  isOpen,
+  onClose,
+  onSearch,
+}) => {
   const navigate = useNavigate();
   const [_, setArea] = useState<string>('');
   const [, setHashtag] = useState<string>('');
@@ -24,18 +29,23 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
   // 인기 지역 (선택박스)
   const { data: areaList } = useGetAreaListQuery();
   const areaItem = areaList?.data;
+  const [isSearchModalOpen, setSearchModalOpen] = useState<boolean>(false);
+
+  const toggleSearchModal = () => {
+    setSearchModalOpen(!isSearchModalOpen);
+  };
 
   useEffect(() => {
-    const handleScroll = (event: Event) => {
+    const handleScroll = (event: WheelEvent) => {
       event.preventDefault();
     };
 
     if (isOpen) {
-      window.addEventListener('scroll', handleScroll, { passive: false });
+      window.addEventListener('wheel', handleScroll, { passive: false });
     }
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('wheel', handleScroll);
     };
   }, [isOpen, areaItem, tagList]);
 
@@ -59,6 +69,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
   // const handleResultpage = () => {
   //   navigate('/results');
   // }
+
   return (
     <>
       <S.ModalOverlay onClick={onClose}>
