@@ -84,6 +84,7 @@ const SearchModal: React.FC<SearchModalProps> = ({
                   title={area}
                   icon={<IoLocationSharp />}
                   onClick={() => handleAreaClick(area)}
+                  cursor="pointer"
                 />
               ))}
             </S.BtnContainer>
@@ -97,6 +98,7 @@ const SearchModal: React.FC<SearchModalProps> = ({
                   title={hashtag}
                   icon={<IoLocationSharp />}
                   onClick={() => handleHashtagClick(hashtag)}
+                  cursor="pointer"
                 />
               ))}
             </S.BtnContainer>

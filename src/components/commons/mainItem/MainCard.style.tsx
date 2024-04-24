@@ -32,6 +32,7 @@ export const ImageContainer = styled.div`
   max-width: 300px;
   height: 250px;
   border-radius: 15px 15px 0 0;
+  cursor: pointer;
 
   img {
     width: 100%;
@@ -54,6 +55,7 @@ export const Title = styled.p`
   font-weight: bold;
   margin-bottom: 7px;
   color: #333;
+  cursor: pointer;
 `;
 
 export const Price = styled.div`

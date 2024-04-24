@@ -84,7 +84,10 @@ const MainCard: React.FC<MainCardProps> = ({ cards = [] }) => {
   return (
     <StyledSlider {...settings}>
       {cards.map((card) => (
-        <S.CardContainer key={card.tripId}>
+        <S.CardContainer
+          key={card.tripId}
+          onClick={() => handleGoToDetailClick(card.tripId)}
+        >
           <S.ImageContainer>
             <img
               src={card.thumbnailUrl || ''}
@@ -98,9 +101,7 @@ const MainCard: React.FC<MainCardProps> = ({ cards = [] }) => {
               </S.Title>
             </div>
             <div>
-              <S.Price onClick={() => handleGoToDetailClick(card.tripId)}>
-                {card.title}
-              </S.Price>
+              <S.Price>{card.title}</S.Price>
             </div>
             <S.CategoriesContainer>
               {card.hashtagList

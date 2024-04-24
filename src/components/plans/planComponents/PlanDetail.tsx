@@ -53,8 +53,8 @@ const PlanDetail: React.FC<ButtonProps> = () => {
   const [isInvitationModalOpen, setIsInvitationModalOpen] = useState(false); // 초대 모달 상태를 관리하는 useState
   const [invitedPeople, _] = useState<string[]>([]); // 초대된 사람 목록을 저장할 상태
 
-  const [isLike, setIsLike] = useState<boolean>(false);
-  const [isScrap, setIsScrap] = useState<boolean>(false);
+  const [likeActive, setLikeActive] = useState(false);
+  const [scrapActive, setScrapActive] = useState(false);
 
   // `id`를 숫자로 변환하기 전에 유효성 검사 수행
   const planId = Number(id);
@@ -64,14 +64,10 @@ const PlanDetail: React.FC<ButtonProps> = () => {
   const planVotes = data?.data.planVotes;
 
   useEffect(() => {
-    if (planDetails?.dayPlans) {
-      setDayPlans(planDetails.dayPlans);
-    }
-    if (planDetails?.isLike) {
-      setIsLike(planDetails.isLike);
-    }
-    if (planDetails?.isScrap) {
-      setIsLike(planDetails.isScrap);
+    if (planDetails) {
+      setDayPlans(planDetails.dayPlans || []);
+      setLikeActive(planDetails.isLike);
+      setScrapActive(planDetails.isScrap);
     }
   }, [planDetails]);
 
@@ -98,8 +94,8 @@ const PlanDetail: React.FC<ButtonProps> = () => {
 
   // 좋아요 기능
   const handleLikeClick = (planId: number) => {
-    !isLike ? likePlan.mutate(planId) : disLikePlan.mutate(planId);
-    setIsLike(!isLike);
+    !likeActive ? likePlan.mutate(planId) : disLikePlan.mutate(planId);
+    setLikeActive(!likeActive);
   };
 
   const scrapPlan = useCreateScrapPlanMutation();
@@ -107,8 +103,8 @@ const PlanDetail: React.FC<ButtonProps> = () => {
 
   // 스크랩 기능
   const handleScrapClick = (planId: number) => {
-    !isScrap ? scrapPlan.mutate(planId) : scrapCancel.mutate(planId);
-    setIsScrap(!isScrap);
+    !scrapActive ? scrapPlan.mutate(planId) : scrapCancel.mutate(planId);
+    setScrapActive(!scrapActive);
   };
 
   // 수정 기능
@@ -182,7 +178,7 @@ const PlanDetail: React.FC<ButtonProps> = () => {
             <div
               onClick={() => handleLikeClick(planDetails.planId)}
               style={{
-                backgroundImage: `url(${isLike ? '/assets/icons/blueHeart.svg' : '/assets/icons/grayHeart.svg'})`,
+                backgroundImage: `url(${likeActive ? '/assets/icons/blueHeart.svg' : '/assets/icons/grayHeart.svg'})`,
                 width: '32px',
                 height: '32px',
                 backgroundSize: 'cover', // 배경 이미지가 div 크기에 맞게 조절
@@ -192,7 +188,7 @@ const PlanDetail: React.FC<ButtonProps> = () => {
             <div
               onClick={() => handleScrapClick(planDetails.planId)}
               style={{
-                backgroundImage: `url(${isScrap ? '/assets/icons/blueBookmark.svg' : '/assets/icons/grayBookmark.svg'})`,
+                backgroundImage: `url(${scrapActive ? '/assets/icons/blueBookmark.svg' : '/assets/icons/grayBookmark.svg'})`,
                 width: '32px',
                 height: '32px',
                 backgroundSize: 'cover', // 배경 이미지가 div 크기에 맞게 조절

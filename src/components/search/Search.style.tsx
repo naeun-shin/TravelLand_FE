@@ -73,6 +73,7 @@ export const BtnContainer = styled.div`
   display: flex;
   justify-content: flex-start;
   flex-wrap: wrap;
+  cursor: pointer;
 `;
 
 export const SearchSection = styled.section`

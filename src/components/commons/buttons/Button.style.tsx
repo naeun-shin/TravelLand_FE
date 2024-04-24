@@ -63,6 +63,7 @@ export const ButtonsWrapper = styled.div`
 export const CategoryButtonStyle = styled.button<{
   hoverColor?: string;
   selected?: boolean;
+  cursor?: string;
 }>`
   display: flex;
   width: fit-content;
@@ -76,7 +77,7 @@ export const CategoryButtonStyle = styled.button<{
   align-items: center;
   text-align: center;
   font-size: 14px;
-  cursor: pointer;
+  cursor: ${(props) => (props.cursor ? 'pointer' : '')};
   white-space: nowrap;
   overflow: hidden;
   margin-right: 3px;
