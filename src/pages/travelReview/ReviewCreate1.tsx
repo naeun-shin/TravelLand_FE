@@ -1,8 +1,6 @@
-// import Header from '@/components/layouts/Header';
 import ReDesignHeader from '@/components/layouts/Header2';
 import ReviewCreate from '@/components/reviews/reviewIndex/TReviewCreate';
 import { useState } from 'react';
-// import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 const ReviewCreate1 = () => {

@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { IoLocationSharp } from 'react-icons/io5';
 import * as S from './Search.style';
 import styled from 'styled-components';
 import CategoryButton from '../commons/buttons/CategoryButton';
-
+import { useNavigate, useLocation } from 'react-router-dom';
 interface IPlaceNameProps {
   name: string;
 }
@@ -12,65 +12,32 @@ const PlaceName: React.FC<IPlaceNameProps> = ({ name }) => (
   <div style={{ color: '#3AB9F0' }}>{name}</div>
 );
 
-// 예시 데이터
-const Results = [
-  {
-    imageUrl: '/assets/jejudo_720.jpg',
-    location: '고성시',
-    startDate: '2022-05-01',
-    endDate: '2022-05-05',
-    title: '봄날의 고성, 1박 2일',
-    content:
-      '매우 만족했던 경남 고성 여행 1박 2일 코스, 경남 고성 가볼만한 곳, 고성 드라이브 코스, 고성 투어 1편시작합니다!, 매우 만족했던 경남 고성 여행 1박 2일맞 코스,여행 1박  1박 경남 고성 가볼만한 곳, 고성 드라이브 코스, 경남 고성 가볼만한 곳, 고성 드라이브 코스, 고성 투어 1편시작합니다!',
-    categories: ['자연', '문화', '역사'],
-  },
-  {
-    imageUrl: '/assets/jejudo_720.jpg',
-    location: '고성시',
-    startDate: '2022-05-01',
-    endDate: '2022-05-05',
-    title: '봄날의 고성, 1박 2일',
-    content:
-      '매우 만족했던 경남 고성 여행 1박 2일 코스, 경남 고성 가볼만한 곳, 고성 드라이브 코스, 고성 투어 1편시작합니다!',
-    categories: ['자연', '문화', '역사'],
-  },
-  {
-    imageUrl: '/assets/jejudo_720.jpg',
-    location: '고성시',
-    startDate: '2022-05-01',
-    endDate: '2022-05-05',
-    title: '봄날의 고성, 1박 2일',
-    content:
-      '매우 만족했던 경남 고성 여행 1박 2일 코스, 경남 고성 가볼만한 곳, 고성 드라이브 코스, 고성 투어 1편시작합니다!',
-    categories: ['자연', '문화', '역사'],
-  },
-  {
-    imageUrl: '/assets/jejudo_720.jpg',
-    location: '고성시',
-    startDate: '2022-05-01',
-    endDate: '2022-05-05',
-    title: '봄날의 고성, 1박 2일',
-    content:
-      '매우 만족했던 경남 고성 여행 1박 2일 코스, 경남 고성 가볼만한 곳, 고성 드라이브 코스, 고성 투어 1편시작합니다!',
-    categories: ['자연', '문화', '역사'],
-  },
-  {
-    imageUrl: '/assets/jejudo_720.jpg',
-    location: '고성시',
-    startDate: '2022-05-01',
-    endDate: '2022-05-05',
-    title: '봄날의 고성, 1박 2일',
-    content:
-      '매우 만족했던 경남 고성 여행 1박 2일 코스, 경남 고성 가볼만한 곳, 고성 드라이브 코스, 고성 투어 1편시작합니다!',
-    categories: ['자연', '문화', '역사'],
-  },
-];
-
 const ResultsContent: React.FC = () => {
-  const [activeTab, setActiveTab] = useState(0); // 선택된 탭의 인덱스를 추적
+  const navigate = useNavigate();
+  const [activeTab, setActiveTab] = useState(0);
+  const location = useLocation();
+  const [searchResults, setSearchResults] = useState<any[]>([]); // 검색 결과를 저장할 상태
 
   const placeName = '고성시';
   const place = ['조계사', '경인미술관', '숭례문'];
+
+  // 게시물 클릭 (상세보기이동)
+  const handleItemClick = (tripId: number) => {
+    navigate(`/travelDetail/${tripId}`);
+  };
+
+  useEffect(() => {
+    // location.state에서 searchData를 확인하고 상태를 설정
+    const data = location.state?.searchData || [];
+    setSearchResults(data);
+  }, [location]);
+
+  //
+  useEffect(() => {
+    if (location.state?.searchData) {
+      setSearchResults(location.state.searchData);
+    }
+  }, [location]);
 
   return (
     <S.ResultContainer>
@@ -108,31 +75,48 @@ const ResultsContent: React.FC = () => {
           </SearchTitle>
         </Sort>
       </DivWrapper>
+
+      {/* 검색 결과를 화면에 표시 */}
       <S.ResultsContainer>
-        {Results.map((data, index) => (
-          <S.ResultItem key={index}>
-            <ThumbnailImage src={data.imageUrl} alt="썸네일" />
-            <S.ContentWrapper>
-              <Location>
-                {data.location} | {`${data.startDate} - ${data.endDate}`}
-              </Location>
-              {/* <DateRange>{`${data.startDate} - ${data.endDate}`}</DateRange> */}
-              <S.ItemTitle>{data.title}</S.ItemTitle>
-              <S.ItemContent>{data.content}</S.ItemContent>
-              <CategoriesContainer>
-                {data.categories.map((category, categoryIndex) => (
-                  <CategoryButton key={categoryIndex} title={category} />
-                ))}
-              </CategoriesContainer>
-            </S.ContentWrapper>
-          </S.ResultItem>
-        ))}
+        {searchResults.length === 0 ? (
+          <Notfound>해당하는 게시물을 찾을 수 없습니다.</Notfound>
+        ) : (
+          searchResults.map((data, index) => (
+            <S.ResultItem
+              key={index}
+              onClick={() => handleItemClick(data.tripId)}
+            >
+              <ThumbnailImage src={data.thumbnailUrl} alt="썸네일" />
+              <S.ContentWrapper>
+                <Location>
+                  {data.area} | {`${data.tripStartDate} - ${data.tripEndDate}`}
+                </Location>
+                <S.ItemTitle>{data.title}</S.ItemTitle>
+                <S.ItemContent>{data.content}</S.ItemContent>
+                {/* 여기서 map 함수를 호출하기 전에 data.categories가 존재하고 배열인지 확인합니다. */}
+                <CategoriesContainer>
+                  {Array.isArray(data.hashtagList) &&
+                    data.hashtagList.map(
+                      (category: string, categoryIndex: number) => (
+                        <CategoryButton key={categoryIndex} title={category} />
+                      ),
+                    )}
+                </CategoriesContainer>
+              </S.ContentWrapper>
+            </S.ResultItem>
+          ))
+        )}
       </S.ResultsContainer>
     </S.ResultContainer>
   );
 };
 
 export default ResultsContent;
+
+const Notfound = styled.div`
+  font-size: 24px;
+  margin-top: 20px;
+`;
 
 const ThumbnailImage = styled.img`
   width: 280px;
