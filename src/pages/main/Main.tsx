@@ -19,6 +19,7 @@ import styled from 'styled-components';
 import {
   useGetMainHashtagListQuery,
   useGetMainRankListQuery,
+  useGetMainSearchQuery,
 } from '@/hooks/useQuery';
 
 interface MainProps {
@@ -27,31 +28,73 @@ interface MainProps {
 
 const Main: React.FC<MainProps> = () => {
   const navigate = useNavigate();
-
+  const [searchQuery, setSearchQuery] = useState(''); // 검색어 상태
   const [isSearchModalOpen, setSearchModalOpen] = useState<boolean>(false);
 
   // 모달을 토글하는 함수
-  const toggleSearchModal = () => setSearchModalOpen(!isSearchModalOpen);
+  const toggleSearchModal = () => {
+    console.log('Toggling search modal');
+    setSearchModalOpen(!isSearchModalOpen);
+  };
 
   // TopTen
-  const { data: TopTenData, isLoading, isError } = useGetMainRankListQuery();
+  // const { data: TopTenData, isLoading, isError } = useGetMainRankListQuery();
 
-  console.log(TopTenData);
+  // console.log(TopTenData);
 
   // 해시태그
   const { data: hashTagData } = useGetMainHashtagListQuery();
 
   console.log(hashTagData);
 
-  // 모달을 여는 함수
-  // const openSearchModal = () => {
-  //   setSearchModalOpen(true);
-  // };
+  // 검색 아이콘 클릭 시 호출될 함수
+  const handleSearchIconClick = () => {
+    if (searchQuery.trim()) {
+      // 검색어가 있으면 검색 결과 페이지로 이동
+      navigate('/results', { state: searchQuery });
+    } else {
+      // 검색어가 없으면 검색 모달 토글
+      toggleSearchModal();
+    }
+  };
 
-  // // 모달을 닫는 함수
-  // const closeSearchModal = () => {
-  //   setSearchModalOpen(false);
-  // };
+  // 검색어 입력 시 호출될 함수
+  const handleSearchInputChange = (query: string) => {
+    setSearchQuery(query);
+  };
+
+  // 검색어를 사용하여 검색 API를 호출
+  const {
+    isLoading,
+    isError,
+    data: searchData,
+  } = useGetMainSearchQuery(searchQuery);
+
+  // API 호출 상태에 따라 로딩 또는 에러 처리
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError) {
+    return <div>Error occurred</div>;
+  }
+  const handleSearchResult = () => {
+    if (searchData) {
+      navigate('/search-results', { state: searchData });
+    } else {
+      closeSearchModal();
+    }
+  };
+
+  // 모달을 여는 함수
+  const openSearchModal = () => {
+    setSearchModalOpen(true);
+  };
+
+  // 모달을 닫는 함수
+  const closeSearchModal = () => {
+    setSearchModalOpen(false);
+  };
 
   const handleMakePlanClick = () => {
     navigate('/planList');
@@ -144,15 +187,6 @@ const Main: React.FC<MainProps> = () => {
       isScrap: true,
     },
   ];
-
-  // 메인 TOP 10 리스트 임시 데이터
-  // const tempData: ListItemProps[] = [...Array(10)].map((_, index) => ({
-  //   title: `${index + 1} 서울`,
-  //   location: '서울 > 남산타워( N서울타워)',
-  //   description: '멋진 도시 전망을 볼 수 있는 곳',
-  //   likes: 77,
-  //   imageUrl: '/assets/namsantower_720.jpg',
-  // }));
 
   const items = [
     {
@@ -270,7 +304,9 @@ const Main: React.FC<MainProps> = () => {
       <ReDesignHeader needSearchInput={false} />
       <Search
         placeholder="검색어를 입력해주세요."
-        onIconClick={toggleSearchModal}
+        openSearchModal={toggleSearchModal}
+        onIconClick={handleSearchIconClick}
+        onInputChange={handleSearchInputChange}
       />
       <ButtonContainer>
         {/* 버튼 이벤트 핸들러 로직 */}
@@ -291,7 +327,11 @@ const Main: React.FC<MainProps> = () => {
       <ListTitle />
       {/* 탑텐 데이터 전달 */}
       <MainList items={items} />
-      <SearchModal isOpen={isSearchModalOpen} onClose={toggleSearchModal} />
+      <SearchModal
+        isOpen={isSearchModalOpen}
+        onClose={toggleSearchModal}
+        onSearch={handleSearchResult}
+      />
     </>
   );
 };
@@ -299,7 +339,7 @@ const Main: React.FC<MainProps> = () => {
 export default Main;
 
 const ButtonsWrapper1 = styled.div`
-  width: 1400px;
+  width: 1100px;
   margin: 0 auto;
   display: flex;
   gap: 20px;
