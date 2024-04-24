@@ -10,6 +10,9 @@ import {
   searchTripsByArea,
   searchTripsByHashtag,
 } from '@/api/searchAxios';
+import { searchTripsByText } from '@/api/searchAxios';
+// import { getVoteResult } from '@/api/voteAxios';
+// import { UserInfoData } from '@/api/interfaces/userInterface';
 
 export const usePlanListQuery = (planListParams: PlanListParams) => {
   return useQuery({
@@ -73,6 +76,7 @@ export const useGetMainRandomListQuery = () => {
   });
 };
 
+
 // 인기 해시태그 TOP 5
 export const useGetHahtagListQuery = () => {
   return useQuery({
@@ -114,3 +118,13 @@ export const useGetSearchResultHashtagQuery = (
     enabled: Boolean(searchHashtagParams.hashtag),
   });
 };
+
+// 여행 정보 통합 검색
+export const useGetMainSearchQuery = (text: string) => {
+  return useQuery({
+    queryKey: ['tripSearch', text],
+    queryFn: () => searchTripsByText(text, 1, 9, '', true),
+    staleTime: 0,
+  });
+};
+

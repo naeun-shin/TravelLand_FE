@@ -45,6 +45,9 @@ export const router = createBrowserRouter([
             onClose={function (): void {
               throw new Error('Function not implemented.');
             }}
+            onSearch={function (): void {
+              throw new Error('Function not implemented.');
+            }}
           />
         ),
       },

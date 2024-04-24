@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 // import { IoLocationSharp } from 'react-icons/io5';
 import * as S from './Search.style';
 import styled from 'styled-components';
@@ -8,10 +8,11 @@ import {
   useGetSearchResultHashtagQuery,
 } from '@/hooks/useQuery';
 import { useLocation, useNavigate } from 'react-router-dom';
+// import { IoLocationSharp } from 'react-icons/io5';
 
-// interface IPlaceNameProps {
-//   name: string;
-// }
+interface IPlaceNameProps {
+  name: string;
+}
 
 interface SearchResult {
   tripId: number;
@@ -25,16 +26,16 @@ interface SearchResult {
   hashtagList: string[]; // 카테고리는 문자열 배열로 가정합니다.
 }
 
-// const PlaceName: React.FC<IPlaceNameProps> = ({ name }) => (
-//   <div style={{ color: '#3AB9F0' }}>{name}</div>
-// );
-
 // 타입 안전성을 위한 추가적인 검사를 할 수 있습니다.
 const validateData = (data: any): data is SearchResult[] => {
   return (
     Array.isArray(data) && data.every((item) => item.hasOwnProperty('tripId'))
   );
 };
+
+const PlaceName: React.FC<IPlaceNameProps> = ({ name }) => (
+  <div style={{ color: '#3AB9F0' }}>{name}</div>
+);
 
 const ResultsContent: React.FC = () => {
   const location = useLocation();
@@ -46,10 +47,9 @@ const ResultsContent: React.FC = () => {
   const [size] = useState<number>(9);
   const [sortBy] = useState<string>('createdAt');
   const [isAsc] = useState<boolean>(false);
-
-  console.log('area ', area);
-  console.log('hashtag ', hashtag);
-
+  const [searchResults, setSearchResults] = useState<SearchResult[]>([]); // 검색 결과를 저장할 상태
+  // const places = searchResults.map((result) => result.placeName); // placeName을 추출하여 배열로 저장
+  // console.log(places);
   const searchAreaParams = { area, page, size, sortBy, isAsc };
   const searchHashtagParams = { hashtag, page, size, sortBy, isAsc };
 
@@ -68,25 +68,56 @@ const ResultsContent: React.FC = () => {
   const handleGoToDetail = (tripId: number) => {
     navigate(`/travelDetail/${tripId}`);
   };
+
+  useEffect(() => {
+    const results = area ? areaResults : hashtagResults;
+    if (results && validateData(results)) {
+      setSearchResults(results);
+    }
+  }, [areaResults, hashtagResults]);
+
+  // // 게시물 클릭 (상세보기이동)
+  // const handleItemClick = (tripId: number) => {
+  //   navigate(`/travelDetail/${tripId}`);
+  // };
+
+  useEffect(() => {
+    // location.state에서 searchData를 확인하고 상태를 설정
+    const data = location.state?.searchData || [];
+    setSearchResults(data);
+  }, [location]);
+
+  //
+  useEffect(() => {
+    if (location.state?.searchData) {
+      setSearchResults(location.state.searchData);
+    }
+  }, [location]);
+
   if (areaLoading || hashtagLoading) return <div>Loading...</div>;
   if (areaError || hashtagError) return <div>Error loading data</div>;
-
-  const results = area ? areaResults : hashtagResults;
-  console.log(results);
-  if (!results || !validateData(results)) return <div>데이터가 없습니다!</div>; // 데이터가 유효한 배열인지 확인
 
   return (
     <S.ResultContainer>
       <S.ResultBox>
         <S.ResultTitle>
-          {/* <div style={{ display: 'flex', alignItems: 'center' }}>
-            <PlaceName name={results.placeName} />
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            {/* 첫 번째 검색 결과의 placeName을 사용 */}
             <span style={{ marginLeft: '0.3rem' }}>주변에 가볼만한 곳</span>
-          </div> */}
+            {searchResults.length > 0 && (
+              <PlaceName name={searchResults[0].placeName} />
+            )}
+          </div>
+          {/* 모든 placeName 탭으로 처리하기 */}
+          {/* {searchResults.map((result, index) => (
+            <S.TabButton key={index} onClick={() => setActiveTab(index)}>
+              <IoLocationSharp /> {result.placeName}
+            </S.TabButton>
+          ))} */}
         </S.ResultTitle>
       </S.ResultBox>
       <S.TabContainer>
-        {/* {place.map((tab) => (
+        {/* {places.map((tab) => (
           <S.TabButton key={tab}>
             <IoLocationSharp /> {tab}
           </S.TabButton>
@@ -110,38 +141,48 @@ const ResultsContent: React.FC = () => {
           </SearchTitle> */}
         </Sort>
       </DivWrapper>
+
+      {/* 검색 결과를 화면에 표시 */}
       <S.ResultsContainer>
-        {results.map((result: SearchResult, index: number) => (
-          <S.ResultItem key={index}>
-            <ThumbnailImage src={result.thumbnailUrl} alt={result.title} />
-            <S.ContentWrapper>
-              <Location>
-                {result.area} |{' '}
-                {`${result.tripStartDate} - ${result.tripEndDate}`}
-              </Location>
-              <S.ItemTitle onClick={() => handleGoToDetail(result.tripId)}>
-                {result.title}
-              </S.ItemTitle>
-              <S.ItemContent>
-                {result.content}...
-                <span onClick={() => handleGoToDetail(result.tripId)}>
-                  더보기
-                </span>
-              </S.ItemContent>
-              <CategoriesContainer>
-                {result.hashtagList.map((hashTag: string, idx: number) => (
-                  <CategoryButton key={idx} title={hashTag} />
-                ))}
-              </CategoriesContainer>
-            </S.ContentWrapper>
-          </S.ResultItem>
-        ))}
+        {searchResults.length === 0 ? (
+          <Notfound>해당하는 게시물을 찾을 수 없습니다.</Notfound>
+        ) : (
+          searchResults.map((data, index) => (
+            <S.ResultItem
+              key={index}
+              onClick={() => handleGoToDetail(data.tripId)}
+            >
+              <ThumbnailImage src={data.thumbnailUrl} alt="썸네일" />
+              <S.ContentWrapper>
+                <Location>
+                  {data.area} | {`${data.tripStartDate} - ${data.tripEndDate}`}
+                </Location>
+                <S.ItemTitle>{data.title}</S.ItemTitle>
+                <S.ItemContent>{data.content} ... 더보기</S.ItemContent>
+                {/* 여기서 map 함수를 호출하기 전에 data.categories가 존재하고 배열인지 확인합니다. */}
+                <CategoriesContainer>
+                  {Array.isArray(data.hashtagList) &&
+                    data.hashtagList.map(
+                      (category: string, categoryIndex: number) => (
+                        <CategoryButton key={categoryIndex} title={category} />
+                      ),
+                    )}
+                </CategoriesContainer>
+              </S.ContentWrapper>
+            </S.ResultItem>
+          ))
+        )}
       </S.ResultsContainer>
     </S.ResultContainer>
   );
 };
 
 export default ResultsContent;
+
+const Notfound = styled.div`
+  font-size: 24px;
+  margin-top: 20px;
+`;
 
 const ThumbnailImage = styled.img`
   width: 280px;

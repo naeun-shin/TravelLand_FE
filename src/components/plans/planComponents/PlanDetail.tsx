@@ -69,8 +69,6 @@ const PlanDetail: React.FC<ButtonProps> = () => {
       setDayPlans(planDetails.dayPlans);
     }
   }, [planDetails]);
-  console.log('planDetails > ', planDetails);
-  console.log('planVotes', planVotes);
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -139,7 +137,6 @@ const PlanDetail: React.FC<ButtonProps> = () => {
   // 초대하기 로직
   const handleInvite = () => {
     // 초대 로직 구현 필요
-    console.log('초대하기 로직 실행');
     closeInvitationModal(); // 초대 후 모달 닫기
   };
 

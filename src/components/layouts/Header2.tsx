@@ -86,7 +86,6 @@ const ReDesignHeader: React.FC<HeaderProps> = ({ needSearchInput }) => {
   };
 
   const handleLogoutClick = () => {
-    // console.log(cookie.getAll());
     setIsMenuModalOpen(false);
     logout();
     cookie.remove('Authorization', { path: '/' }); // Adjust the path and domain as needed.
@@ -94,7 +93,6 @@ const ReDesignHeader: React.FC<HeaderProps> = ({ needSearchInput }) => {
   };
 
   const closeModal = () => {
-    // console.log('closeModal 실행됨');
     setIsModalOpen(false);
     setIsMenuModalOpen(false);
     setIsNoticeModalOpen(false); // Make sure to reset all modal states
@@ -298,7 +296,11 @@ const ReDesignHeader: React.FC<HeaderProps> = ({ needSearchInput }) => {
       {isModalOpen && <Login isOpen={isModalOpen} onClose={closeModal} />}
       {/* 검색 모달 */}
       {isSearchModalOpen && (
-        <SearchModal isOpen={isSearchModalOpen} onClose={closeSearchModal} />
+        <SearchModal
+          isOpen={isSearchModalOpen}
+          onClose={closeSearchModal}
+          onSearch={openSearchModal}
+        />
       )}
       {/* 투표 모달이 열렸을 때, Vote 컴포넌트를 렌더링합니다. */}
       {isVoteModalOpen && (

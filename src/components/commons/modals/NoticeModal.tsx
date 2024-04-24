@@ -12,7 +12,6 @@ export const NoticeModal = () => {
 
   useEffect(() => {
     setSlide(true);
-    console.log('Modal opened');
   }, []);
 
   useEffect(() => {

@@ -26,7 +26,6 @@ const PlanList = () => {
 
   const { data, isError, isLoading } = usePlanListQuery(planListParams);
 
-  console.log(data);
   useEffect(() => {
     if (data) {
       setTotalPages(data?.data.totalPages); // 전체 페이지 수 업데이트
@@ -50,12 +49,9 @@ const PlanList = () => {
   // 데이터 필터링 (public 속성이 true인 항목만)
   // 수정된 코드
   const content = data?.data.content; // 실제 항목이 포함된 배열
-  console.log(content);
+
   // 현재 입력 값 public이 true 저장 불가한 상태로 false로 임시 목록 보여주기
   const filteredData = content?.filter((item: any) => item.isPublic === true); // public 속성이 true인 항목만 필터링
-
-  // console.log(filteredData);
-  //
 
   if (isLoading) return <div>Data is Loading</div>;
   if (isError) return <div>Error occurred during fetching</div>;

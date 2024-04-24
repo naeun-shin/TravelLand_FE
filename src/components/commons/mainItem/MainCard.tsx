@@ -66,7 +66,7 @@ const StyledSlider = styled(Slider)`
 `;
 const MainCard: React.FC<MainCardProps> = ({ cards = [] }) => {
   const navigate = useNavigate();
-  console.log(cards);
+
   const settings = {
     dots: false,
     infinite: false,
