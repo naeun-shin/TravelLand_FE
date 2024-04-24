@@ -14,6 +14,7 @@ const ReviewCreate2 = () => {
   const [title, setTitle] = useState<string>(state?.title || ''); // 상태 이름 수정
   const [imageFiles, setImageFiles] = useState<File[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [hasAttemptedSubmit, setHasAttemptedSubmit] = useState<boolean>(false);
   // const [step, setStep] = useState<number>(1);
 
   // totalPlanTitle이 변경될 때마다 해당 값을 설정
@@ -30,9 +31,14 @@ const ReviewCreate2 = () => {
   const toggleIsPublic = () => setIsPublic(!isPublic);
 
   const handleNextClick = () => {
-    navigate('/reviewCreate/3', {
-      state: { ...state, imageFiles, isPublic },
-    });
+    setHasAttemptedSubmit(true);
+    if (imageFiles.length === 0) {
+      alert('사진을 1장 이상 선택해주세요.');
+    } else {
+      navigate('/reviewCreate/3', {
+        state: { ...state, imageFiles, isPublic },
+      });
+    }
   };
   // 뒤로가기
   const handleBackClick = () => {
@@ -113,6 +119,9 @@ const ReviewCreate2 = () => {
           </PhotoBox>
           <div>
             <div style={{ textAlign: 'center', marginBottom: '25px' }}>
+              {hasAttemptedSubmit && imageFiles.length === 0 && (
+                <ErrorMessage>사진을 1장 이상 선택해주세요.</ErrorMessage>
+              )}
               <BringPlanBtn onClick={handleAddImageClick}>
                 + 사진 추가하기
               </BringPlanBtn>
@@ -142,6 +151,11 @@ const ReviewCreate2 = () => {
 };
 
 export default ReviewCreate2;
+
+const ErrorMessage = styled.div`
+  color: #ff0000;
+  font-size: 14px;
+`;
 
 const ReviewBackButton = styled.button`
   background-color: #5ac8ec;
@@ -206,9 +220,9 @@ const ReviewBoxWithSpaceBetween = styled.div`
 const PhotoText = styled.div`
   margin: 0 auto;
   width: 100%;
-  max-width: 300px;
+  max-width: 250px;
   color: #238bad;
-  margin-bottom: 70px;
+  margin-bottom: 50px;
 `;
 
 const ReviewBtnBox = styled.div`

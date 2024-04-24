@@ -2,43 +2,66 @@ import React from 'react';
 import styled from 'styled-components';
 import { CiBookmark } from 'react-icons/ci';
 import CategoryButton from '../buttons/CategoryButton';
+import { useNavigate } from 'react-router-dom';
 
 interface ListItemProps {
-  rank: string;
+  // rank: string;
+  tripId: number;
+  placeName?: string;
+  area: string;
+  content: string;
   title: string;
   location: string;
-  description: string;
-  categories: string[];
-  imageUrl: string;
-  startDate: string;
-  endDate: string;
+  hashtagList: string[];
+  thumbnailUrl: string;
+  tripStartDate: string;
+  tripEndDate: string;
 }
 
 interface MainListProps {
   items: ListItemProps[];
 }
 
-const MainList: React.FC<MainListProps> = ({ items = [] }) => {
+const MainList: React.FC<MainListProps> = ({ items }) => {
+  const navigate = useNavigate();
+
+  const handleGoToDetail = (tripId: number) => {
+    navigate(`/travelDetail/${tripId}`);
+  };
+
   return (
     <MainListContainer>
       {items.map((item, index) => (
         <ItemContainer key={index}>
           <ImageSection>
-            <Image src={item.imageUrl} alt="이미지" />
+            <Image
+              src={item.thumbnailUrl}
+              alt="이미지"
+              onClick={() => handleGoToDetail(item.tripId)}
+            />
             <BookmarkIcon />
           </ImageSection>
           <TextSection>
-            <Rank>{index + 1}</Rank>
-            <Title>
-              {item.location} | {item.startDate} - {item.endDate}
-            </Title>
-            <MainTitle>{item.title}</MainTitle>
-            <Content>{item.description}</Content>
             <CategoriesContainer>
-              {item.categories.map((category, categoryIndex) => (
-                <CategoryButton key={categoryIndex} title={category} />
+              {item.hashtagList.map((category, categoryIndex) => (
+                <CategoryButton
+                  key={categoryIndex}
+                  title={category}
+                  hoverColor="none"
+                />
               ))}
             </CategoriesContainer>
+            <Rank>{index + 1}</Rank>
+            <Title>
+              {item.area} | {item.tripStartDate} - {item.tripEndDate}
+            </Title>
+            <MainTitle onClick={() => handleGoToDetail(item.tripId)}>
+              {item.title}
+            </MainTitle>
+            <Content>
+              {item.content}...{' '}
+              <span onClick={() => handleGoToDetail(item.tripId)}>더보기</span>{' '}
+            </Content>
           </TextSection>
         </ItemContainer>
       ))}
@@ -53,9 +76,10 @@ const MainListContainer = styled.div`
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: auto;
   gap: 20px;
-  width: 1250px;
+  width: 1400px;
   margin: 0 auto;
   margin-bottom: 100px;
+  cursor: pointer;
 `;
 
 const BookmarkIcon = styled(CiBookmark)`
@@ -71,20 +95,21 @@ const BookmarkIcon = styled(CiBookmark)`
   padding: 5px;
   z-index: 9;
   background-color: #c5f1ff;
+  cursor: pointer;
 `;
 
 const Rank = styled.div`
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  background: #fff;
+  /* position: absolute; */
+  /* top: 10px; */
+  /* left: 10px; */
+  /* background: #fff; */
   padding: 5px 10px;
-  margin-top: 20px;
+  /* margin-top: 20px; */
   color: #5ac8ec;
   font-family: 'Chab'; /* 다른 폰트 적용 */
-  font-size: 30px;
+  font-size: 36px;
   /* font-size: 3rem; */
-  font-weight: bold;
+  font-weight: lighter;
 `;
 
 const ItemContainer = styled.div`
@@ -96,6 +121,7 @@ const ItemContainer = styled.div`
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   overflow: hidden;
+  cursor: pointer;
 `;
 
 const ImageSection = styled.div`
@@ -109,27 +135,36 @@ const ImageSection = styled.div`
 const TextSection = styled.div`
   flex: 3;
   position: relative;
-  padding: 20px;
+  padding: 15px;
 `;
 
 const Title = styled.div`
-  margin-top: 70px;
+  /* margin-top: 70px; */
+  padding: 5px 10px;
   color: #333;
   font-size: 14px;
   font-weight: 600;
 `;
 
 const MainTitle = styled.div`
+  padding: 5px 10px;
   margin-top: 10px;
   color: #000;
   font-size: 22px;
   font-weight: 600;
+
+  cursor: pointer;
 `;
 
 const Content = styled.div`
+  padding: 5px 10px;
   margin: 10px 0 10px;
   color: #000;
   font-size: 17px;
+
+  span {
+    cursor: pointer;
+  }
 `;
 
 const Image = styled.img`
@@ -143,8 +178,8 @@ const CategoriesContainer = styled.div`
   flex-wrap: wrap;
   justify-content: flex-start;
   align-items: flex-start;
-  margin-top: 3px;
-  gap: 4px;
-  height: 100px;
-  overflow: hidden;
+  /* margin-top: 3px; */
+  gap: 2px;
+  /* height: 100px;
+  overflow: hidden;*/
 `;

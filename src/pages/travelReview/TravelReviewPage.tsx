@@ -22,6 +22,20 @@ interface Trip {
   viewCount?: number;
 }
 
+enum Area {
+  '전체' = '전체',
+  '서울' = '서울',
+  '경기' = '경기',
+  '강원' = '강원',
+  '대전' = '대전',
+  '충북충남' = '충북충남',
+  '경북경남' = '경북경남',
+  '부산' = '부산',
+  '울산' = '울산',
+  '전북전남' = '전북전남',
+  '제주' = '제주',
+}
+
 const TravelReviewPage = () => {
   const navigate = useNavigate();
   const [page, setPage] = useState<number>(1);
@@ -29,19 +43,20 @@ const TravelReviewPage = () => {
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const [_, setArea] = useState<string>(Area['전체']);
 
   const loadTrips = async () => {
     setLoading(true);
     try {
       const response: AxiosResponse<Trip[]> = await getTripList({
         page,
-        size: 4,
+        size: 8,
         sortBy: 'createdAt',
         isAsc: false,
       });
       const responseData: Trip[] = response.data;
       setTrips((prevTrips) => [...prevTrips, ...responseData]);
-      if (responseData.length === 0 && responseData.length < 4) {
+      if (responseData.length === 0 && responseData.length < 8) {
         setHasMore(false);
       }
     } catch (error) {
@@ -62,6 +77,11 @@ const TravelReviewPage = () => {
 
   const handleTextClick = () => {
     navigate('/travelCreate');
+  };
+
+  const handleSearchByLocation = (area: Area) => {
+    setArea(area);
+    navigate('/results', { state: { area } });
   };
 
   const fetchMoreData = () => {
@@ -94,18 +114,14 @@ const TravelReviewPage = () => {
             <ReviewCateBox>
               <h2>지역별 여행 후기</h2>
               <div style={{ display: 'flex' }}>
-                <CategoryButton title="전체" />
-                <CategoryButton title="서울" />
-                <CategoryButton title="경기" />
-                <CategoryButton title="인천" />
-                <CategoryButton title="강원" />
-                <CategoryButton title="대전" />
-                <CategoryButton title="충북충남" />
-                <CategoryButton title="경북경남" />
-                <CategoryButton title="부산" />
-                <CategoryButton title="울산" />
-                <CategoryButton title="전북전남" />
-                <CategoryButton title="제주" />
+                {Object.entries(Area).map(([label, value]) => (
+                  <CategoryButton
+                    key={value}
+                    title={label}
+                    onClick={() => handleSearchByLocation(value as Area)}
+                    cursor="pointer"
+                  />
+                ))}
               </div>
             </ReviewCateBox>
           </div>
@@ -122,7 +138,7 @@ const TravelReviewPage = () => {
             endMessage={<p>더 이상 로드할 내용이 없습니다.</p>}
             scrollableTarget="scrollableDiv"
           >
-            <S.TravelReviewCardSection>
+            <S.TravelReviewCardSection style={{ cursor: 'pointer' }}>
               {trips.map((trip) => (
                 <>
                   <ListCard
@@ -138,7 +154,7 @@ const TravelReviewPage = () => {
                     viewCount={trip.viewCount}
                     onClick={() => handleCardClick(trip.tripId)}
                   />
-                  <ListCard
+                  {/* <ListCard
                     key={trip.tripId}
                     tripId={trip.tripId}
                     area={trip.area}
@@ -150,7 +166,7 @@ const TravelReviewPage = () => {
                     isScrap={trip.isScrap}
                     viewCount={trip.viewCount}
                     onClick={() => handleCardClick(trip.tripId)}
-                  />
+                  /> */}
                 </>
               ))}
             </S.TravelReviewCardSection>
@@ -172,7 +188,7 @@ const ScrollDiv = styled.div`
 `;
 
 const ReviewCateBox = styled.div`
-  max-width: 1300px;
+  max-width: 1400px;
   margin: 0 auto;
   padding-left: 45px;
 `;

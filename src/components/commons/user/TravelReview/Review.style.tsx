@@ -86,7 +86,7 @@ export const Container = styled.div`
   width: 800px;
   margin: 0 auto;
   padding: 16px 0;
-  margin-top: 150px;
+  margin-top: 60px;
 `;
 
 export const Title = styled.div`

@@ -3,17 +3,17 @@ import styled from 'styled-components';
 export const CardContainerWrapper = styled.div`
   display: flex;
   width: 100%;
-  max-width: 230px;
+  max-width: 1400px;
   margin: 30px auto;
-  gap: 20px;
+  gap: 10px;
   justify-content: start;
   white-space: nowrap;
-  max-width: 1300px;
 `;
 
 export const CardContainer = styled.div`
-  width: calc(25% - 25px);
-  max-width: 280px;
+  /* width: calc(25% - 25px); */
+  width: 100%;
+  max-width: 300px;
   min-width: 230px;
   height: 420px;
   border-radius: 10px;
@@ -32,6 +32,7 @@ export const ImageContainer = styled.div`
   max-width: 300px;
   height: 250px;
   border-radius: 15px 15px 0 0;
+  cursor: pointer;
 
   img {
     width: 100%;
@@ -54,6 +55,7 @@ export const Title = styled.p`
   font-weight: bold;
   margin-bottom: 7px;
   color: #333;
+  cursor: pointer;
 `;
 
 export const Price = styled.div`

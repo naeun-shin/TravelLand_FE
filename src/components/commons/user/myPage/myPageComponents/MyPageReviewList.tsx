@@ -1,5 +1,5 @@
 // import { MediumButton } from '@/components/commons/buttons/Button';
-import Card from '@/components/commons/cards/Card';
+// import Card from '@/components/commons/cards/Card';
 import * as S from '@/components/commons/user/myPage/MyPage.style';
 // import { useMyTripListQuery } from '@/hooks/useQuery';
 // import { useState } from 'react';
@@ -33,7 +33,7 @@ const MyPageReviewList = () => {
         </MediumButton> */}
       </S.MyPageButton>
       {/* 카드 섹션 */}
-      <Card title={'후쿠오카'} date={'2024.03.31'} city={'일본 - 후쿠오카'} />
+      {/* <Card title={'후쿠오카'} date={'2024.03.31'} city={'일본 - 후쿠오카'} /> */}
     </>
   );
 };

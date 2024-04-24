@@ -19,14 +19,13 @@ const PlanList = () => {
   const pageGroupSize = 10; // 페이지 그룹 당 표시할 페이지 수
 
   const [sortBy] = useState('createdAt');
-  const [isAsc] = useState(true);
+  const [isAsc] = useState(false);
 
   // 페이지네이션을 위한 파라미터 설정
   const planListParams = { page, size, sortBy, isAsc };
 
   const { data, isError, isLoading } = usePlanListQuery(planListParams);
 
-  console.log(data);
   useEffect(() => {
     if (data) {
       setTotalPages(data?.data.totalPages); // 전체 페이지 수 업데이트
@@ -50,12 +49,9 @@ const PlanList = () => {
   // 데이터 필터링 (public 속성이 true인 항목만)
   // 수정된 코드
   const content = data?.data.content; // 실제 항목이 포함된 배열
-  console.log(content);
+
   // 현재 입력 값 public이 true 저장 불가한 상태로 false로 임시 목록 보여주기
   const filteredData = content?.filter((item: any) => item.isPublic === true); // public 속성이 true인 항목만 필터링
-
-  // console.log(filteredData);
-  //
 
   if (isLoading) return <div>Data is Loading</div>;
   if (isError) return <div>Error occurred during fetching</div>;
@@ -72,7 +68,7 @@ const PlanList = () => {
       {/* 데이터 리스트 컴포넌트 */}
       <List planListData={filteredData} />
       {/* pagination */}
-      <CS.PagenationStyle>
+      <CS.PlanPagenationStyle>
         {pageGroup > 0 && <button onClick={handlePrevGroup}>이전</button>}
         {Array.from(
           {
@@ -94,7 +90,7 @@ const PlanList = () => {
         {(pageGroup + 1) * pageGroupSize < totalPages && (
           <button onClick={handleNextGroup}>다음</button>
         )}
-      </CS.PagenationStyle>
+      </CS.PlanPagenationStyle>
     </>
   );
 };

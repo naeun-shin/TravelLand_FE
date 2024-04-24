@@ -2,8 +2,9 @@ import styled from 'styled-components';
 
 const TravelPlanMainStyle = styled.div`
   max-width: 1400px;
-  margin: 10px auto;
+  margin: 40px auto;
   padding: 0px 20px;
+  margin-bottom: 150px;
 
   h2 {
     font-size: 24px;

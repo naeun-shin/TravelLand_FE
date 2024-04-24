@@ -17,7 +17,7 @@ import { useNavigate } from 'react-router-dom';
 import SearchModal from './SearchPage';
 import styled from 'styled-components';
 import {
-  useGetMainHashtagListQuery,
+  useGetMainRandomListQuery,
   useGetMainRankListQuery,
   useGetMainSearchQuery,
 } from '@/hooks/useQuery';
@@ -31,21 +31,29 @@ const Main: React.FC<MainProps> = () => {
   const [searchQuery, setSearchQuery] = useState(''); // 검색어 상태
   const [isSearchModalOpen, setSearchModalOpen] = useState<boolean>(false);
 
-  // 모달을 토글하는 함수
-  const toggleSearchModal = () => {
-    console.log('Toggling search modal');
-    setSearchModalOpen(!isSearchModalOpen);
-  };
-
   // TopTen
-  // const { data: TopTenData, isLoading, isError } = useGetMainRankListQuery();
+  const {
+    data: TopTenData,
+    isLoading: isLoadingTopTen,
+    isError: isErrorTopTen,
+  } = useGetMainRankListQuery();
 
-  // console.log(TopTenData);
+  // 랜덤 8개
+  const {
+    data: randomData,
+    isLoading: isLoadingRandom,
+    isError: isErrorRandom,
+  } = useGetMainRandomListQuery();
 
-  // 해시태그
-  const { data: hashTagData } = useGetMainHashtagListQuery();
+  // 검색 API
+  const {
+    isLoading: isLoadingSearch,
+    isError: isErrorSearch,
+    data: searchData,
+  } = useGetMainSearchQuery(searchQuery);
 
-  console.log(hashTagData);
+  if (!searchQuery == null) {
+  }
 
   // 검색 아이콘 클릭 시 호출될 함수
   const handleSearchIconClick = () => {
@@ -58,26 +66,6 @@ const Main: React.FC<MainProps> = () => {
     }
   };
 
-  // 검색어 입력 시 호출될 함수
-  const handleSearchInputChange = (query: string) => {
-    setSearchQuery(query);
-  };
-
-  // 검색어를 사용하여 검색 API를 호출
-  const {
-    isLoading,
-    isError,
-    data: searchData,
-  } = useGetMainSearchQuery(searchQuery);
-
-  // API 호출 상태에 따라 로딩 또는 에러 처리
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (isError) {
-    return <div>Error occurred</div>;
-  }
   const handleSearchResult = () => {
     if (searchData) {
       navigate('/search-results', { state: searchData });
@@ -86,12 +74,22 @@ const Main: React.FC<MainProps> = () => {
     }
   };
 
-  // 모달을 여는 함수
-  const openSearchModal = () => {
-    setSearchModalOpen(true);
+  // 검색어 입력 시 호출될 함수
+  const handleSearchInputChange = (query: string) => {
+    setSearchQuery(query);
   };
 
-  // 모달을 닫는 함수
+  // 모달을 토글하는 함수
+  const toggleSearchModal = () => {
+    setSearchModalOpen(!isSearchModalOpen);
+  };
+
+  // 모달을 여는 함수
+  // const openSearchModal = () => {
+  //   setSearchModalOpen(true);
+  // };
+
+  // // // 모달을 닫는 함수
   const closeSearchModal = () => {
     setSearchModalOpen(false);
   };
@@ -104,199 +102,13 @@ const Main: React.FC<MainProps> = () => {
     navigate('/travelReview');
   };
 
-  // 메인 헤더 카드 임시 데이터
-  const MainCardsData = [
-    {
-      tripId: 1,
-      area: '경상도',
-      title: '향기로운 봄날의 한옥 체험',
-      tripStartDate: '2024-05-01',
-      tripEndDate: '2024-05-03',
-      thumbnailUrl: '/assets/jejudo_720.jpg',
-      hashtagList: ['한옥', '데이트', '가족여행', '역사'],
-      isScrap: true,
-    },
-    {
-      tripId: 1,
-      area: '경상도',
-      title: '향기로운 봄날의 한옥 체험',
-      tripStartDate: '2024-05-01',
-      tripEndDate: '2024-05-03',
-      thumbnailUrl: '/assets/kyeongju_720.jpg',
-      hashtagList: ['한옥', '가족여행', '데이트'],
-      isScrap: true,
-    },
-    {
-      tripId: 1,
-      area: '경상도',
-      title: '향기로운 봄날의 한옥 체험',
-      tripStartDate: '2024-05-01',
-      tripEndDate: '2024-05-03',
-      thumbnailUrl: '/assets/jejudo_720.jpg',
-      hashtagList: ['한옥', '데이트', '가족여행'],
-      isScrap: true,
-    },
-    {
-      tripId: 1,
-      area: '경상도',
-      title: '향기로운 봄날의 한옥 체험',
-      tripStartDate: '2024-05-01',
-      tripEndDate: '2024-05-03',
-      thumbnailUrl: '/assets/kyeongju_720.jpg',
-      hashtagList: ['한옥', '데이트', '가족여행', '역사'],
-      isScrap: true,
-    },
-    {
-      tripId: 1,
-      area: '경상도',
-      title: '향기로운 봄날의 한옥 체험',
-      tripStartDate: '2024-05-01',
-      tripEndDate: '2024-05-03',
-      thumbnailUrl: '/assets/jejudo_720.jpg',
-      hashtagList: ['한옥', '데이트', '가족여행', '역사'],
-      isScrap: true,
-    },
-    {
-      tripId: 1,
-      area: '경상도',
-      title: '향기로운 봄날의 한옥 체험',
-      tripStartDate: '2024-05-01',
-      tripEndDate: '2024-05-03',
-      thumbnailUrl: '/assets/kyeongju_720.jpg',
-      hashtagList: ['한옥', '데이트', '가족여행'],
-      isScrap: true,
-    },
-    {
-      tripId: 1,
-      area: '경상도',
-      title: '향기로운 봄날의 한옥 체험',
-      tripStartDate: '2024-05-01',
-      tripEndDate: '2024-05-03',
-      thumbnailUrl: '/assets/jejudo_720.jpg',
-      hashtagList: ['한옥', '가족여행', '데이트', '역사'],
-      isScrap: true,
-    },
-    {
-      tripId: 1,
-      area: '경상도',
-      title: '향기로운 봄날의 한옥 체험',
-      tripStartDate: '2024-05-01',
-      tripEndDate: '2024-05-03',
-      thumbnailUrl: '/assets/kyeongju_720.jpg',
-      hashtagList: ['한옥', '데이트'],
-      isScrap: true,
-    },
-  ];
-
-  const items = [
-    {
-      rank: '1',
-      title: '즐거웠던 여행',
-      location: '서울',
-      categories: ['#한옥', '#데이트'],
-      description: '멋진 도시 전망을 볼 수 있는 곳',
-      imageUrl: '/assets/namsantower_720.jpg',
-      startDate: '2024-05-01',
-      endDate: '2024-05-03',
-    },
-    {
-      rank: '1',
-      title: '즐거웠던 여행',
-      location: '서울',
-      categories: ['#한옥', '#데이트'],
-      description: '멋진 도시 전망을 볼 수 있는 곳',
-      imageUrl: '/assets/namsantower_720.jpg',
-      startDate: '2024-05-01',
-      endDate: '2024-05-03',
-    },
-    {
-      rank: '1',
-      title: '즐거웠던 여행',
-      location: '서울',
-      categories: ['#한옥', '#데이트'],
-      description: '멋진 도시 전망을 볼 수 있는 곳',
-      imageUrl: '/assets/namsantower_720.jpg',
-      startDate: '2024-05-01',
-      endDate: '2024-05-03',
-    },
-    {
-      rank: '1',
-      title: '즐거웠던 여행',
-      location: '서울',
-      categories: ['#한옥', '#데이트'],
-      description: '멋진 도시 전망을 볼 수 있는 곳',
-      imageUrl: '/assets/namsantower_720.jpg',
-      startDate: '2024-05-01',
-      endDate: '2024-05-03',
-    },
-    {
-      rank: '1',
-      title: '즐거웠던 여행',
-      location: '서울',
-      categories: ['#한옥', '#데이트'],
-      description: '멋진 도시 전망을 볼 수 있는 곳',
-      imageUrl: '/assets/namsantower_720.jpg',
-      startDate: '2024-05-01',
-      endDate: '2024-05-03',
-    },
-    {
-      rank: '1',
-      title: '즐거웠던 여행',
-      location: '서울',
-      categories: ['#한옥', '#데이트'],
-      description: '멋진 도시 전망을 볼 수 있는 곳',
-      imageUrl: '/assets/namsantower_720.jpg',
-      startDate: '2024-05-01',
-      endDate: '2024-05-03',
-    },
-    {
-      rank: '1',
-      title: '즐거웠던 여행',
-      location: '서울',
-      categories: ['#한옥', '#데이트'],
-      description: '멋진 도시 전망을 볼 수 있는 곳',
-      imageUrl: '/assets/namsantower_720.jpg',
-      startDate: '2024-05-01',
-      endDate: '2024-05-03',
-    },
-    {
-      rank: '1',
-      title: '즐거웠던 여행',
-      location: '서울',
-      categories: ['#한옥', '#데이트'],
-      description: '멋진 도시 전망을 볼 수 있는 곳',
-      imageUrl: '/assets/namsantower_720.jpg',
-      startDate: '2024-05-01',
-      endDate: '2024-05-03',
-    },
-    {
-      rank: '1',
-      title: '즐거웠던 여행',
-      location: '서울',
-      categories: ['#한옥', '#데이트'],
-      description: '멋진 도시 전망을 볼 수 있는 곳',
-      imageUrl: '/assets/namsantower_720.jpg',
-      startDate: '2024-05-01',
-      endDate: '2024-05-03',
-    },
-    {
-      rank: '1',
-      title: '즐거웠던 여행',
-      location: '서울',
-      categories: ['#한옥', '#데이트'],
-      description: '멋진 도시 전망을 볼 수 있는 곳',
-      imageUrl: '/assets/namsantower_720.jpg',
-      startDate: '2024-05-01',
-      endDate: '2024-05-03',
-    },
-  ];
-
-  if (isLoading) {
+  // 전체 로딩 및 에러 처리
+  if (isLoadingTopTen || isLoadingRandom || isLoadingSearch) {
     return <div>Loading...</div>;
   }
 
-  if (isError) {
-    return <div>error occured</div>;
+  if (isErrorTopTen || isErrorRandom || isErrorSearch) {
+    return <div>Error occurred</div>;
   }
 
   return (
@@ -319,14 +131,14 @@ const Main: React.FC<MainProps> = () => {
       <Maintitle />
       <ButtonsWrapper>
         <SmallButton text="전체" />
-        <SmallButton text="가족 여행" />
-        <SmallButton text="커플 여행" />
+        {/* <SmallButton text="가족 여행" />
+        <SmallButton text="커플 여행" /> */}
       </ButtonsWrapper>
       {/* 해시태그 영역 */}
-      <MainCard cards={MainCardsData} />
+      <MainCard cards={randomData?.data} />
       <ListTitle />
       {/* 탑텐 데이터 전달 */}
-      <MainList items={items} />
+      <MainList items={TopTenData?.data} />
       <SearchModal
         isOpen={isSearchModalOpen}
         onClose={toggleSearchModal}

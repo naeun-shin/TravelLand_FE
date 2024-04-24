@@ -1,11 +1,24 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import ReDesignHeader2 from '@/components/layouts/Header2';
 import ResultsContent from '@/components/search/ResultsContent';
 // SearchInputProps import 변경
 import { useNavigate } from 'react-router-dom';
 import SearchInput from '@/components/search/Search';
 
-const SearchResults = () => {
+interface SearchInputProps {
+  placeholder?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onIconClick?: () => void;
+  openSearchModal?: () => void;
+  needSearchInput?: boolean;
+  value?: string;
+  onInputChange?: (query: string) => void;
+}
+
+const SearchResults: React.FC<SearchInputProps> = ({
+  openSearchModal,
+  // onInputChange,
+}) => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState(''); // 검색어 상태
 
@@ -16,6 +29,7 @@ const SearchResults = () => {
       navigate(`/results?query=${searchQuery}`);
     } else {
       console.log('검색어를 입력해주세요.');
+      openSearchModal?.();
     }
   };
 

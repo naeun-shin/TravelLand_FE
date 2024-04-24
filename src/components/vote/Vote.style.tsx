@@ -118,7 +118,7 @@ export const VoteIsClosedBox = styled.div`
   background-color: #c5f1ff;
   color: #6f7878;
 
-  width: 100px;
+  width: 130px;
   height: 40px;
 
   border-radius: 25px;

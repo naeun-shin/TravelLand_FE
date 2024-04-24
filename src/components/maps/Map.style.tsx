@@ -5,17 +5,21 @@ const MapTitle = styled.div`
   justify-content: space-between;
   align-items: baseline;
   padding-bottom: 20px;
+
+  font-size: 18px;
   width: 100%;
 
   div {
-    font-weight: bold;
-    font-size: 12px;
+    /* font-weight: re; */
+    font-size: 18px;
   }
 `;
 
 const MapTitleLeft = styled.div`
   display: flex;
   align-items: center;
+
+  font-size: 18px;
 
   img {
     width: 50px;

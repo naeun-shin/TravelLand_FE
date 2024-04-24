@@ -4,7 +4,6 @@ import { useState } from 'react';
 import styled from 'styled-components';
 
 const ReviewCreate1 = () => {
-  // const navigate = useNavigate();
   const [step, _] = useState<number>(1);
 
   return (
@@ -30,7 +29,8 @@ const CenteredContainer = styled.div`
   flex-direction: column;
   width: 100%;
   margin: 0 auto;
-  margin-top: 120px;
+  margin-top: 40px;
+  margin-bottom: 150px;
 
   h2 {
     font-size: 24px;

@@ -4,8 +4,6 @@ import { TripDetail } from '@/api/interfaces/reviewInterface';
 import * as S from '@/components/commons/user/TravelReview/Review.style';
 import Button from '../../buttons/Button';
 import { useNavigate } from 'react-router-dom';
-import LikeIcon from '@/icons/heart.svg';
-import scrapIcon from '@/icons/bookmark.svg';
 import { useMutation } from '@tanstack/react-query';
 import { deleteTrip } from '@/api/reviewAxios';
 import { AxiosError } from 'axios';
@@ -14,6 +12,13 @@ import {
   // CategoriesContainer,
   HashTagContainer,
 } from '../../mainItem/MainCard.style';
+import {
+  useCancelLikeTripMutation,
+  useCancelScrapTripMutation,
+  useCreateLikeTripMutation,
+  useCreateScrapTripMutation,
+} from '@/hooks/useMutation';
+import ReDesignHeader from '@/components/layouts/Header2';
 
 interface ReviewDetailListProps {
   tripDetail: TripDetail;
@@ -29,22 +34,25 @@ const ReviewDetailList = ({ tripDetail }: ReviewDetailListProps) => {
 
   // tripDetail로부터 초기 like 및 scrap 상태를 설정
   useEffect(() => {
-    setLikeActive(tripDetail.like);
-    setScrapActive(tripDetail.scrap);
-  }, [tripDetail.like, tripDetail.scrap]);
+    setLikeActive(tripDetail.isLike);
+    setScrapActive(tripDetail.isScrap);
+  }, [tripDetail, tripDetail.isLike, tripDetail.isScrap]);
 
-  useEffect(() => {
-    console.log('tripDetail 전체 데이터:', tripDetail); // 해시태그 데이터 로깅
-  }, [tripDetail]);
+  const likeTrip = useCreateLikeTripMutation();
+  const disLikeTrip = useCancelLikeTripMutation();
 
-  const toggleLike = () => {
+  // 좋아요 기능
+  const toggleLike = (tripId: number) => {
+    !likeActive ? likeTrip.mutate(tripId) : disLikeTrip.mutate(tripId);
     setLikeActive(!likeActive);
-    // 서버에 상태 업데이트 요청 로직 구현
   };
 
-  const toggleScrap = () => {
+  const scrapTrip = useCreateScrapTripMutation();
+  const scrapCancel = useCancelScrapTripMutation();
+
+  const toggleScrap = (tripId: number) => {
+    !scrapActive ? scrapTrip.mutate(tripId) : scrapCancel.mutate(tripId);
     setScrapActive(!scrapActive);
-    // 서버에 상태 업데이트 요청 로직 구현
   };
   // 여행 정보 -> 삭제하기
   const deleteReviewMutation = useMutation({
@@ -66,13 +74,14 @@ const ReviewDetailList = ({ tripDetail }: ReviewDetailListProps) => {
   };
 
   // 여기자나여 => 여기가 썸네일 이미지 구간
-  const imageUrl =
-    tripDetail.imageUrlList && tripDetail.imageUrlList.length > 0
-      ? tripDetail.imageUrlList[0]
-      : '기본이미지URL';
+  // const imageUrl =
+  //   tripDetail.imageUrlList && tripDetail.imageUrlList.length > 0
+  //     ? tripDetail.imageUrlList[0]
+  //     : '기본이미지URL';
 
   return (
     <>
+      <ReDesignHeader needSearchInput={true} />
       <S.Container>
         <S.ImageBox>
           {tripDetail.imageUrlList &&
@@ -104,28 +113,25 @@ const ReviewDetailList = ({ tripDetail }: ReviewDetailListProps) => {
         <DateRange>{`${tripDetail.area} | ${tripDetail.tripStartDate} - ${tripDetail.tripEndDate}`}</DateRange>
         <ReviewHeader>
           <LocationTag>{`${tripDetail.title}`}</LocationTag>
-          <div>
-            <Icon
-              src={LikeIcon}
-              alt="Like"
-              onClick={toggleLike}
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <div
+              onClick={() => toggleLike(tripDetail.tripId)}
               style={{
                 cursor: 'pointer',
-                backgroundColor: likeActive ? '#e7e7e7' : '#fff',
-                padding: '3px',
-                borderRadius: '50%',
+                backgroundImage: `url(${likeActive ? '/assets/icons/blueHeart.svg' : '/assets/icons/grayHeart.svg'})`,
+                width: '32px',
+                height: '32px',
+                backgroundSize: 'cover', // 배경 이미지가 div 크기에 맞게 조절
               }}
             />
-            <Icon
-              src={scrapIcon}
-              alt="Scrap"
-              onClick={toggleScrap}
+            <div
+              onClick={() => toggleScrap(tripDetail.tripId)}
               style={{
-                marginLeft: '10px',
                 cursor: 'pointer',
-                backgroundColor: scrapActive ? '#e7e7e7' : '#fff',
-                padding: '3px',
-                borderRadius: '50%',
+                backgroundImage: `url(${scrapActive ? '/assets/icons/blueBookmark.svg' : '/assets/icons/grayBookmark.svg'})`,
+                width: '32px',
+                height: '32px',
+                backgroundSize: 'cover',
               }}
             />
           </div>
@@ -133,7 +139,7 @@ const ReviewDetailList = ({ tripDetail }: ReviewDetailListProps) => {
         <UserBox>
           <div>
             <S.UserSection>
-              <S.UserImage src={imageUrl} alt="사진" />
+              <S.UserImage src={tripDetail.profileImage} alt="사진" />
               <S.UserName>{tripDetail.nickname}님</S.UserName>
             </S.UserSection>
           </div>
@@ -157,7 +163,7 @@ const ReviewDetailList = ({ tripDetail }: ReviewDetailListProps) => {
           <HashTagContainer>
             {tripDetail.hashtagList && tripDetail.hashtagList.length > 0 ? (
               tripDetail.hashtagList.map((category, idx) => (
-                <CategoryButton key={idx} title={category} />
+                <CategoryButton key={idx} title={category} hoverColor="none" />
               ))
             ) : (
               <p>해시태그가 없습니다.</p>
@@ -273,7 +279,7 @@ const UserBox = styled.div`
   line-height: 50px;
 `;
 
-const Icon = styled.img`
-  width: 35px;
-  height: 35px;
-`;
+// const Icon = styled.img`
+//   width: 35px;
+//   height: 35px;
+// `;

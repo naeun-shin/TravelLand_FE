@@ -6,17 +6,19 @@ import * as S from './MainCard.style';
 import CategoryButton from '../buttons/CategoryButton';
 import { IoIosArrowDropleft, IoIosArrowDropright } from 'react-icons/io';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
+// import { Card } from '@/components/commons/cards/Card';
 
 // 메인 헤더 카드 인터페이스 업데이트
 interface CardProps {
-  tripId?: number;
-  area?: string;
-  title?: string;
-  tripStartDate?: string;
-  tripEndDate?: string;
+  tripId: number;
+  area: string;
+  title: string;
+  tripStartDate: string;
+  tripEndDate: string;
   thumbnailUrl?: string;
-  hashtagList?: string[];
-  isScrap?: boolean;
+  hashtagList: string[];
+  isScrap: boolean;
 }
 
 interface MainCardProps {
@@ -27,7 +29,7 @@ interface MainCardProps {
 const StyledSlider = styled(Slider)`
   position: relative;
   margin: auto;
-  width: 1260px;
+  width: 1400px;
   display: flex;
 
   .slick-prev,
@@ -59,13 +61,12 @@ const StyledSlider = styled(Slider)`
   }
 
   .slick-slide {
-    /* width: 250px; */
-    /* display: flex; */
-    /* justify-content: center; */
+    width: auto;
   }
 `;
-
 const MainCard: React.FC<MainCardProps> = ({ cards = [] }) => {
+  const navigate = useNavigate();
+
   const settings = {
     dots: false,
     infinite: false,
@@ -76,12 +77,22 @@ const MainCard: React.FC<MainCardProps> = ({ cards = [] }) => {
     nextArrow: <IoIosArrowDropright />,
   };
 
+  const handleGoToDetailClick = (tripId: number) => {
+    navigate(`/travelDetail/${tripId}`);
+  };
+
   return (
     <StyledSlider {...settings}>
       {cards.map((card) => (
-        <S.CardContainer key={card.tripId}>
+        <S.CardContainer
+          key={card.tripId}
+          onClick={() => handleGoToDetailClick(card.tripId)}
+        >
           <S.ImageContainer>
-            <img src={card.thumbnailUrl} alt={card.title} />
+            <img
+              src={card.thumbnailUrl || ''}
+              alt={`Thumbnail for ${card.title}`}
+            />
           </S.ImageContainer>
           <S.TextContainer>
             <div>
@@ -94,8 +105,12 @@ const MainCard: React.FC<MainCardProps> = ({ cards = [] }) => {
             </div>
             <S.CategoriesContainer>
               {card.hashtagList
-                ? card.hashtagList.map((category, idx) => (
-                    <CategoryButton key={idx} title={category} />
+                ? card.hashtagList.map((category: string, idx: number) => (
+                    <CategoryButton
+                      key={idx}
+                      title={category}
+                      hoverColor="none"
+                    />
                   ))
                 : null}
             </S.CategoriesContainer>
