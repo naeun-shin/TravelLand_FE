@@ -4,7 +4,7 @@ import * as S from '@components/commons/user/myPage/MyPage.style';
 const MyPageUserInfo = () => {
   // return <></>;
   const { data, isLoading, isError } = useGetUerInfoQuery();
-  console.log(data);
+
   const userData = data?.data;
   if (isLoading) return <div>Data is Loading</div>;
   if (isError) return <div>Error occurred during fetching</div>;

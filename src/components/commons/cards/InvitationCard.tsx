@@ -6,9 +6,6 @@ export interface InvitationCardProps {
 }
 
 const InvitationCard: React.FC<InvitationCardProps> = ({ src, onClick }) => {
-  console.log(onClick);
-  console.log(src);
-
   return (
     <>
       <S.InvitationCardContainer>

@@ -31,20 +31,26 @@ const Main: React.FC<MainProps> = () => {
   const [searchQuery, setSearchQuery] = useState(''); // 검색어 상태
   const [isSearchModalOpen, setSearchModalOpen] = useState<boolean>(false);
 
-  // 모달을 토글하는 함수
-  const toggleSearchModal = () => {
-    console.log('Toggling search modal');
-    setSearchModalOpen(!isSearchModalOpen);
-  };
-
   // TopTen
-  const { data: TopTenData } = useGetMainRankListQuery();
-
+  const {
+    data: TopTenData,
+    isLoading: isLoadingTopTen,
+    isError: isErrorTopTen,
+  } = useGetMainRankListQuery();
 
   // 랜덤 8개
-  const { data: randomData } = useGetMainRandomListQuery();
+  const {
+    data: randomData,
+    isLoading: isLoadingRandom,
+    isError: isErrorRandom,
+  } = useGetMainRandomListQuery();
 
-  console.log('randomData > ', randomData?.data);
+  // 검색 API
+  const {
+    isLoading: isLoadingSearch,
+    isError: isErrorSearch,
+    data: searchData,
+  } = useGetMainSearchQuery(searchQuery);
 
   // 검색 아이콘 클릭 시 호출될 함수
   const handleSearchIconClick = () => {
@@ -62,21 +68,21 @@ const Main: React.FC<MainProps> = () => {
     setSearchQuery(query);
   };
 
-  // 검색어를 사용하여 검색 API를 호출
-  const {
-    isLoading,
-    isError,
-    data: searchData,
-  } = useGetMainSearchQuery(searchQuery);
+  // 모달을 토글하는 함수
+  const toggleSearchModal = () => {
+    setSearchModalOpen(!isSearchModalOpen);
+  };
 
-  // API 호출 상태에 따라 로딩 또는 에러 처리
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+  // 모달을 여는 함수
+  // const openSearchModal = () => {
+  //   setSearchModalOpen(true);
+  // };
 
-  if (isError) {
-    return <div>Error occurred</div>;
-  }
+  // // // 모달을 닫는 함수
+  const closeSearchModal = () => {
+    setSearchModalOpen(false);
+  };
+
   const handleSearchResult = () => {
     if (searchData) {
       navigate('/search-results', { state: searchData });
@@ -84,17 +90,6 @@ const Main: React.FC<MainProps> = () => {
       closeSearchModal();
     }
   };
-
-  // 모달을 여는 함수
-  const openSearchModal = () => {
-    setSearchModalOpen(true);
-  };
-
-  // // // 모달을 닫는 함수
-  // const closeSearchModal = () => {
-  //   setSearchModalOpen(false);
-  // };
-
   const handleMakePlanClick = () => {
     navigate('/planList');
   };
@@ -103,12 +98,13 @@ const Main: React.FC<MainProps> = () => {
     navigate('/travelReview');
   };
 
-  if (isLoading) {
+  // 전체 로딩 및 에러 처리
+  if (isLoadingTopTen || isLoadingRandom || isLoadingSearch) {
     return <div>Loading...</div>;
   }
 
-  if (isError) {
-    return <div>error occured</div>;
+  if (isErrorTopTen || isErrorRandom || isErrorSearch) {
+    return <div>Error occurred</div>;
   }
 
   return (
@@ -139,8 +135,11 @@ const Main: React.FC<MainProps> = () => {
       <ListTitle />
       {/* 탑텐 데이터 전달 */}
       <MainList items={TopTenData?.data} />
-      <SearchModal isOpen={isSearchModalOpen} onClose={toggleSearchModal} />
-
+      <SearchModal
+        isOpen={isSearchModalOpen}
+        onClose={toggleSearchModal}
+        onSearch={handleSearchResult}
+      />
     </>
   );
 };

@@ -17,7 +17,7 @@ interface SearchModalProps {
 const SearchModal: React.FC<SearchModalProps> = ({
   isOpen,
   onClose,
-  onSearch,
+  // onSearch,
 }) => {
   const navigate = useNavigate();
   const [_, setArea] = useState<string>('');
@@ -29,11 +29,11 @@ const SearchModal: React.FC<SearchModalProps> = ({
   // 인기 지역 (선택박스)
   const { data: areaList } = useGetAreaListQuery();
   const areaItem = areaList?.data;
-  const [isSearchModalOpen, setSearchModalOpen] = useState<boolean>(false);
+  // const [isSearchModalOpen, setSearchModalOpen] = useState<boolean>(false);
 
-  const toggleSearchModal = () => {
-    setSearchModalOpen(!isSearchModalOpen);
-  };
+  // const toggleSearchModal = () => {
+  //   setSearchModalOpen(!isSearchModalOpen);
+  // };
 
   useEffect(() => {
     const handleScroll = (event: WheelEvent) => {
@@ -55,14 +55,12 @@ const SearchModal: React.FC<SearchModalProps> = ({
   const handleAreaClick = (area: string) => {
     // 카테고리 Api 호출
     setArea(area);
-    console.log(area);
     navigate('/results', { state: { area } });
   };
 
   // 해시 태그 검색
   const handleHashtagClick = (hashtag: string) => {
     setHashtag(hashtag);
-    console.log(hashtag);
     navigate('/results', { state: { hashtag } });
   };
 

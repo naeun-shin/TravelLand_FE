@@ -27,7 +27,7 @@ interface CheckVoteProps {
 
 export const VoteCheck: React.FC<CheckVoteProps> = ({ voteData }) => {
   const navigate = useNavigate();
-  //   console.log(voteData.planAId, voteData.planBId);
+
   const [selectedVote, setSelectedVote] = useState<PlanVotes | undefined>();
   const [isVotedA, setIsVotedA] = useState<boolean | null>(null);
   const [content, _] = useState<string>('');
@@ -73,8 +73,6 @@ export const VoteCheck: React.FC<CheckVoteProps> = ({ voteData }) => {
       isVotedA: isVotedA,
       content,
     };
-
-    console.log('voteData:', voteData);
 
     votSubmit.mutate(voteData, {
       onSuccess: () => {

@@ -24,10 +24,6 @@ const List: React.FC<ListProps> = ({ planListData }) => {
     navigate(`/planDetail/${planId}`);
   };
 
-  // const handleBookmarkClick = (planId: number) => {
-  //   console.log(planId);
-  // };
-
   const halfIndex = Math.ceil(planListData.length / 2);
   const leftColumnItems = planListData.slice(0, halfIndex);
   const rightColumnItems = planListData.slice(halfIndex);
