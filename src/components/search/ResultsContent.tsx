@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 // import { IoLocationSharp } from 'react-icons/io5';
 import * as S from './Search.style';
 import styled from 'styled-components';
@@ -8,11 +8,12 @@ import {
   useGetSearchResultHashtagQuery,
 } from '@/hooks/useQuery';
 import { useLocation, useNavigate } from 'react-router-dom';
+// import { IoLocationSharp } from 'react-icons/io5';
 
 interface IPlaceNameProps {
   name: string;
 }
-        
+
 interface SearchResult {
   tripId: number;
   thumbnailUrl: string;
@@ -35,7 +36,7 @@ const validateData = (data: any): data is SearchResult[] => {
 const PlaceName: React.FC<IPlaceNameProps> = ({ name }) => (
   <div style={{ color: '#3AB9F0' }}>{name}</div>
 );
-  
+
 const ResultsContent: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -46,9 +47,9 @@ const ResultsContent: React.FC = () => {
   const [size] = useState<number>(9);
   const [sortBy] = useState<string>('createdAt');
   const [isAsc] = useState<boolean>(false);
-  const [searchResults, setSearchResults] = useState<any[]>([]); // 검색 결과를 저장할 상태
-
-
+  const [searchResults, setSearchResults] = useState<SearchResult[]>([]); // 검색 결과를 저장할 상태
+  // const places = searchResults.map((result) => result.placeName); // placeName을 추출하여 배열로 저장
+  // console.log(places);
   const searchAreaParams = { area, page, size, sortBy, isAsc };
   const searchHashtagParams = { hashtag, page, size, sortBy, isAsc };
 
@@ -67,17 +68,18 @@ const ResultsContent: React.FC = () => {
   const handleGoToDetail = (tripId: number) => {
     navigate(`/travelDetail/${tripId}`);
   };
-  if (areaLoading || hashtagLoading) return <div>Loading...</div>;
-  if (areaError || hashtagError) return <div>Error loading data</div>;
 
-  const results = area ? areaResults : hashtagResults;
-  console.log(results);
-  if (!results || !validateData(results)) return <div>데이터가 없습니다!</div>; // 데이터가 유효한 배열인지 확인
+  useEffect(() => {
+    const results = area ? areaResults : hashtagResults;
+    if (results && validateData(results)) {
+      setSearchResults(results);
+    }
+  }, [areaResults, hashtagResults]);
 
-  // 게시물 클릭 (상세보기이동)
-  const handleItemClick = (tripId: number) => {
-    navigate(`/travelDetail/${tripId}`);
-  };
+  // // 게시물 클릭 (상세보기이동)
+  // const handleItemClick = (tripId: number) => {
+  //   navigate(`/travelDetail/${tripId}`);
+  // };
 
   useEffect(() => {
     // location.state에서 searchData를 확인하고 상태를 설정
@@ -92,18 +94,30 @@ const ResultsContent: React.FC = () => {
     }
   }, [location]);
 
+  if (areaLoading || hashtagLoading) return <div>Loading...</div>;
+  if (areaError || hashtagError) return <div>Error loading data</div>;
+
   return (
     <S.ResultContainer>
       <S.ResultBox>
         <S.ResultTitle>
-          {/* <div style={{ display: 'flex', alignItems: 'center' }}>
-            <PlaceName name={results.placeName} />
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            {/* 첫 번째 검색 결과의 placeName을 사용 */}
             <span style={{ marginLeft: '0.3rem' }}>주변에 가볼만한 곳</span>
-          </div> */}
+            {searchResults.length > 0 && (
+              <PlaceName name={searchResults[0].placeName} />
+            )}
+          </div>
+          {/* 모든 placeName 탭으로 처리하기 */}
+          {/* {searchResults.map((result, index) => (
+            <S.TabButton key={index} onClick={() => setActiveTab(index)}>
+              <IoLocationSharp /> {result.placeName}
+            </S.TabButton>
+          ))} */}
         </S.ResultTitle>
       </S.ResultBox>
       <S.TabContainer>
-        {/* {place.map((tab) => (
+        {/* {places.map((tab) => (
           <S.TabButton key={tab}>
             <IoLocationSharp /> {tab}
           </S.TabButton>
@@ -136,7 +150,7 @@ const ResultsContent: React.FC = () => {
           searchResults.map((data, index) => (
             <S.ResultItem
               key={index}
-              onClick={() => handleItemClick(data.tripId)}
+              onClick={() => handleGoToDetail(data.tripId)}
             >
               <ThumbnailImage src={data.thumbnailUrl} alt="썸네일" />
               <S.ContentWrapper>
@@ -144,7 +158,7 @@ const ResultsContent: React.FC = () => {
                   {data.area} | {`${data.tripStartDate} - ${data.tripEndDate}`}
                 </Location>
                 <S.ItemTitle>{data.title}</S.ItemTitle>
-                <S.ItemContent>{data.content}</S.ItemContent>
+                <S.ItemContent>{data.content} ... 더보기</S.ItemContent>
                 {/* 여기서 map 함수를 호출하기 전에 data.categories가 존재하고 배열인지 확인합니다. */}
                 <CategoriesContainer>
                   {Array.isArray(data.hashtagList) &&

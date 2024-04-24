@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import ReDesignHeader2 from '@/components/layouts/Header2';
 import ResultsContent from '@/components/search/ResultsContent';
 // SearchInputProps import 변경

@@ -137,7 +137,7 @@ const PlanCreate = () => {
   };
 
   const dateFormat = 'yyyy-MM';
-  console.log(isPublic);
+
   return (
     <>
       {/* 전체 컨테이너 */}

@@ -35,7 +35,6 @@ const MainModal: React.FC<IMainModalProps> = ({
 
   useEffect(() => {
     setSlide(true);
-    console.log('Modal opened');
   }, []);
 
   useEffect(() => {
