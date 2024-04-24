@@ -54,7 +54,7 @@ export const KaKaoMapResult: React.FC<MapSearchType> = ({
       let keyword = searchKeyword;
 
       if (!keyword.replace(/^\s+|\s+$/g, '')) {
-        alert('키워드를 입력해주세요!');
+        // alert('키워드를 입력해주세요!');
         return false;
       }
 

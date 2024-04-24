@@ -34,13 +34,21 @@ const MainList: React.FC<MainListProps> = ({ items }) => {
       {items.map((item, index) => (
         <ItemContainer key={index}>
           <ImageSection>
-            <Image src={item.thumbnailUrl} alt="이미지" />
+            <Image
+              src={item.thumbnailUrl}
+              alt="이미지"
+              onClick={() => handleGoToDetail(item.tripId)}
+            />
             <BookmarkIcon />
           </ImageSection>
           <TextSection>
             <CategoriesContainer>
               {item.hashtagList.map((category, categoryIndex) => (
-                <CategoryButton key={categoryIndex} title={category} />
+                <CategoryButton
+                  key={categoryIndex}
+                  title={category}
+                  hoverColor="none"
+                />
               ))}
             </CategoriesContainer>
             <Rank>{index + 1}</Rank>
@@ -71,6 +79,7 @@ const MainListContainer = styled.div`
   width: 1400px;
   margin: 0 auto;
   margin-bottom: 100px;
+  cursor: pointer;
 `;
 
 const BookmarkIcon = styled(CiBookmark)`
@@ -86,6 +95,7 @@ const BookmarkIcon = styled(CiBookmark)`
   padding: 5px;
   z-index: 9;
   background-color: #c5f1ff;
+  cursor: pointer;
 `;
 
 const Rank = styled.div`
@@ -111,6 +121,7 @@ const ItemContainer = styled.div`
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   overflow: hidden;
+  cursor: pointer;
 `;
 
 const ImageSection = styled.div`

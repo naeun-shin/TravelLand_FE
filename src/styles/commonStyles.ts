@@ -16,7 +16,7 @@ const PagenationStyle = styled.div`
 `;
 
 const PlanPagenationStyle = styled.div`
-  padding-top: 50%;
+  padding-top: 630px;
   display: flex;
   flex-direction: row;
   justify-content: center;

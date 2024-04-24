@@ -109,6 +109,7 @@ export const searchTripsByArea = async (
     throw error;
   }
 };
+
 // 해시 태그 검색 결과
 export const searchTripsByHashtag = async (
   searchHashtagParams: SearchHashtagParams,

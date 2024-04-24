@@ -34,21 +34,17 @@ const ReviewDetailList = ({ tripDetail }: ReviewDetailListProps) => {
 
   // tripDetail로부터 초기 like 및 scrap 상태를 설정
   useEffect(() => {
-    setLikeActive(tripDetail.like);
-    setScrapActive(tripDetail.scrap);
-  }, [tripDetail.like, tripDetail.scrap]);
-
-  useEffect(() => {
-    console.log('tripDetail 전체 데이터:', tripDetail); // 해시태그 데이터 로깅
-  }, [tripDetail]);
+    setLikeActive(tripDetail.isLike);
+    setScrapActive(tripDetail.isScrap);
+  }, [tripDetail, tripDetail.isLike, tripDetail.isScrap]);
 
   const likeTrip = useCreateLikeTripMutation();
   const disLikeTrip = useCancelLikeTripMutation();
+
   // 좋아요 기능
   const toggleLike = (tripId: number) => {
     !likeActive ? likeTrip.mutate(tripId) : disLikeTrip.mutate(tripId);
     setLikeActive(!likeActive);
-    // 서버에 상태 업데이트 요청 로직 구현
   };
 
   const scrapTrip = useCreateScrapTripMutation();
@@ -78,10 +74,10 @@ const ReviewDetailList = ({ tripDetail }: ReviewDetailListProps) => {
   };
 
   // 여기자나여 => 여기가 썸네일 이미지 구간
-  const imageUrl =
-    tripDetail.imageUrlList && tripDetail.imageUrlList.length > 0
-      ? tripDetail.imageUrlList[0]
-      : '기본이미지URL';
+  // const imageUrl =
+  //   tripDetail.imageUrlList && tripDetail.imageUrlList.length > 0
+  //     ? tripDetail.imageUrlList[0]
+  //     : '기본이미지URL';
 
   return (
     <>
@@ -143,7 +139,7 @@ const ReviewDetailList = ({ tripDetail }: ReviewDetailListProps) => {
         <UserBox>
           <div>
             <S.UserSection>
-              <S.UserImage src={imageUrl} alt="사진" />
+              <S.UserImage src={tripDetail.profileImage} alt="사진" />
               <S.UserName>{tripDetail.nickname}님</S.UserName>
             </S.UserSection>
           </div>
@@ -167,7 +163,7 @@ const ReviewDetailList = ({ tripDetail }: ReviewDetailListProps) => {
           <HashTagContainer>
             {tripDetail.hashtagList && tripDetail.hashtagList.length > 0 ? (
               tripDetail.hashtagList.map((category, idx) => (
-                <CategoryButton key={idx} title={category} />
+                <CategoryButton key={idx} title={category} hoverColor="none" />
               ))
             ) : (
               <p>해시태그가 없습니다.</p>

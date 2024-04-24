@@ -316,135 +316,140 @@ const PlanCreate2: React.FC = () => {
       {/* 스태퍼 박스 영역 */}
 
       {unitPlans.map((input, index) => (
-        <S.PlanDetailCreateBox>
-          <IS.PlanListInputContainer key={index}>
-            {/* 출발지 영역 */}
-            <IS.ListInputbox>
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'flex-start',
-                  justifyContent: 'flex-start',
-                }}
-              >
-                제목 &nbsp; <img src="/assets/icons/requiredPoint.svg" />
-              </div>
-              <input
-                placeholder="서울시 강남구"
-                value={input.title}
-                onChange={(e) =>
-                  handleInputChange(index, 'title', e.target.value)
-                }
-              />
-            </IS.ListInputbox>
-            {/* 시간 영역 */}
-            <IS.ListInputbox>
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'flex-start',
-                  justifyContent: 'flex-start',
-                }}
-              >
-                시간 &nbsp; <img src="/assets/icons/requiredPoint.svg" />
-              </div>
-              <input
-                placeholder="09:30"
-                value={input.time}
-                onChange={(e) =>
-                  handleInputChange(index, 'time', e.target.value)
-                }
-              />
-            </IS.ListInputbox>
-            {/* 일정 영역 */}
-            <IS.ListInputbox>
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'flex-start',
-                  justifyContent: 'flex-start',
-                }}
-              >
-                일정 &nbsp; <img src="/assets/icons/requiredPoint.svg" />
-              </div>
-              <ModernInput
-                placeholder="가이드 만나기"
-                value={input.content}
-                type="text"
-                height={50}
-                onChange={(e) =>
-                  handleInputChange(index, 'content', e.target.value)
-                }
-              />
-            </IS.ListInputbox>
-            {/* 경비 영역 */}
-            <IS.ListInputbox>
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'flex-start',
-                  justifyContent: 'flex-start',
-                }}
-              >
-                경비 &nbsp; <img src="/assets/icons/requiredPoint.svg" />
-              </div>
-              <ModernInput
-                placeholder="경비"
-                value={input.budget}
-                type="text" // Set input type as number to allow only numeric values
-                height={50}
-                onChange={(e) =>
-                  handleInputChange(index, 'budget', e.target.value)
-                }
-              />
-            </IS.ListInputbox>
-            {/* 위치 영역 */}
-            <IS.ListInputboxWithFlex>
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'flex-start',
-                  justifyContent: 'flex-start',
-                }}
-              >
-                위치 &nbsp; <img src="/assets/icons/requiredPoint.svg" />
-              </div>
-              <IS.ListContent>
-                <ModernInput
-                  placeholder="서울특별시 중구 을지로 201"
-                  value={`${input.place_name}, ${input.address}`}
-                  readonly={true}
-                  type={'text'}
-                  border="transparent"
-                  width={1000}
-                  fontSize={18}
-                />
-                <IS.ImgBox>
-                  {/* <IoIosArrowDropright
+        <>
+          <div style={{ marginBottom: '30px' }}>
+            <S.PlanDetailCreateBox>
+              <IS.PlanListInputContainer key={index}>
+                {/* 출발지 영역 */}
+                <IS.ListInputbox>
+                  <div
+                    style={{
+                      display: 'flex',
+                      alignItems: 'flex-start',
+                      justifyContent: 'flex-start',
+                    }}
+                  >
+                    제목 &nbsp; <img src="/assets/icons/requiredPoint.svg" />
+                  </div>
+                  <input
+                    placeholder="서울시 강남구"
+                    value={input.title}
+                    onChange={(e) =>
+                      handleInputChange(index, 'title', e.target.value)
+                    }
+                  />
+                </IS.ListInputbox>
+                {/* 시간 영역 */}
+                <IS.ListInputbox>
+                  <div
+                    style={{
+                      display: 'flex',
+                      alignItems: 'flex-start',
+                      justifyContent: 'flex-start',
+                    }}
+                  >
+                    시간 &nbsp; <img src="/assets/icons/requiredPoint.svg" />
+                  </div>
+                  <input
+                    placeholder="09:30"
+                    value={input.time}
+                    onChange={(e) =>
+                      handleInputChange(index, 'time', e.target.value)
+                    }
+                  />
+                </IS.ListInputbox>
+                {/* 일정 영역 */}
+                <IS.ListInputbox>
+                  <div
+                    style={{
+                      display: 'flex',
+                      alignItems: 'flex-start',
+                      justifyContent: 'flex-start',
+                    }}
+                  >
+                    일정 &nbsp; <img src="/assets/icons/requiredPoint.svg" />
+                  </div>
+                  <ModernInput
+                    placeholder="가이드 만나기"
+                    value={input.content}
+                    type="text"
+                    height={50}
+                    onChange={(e) =>
+                      handleInputChange(index, 'content', e.target.value)
+                    }
+                  />
+                </IS.ListInputbox>
+                {/* 경비 영역 */}
+                <IS.ListInputbox>
+                  <div
+                    style={{
+                      display: 'flex',
+                      alignItems: 'flex-start',
+                      justifyContent: 'flex-start',
+                    }}
+                  >
+                    경비 &nbsp; <img src="/assets/icons/requiredPoint.svg" />
+                  </div>
+                  <ModernInput
+                    placeholder="경비"
+                    value={input.budget}
+                    type="text" // Set input type as number to allow only numeric values
+                    height={50}
+                    onChange={(e) =>
+                      handleInputChange(index, 'budget', e.target.value)
+                    }
+                  />
+                </IS.ListInputbox>
+                {/* 위치 영역 */}
+                <IS.ListInputboxWithFlex>
+                  <div
+                    style={{
+                      display: 'flex',
+                      alignItems: 'flex-start',
+                      justifyContent: 'flex-start',
+                    }}
+                  >
+                    위치 &nbsp; <img src="/assets/icons/requiredPoint.svg" />
+                  </div>
+                  <IS.ListContent>
+                    <ModernInput
+                      placeholder="서울특별시 중구 을지로 201"
+                      value={`${input.place_name}, ${input.address}`}
+                      readonly={true}
+                      type={'text'}
+                      border="transparent"
+                      width={1000}
+                      fontSize={18}
+                    />
+                    <IS.ImgBox>
+                      {/* <IoIosArrowDropright
                     color="lightGray"
                     size="2rem"
                     onClick={() => handleOpenMapClick(index)}
                   /> */}
-                  <TfiArrowCircleRight
-                    size="35px"
-                    color="lightGray"
-                    onClick={() => handleOpenMapClick(index)}
-                  />
-                </IS.ImgBox>
-              </IS.ListContent>
-            </IS.ListInputboxWithFlex>
-          </IS.PlanListInputContainer>
-        </S.PlanDetailCreateBox>
+                      <TfiArrowCircleRight
+                        size="35px"
+                        color="lightGray"
+                        onClick={() => handleOpenMapClick(index)}
+                      />
+                    </IS.ImgBox>
+                  </IS.ListContent>
+                </IS.ListInputboxWithFlex>
+              </IS.PlanListInputContainer>
+            </S.PlanDetailCreateBox>
+          </div>
+        </>
       ))}
+
       <PS.ButtonBox>
         <Button
           text="+"
           width="78%"
           height="60px"
           color="white"
-          borderColor="lightGray"
+          borderColor="gray"
           borderRadius="25px"
-          textColor="lightGray"
+          textColor="gray"
           onClick={handlePlanAdd}
         />
       </PS.ButtonBox>

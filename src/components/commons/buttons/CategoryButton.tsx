@@ -9,6 +9,7 @@ interface CategoryButtonProps {
   icon?: React.ReactNode;
   hoverColor?: string;
   selected?: boolean; // 선택된 상태를 처리하기 위해 추가
+  cursor?: string;
 }
 
 const CategoryButton: React.FC<CategoryButtonProps> = ({
@@ -18,6 +19,7 @@ const CategoryButton: React.FC<CategoryButtonProps> = ({
   icon,
   hoverColor,
   selected = false,
+  cursor,
 }) => {
   return (
     <S.CategoryButtonStyle
@@ -25,6 +27,7 @@ const CategoryButton: React.FC<CategoryButtonProps> = ({
       onClick={onClick}
       hoverColor={hoverColor}
       selected={selected}
+      cursor={cursor}
     >
       {icon}
       {title}
