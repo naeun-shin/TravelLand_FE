@@ -14,94 +14,106 @@ import SearchResults from '@/pages/main/SearchResults';
 import ReviewCreatePage1 from '@/pages/travelReview/ReviewCreate1';
 import ReviewCreate2 from '@/pages/travelReview/ReviewCreate2';
 import ReviewCreate3 from '@/pages/travelReview/ReviewCreate3';
-// import PrivateRoute from '@/components/PrivateRoute';
+import GlobalStyle from '@/styles/GlobalStyles';
+import App from '@/App';
+import PrivateRoute from '@/components/PrivateRoute';
 
 export const router = createBrowserRouter([
   {
-    path: '/',
     element: (
-      <Main
-        onClick={function (): void {
-          throw new Error('Function not implemented.');
-        }}
-      />
+      <>
+        <GlobalStyle />
+        <App />
+      </>
     ),
-  },
-  {
-    path: '/search',
-    element: (
-      <SearchPage
-        isOpen={false}
-        onClose={function (): void {
-          throw new Error('Function not implemented.');
-        }}
-      />
-    ),
-  },
-  { path: '/results', element: <SearchResults /> },
-  { path: '/travelReview', element: <TravelReviewPage /> },
-  { path: '/travelDetail/:tripId', element: <TravelDetailPage /> },
-  { path: '/login/oauth', element: <KakaoRedirect /> },
-  {
-    path: '/user/myPage',
-    element: (
-      // <PrivateRoute>
-      <MyPage />
-      // </PrivateRoute>
-    ),
-  },
-  {
-    path: '/login',
-    element: (
-      <Login
-        isOpen={false}
-        onClose={function (): void {
-          throw new Error('Function not implemented.');
-        }}
-      />
-    ),
-  },
-  {
-    path: '/planCreate/1',
-    element: (
-      // <PrivateRoute>
-      <TravelPlanCreate1 />
-      // </PrivateRoute>
-    ),
-  },
-  {
-    path: '/planCreate/2',
-    element: (
-      // <PrivateRoute>
-      <TravelPlanCreate2 />
-      // </PrivateRoute>
-    ),
-  },
-  { path: '/planList', element: <TravelPlanList /> },
-  { path: '/planDetail/:id', element: <TravelPlanDetail /> },
-  { path: '/TravelDetailPage/:tripId', element: <TravelDetailPage /> },
-  {
-    path: '/travelCreate',
-    element: (
-      // <PrivateRoute>
-      <ReviewCreatePage1 />
-      // </PrivateRoute>
-    ),
-  },
-  {
-    path: '/reviewCreate/2',
-    element: (
-      // <PrivateRoute>
-      <ReviewCreate2 />
-      // </PrivateRoute>
-    ),
-  },
-  {
-    path: '/reviewCreate/3',
-    element: (
-      // <PrivateRoute>
-      <ReviewCreate3 />
-      // </PrivateRoute>
-    ),
+    children: [
+      {
+        path: '/',
+        element: (
+          <Main
+            onClick={function (): void {
+              throw new Error('Function not implemented.');
+            }}
+          />
+        ),
+      },
+      {
+        path: '/search',
+        element: (
+          <SearchPage
+            isOpen={false}
+            onClose={function (): void {
+              throw new Error('Function not implemented.');
+            }}
+          />
+        ),
+      },
+      { path: '/results', element: <SearchResults /> },
+      { path: '/travelReview', element: <TravelReviewPage /> },
+      { path: '/travelDetail/:tripId', element: <TravelDetailPage /> },
+      { path: '/login/oauth', element: <KakaoRedirect /> },
+      {
+        path: '/user/myPage',
+        element: (
+          <PrivateRoute>
+            <MyPage />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: '/login',
+        element: (
+          <Login
+            isOpen={false}
+            onClose={function (): void {
+              throw new Error('Function not implemented.');
+            }}
+          />
+        ),
+      },
+      {
+        path: '/planCreate/1',
+        element: (
+          <PrivateRoute>
+            <TravelPlanCreate1 />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: '/planCreate/2',
+        element: (
+          <PrivateRoute>
+            <TravelPlanCreate2 />
+          </PrivateRoute>
+        ),
+      },
+      { path: '/planList', element: <TravelPlanList /> },
+      { path: '/planDetail/:id', element: <TravelPlanDetail /> },
+      { path: '/TravelDetailPage/:tripId', element: <TravelDetailPage /> },
+      {
+        path: '/travelCreate',
+        element: (
+          <PrivateRoute>
+            <ReviewCreatePage1 />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: '/reviewCreate/2',
+        element: (
+          <PrivateRoute>
+            <ReviewCreate2 />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: '/reviewCreate/3',
+        element: (
+          <PrivateRoute>
+            <ReviewCreate3 />
+          </PrivateRoute>
+        ),
+      },
+    ],
   },
 ]);

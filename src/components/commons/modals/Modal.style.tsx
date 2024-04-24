@@ -50,7 +50,7 @@ export const MapModalOverlay = styled.div`
 `;
 
 export const InvitationModalOverlay = styled.div`
-  width: 500px; // 모달의 너비
+  width: 600px; // 모달의 너비
   height: 600px; // 모달의 높이를 화면의 80%로 설정
   padding: 25px;
   background-color: #fff;
@@ -68,8 +68,8 @@ export const InvitationModalOverlay = styled.div`
 `;
 
 export const DetailMapModalOverlay = styled.div`
-  width: 500px; // 모달의 너비
-  height: 600px; // 모달의 높이를 화면의 80%로 설정
+  width: 600px; // 모달의 너비
+  height: 700px; // 모달의 높이를 화면의 80%로 설정
   padding: 25px;
   background-color: #fff;
   border-style: 1px solid transparent;
@@ -101,6 +101,27 @@ export const LoginModalOverlay = styled.div`
   overflow: hidden; // 내부 컨텐츠가 넘치면 숨김
   z-index: 10;
   /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); // 모달에 그림자 효과 추가 */
+
+  div {
+    width: 500px;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  h1 {
+    font-size: 28px;
+    font-weight: 400;
+    padding-bottom: 25px;
+  }
+
+  h4 {
+    font-size: 16px;
+    font-weight: 400;
+  }
+
+  span {
+    font-weight: 600;
+  }
 `;
 
 export const VoteModalOverlay = styled.div`

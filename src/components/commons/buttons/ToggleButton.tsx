@@ -32,6 +32,7 @@ const ToggleInput = styled.input`
 
 const Slider = styled.span<{ $isChecked: boolean }>`
   display: flex;
+  align-items: c;
   flex-wrap: nowrap;
   position: relative;
   cursor: pointer;
@@ -39,14 +40,23 @@ const Slider = styled.span<{ $isChecked: boolean }>`
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: ${(props) => (props.$isChecked ? '#5AC8EC' : '#5AC8EC')};
+  background-color: ${(props) => (props.$isChecked ? '#5AC8EC' : '#E9E9E9')};
   transition: 0.4s;
   border-radius: 50px;
   /* border: 1px solid black; */
 
   span {
-    text-align: center;
-    width: 40px;
+    display: flex;
+    align-items: center;
+    /* text-align: center; */
+
+    /* width: 35px; */
+    height: 20px;
+
+    padding: 12px 10px;
+    font-size: 12px;
+    font-weight: bold;
+    z-index: 100;
 
     &:nth-child(1) {
       transition: all 0.4s;
@@ -56,22 +66,18 @@ const Slider = styled.span<{ $isChecked: boolean }>`
       transition: all 0.4s;
       color: ${(props) => (props.$isChecked ? 'white' : 'white')};
     }
-    padding: 12px 7px;
-    font-size: 13px;
-    font-weight: bold;
-    z-index: 100;
   }
 
   &:before {
     position: absolute;
     content: '';
     top: 50%;
-    height: 35px;
-    width: 45%;
-    left: ${(props) => (props.$isChecked ? '57px' : '3px')};
+    height: 40px;
+    width: 40px;
+    left: ${(props) => (props.$isChecked ? '50px' : '3px')};
     background-color: white;
     transition: all 0.4s;
-    border-radius: 20px;
+    border-radius: 50%;
     transform: translateY(-50%);
   }
 `;

@@ -17,7 +17,7 @@ import { useNavigate } from 'react-router-dom';
 import SearchModal from './SearchPage';
 import styled from 'styled-components';
 import {
-  useGetMainHashtagListQuery,
+  useGetMainRandomListQuery,
   useGetMainRankListQuery,
   useGetMainSearchQuery,
 } from '@/hooks/useQuery';
@@ -38,14 +38,13 @@ const Main: React.FC<MainProps> = () => {
   };
 
   // TopTen
-  // const { data: TopTenData, isLoading, isError } = useGetMainRankListQuery();
+  const { data: TopTenData } = useGetMainRankListQuery();
 
-  // console.log(TopTenData);
 
-  // 해시태그
-  const { data: hashTagData } = useGetMainHashtagListQuery();
+  // 랜덤 8개
+  const { data: randomData } = useGetMainRandomListQuery();
 
-  console.log(hashTagData);
+  console.log('randomData > ', randomData?.data);
 
   // 검색 아이콘 클릭 시 호출될 함수
   const handleSearchIconClick = () => {
@@ -91,10 +90,10 @@ const Main: React.FC<MainProps> = () => {
     setSearchModalOpen(true);
   };
 
-  // 모달을 닫는 함수
-  const closeSearchModal = () => {
-    setSearchModalOpen(false);
-  };
+  // // // 모달을 닫는 함수
+  // const closeSearchModal = () => {
+  //   setSearchModalOpen(false);
+  // };
 
   const handleMakePlanClick = () => {
     navigate('/planList');
@@ -103,193 +102,6 @@ const Main: React.FC<MainProps> = () => {
   const handleReviewPageClick = () => {
     navigate('/travelReview');
   };
-
-  // 메인 헤더 카드 임시 데이터
-  const MainCardsData = [
-    {
-      tripId: 1,
-      area: '경상도',
-      title: '향기로운 봄날의 한옥 체험',
-      tripStartDate: '2024-05-01',
-      tripEndDate: '2024-05-03',
-      thumbnailUrl: '/assets/jejudo_720.jpg',
-      hashtagList: ['한옥', '데이트', '가족여행', '역사'],
-      isScrap: true,
-    },
-    {
-      tripId: 1,
-      area: '경상도',
-      title: '향기로운 봄날의 한옥 체험',
-      tripStartDate: '2024-05-01',
-      tripEndDate: '2024-05-03',
-      thumbnailUrl: '/assets/kyeongju_720.jpg',
-      hashtagList: ['한옥', '가족여행', '데이트'],
-      isScrap: true,
-    },
-    {
-      tripId: 1,
-      area: '경상도',
-      title: '향기로운 봄날의 한옥 체험',
-      tripStartDate: '2024-05-01',
-      tripEndDate: '2024-05-03',
-      thumbnailUrl: '/assets/jejudo_720.jpg',
-      hashtagList: ['한옥', '데이트', '가족여행'],
-      isScrap: true,
-    },
-    {
-      tripId: 1,
-      area: '경상도',
-      title: '향기로운 봄날의 한옥 체험',
-      tripStartDate: '2024-05-01',
-      tripEndDate: '2024-05-03',
-      thumbnailUrl: '/assets/kyeongju_720.jpg',
-      hashtagList: ['한옥', '데이트', '가족여행', '역사'],
-      isScrap: true,
-    },
-    {
-      tripId: 1,
-      area: '경상도',
-      title: '향기로운 봄날의 한옥 체험',
-      tripStartDate: '2024-05-01',
-      tripEndDate: '2024-05-03',
-      thumbnailUrl: '/assets/jejudo_720.jpg',
-      hashtagList: ['한옥', '데이트', '가족여행', '역사'],
-      isScrap: true,
-    },
-    {
-      tripId: 1,
-      area: '경상도',
-      title: '향기로운 봄날의 한옥 체험',
-      tripStartDate: '2024-05-01',
-      tripEndDate: '2024-05-03',
-      thumbnailUrl: '/assets/kyeongju_720.jpg',
-      hashtagList: ['한옥', '데이트', '가족여행'],
-      isScrap: true,
-    },
-    {
-      tripId: 1,
-      area: '경상도',
-      title: '향기로운 봄날의 한옥 체험',
-      tripStartDate: '2024-05-01',
-      tripEndDate: '2024-05-03',
-      thumbnailUrl: '/assets/jejudo_720.jpg',
-      hashtagList: ['한옥', '가족여행', '데이트', '역사'],
-      isScrap: true,
-    },
-    {
-      tripId: 1,
-      area: '경상도',
-      title: '향기로운 봄날의 한옥 체험',
-      tripStartDate: '2024-05-01',
-      tripEndDate: '2024-05-03',
-      thumbnailUrl: '/assets/kyeongju_720.jpg',
-      hashtagList: ['한옥', '데이트'],
-      isScrap: true,
-    },
-  ];
-
-  const items = [
-    {
-      rank: '1',
-      title: '즐거웠던 여행',
-      location: '서울',
-      categories: ['#한옥', '#데이트'],
-      description: '멋진 도시 전망을 볼 수 있는 곳',
-      imageUrl: '/assets/namsantower_720.jpg',
-      startDate: '2024-05-01',
-      endDate: '2024-05-03',
-    },
-    {
-      rank: '1',
-      title: '즐거웠던 여행',
-      location: '서울',
-      categories: ['#한옥', '#데이트'],
-      description: '멋진 도시 전망을 볼 수 있는 곳',
-      imageUrl: '/assets/namsantower_720.jpg',
-      startDate: '2024-05-01',
-      endDate: '2024-05-03',
-    },
-    {
-      rank: '1',
-      title: '즐거웠던 여행',
-      location: '서울',
-      categories: ['#한옥', '#데이트'],
-      description: '멋진 도시 전망을 볼 수 있는 곳',
-      imageUrl: '/assets/namsantower_720.jpg',
-      startDate: '2024-05-01',
-      endDate: '2024-05-03',
-    },
-    {
-      rank: '1',
-      title: '즐거웠던 여행',
-      location: '서울',
-      categories: ['#한옥', '#데이트'],
-      description: '멋진 도시 전망을 볼 수 있는 곳',
-      imageUrl: '/assets/namsantower_720.jpg',
-      startDate: '2024-05-01',
-      endDate: '2024-05-03',
-    },
-    {
-      rank: '1',
-      title: '즐거웠던 여행',
-      location: '서울',
-      categories: ['#한옥', '#데이트'],
-      description: '멋진 도시 전망을 볼 수 있는 곳',
-      imageUrl: '/assets/namsantower_720.jpg',
-      startDate: '2024-05-01',
-      endDate: '2024-05-03',
-    },
-    {
-      rank: '1',
-      title: '즐거웠던 여행',
-      location: '서울',
-      categories: ['#한옥', '#데이트'],
-      description: '멋진 도시 전망을 볼 수 있는 곳',
-      imageUrl: '/assets/namsantower_720.jpg',
-      startDate: '2024-05-01',
-      endDate: '2024-05-03',
-    },
-    {
-      rank: '1',
-      title: '즐거웠던 여행',
-      location: '서울',
-      categories: ['#한옥', '#데이트'],
-      description: '멋진 도시 전망을 볼 수 있는 곳',
-      imageUrl: '/assets/namsantower_720.jpg',
-      startDate: '2024-05-01',
-      endDate: '2024-05-03',
-    },
-    {
-      rank: '1',
-      title: '즐거웠던 여행',
-      location: '서울',
-      categories: ['#한옥', '#데이트'],
-      description: '멋진 도시 전망을 볼 수 있는 곳',
-      imageUrl: '/assets/namsantower_720.jpg',
-      startDate: '2024-05-01',
-      endDate: '2024-05-03',
-    },
-    {
-      rank: '1',
-      title: '즐거웠던 여행',
-      location: '서울',
-      categories: ['#한옥', '#데이트'],
-      description: '멋진 도시 전망을 볼 수 있는 곳',
-      imageUrl: '/assets/namsantower_720.jpg',
-      startDate: '2024-05-01',
-      endDate: '2024-05-03',
-    },
-    {
-      rank: '1',
-      title: '즐거웠던 여행',
-      location: '서울',
-      categories: ['#한옥', '#데이트'],
-      description: '멋진 도시 전망을 볼 수 있는 곳',
-      imageUrl: '/assets/namsantower_720.jpg',
-      startDate: '2024-05-01',
-      endDate: '2024-05-03',
-    },
-  ];
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -319,19 +131,16 @@ const Main: React.FC<MainProps> = () => {
       <Maintitle />
       <ButtonsWrapper>
         <SmallButton text="전체" />
-        <SmallButton text="가족 여행" />
-        <SmallButton text="커플 여행" />
+        {/* <SmallButton text="가족 여행" />
+        <SmallButton text="커플 여행" /> */}
       </ButtonsWrapper>
       {/* 해시태그 영역 */}
-      <MainCard cards={MainCardsData} />
+      <MainCard cards={randomData?.data} />
       <ListTitle />
       {/* 탑텐 데이터 전달 */}
-      <MainList items={items} />
-      <SearchModal
-        isOpen={isSearchModalOpen}
-        onClose={toggleSearchModal}
-        onSearch={handleSearchResult}
-      />
+      <MainList items={TopTenData?.data} />
+      <SearchModal isOpen={isSearchModalOpen} onClose={toggleSearchModal} />
+
     </>
   );
 };

@@ -60,7 +60,7 @@ const SearchContainer = styled.div`
   align-items: center;
   line-height: 50px;
   position: relative;
-  width: 550px;
+  width: 650px;
   height: 50px;
   padding: 5px;
   border-radius: 50px;

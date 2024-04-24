@@ -6,6 +6,7 @@ import SearchInput from '@/components/search/Search';
 import { IoClose } from 'react-icons/io5';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import { useGetAreaListQuery, useGetHahtagListQuery } from '@/hooks/useQuery';
 
 interface SearchModalProps {
   isOpen: boolean;
@@ -19,6 +20,15 @@ const SearchModal: React.FC<SearchModalProps> = ({
   onSearch,
 }) => {
   const navigate = useNavigate();
+  const [_, setArea] = useState<string>('');
+  const [, setHashtag] = useState<string>('');
+
+  // // 인기 태그 (선택박스)
+  const { data: tagList } = useGetHahtagListQuery();
+
+  // 인기 지역 (선택박스)
+  const { data: areaList } = useGetAreaListQuery();
+  const areaItem = areaList?.data;
   const [isSearchModalOpen, setSearchModalOpen] = useState<boolean>(false);
 
   const toggleSearchModal = () => {
@@ -37,31 +47,28 @@ const SearchModal: React.FC<SearchModalProps> = ({
     return () => {
       window.removeEventListener('wheel', handleScroll);
     };
-  }, [isOpen]);
+  }, [isOpen, areaItem, tagList]);
 
   if (!isOpen) return null;
 
-  const handleCategoryClick = (category: string) => {
-    console.log(`${category} 카테고리 선택`);
+  // 지역 기반 검색
+  const handleAreaClick = (area: string) => {
     // 카테고리 Api 호출
-    navigate('/results');
+    setArea(area);
+    console.log(area);
+    navigate('/results', { state: { area } });
+  };
+
+  // 해시 태그 검색
+  const handleHashtagClick = (hashtag: string) => {
+    setHashtag(hashtag);
+    console.log(hashtag);
+    navigate('/results', { state: { hashtag } });
   };
 
   // const handleResultpage = () => {
   //   navigate('/results');
   // }
-
-  /*
-  1. 지역별 인기 검색 & 해시태그 검색 get API 호출
-    1-1. /v1/trips/rank/area - get (useQuery)
-    1-2. /v1/trips/rank/hashtag - get (useQuery)
-
-  2. 해당 검색 버튼 누를 때,
-    2-1. 지역별 인기 검색 호출
-        /v1/trips/search/area - get (useQuery)
-    2-2. 해시태그 검색 호출
-        /v1/trips/search/hashtag get (useQuery)
-*/
 
   return (
     <>
@@ -77,41 +84,27 @@ const SearchModal: React.FC<SearchModalProps> = ({
           <S.LocalContainer>
             <S.LocalTitle>지역별 인기</S.LocalTitle>
             <S.BtnContainer>
-              <CategoryButton
-                title="고성"
-                icon={<IoLocationSharp />}
-                onClick={() => handleCategoryClick('고성')}
-              />
-              <CategoryButton
-                title="강원도"
-                icon={<IoLocationSharp />}
-                onClick={() => handleCategoryClick('강원도')}
-              />
-              <CategoryButton
-                title="서울"
-                icon={<IoLocationSharp />}
-                onClick={() => handleCategoryClick('서울')}
-              />
+              {areaItem?.map((area: string, idx: number) => (
+                <CategoryButton
+                  key={idx}
+                  title={area}
+                  icon={<IoLocationSharp />}
+                  onClick={() => handleAreaClick(area)}
+                />
+              ))}
             </S.BtnContainer>
           </S.LocalContainer>
           <S.LocalContainer>
             <S.LocalTitle>인기 검색어</S.LocalTitle>
             <S.BtnContainer>
-              <CategoryButton
-                title="데이트"
-                icon={<IoLocationSharp />}
-                onClick={() => handleCategoryClick('데이트')}
-              />
-              <CategoryButton
-                title="가족 여행"
-                icon={<IoLocationSharp />}
-                onClick={() => handleCategoryClick('가족 여행')}
-              />
-              <CategoryButton
-                title="친구"
-                icon={<IoLocationSharp />}
-                onClick={() => handleCategoryClick('친구')}
-              />
+              {tagList?.map((hashtag, idx) => (
+                <CategoryButton
+                  key={idx}
+                  title={hashtag}
+                  icon={<IoLocationSharp />}
+                  onClick={() => handleHashtagClick(hashtag)}
+                />
+              ))}
             </S.BtnContainer>
           </S.LocalContainer>
         </S.ModalContainer>

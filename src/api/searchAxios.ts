@@ -1,3 +1,4 @@
+import { AxiosResponse } from 'axios';
 import { instance } from './axios';
 // import { AxiosResponse, AxiosError } from 'axios';
 
@@ -71,14 +72,33 @@ export const fetchTripsByHashtag = async (
   }
 };
 
-// 여행정보 지역 검색
+// 인기 지역 정보
+export const getSearchTopArea = async (): Promise<AxiosResponse<any>> => {
+  try {
+    const response = await instance.get('/v1/trips/rank/area');
+    return response;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+// 인기 해쉬태그 TOP 5
+export const getTopHashtags = async (): Promise<string[]> => {
+  try {
+    const response = await instance.get('/v1/trips/rank/hashtag');
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+// 여행정보 지역 검색 결과
 export const searchTripsByArea = async (
-  area: string,
-  page: number,
-  size: number,
-  sortBy: string,
-  isAsc: boolean,
-): Promise<TripSearch[]> => {
+  searchAreaParams: SearchAreaParams,
+): Promise<AxiosResponse<any>> => {
+  const { area, page, size, sortBy, isAsc } = searchAreaParams;
   try {
     const response = await instance.get('/v1/trips/search/area', {
       params: { area, page, size, sortBy, isAsc },
@@ -89,12 +109,16 @@ export const searchTripsByArea = async (
     throw error;
   }
 };
-
-// 인기 해쉬태그 TOP 5
-export const fetchTopHashtags = async (): Promise<string[]> => {
+// 해시 태그 검색 결과
+export const searchTripsByHashtag = async (
+  searchHashtagParams: SearchHashtagParams,
+): Promise<AxiosResponse<any>> => {
+  const { hashtag, page, size, sortBy, isAsc } = searchHashtagParams;
   try {
-    const response = await instance.get('/v1/trips/rank/hashtag');
-    return response.data.hashtags;
+    const response = await instance.get('/v1/trips/search/hashtag', {
+      params: { hashtag, page, size, sortBy, isAsc },
+    });
+    return response.data.searches;
   } catch (error) {
     console.error(error);
     throw error;
