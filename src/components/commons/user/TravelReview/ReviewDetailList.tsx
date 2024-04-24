@@ -34,17 +34,17 @@ const ReviewDetailList = ({ tripDetail }: ReviewDetailListProps) => {
 
   // tripDetail로부터 초기 like 및 scrap 상태를 설정
   useEffect(() => {
-    setLikeActive(tripDetail.like);
-    setScrapActive(tripDetail.scrap);
-  }, [tripDetail, tripDetail.like, tripDetail.scrap]);
+    setLikeActive(tripDetail.isLike);
+    setScrapActive(tripDetail.isScrap);
+  }, [tripDetail, tripDetail.isLike, tripDetail.isScrap]);
 
   const likeTrip = useCreateLikeTripMutation();
   const disLikeTrip = useCancelLikeTripMutation();
+
   // 좋아요 기능
   const toggleLike = (tripId: number) => {
     !likeActive ? likeTrip.mutate(tripId) : disLikeTrip.mutate(tripId);
     setLikeActive(!likeActive);
-    // 서버에 상태 업데이트 요청 로직 구현
   };
 
   const scrapTrip = useCreateScrapTripMutation();
