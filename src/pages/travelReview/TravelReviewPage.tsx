@@ -119,6 +119,7 @@ const TravelReviewPage = () => {
                     key={value}
                     title={label}
                     onClick={() => handleSearchByLocation(value as Area)}
+                    cursor="pointer"
                   />
                 ))}
               </div>
