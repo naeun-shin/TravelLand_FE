@@ -36,11 +36,7 @@ const ReviewDetailList = ({ tripDetail }: ReviewDetailListProps) => {
   useEffect(() => {
     setLikeActive(tripDetail.like);
     setScrapActive(tripDetail.scrap);
-  }, [tripDetail.like, tripDetail.scrap]);
-
-  useEffect(() => {
-    console.log('tripDetail 전체 데이터:', tripDetail); // 해시태그 데이터 로깅
-  }, [tripDetail]);
+  }, [tripDetail, tripDetail.like, tripDetail.scrap]);
 
   const likeTrip = useCreateLikeTripMutation();
   const disLikeTrip = useCancelLikeTripMutation();
@@ -167,7 +163,7 @@ const ReviewDetailList = ({ tripDetail }: ReviewDetailListProps) => {
           <HashTagContainer>
             {tripDetail.hashtagList && tripDetail.hashtagList.length > 0 ? (
               tripDetail.hashtagList.map((category, idx) => (
-                <CategoryButton key={idx} title={category} />
+                <CategoryButton key={idx} title={category} hoverColor="none" />
               ))
             ) : (
               <p>해시태그가 없습니다.</p>

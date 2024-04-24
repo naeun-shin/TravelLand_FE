@@ -151,7 +151,7 @@ const ButtonBox = styled.div`
 const ButtonBoxToRight = styled.div`
   display: flex;
   justify-content: end;
-  width: 75%;
+  width: 80%;
   padding-top: 30px;
   padding-right: 30px;
 `;

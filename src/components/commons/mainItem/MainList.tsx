@@ -40,7 +40,11 @@ const MainList: React.FC<MainListProps> = ({ items }) => {
           <TextSection>
             <CategoriesContainer>
               {item.hashtagList.map((category, categoryIndex) => (
-                <CategoryButton key={categoryIndex} title={category} />
+                <CategoryButton
+                  key={categoryIndex}
+                  title={category}
+                  hoverColor="none"
+                />
               ))}
             </CategoriesContainer>
             <Rank>{index + 1}</Rank>

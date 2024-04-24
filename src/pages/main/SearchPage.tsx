@@ -64,10 +64,6 @@ const SearchModal: React.FC<SearchModalProps> = ({
     navigate('/results', { state: { hashtag } });
   };
 
-  // const handleResultpage = () => {
-  //   navigate('/results');
-  // }
-
   return (
     <>
       <S.ModalOverlay onClick={onClose}>

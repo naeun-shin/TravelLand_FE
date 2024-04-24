@@ -10,9 +10,9 @@ import {
 import { useLocation, useNavigate } from 'react-router-dom';
 // import { IoLocationSharp } from 'react-icons/io5';
 
-interface IPlaceNameProps {
-  name: string;
-}
+// interface IPlaceNameProps {
+//   name: string;
+// }
 
 interface SearchResult {
   tripId: number;
@@ -33,9 +33,9 @@ const validateData = (data: any): data is SearchResult[] => {
   );
 };
 
-const PlaceName: React.FC<IPlaceNameProps> = ({ name }) => (
-  <div style={{ color: '#3AB9F0' }}>{name}</div>
-);
+// const PlaceName: React.FC<IPlaceNameProps> = ({ name }) => (
+//   <div style={{ color: '#3AB9F0' }}>{name}</div>
+// );
 
 const ResultsContent: React.FC = () => {
   const location = useLocation();
@@ -49,7 +49,7 @@ const ResultsContent: React.FC = () => {
   const [isAsc] = useState<boolean>(false);
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]); // 검색 결과를 저장할 상태
   // const places = searchResults.map((result) => result.placeName); // placeName을 추출하여 배열로 저장
-  // console.log(places);
+
   const searchAreaParams = { area, page, size, sortBy, isAsc };
   const searchHashtagParams = { hashtag, page, size, sortBy, isAsc };
 
@@ -59,6 +59,7 @@ const ResultsContent: React.FC = () => {
     isLoading: areaLoading,
     isError: areaError,
   } = useGetSearchResultAreaQuery(searchAreaParams);
+
   const {
     data: hashtagResults,
     isLoading: hashtagLoading,
@@ -70,29 +71,30 @@ const ResultsContent: React.FC = () => {
   };
 
   useEffect(() => {
-    const results = area ? areaResults : hashtagResults;
-    if (results && validateData(results)) {
-      setSearchResults(results);
+    let results: any[] | ((prevState: SearchResult[]) => SearchResult[]) = [];
+    if (areaResults && validateData(areaResults)) {
+      results = results.concat(areaResults);
     }
-  }, [areaResults, hashtagResults]);
+    if (hashtagResults && validateData(hashtagResults)) {
+      results = results.concat(hashtagResults);
+    }
+    if (location.state?.searchData) {
+      results = results.concat(location.state.searchData);
+    }
+    setSearchResults(results);
+  }, [areaResults, hashtagResults, location.state]);
 
   // // 게시물 클릭 (상세보기이동)
   // const handleItemClick = (tripId: number) => {
   //   navigate(`/travelDetail/${tripId}`);
   // };
 
-  useEffect(() => {
-    // location.state에서 searchData를 확인하고 상태를 설정
-    const data = location.state?.searchData || [];
-    setSearchResults(data);
-  }, [location]);
+  // useEffect(() => {
+  //   // location.state에서 searchData를 확인하고 상태를 설정
+  // }, [location]);
 
   //
-  useEffect(() => {
-    if (location.state?.searchData) {
-      setSearchResults(location.state.searchData);
-    }
-  }, [location]);
+  // useEffect(() => {}, [location]);
 
   if (areaLoading || hashtagLoading) return <div>Loading...</div>;
   if (areaError || hashtagError) return <div>Error loading data</div>;
@@ -103,10 +105,10 @@ const ResultsContent: React.FC = () => {
         <S.ResultTitle>
           <div style={{ display: 'flex', alignItems: 'center' }}>
             {/* 첫 번째 검색 결과의 placeName을 사용 */}
-            <span style={{ marginLeft: '0.3rem' }}>주변에 가볼만한 곳</span>
+            {/* <span style={{ marginLeft: '0.3rem' }}>주변에 가볼만한 곳</span>
             {searchResults.length > 0 && (
               <PlaceName name={searchResults[0].placeName} />
-            )}
+            )} */}
           </div>
           {/* 모든 placeName 탭으로 처리하기 */}
           {/* {searchResults.map((result, index) => (

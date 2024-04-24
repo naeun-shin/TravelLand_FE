@@ -45,7 +45,7 @@ export const ListCard: React.FC<ListCardProps> = ({
         </div>
         <S.CategoriesContainer>
           {hashtagList?.map((category, idx) => (
-            <CategoryButton key={idx} title={category} />
+            <CategoryButton key={idx} title={category} hoverColor="none" />
           ))}
         </S.CategoriesContainer>
       </S.TextContainer>

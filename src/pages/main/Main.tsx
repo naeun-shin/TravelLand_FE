@@ -52,6 +52,9 @@ const Main: React.FC<MainProps> = () => {
     data: searchData,
   } = useGetMainSearchQuery(searchQuery);
 
+  if (!searchQuery == null) {
+  }
+
   // 검색 아이콘 클릭 시 호출될 함수
   const handleSearchIconClick = () => {
     if (searchQuery.trim()) {
@@ -60,6 +63,14 @@ const Main: React.FC<MainProps> = () => {
     } else {
       // 검색어가 없으면 검색 모달 토글
       toggleSearchModal();
+    }
+  };
+
+  const handleSearchResult = () => {
+    if (searchData) {
+      navigate('/search-results', { state: searchData });
+    } else {
+      closeSearchModal();
     }
   };
 
@@ -83,13 +94,6 @@ const Main: React.FC<MainProps> = () => {
     setSearchModalOpen(false);
   };
 
-  const handleSearchResult = () => {
-    if (searchData) {
-      navigate('/search-results', { state: searchData });
-    } else {
-      closeSearchModal();
-    }
-  };
   const handleMakePlanClick = () => {
     navigate('/planList');
   };

@@ -29,7 +29,8 @@ const CenteredContainer = styled.div`
   flex-direction: column;
   width: 100%;
   margin: 0 auto;
-  /* margin-top: 120px; */
+  margin-top: 40px;
+  margin-bottom: 150px;
 
   h2 {
     font-size: 24px;

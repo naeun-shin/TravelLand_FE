@@ -54,7 +54,7 @@ const PlanDetail: React.FC<ButtonProps> = () => {
   const [invitedPeople, _] = useState<string[]>([]); // 초대된 사람 목록을 저장할 상태
 
   const [isLike, setIsLike] = useState<boolean>(false);
-  const [isScraped, setIsScraped] = useState<boolean>(false);
+  const [isScrap, setIsScrap] = useState<boolean>(false);
 
   // `id`를 숫자로 변환하기 전에 유효성 검사 수행
   const planId = Number(id);
@@ -63,10 +63,15 @@ const PlanDetail: React.FC<ButtonProps> = () => {
   const planDetails = data?.data;
   const planVotes = data?.data.planVotes;
 
-  // const vo
   useEffect(() => {
     if (planDetails?.dayPlans) {
       setDayPlans(planDetails.dayPlans);
+    }
+    if (planDetails?.isLike) {
+      setIsLike(planDetails.isLike);
+    }
+    if (planDetails?.isScrap) {
+      setIsLike(planDetails.isScrap);
     }
   }, [planDetails]);
 
@@ -102,8 +107,8 @@ const PlanDetail: React.FC<ButtonProps> = () => {
 
   // 스크랩 기능
   const handleScrapClick = (planId: number) => {
-    !isScraped ? scrapPlan.mutate(planId) : scrapCancel.mutate(planId);
-    setIsScraped(!isScraped);
+    !isScrap ? scrapPlan.mutate(planId) : scrapCancel.mutate(planId);
+    setIsScrap(!isScrap);
   };
 
   // 수정 기능
@@ -187,7 +192,7 @@ const PlanDetail: React.FC<ButtonProps> = () => {
             <div
               onClick={() => handleScrapClick(planDetails.planId)}
               style={{
-                backgroundImage: `url(${isScraped ? '/assets/icons/blueBookmark.svg' : '/assets/icons/grayBookmark.svg'})`,
+                backgroundImage: `url(${isScrap ? '/assets/icons/blueBookmark.svg' : '/assets/icons/grayBookmark.svg'})`,
                 width: '32px',
                 height: '32px',
                 backgroundSize: 'cover', // 배경 이미지가 div 크기에 맞게 조절
