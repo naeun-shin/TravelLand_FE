@@ -56,4 +56,5 @@ export interface TripDetail {
   like: boolean;
   scrap: boolean;
   hashtagList?: string[];
+  profileImage: string;
 }

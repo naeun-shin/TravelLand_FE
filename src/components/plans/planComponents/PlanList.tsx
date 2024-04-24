@@ -19,7 +19,7 @@ const PlanList = () => {
   const pageGroupSize = 10; // 페이지 그룹 당 표시할 페이지 수
 
   const [sortBy] = useState('createdAt');
-  const [isAsc] = useState(true);
+  const [isAsc] = useState(false);
 
   // 페이지네이션을 위한 파라미터 설정
   const planListParams = { page, size, sortBy, isAsc };

@@ -105,7 +105,11 @@ const MainCard: React.FC<MainCardProps> = ({ cards = [] }) => {
             <S.CategoriesContainer>
               {card.hashtagList
                 ? card.hashtagList.map((category: string, idx: number) => (
-                    <CategoryButton key={idx} title={category} />
+                    <CategoryButton
+                      key={idx}
+                      title={category}
+                      hoverColor="none"
+                    />
                   ))
                 : null}
             </S.CategoriesContainer>

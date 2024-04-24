@@ -13,8 +13,6 @@ interface CreateVoteModalProps {
 }
 
 enum Duration {
-  '1분' = 'ONE_MINUTE',
-  '1초' = 'ONE_SECOND',
   '12시간' = 'HALF_DAY',
   '1일' = 'ONE_DAY',
   '3일' = 'THREE_DAY',
@@ -33,7 +31,7 @@ const VoteCreate: React.FC<CreateVoteModalProps> = ({
 
   const [title, setTitle] = useState<string>('');
   const [planVoteDuration, setPlanVoteDuration] = useState<string>(
-    Duration['1분'],
+    Duration['12시간'],
   );
 
   const hadleVoteTitleChange = (e: {

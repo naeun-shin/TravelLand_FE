@@ -9,14 +9,16 @@ const ReviewCreate2 = () => {
   return (
     <>
       <ReDesignHeader needSearchInput={true} />
-      <CenteredContainer>
-        <h2>여행 정보 작성하기</h2>
-        <StepperContainer>
-          <ProgressBar width={(step * 33).toString() + '%'} />{' '}
-          {/* 현재 단계에 따라 프로그레스 바의 너비 설정 */}
-        </StepperContainer>
-      </CenteredContainer>
-      <TReviewCreate2 />
+      <div style={{ marginBottom: '150px' }}>
+        <CenteredContainer>
+          <h2>여행 정보 작성하기</h2>
+          <StepperContainer>
+            <ProgressBar width={(step * 33).toString() + '%'} />{' '}
+            {/* 현재 단계에 따라 프로그레스 바의 너비 설정 */}
+          </StepperContainer>
+        </CenteredContainer>
+        <TReviewCreate2 />
+      </div>
     </>
   );
 };
@@ -31,7 +33,8 @@ const CenteredContainer = styled.div`
   width: 100%;
   max-width: 1100px;
   margin: 0 auto;
-  margin-top: 120px;
+  margin-top: 40px;
+  /* margin-bottom: 150px; */
 
   h2 {
     font-size: 24px;

@@ -31,7 +31,8 @@ const CenteredContainer = styled.div`
   width: 100%;
   max-width: 1100px;
   margin: 0 auto;
-  margin-top: 120px;
+  margin-top: 40px;
+  margin-bottom: 200px;
 
   h2 {
     font-size: 24px;
