@@ -53,8 +53,8 @@ export interface TripDetail {
   createdAt: string;
   hashTag?: string[];
   imageUrlList: string[];
-  like: boolean;
-  scrap: boolean;
+  isLike: boolean;
+  isScrap: boolean;
   hashtagList?: string[];
   profileImage: string;
 }
