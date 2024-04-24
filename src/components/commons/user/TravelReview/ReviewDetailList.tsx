@@ -74,10 +74,10 @@ const ReviewDetailList = ({ tripDetail }: ReviewDetailListProps) => {
   };
 
   // 여기자나여 => 여기가 썸네일 이미지 구간
-  const imageUrl =
-    tripDetail.imageUrlList && tripDetail.imageUrlList.length > 0
-      ? tripDetail.imageUrlList[0]
-      : '기본이미지URL';
+  // const imageUrl =
+  //   tripDetail.imageUrlList && tripDetail.imageUrlList.length > 0
+  //     ? tripDetail.imageUrlList[0]
+  //     : '기본이미지URL';
 
   return (
     <>
@@ -139,7 +139,7 @@ const ReviewDetailList = ({ tripDetail }: ReviewDetailListProps) => {
         <UserBox>
           <div>
             <S.UserSection>
-              <S.UserImage src={imageUrl} alt="사진" />
+              <S.UserImage src={tripDetail.profileImage} alt="사진" />
               <S.UserName>{tripDetail.nickname}님</S.UserName>
             </S.UserSection>
           </div>
