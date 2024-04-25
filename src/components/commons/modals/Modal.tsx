@@ -32,6 +32,24 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
 
 export default Modal;
 
+// 닉네임 모달 추가
+
+export const NicknameModal: React.FC<ModalProps> = ({
+  isOpen,
+  onClose,
+  children,
+}) => {
+  if (!isOpen) return null;
+
+  return (
+    <ModalDim onClick={onClose}>
+      <MapModalOverlay onClick={(e) => e.stopPropagation()}>
+        <ModalContainer>{children}</ModalContainer>
+      </MapModalOverlay>
+    </ModalDim>
+  );
+};
+
 export const MapModal: React.FC<ModalProps> = ({
   isOpen,
   onClose,

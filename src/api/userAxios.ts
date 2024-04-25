@@ -13,6 +13,11 @@ export const getUserInfo = async () => {
   }
 };
 
+// 닉네임 변경
+export const updateNickname = (nickname: string) => {
+  return instanceWithToken.patch('/users', { nickname });
+};
+
 // 여행 플랜 목록 조회
 export const getMyPlanList = async (
   paramData: PlanListParams,
