@@ -68,7 +68,7 @@ const TravelReviewPage = () => {
 
   useEffect(() => {
     loadTrips();
-    console.log('현재페이지', page);
+    // console.log('현재페이지', page);
   }, [page]);
 
   const handleCardClick = (tripId?: number) => {
@@ -85,10 +85,10 @@ const TravelReviewPage = () => {
   };
 
   const fetchMoreData = () => {
-    console.log('스크롤 감지', hasMore);
+    // console.log('스크롤 감지', hasMore);
     if (!loading && hasMore) {
       setPage((prevPage) => prevPage + 1);
-      console.log('page증가');
+      // console.log('page증가');
     }
   };
 
@@ -135,7 +135,7 @@ const TravelReviewPage = () => {
                 Loading ...
               </div>
             }
-            endMessage={<p>더 이상 로드할 내용이 없습니다.</p>}
+            // endMessage={<p>더 이상 로드할 내용이 없습니다.</p>}
             scrollableTarget="scrollableDiv"
           >
             <S.TravelReviewCardSection style={{ cursor: 'pointer' }}>
