@@ -4,3 +4,8 @@ export interface UserInfoData {
   email: string;
   profileImage: string;
 }
+
+// 닉네임
+export interface UpdateNicknameData {
+  nickname: string;
+}
