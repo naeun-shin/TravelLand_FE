@@ -1,11 +1,37 @@
 // import { MediumButton } from '@/components/commons/buttons/Button';
 // import Card from '@/components/commons/cards/Card';
+import ListCard from '@/components/commons/mainItem/ListCard';
 import * as S from '@/components/commons/user/myPage/MyPage.style';
+import { useMypageTrip } from '@/hooks/useQuery';
+import { TravelReviewCardSection } from '@/pages/travelReview/TravelReview.styles';
 // import { useMyTripListQuery } from '@/hooks/useQuery';
 // import { useState } from 'react';
 // import { getMyTripList } from '@/api/userAxios';
+import { useNavigate } from 'react-router-dom';
+
+export interface Trip {
+  tripId: number;
+  area?: string;
+  title?: string;
+  tripStartDate?: string;
+  tripEndDate?: string;
+  thumbnailUrl?: string;
+  hashtagList?: string[];
+  isScrap?: boolean;
+  viewCount?: number;
+}
 
 const MyPageReviewList = () => {
+  const navigate = useNavigate();
+  const { data, isError, isLoading, error } = useMypageTrip({
+    page: 1,
+    size: 10,
+  });
+
+  const handleCardClick = (tripId?: number) => {
+    navigate(`/travelDetail/${tripId}`);
+  };
+
   // const [page, _] = useState(1); // 페이지 번호
   // const [size] = useState(10); // 한 페이지 당 받아올 겟수
   // const [sortBy] = useState('createdAt');
@@ -17,8 +43,8 @@ const MyPageReviewList = () => {
   // const { data, isError, isLoading } = useMyTripListQuery(tripListParams);
   // console.log(data);
 
-  // if (isLoading) return <div>Data is Loading</div>;
-  // if (isError) return <div>Error occurred during fetching</div>;
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error: {error.message}</div>;
 
   return (
     <>
@@ -33,7 +59,23 @@ const MyPageReviewList = () => {
         </MediumButton> */}
       </S.MyPageButton>
       {/* 카드 섹션 */}
-      {/* <Card title={'후쿠오카'} date={'2024.03.31'} city={'일본 - 후쿠오카'} /> */}
+      <TravelReviewCardSection>
+        {data?.data.trips.map((trip: Trip) => (
+          <ListCard
+            key={trip.tripId}
+            tripId={trip.tripId}
+            area={trip.area}
+            title={trip.title}
+            tripStartDate={trip.tripStartDate}
+            tripEndDate={trip.tripEndDate}
+            thumbnailUrl={trip.thumbnailUrl}
+            hashtagList={trip.hashtagList}
+            isScrap={trip.isScrap}
+            viewCount={trip.viewCount}
+            onClick={() => handleCardClick}
+          />
+        ))}
+      </TravelReviewCardSection>
     </>
   );
 };
