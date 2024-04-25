@@ -33,6 +33,12 @@ const Main: React.FC<MainProps> = () => {
   const [isSearchModalOpen, setSearchModalOpen] = useState<boolean>(false);
   const [isModalOpen, setModalOpen] = useState(true);
 
+  useEffect(() => {
+    // 메인 페이지 로드 시 localStorage에서 'planData','reviewState'를 삭제
+    localStorage.removeItem('planData');
+    localStorage.removeItem('reviewState');
+  }, []);
+
   // 팝업 모달을 닫기
   const handleCloseModal = () => {
     setModalOpen(false);
@@ -56,6 +62,7 @@ const Main: React.FC<MainProps> = () => {
       setModalOpen(false);
     }
   }, []);
+
   // TopTen
   const {
     data: TopTenData,
@@ -150,8 +157,8 @@ const Main: React.FC<MainProps> = () => {
         {/* ... */}
       </ButtonContainer>
       <ButtonsWrapper1>
-        <Button text="떠돌이랜드" onClick={handleReviewPageClick} />
-        <Button text="어디 갈랜?" onClick={handleMakePlanClick} />
+        <Button text="여행 후기" onClick={handleReviewPageClick} />
+        <Button text="여행 플랜" onClick={handleMakePlanClick} />
       </ButtonsWrapper1>
       <Maintitle />
       <ButtonsWrapper>

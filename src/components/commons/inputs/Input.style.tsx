@@ -11,6 +11,12 @@ const modernInput = styled.input<InputProps>`
   font-size: ${(props) => props.fontSize + 'px'};
   font-weight: ${(props) => props.fontWeight};
   outline: none;
+
+  &::-webkit-inner-spin-button,
+  &::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
 `;
 
 const PlanListInputContainer = styled.div`

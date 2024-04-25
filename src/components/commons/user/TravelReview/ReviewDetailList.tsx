@@ -145,13 +145,19 @@ const ReviewDetailList = ({ tripDetail }: ReviewDetailListProps) => {
           </div>
           <div>
             <S.HeaderBox>
-              <S.ButtonBox>
-                <Button text="수정하기" />
-                <Button
-                  text="삭제하기"
-                  onClick={() => handleDelete(tripDetail.tripId)}
-                />
-              </S.ButtonBox>
+              {tripDetail.isWriter ? (
+                <>
+                  <S.ButtonBox>
+                    <Button text="수정하기" />
+                    <Button
+                      text="삭제하기"
+                      onClick={() => handleDelete(tripDetail.tripId)}
+                    />
+                  </S.ButtonBox>
+                </>
+              ) : (
+                <></>
+              )}
             </S.HeaderBox>
           </div>
         </UserBox>

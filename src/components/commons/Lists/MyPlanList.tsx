@@ -124,7 +124,7 @@ export const MyPlanList: React.FC<MyPlanListProps> = ({
                   {item.likeCount}
                 </div>
               </S.MyPlanListCountBox>
-              <S.MyPlanListInviteeBox>
+              {/* <S.MyPlanListInviteeBox>
                 <img src="/assets/paris.jpg" alt="Invitee" />
                 <img src="/assets/paris.jpg" alt="Invitee" />
                 <img src="/assets/paris.jpg" alt="Invitee" />
@@ -133,7 +133,7 @@ export const MyPlanList: React.FC<MyPlanListProps> = ({
                 <S.MyPlanListInviteeCount>
                   <div>+5</div>
                 </S.MyPlanListInviteeCount>
-              </S.MyPlanListInviteeBox>
+              </S.MyPlanListInviteeBox> */}
               {isVoting ? (
                 <>
                   <S.MyPlanVoteSelectContainer
