@@ -3,9 +3,16 @@ import MyPagePlanList from './MyPagePlanList';
 import MyPageReviewList from './MyPageReviewList';
 import styled from 'styled-components';
 import MyPageVoteList from './MyPageVoteList';
+// import { useMypageTrip } from '@/hooks/useQuery';
+// import MainCard from '@/components/commons/mainItem/MainCard';
 
 const MyPageTab = () => {
+  // const { data, isLoading, error } = useMypageTrip({ page: 1, size: 10 });
   const [isActive, setIsActive] = useState<number>(0);
+
+  // if (isLoading) return <div>Loading...</div>;
+  // if (error) return <div>An error has occurred: {error.message}</div>;
+
   return (
     <>
       <DivWrapper>

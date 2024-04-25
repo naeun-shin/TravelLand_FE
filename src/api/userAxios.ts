@@ -1,12 +1,35 @@
 import { AxiosResponse } from 'axios';
 import { instanceWithToken } from './axios';
 import { PlanListParams } from './interfaces/planInterface';
-import { TripListParams } from './interfaces/reviewInterface';
+import {
+  MypageReviewParams,
+  TripListParams,
+} from './interfaces/reviewInterface';
 
 // 유저 정보
 export const getUserInfo = async () => {
   try {
     return await instanceWithToken.get('/users/memberInfo');
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+// 닉네임 변경 -> 아직 적용 필요
+export const updateNickname = (nickname: string) => {
+  return instanceWithToken.patch('/users', { nickname });
+};
+
+// 마이페이지 여행 정보 목록 조회
+export const getMypageTrip = async (
+  paramData: MypageReviewParams,
+): Promise<AxiosResponse<any>> => {
+  const { page, size } = paramData;
+  try {
+    return await instanceWithToken.get('/v1/users/trips', {
+      params: { page, size },
+    });
   } catch (error) {
     console.error(error);
     throw error;

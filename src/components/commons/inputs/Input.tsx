@@ -9,13 +9,15 @@ export interface InputProps {
   onFocus?: (e: any) => void;
   placeholder?: string;
   border?: string;
-  value?: string | number;
+  value?: string | number | undefined;
   width?: number;
   height?: number;
   fontSize?: number;
   fontWeight?: string;
   readonly?: boolean;
   required?: boolean;
+  style?: {};
+  onKeyDown?: (e: any) => void;
 }
 export const ModernInput = (props: InputProps) => {
   return (
@@ -36,6 +38,8 @@ export const ModernInput = (props: InputProps) => {
         fontWeight={props.fontWeight}
         readOnly={props.readonly}
         required={props.required}
+        style={props.style}
+        onKeyDown={props.onKeyDown}
       />
     </>
   );
