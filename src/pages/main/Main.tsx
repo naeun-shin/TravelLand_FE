@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   ButtonContainer,
   ButtonsWrapper,
@@ -21,6 +21,7 @@ import {
   useGetMainRankListQuery,
   useGetMainSearchQuery,
 } from '@/hooks/useQuery';
+import PopupModal from '@/components/commons/modals/PopupModal';
 
 interface MainProps {
   onClick?: () => void;
@@ -30,7 +31,31 @@ const Main: React.FC<MainProps> = () => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState(''); // 검색어 상태
   const [isSearchModalOpen, setSearchModalOpen] = useState<boolean>(false);
+  const [isModalOpen, setModalOpen] = useState(true);
 
+  // 팝업 모달을 닫기
+  const handleCloseModal = () => {
+    setModalOpen(false);
+  };
+
+  // '오늘 하루 그만 보기' 기능을 처리하는 함수
+  const handleTodayClose = () => {
+    // localStorage에 정보 저장
+    const today = new Date().toISOString().split('T')[0];
+    localStorage.setItem('hideModalDate', today);
+    setModalOpen(false);
+  };
+
+  // 로컬 스토리지에서 날짜 값을 확인
+  useEffect(() => {
+    const hideModalDate = localStorage.getItem('hideModalDate');
+    const today = new Date().toISOString().split('T')[0];
+
+    if (hideModalDate === today) {
+      // 오늘 날짜에 '오늘 하루 그만 보기' 선택!
+      setModalOpen(false);
+    }
+  }, []);
   // TopTen
   const {
     data: TopTenData,
@@ -143,6 +168,12 @@ const Main: React.FC<MainProps> = () => {
         isOpen={isSearchModalOpen}
         onClose={toggleSearchModal}
         onSearch={handleSearchResult}
+      />
+      <PopupModal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        onTodayClose={handleTodayClose}
+        imageUrl="/assets/popup.png"
       />
     </>
   );
