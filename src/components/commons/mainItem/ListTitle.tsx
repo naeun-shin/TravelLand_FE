@@ -12,7 +12,7 @@ const ListTitle: React.FC<ListTitleProps> = () => {
       <TitleText>
         <div>지금 가장 HOT한 방문지 10</div>
       </TitleText>
-      <Subtitle>지난 일주일 간 평소보다 더 많이 저장된 관광지</Subtitle>
+      <Subtitle>지난 일주일 간 평소보다 더 많이 조회된 관광지</Subtitle>
     </TitleContainer>
   );
 };

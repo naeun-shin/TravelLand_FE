@@ -1,6 +1,7 @@
 import { AxiosResponse } from 'axios';
 import { instance, instanceWithToken } from './axios';
 import { PlanListParams, WholePlan } from './interfaces/planInterface';
+import { Cookies } from 'react-cookie';
 
 // 여행 플랜 작성하기
 export const createPlanList = async (wholePlan: WholePlan) => {
@@ -31,9 +32,13 @@ export const getPlanList = async (
 export const getPlanDetail = async (
   planId: number,
 ): Promise<AxiosResponse<any>> => {
-  console.log(planId);
+  const cookie = new Cookies();
   try {
-    return await instance.get(`/v1/plans/allInOn/${planId}`);
+    if (cookie.get('Authorization')) {
+      return await instanceWithToken.get(`/v1/plans/allInOn/${planId}`);
+    } else {
+      return await instance.get(`/v1/plans/allInOn/${planId}`);
+    }
   } catch (error) {
     console.error(error);
     throw error;

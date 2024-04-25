@@ -18,6 +18,7 @@ export interface UnitPlan {
   address: string;
   x: number;
   y: number;
+  budgetFormatted?: string; // 추가된 필드
 }
 
 export interface DayPlan {
@@ -39,6 +40,7 @@ export interface WholePlan {
 const formatDate = (date: { toISOString: () => string }) => {
   return date.toISOString().split('T')[0]; // 날짜 부분만 추출 ('YYYY-MM-DD')
 };
+
 const PlanCreate2: React.FC = () => {
   const location = useLocation();
 
@@ -53,6 +55,7 @@ const PlanCreate2: React.FC = () => {
 
   // useState부분
   const [currentStep, setCurrentStep] = useState<number>(0);
+  const [isSubmit, setIsSubmit] = useState<boolean>(false);
 
   // Initializing displayDate
   // const [, setDisplayDate] = useState<string>(formatDate(tripStartDate));
@@ -123,16 +126,17 @@ const PlanCreate2: React.FC = () => {
   ) => {
     const newUnitPlans = [...unitPlans];
     if (field === 'budget') {
-      // 입력값을 정수로 변환합니다. 숫자가 아닌 값은 무시합니다.
-      const numericValue = parseInt(value, 10);
-      if (!isNaN(numericValue)) {
-        newUnitPlans[index][field] = numericValue;
+      // 숫자 이외의 문자를 제거하고, 콤마로 포맷합니다.
+      const cleanedValue = value.replace(/[^0-9]/g, ''); // 숫자만 추출
+      const numericValue = parseInt(cleanedValue, 10); // 정수 변환
+      if (!cleanedValue) {
+        newUnitPlans[index].budget = 0; // 값이 비어있으면 0을 저장
+        newUnitPlans[index].budgetFormatted = ''; // 포맷된 값도 비워줍니다.
+      } else if (!isNaN(numericValue)) {
+        newUnitPlans[index].budget = numericValue; // 숫자로 변환하여 저장
+        newUnitPlans[index].budgetFormatted = numericValue.toLocaleString(); // 콤마 포맷 적용
       } else {
-        // 숫자가 아닌 입력이 들어올 경우 경고를 출력하고 값을 변경하지 않습니다.
-        console.log(
-          'Invalid input: Please enter numeric values only for budget.',
-        );
-        return; // 상태를 업데이트하지 않음
+        alert('숫자만 입력이 가능합니다.');
       }
     } else if (field === 'x' || field === 'y') {
       const numericValue = parseFloat(value);
@@ -254,7 +258,6 @@ const PlanCreate2: React.FC = () => {
     const isUnitPlansEmpty = unitPlans.every(
       (unitPlan) => !unitPlan.title && !unitPlan.content,
     );
-
     // 마지막 일차의 unitPlans가 비어있지 않다면 업데이트
     if (!isUnitPlansEmpty) {
       const updatedDayPlans = [...dayPlans];
@@ -287,6 +290,8 @@ const PlanCreate2: React.FC = () => {
       // console.log(planToSubmit);
       // 여기서 API 호출 등의 추가 작업을 수행할 수 있습니다.
       createPlanList.mutate(planToSubmit);
+      setIsSubmit(true);
+      localStorage.removeItem('planData');
     } else {
       // 마지막 일차의 unitPlans가 비어 있다면, 사용자에게 작성을 유도하는 메시지 표시
       alert('마지막 일차의 계획을 완성해주세요.');
@@ -317,7 +322,7 @@ const PlanCreate2: React.FC = () => {
 
       {unitPlans.map((input, index) => (
         <>
-          <div style={{ marginBottom: '30px' }}>
+          <div style={{ marginBottom: '20px' }}>
             <S.PlanDetailCreateBox>
               <IS.PlanListInputContainer key={index}>
                 {/* 출발지 영역 */}
@@ -332,7 +337,7 @@ const PlanCreate2: React.FC = () => {
                     제목 &nbsp; <img src="/assets/icons/requiredPoint.svg" />
                   </div>
                   <input
-                    placeholder="서울시 강남구"
+                    placeholder="제목을 입력해주세요"
                     value={input.title}
                     onChange={(e) =>
                       handleInputChange(index, 'title', e.target.value)
@@ -370,7 +375,7 @@ const PlanCreate2: React.FC = () => {
                     일정 &nbsp; <img src="/assets/icons/requiredPoint.svg" />
                   </div>
                   <ModernInput
-                    placeholder="가이드 만나기"
+                    placeholder="일정을 입력해주세요."
                     value={input.content}
                     type="text"
                     height={50}
@@ -391,8 +396,8 @@ const PlanCreate2: React.FC = () => {
                     경비 &nbsp; <img src="/assets/icons/requiredPoint.svg" />
                   </div>
                   <ModernInput
-                    placeholder="경비"
-                    value={input.budget}
+                    placeholder="경비는 숫자로 입력해주세요."
+                    value={input.budgetFormatted || ''}
                     type="text" // Set input type as number to allow only numeric values
                     height={50}
                     onChange={(e) =>
@@ -413,8 +418,12 @@ const PlanCreate2: React.FC = () => {
                   </div>
                   <IS.ListContent>
                     <ModernInput
-                      placeholder="서울특별시 중구 을지로 201"
-                      value={`${input.place_name}, ${input.address}`}
+                      placeholder="우측 화살표를 클릭하여 지도에서 검색해서 입력해주세요."
+                      value={
+                        input.place_name && input.address
+                          ? `${input.place_name}, ${input.address}`
+                          : ''
+                      }
                       readonly={true}
                       type={'text'}
                       border="transparent"
@@ -431,6 +440,7 @@ const PlanCreate2: React.FC = () => {
                         size="35px"
                         color="lightGray"
                         onClick={() => handleOpenMapClick(index)}
+                        style={{ cursor: 'pointer' }}
                       />
                     </IS.ImgBox>
                   </IS.ListContent>
@@ -466,6 +476,7 @@ const PlanCreate2: React.FC = () => {
           borderColor="#5AC8EC"
           marginRight="15px"
           onClick={handlePlanSubmit} // 등록하기 버튼 클릭 핸들러 추가
+          disabled={isSubmit}
         />
       </S.ButtonBoxToRight>
 

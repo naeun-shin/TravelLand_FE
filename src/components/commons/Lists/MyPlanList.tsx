@@ -124,7 +124,7 @@ export const MyPlanList: React.FC<MyPlanListProps> = ({
                   {item.likeCount}
                 </div>
               </S.MyPlanListCountBox>
-              <S.MyPlanListInviteeBox>
+              {/* <S.MyPlanListInviteeBox>
                 <img src="/assets/paris.jpg" alt="Invitee" />
                 <img src="/assets/paris.jpg" alt="Invitee" />
                 <img src="/assets/paris.jpg" alt="Invitee" />
@@ -133,7 +133,7 @@ export const MyPlanList: React.FC<MyPlanListProps> = ({
                 <S.MyPlanListInviteeCount>
                   <div>+5</div>
                 </S.MyPlanListInviteeCount>
-              </S.MyPlanListInviteeBox>
+              </S.MyPlanListInviteeBox> */}
               {isVoting ? (
                 <>
                   <S.MyPlanVoteSelectContainer
@@ -166,7 +166,7 @@ export const MyPlanList: React.FC<MyPlanListProps> = ({
             </S.MyPlanListItems>
           ))
         ) : (
-          <div>No plans available.</div>
+          <div>나의 여행 플랜이 없습니다! 추가해주세요!</div>
         )}
       </S.MyPlanListItemWrapper>
     </S.MyPlanListWrapper>
