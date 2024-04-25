@@ -60,7 +60,7 @@ const MyPageReviewList = () => {
       </S.MyPageButton>
       {/* 카드 섹션 */}
       <TravelReviewCardSection>
-        {data?.data.trips.length > 0 ? (
+        {data?.data.trips !== null ? (
           <>
             {data?.data.trips.map((trip: Trip) => (
               <ListCard
