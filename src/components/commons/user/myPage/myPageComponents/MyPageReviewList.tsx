@@ -28,6 +28,7 @@ const MyPageReviewList = () => {
     size: 10,
   });
 
+  console.log('data >>>>> ', data);
   const handleCardClick = (tripId?: number) => {
     navigate(`/travelDetail/${tripId}`);
   };
@@ -60,7 +61,7 @@ const MyPageReviewList = () => {
       </S.MyPageButton>
       {/* 카드 섹션 */}
       <TravelReviewCardSection>
-        {data?.data.trips !== null ? (
+        {data?.data !== null ? (
           <>
             {data?.data.trips.map((trip: Trip) => (
               <ListCard
