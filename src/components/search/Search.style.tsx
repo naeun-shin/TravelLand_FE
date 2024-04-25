@@ -99,6 +99,7 @@ export const ResultContainer = styled.div`
   width: 1100px;
   margin: 0 auto;
   padding-top: 30px;
+  cursor: pointer;
 `;
 
 export const ResultBox = styled.div`

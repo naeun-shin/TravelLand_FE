@@ -10,7 +10,7 @@ import ListCard from '@/components/commons/mainItem/ListCard';
 import ReDesignHeader from '@/components/layouts/Header2';
 import CategoryButton from '@/components/commons/buttons/CategoryButton';
 
-interface Trip {
+export interface Trip {
   tripId: number;
   area?: string;
   title?: string;
@@ -154,19 +154,6 @@ const TravelReviewPage = () => {
                     viewCount={trip.viewCount}
                     onClick={() => handleCardClick(trip.tripId)}
                   />
-                  {/* <ListCard
-                    key={trip.tripId}
-                    tripId={trip.tripId}
-                    area={trip.area}
-                    title={trip.title}
-                    tripStartDate={trip.tripStartDate}
-                    tripEndDate={trip.tripEndDate}
-                    thumbnailUrl={trip.thumbnailUrl}
-                    hashtagList={trip.hashtagList}
-                    isScrap={trip.isScrap}
-                    viewCount={trip.viewCount}
-                    onClick={() => handleCardClick(trip.tripId)}
-                  /> */}
                 </>
               ))}
             </S.TravelReviewCardSection>
