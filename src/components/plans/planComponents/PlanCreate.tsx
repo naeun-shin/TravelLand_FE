@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ToggleButton from '@/components/commons/buttons/ToggleButton';
 import { ModernInput } from '@/components/commons/inputs/Input';
@@ -20,9 +20,12 @@ const PlanCreate = () => {
     undefined,
     undefined,
   ]);
-  const [totalPlanTitle, setTotalPlanTitle] = useState<String>('');
+  const [totalPlanTitle, setTotalPlanTitle] = useState<string>('');
   const [totalBudget, setTotalBudget] = useState<number>(0);
-  const [area, setArea] = useState<String>('');
+  const [, setTotalBudgetFormatted] = useState<string>(''); // 추가된 상태
+
+  const [area, setArea] = useState<string>('');
+
   const [focusState, setFocusState] = useState({
     title: false,
     area: false,
@@ -32,16 +35,55 @@ const PlanCreate = () => {
   // Handle field focus and blur to toggle image display
   const handleFocus = (field: keyof typeof focusState) =>
     setFocusState({ ...focusState, [field]: true });
-  const handleBlur = (field: keyof typeof focusState) =>
-    setFocusState({ ...focusState, [field]: false });
 
-  // 입력 값
-  const canProceed =
-    totalPlanTitle.trim() !== '' &&
-    totalBudget > 0 &&
-    area.trim() !== '' &&
-    dateRange[0] !== undefined &&
-    dateRange[1] !== undefined;
+  const handleBlur = (
+    field: keyof typeof focusState,
+    e: React.FocusEvent<HTMLInputElement>,
+  ) => {
+    if (field === 'budget' && e.target.value.trim() === '') {
+      setTotalBudget(0); // 빈 문자열인 경우 0으로 설정
+      // e.target.value = '0'; // 입력 필드에 "0" 표시
+    }
+    setFocusState({ ...focusState, [field]: false });
+  };
+  // 컴포넌트 마운트 시 localStorage에서 데이터 로드
+  useEffect(() => {
+    const storedData = localStorage.getItem('planData');
+    if (storedData) {
+      const data = JSON.parse(storedData);
+      setIsPublic(data.isPublic);
+      setDateRange([
+        data.startDate ? new Date(data.startDate) : undefined,
+        data.endDate ? new Date(data.endDate) : undefined,
+      ]);
+      setTotalPlanTitle(data.totalPlanTitle);
+      setTotalBudget(data.totalBudget);
+      setArea(data.area);
+    }
+  }, []);
+
+  // 지역
+  const handleAreaChange = (e: any) => {
+    setArea(e.target.value);
+  };
+
+  // 제목
+  // const handleTitleChange = (e: any) => {
+  //   setTotalPlanTitle(e.target.value);
+  // };
+
+  // 비용 변경 핸들러
+  const handleBudgetChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const budgetValue = e.target.value.replace(/\D/g, ''); // 숫자 이외 삭제
+    if (budgetValue === '') {
+      setTotalBudget(0);
+      setTotalBudgetFormatted(''); // 빈 문자열로 상태 업데이트
+    } else {
+      const numericValue = parseInt(budgetValue, 10);
+      setTotalBudget(numericValue); // 상태 업데이트
+      setTotalBudgetFormatted(numericValue.toLocaleString()); // 포맷된 문자열로 상태 업데이트
+    }
+  };
 
   // 날짜 범위 변경 핸들러
   const handleDateRangeChange = (update: [Date, Date]) => {
@@ -57,12 +99,13 @@ const PlanCreate = () => {
         <>
           <ModernInput
             type="text"
-            placeholder="기간"
+            placeholder="우측 달력에서 기간을 선택하세요"
             width={400}
             height={30}
             border="transparent"
             fontSize={16}
             readonly={true}
+            // onKeyDown={(e) => activeEnter(e)}
             // onChange={handleAreaChange}
           />
         </>
@@ -85,25 +128,31 @@ const PlanCreate = () => {
     );
   };
 
-  // 지역
-  const handleAreaChange = (e: any) => {
-    setArea(e.target.value);
-  };
-
-  // 제목
-  const handleTitleChange = (e: any) => {
-    setTotalPlanTitle(e.target.value);
-  };
-
-  // 비용 변경 핸들러
-  const handleBudgetChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTotalBudget(parseInt(e.target.value, 10) || 0); // 입력값이 비어있는 문자열인 경우 0을 사용
-  };
+  // 상태가 업데이트될 때마다 localStorage에 저장
+  useEffect(() => {
+    const data = {
+      isPublic,
+      startDate: dateRange[0]?.toISOString(),
+      endDate: dateRange[1]?.toISOString(),
+      totalPlanTitle,
+      totalBudget,
+      area,
+    };
+    localStorage.setItem('planData', JSON.stringify(data));
+  }, [isPublic, dateRange, totalPlanTitle, totalBudget, area]);
 
   // 토글
   const toggleIsPublic = () => {
     setIsPublic((prev) => !prev); // 이전 상태를 참조하여 반전
   };
+
+  // 입력 값
+  const canProceed =
+    totalPlanTitle.trim() !== '' &&
+    totalBudget > 0 &&
+    area.trim() !== '' &&
+    dateRange[0] !== undefined &&
+    dateRange[1] !== undefined;
 
   // 다음 페이지 넘어가기
   const handleNextClick = () => {
@@ -180,10 +229,12 @@ const PlanCreate = () => {
                   height={50}
                   border="transparent"
                   onFocus={() => handleFocus('title')}
-                  onBlur={() => handleBlur('title')}
-                  onChange={handleTitleChange}
+                  onBlur={(e) => handleBlur('title', e)}
+                  onChange={(e) => setTotalPlanTitle(e.target.value)}
                   fontSize={18}
                   fontWeight={'bold'}
+                  value={totalPlanTitle} // 상태값을 input의 value로 설정
+                  // onKeyDown={(e) => activeEnter(e)}
                 />
               </div>
 
@@ -231,12 +282,13 @@ const PlanCreate = () => {
                       type="text"
                       placeholder="지역"
                       onFocus={() => handleFocus('area')}
-                      onBlur={() => handleBlur('area')}
+                      onBlur={(e) => handleBlur('area', e)}
                       width={400}
                       height={30}
                       border="transparent"
                       fontSize={16}
                       onChange={handleAreaChange}
+                      value={area}
                     />
                   </div>
                 </S.PlanContent>
@@ -276,14 +328,15 @@ const PlanCreate = () => {
                     )}
                     <ModernInput
                       type="text"
-                      placeholder="예산"
+                      placeholder="예산을 입력해주세요."
                       onFocus={() => handleFocus('budget')}
-                      onBlur={() => handleBlur('budget')}
+                      onBlur={(e) => handleBlur('budget', e)}
                       width={400}
                       height={30}
                       border="transparent"
                       fontSize={16}
                       onChange={handleBudgetChange}
+                      value={totalBudget.toLocaleString()}
                     />
                   </div>
                 </S.PlanContent>

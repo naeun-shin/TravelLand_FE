@@ -112,11 +112,16 @@ const PlanDetail: React.FC<ButtonProps> = () => {
     alert('기능 개발 중입니다!');
     // deleteMutaion.mutate(planId);
   };
+
   // 삭제 기능
   const deleteMutaion = useDeleteMutation();
-
   const handlePlanDelete = () => {
-    deleteMutaion.mutate(planId);
+    if (confirm('플랜을 삭제하시겠습니까?')) {
+      deleteMutaion.mutate(planId);
+      alert('플랜을 삭제하셨습니다!');
+    } else {
+      alert('취소를 누르셨습니다');
+    }
   };
 
   const closeModal = () => {
@@ -137,6 +142,7 @@ const PlanDetail: React.FC<ButtonProps> = () => {
 
   // 초대하기 로직
   const handleInvite = () => {
+    alert('초대하기 기능이 개발중입니다. 빠른 시일 내에 오픈하겠습니다.');
     // 초대 로직 구현 필요
     closeInvitationModal(); // 초대 후 모달 닫기
   };
@@ -202,19 +208,25 @@ const PlanDetail: React.FC<ButtonProps> = () => {
             <img src={`${planDetails.profileUrl}`} />
             {planDetails.memberNickname}
           </div>
-          <div>
-            <Button
-              onClick={handlePlanUpdate}
-              text={'수정하기'}
-              borderColor="lightGray"
-              marginRight="5px"
-            />
-            <Button
-              onClick={handlePlanDelete}
-              text={'삭제하기'}
-              borderColor="lightGray"
-            />
-          </div>
+          {planDetails.isWriter ? (
+            <>
+              <div>
+                <Button
+                  onClick={handlePlanUpdate}
+                  text={'수정하기'}
+                  borderColor="lightGray"
+                  marginRight="5px"
+                />
+                <Button
+                  onClick={handlePlanDelete}
+                  text={'삭제하기'}
+                  borderColor="lightGray"
+                />
+              </div>
+            </>
+          ) : (
+            <></>
+          )}
         </S.DetailHeaderThirdContent>
         <S.DetailContentSection>
           {/* 투표 영역 */}
@@ -282,7 +294,11 @@ const PlanDetail: React.FC<ButtonProps> = () => {
                 ) : (
                   <div>함께할 동행자를 초대해주세요</div>
                 )}
-                <CiCirclePlus size="55px" onClick={handleOpenInvitation} />
+                <CiCirclePlus
+                  size="55px"
+                  onClick={handleOpenInvitation}
+                  style={{ cursor: 'pointer' }}
+                />
               </S.InvitationDiv>
               <S.PlanInvitationBox>
                 {/* 초대된 사람들 노출 및 삭제 구간 */}

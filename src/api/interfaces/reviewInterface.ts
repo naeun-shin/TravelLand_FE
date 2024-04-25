@@ -57,4 +57,5 @@ export interface TripDetail {
   isScrap: boolean;
   hashtagList?: string[];
   profileImage: string;
+  isWriter: boolean;
 }

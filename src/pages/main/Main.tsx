@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   ButtonContainer,
   ButtonsWrapper,
@@ -30,6 +30,12 @@ const Main: React.FC<MainProps> = () => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState(''); // 검색어 상태
   const [isSearchModalOpen, setSearchModalOpen] = useState<boolean>(false);
+
+  useEffect(() => {
+    // 메인 페이지 로드 시 localStorage에서 'planData','reviewState'를 삭제
+    localStorage.removeItem('planData');
+    localStorage.removeItem('reviewState');
+  }, []);
 
   // TopTen
   const {
@@ -125,8 +131,8 @@ const Main: React.FC<MainProps> = () => {
         {/* ... */}
       </ButtonContainer>
       <ButtonsWrapper1>
-        <Button text="떠돌이랜드" onClick={handleReviewPageClick} />
-        <Button text="어디 갈랜?" onClick={handleMakePlanClick} />
+        <Button text="여행 후기" onClick={handleReviewPageClick} />
+        <Button text="여행 플랜" onClick={handleMakePlanClick} />
       </ButtonsWrapper1>
       <Maintitle />
       <ButtonsWrapper>
