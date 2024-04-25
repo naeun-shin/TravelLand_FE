@@ -166,7 +166,7 @@ export const MyPlanList: React.FC<MyPlanListProps> = ({
             </S.MyPlanListItems>
           ))
         ) : (
-          <div>No plans available.</div>
+          <div>나의 여행 플랜이 없습니다! 추가해주세요!</div>
         )}
       </S.MyPlanListItemWrapper>
     </S.MyPlanListWrapper>
