@@ -31,6 +31,12 @@ export interface TripListParams {
   isAsc: boolean;
 }
 
+// 마이페이지 여행 정보 목록 조회 인터페이스
+export interface MypageReviewParams {
+  page: number;
+  size: number;
+}
+
 // 여행 정보 상세 조회 인터페이스
 // export interface TripDetailParams {
 //   tripId: number;
