@@ -60,21 +60,27 @@ const MyPageReviewList = () => {
       </S.MyPageButton>
       {/* 카드 섹션 */}
       <TravelReviewCardSection>
-        {data?.data.trips.map((trip: Trip) => (
-          <ListCard
-            key={trip.tripId}
-            tripId={trip.tripId}
-            area={trip.area}
-            title={trip.title}
-            tripStartDate={trip.tripStartDate}
-            tripEndDate={trip.tripEndDate}
-            thumbnailUrl={trip.thumbnailUrl}
-            hashtagList={trip.hashtagList}
-            isScrap={trip.isScrap}
-            viewCount={trip.viewCount}
-            onClick={() => handleCardClick}
-          />
-        ))}
+        {data?.data.trips.length > 0 ? (
+          <>
+            {data?.data.trips.map((trip: Trip) => (
+              <ListCard
+                key={trip.tripId}
+                tripId={trip.tripId}
+                area={trip.area}
+                title={trip.title}
+                tripStartDate={trip.tripStartDate}
+                tripEndDate={trip.tripEndDate}
+                thumbnailUrl={trip.thumbnailUrl}
+                hashtagList={trip.hashtagList}
+                isScrap={trip.isScrap}
+                viewCount={trip.viewCount}
+                onClick={() => handleCardClick}
+              />
+            ))}
+          </>
+        ) : (
+          <div>나의 여행 정보가 없습니다! 추가해주세요!</div>
+        )}
       </TravelReviewCardSection>
     </>
   );
