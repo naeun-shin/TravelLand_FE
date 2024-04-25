@@ -1,5 +1,6 @@
 // import { MediumButton } from '@/components/commons/buttons/Button';
 // import Card from '@/components/commons/cards/Card';
+import Button from '@/components/commons/buttons/Button';
 import ListCard from '@/components/commons/mainItem/ListCard';
 import * as S from '@/components/commons/user/myPage/MyPage.style';
 import { useMypageTrip } from '@/hooks/useQuery';
@@ -28,9 +29,12 @@ const MyPageReviewList = () => {
     size: 10,
   });
 
-  console.log('data >>>>> ', data);
   const handleCardClick = (tripId?: number) => {
     navigate(`/travelDetail/${tripId}`);
+  };
+
+  const handleReviewCreate = () => {
+    navigate('/travelCreate');
   };
 
   // const [page, _] = useState(1); // 페이지 번호
@@ -58,27 +62,35 @@ const MyPageReviewList = () => {
         {/* <MediumButton text="스크랩 Number" /> */}
         {/* <img src="/assets/bookmark.png" alt="북마크" />
         </MediumButton> */}
+        <div>
+          <Button
+            text={'작성하기'}
+            width="150px"
+            borderRadius="15px"
+            color="#5AC8EC" // 배경색 변경
+            textColor="white" // 텍스트 색상 변경
+            onClick={handleReviewCreate} // 클릭 이벤트 변경 가능성 고려
+          />
+        </div>
       </S.MyPageButton>
       {/* 카드 섹션 */}
       <TravelReviewCardSection>
-        {data?.data !== null ? (
-          <>
-            {data?.data.trips.map((trip: Trip) => (
-              <ListCard
-                key={trip.tripId}
-                tripId={trip.tripId}
-                area={trip.area}
-                title={trip.title}
-                tripStartDate={trip.tripStartDate}
-                tripEndDate={trip.tripEndDate}
-                thumbnailUrl={trip.thumbnailUrl}
-                hashtagList={trip.hashtagList}
-                isScrap={trip.isScrap}
-                viewCount={trip.viewCount}
-                onClick={() => handleCardClick}
-              />
-            ))}
-          </>
+        {data?.data.trips && data.data.trips.length > 0 ? (
+          data.data.trips.map((trip: Trip) => (
+            <ListCard
+              key={trip.tripId}
+              tripId={trip.tripId}
+              area={trip.area}
+              title={trip.title}
+              tripStartDate={trip.tripStartDate}
+              tripEndDate={trip.tripEndDate}
+              thumbnailUrl={trip.thumbnailUrl}
+              hashtagList={trip.hashtagList}
+              isScrap={trip.isScrap}
+              viewCount={trip.viewCount}
+              onClick={() => handleCardClick(trip.tripId)}
+            />
+          ))
         ) : (
           <div>나의 여행 정보가 없습니다! 추가해주세요!</div>
         )}
