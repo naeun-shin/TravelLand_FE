@@ -16,7 +16,7 @@ interface SearchInputProps {
 
 const SearchInput: React.FC<SearchInputProps> = ({
   placeholder,
-  value,
+  // value,
   openSearchModal,
   needSearchInput = true,
 }) => {

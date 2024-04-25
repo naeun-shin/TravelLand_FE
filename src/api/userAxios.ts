@@ -16,7 +16,7 @@ export const getUserInfo = async () => {
   }
 };
 
-// 닉네임 변경
+// 닉네임 변경 -> 아직 적용 필요
 export const updateNickname = (nickname: string) => {
   return instanceWithToken.patch('/users', { nickname });
 };
@@ -27,7 +27,7 @@ export const getMypageTrip = async (
 ): Promise<AxiosResponse<any>> => {
   const { page, size } = paramData;
   try {
-    return await instanceWithToken.get('/test/users/trips', {
+    return await instanceWithToken.get('/v1/users/trips', {
       params: { page, size },
     });
   } catch (error) {

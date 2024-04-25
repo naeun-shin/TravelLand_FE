@@ -16,7 +16,7 @@ const PopupModal: React.FC<PopupModalProps> = ({
   isOpen,
   onClose,
   onTodayClose,
-  imageUrl = popupImage,
+  // imageUrl = popupImage,
 }) => {
   if (!isOpen) return null;
 
