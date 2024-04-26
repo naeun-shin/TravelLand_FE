@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import Vote from '@/components/vote/Vote';
@@ -7,7 +7,7 @@ import Button from '../buttons/Button';
 export const NoticeModal = () => {
   const [slide, setSlide] = useState(false);
   const [isVoteModalOpen, setIsVoteModalOpen] = useState(false);
-
+  const modalRef = useRef<HTMLDivElement>(null);
   // 모달 애니메이션 효과를 위한 상태 설정
 
   useEffect(() => {

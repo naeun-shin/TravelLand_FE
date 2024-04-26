@@ -1,5 +1,5 @@
 import { useAuthStore } from '@/store/useAuthStore';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
@@ -19,7 +19,7 @@ const MainModal: React.FC<IMainModalProps> = ({
   const navigate = useNavigate();
   const [slide, setSlide] = useState<boolean>(false);
   const { isLoggedIn } = useAuthStore(); // Zustand에서 로그인 상태 가져오기
-
+  const modalRef = useRef<HTMLDivElement>(null);
   // mypage 이동
   const handleOpenMypage = () => {
     navigate('/user/myPage');
@@ -64,28 +64,28 @@ const MainModal: React.FC<IMainModalProps> = ({
     };
   }, []);
 
-  // 모달 외부 클릭 시 모달 닫기
-  // 모달 닫기 함수
   const handleCloseModal = () => {
     setSlide(false);
-    // setTimeout(() => {
-    //   handleLogout(); // 모달 닫힌 후 로그아웃 처리
-    // }, 300);
+  };
+
+  const handleModalClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation(); // 모달 영역 클릭 시 이벤트 버블링 방지
   };
 
   return ReactDOM.createPortal(
-    <Modaldrop style={{ opacity: slide ? 1 : 0 }}>
+    <Modaldrop onClick={handleCloseModal} style={{ opacity: slide ? 1 : 0 }}>
       <ModalWrapper
+        ref={modalRef}
         style={{
           opacity: slide ? 1 : 0,
           transform: slide ? 'translateY(0)' : 'translateY(-20px)',
         }}
-        onClick={handleCloseModal}
+        onClick={handleModalClick}
       >
         <ModalContainer className="ModalContainer">
           {!isLoggedIn && (
             <>
-              <MenuItem onClick={() => handleLogin()}>로그인</MenuItem>
+              <MenuItem onClick={handleLogin}>로그인</MenuItem>
               <MenuItem>회원가입</MenuItem>
             </>
           )}

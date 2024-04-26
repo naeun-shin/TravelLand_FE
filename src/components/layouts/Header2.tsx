@@ -63,18 +63,31 @@ const ReDesignHeader: React.FC<HeaderProps> = ({
       onClick(event);
     }
   };
-
-  // 모달을 토글하는 함수
+  // 검색어 입력 시 호출될 함수
+  const handleSearchInputChange = (query: string) => {
+    setSearchQuery(query);
+  };
+  // 검색 아이콘 클릭 시 호출될 함수
+  const handleSearchIconClick = () => {
+    if (searchQuery.trim()) {
+      // 검색어가 있으면 검색 결과 페이지로 이동
+      navigate('/results', { state: searchQuery });
+    } else {
+      // 검색어가 없으면 검색 모달 토글
+      toggleSearchModal();
+    }
+  };
+  // 검색 모달을 토글하는 함수
   const toggleSearchModal = () => {
     setSearchModalOpen(!isSearchModalOpen);
   };
 
-  // 모달을 여는 함수
+  // 검색 모달을 여는 함수
   const openSearchModal = () => {
     setSearchModalOpen(true);
   };
 
-  // 모달을 닫는 함수
+  // 검색 모달을 닫는 함수
   const closeSearchModal = () => {
     setSearchModalOpen(false);
   };
@@ -175,20 +188,6 @@ const ReDesignHeader: React.FC<HeaderProps> = ({
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
-  // 검색어 입력 시 호출될 함수
-  const handleSearchInputChange = (query: string) => {
-    setSearchQuery(query);
-  };
-  // 검색 아이콘 클릭 시 호출될 함수
-  const handleSearchIconClick = () => {
-    if (searchQuery.trim()) {
-      // 검색어가 있으면 검색 결과 페이지로 이동
-      navigate('/results', { state: searchQuery });
-    } else {
-      // 검색어가 없으면 검색 모달 토글
-      toggleSearchModal();
-    }
-  };
 
   // 로그인 상태에 따라 보여지는 컨텐츠가 달라지도록 조건부 렌더링 처리
   return (
