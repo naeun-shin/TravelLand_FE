@@ -89,6 +89,7 @@ const ReDesignHeader: React.FC<HeaderProps> = ({ needSearchInput }) => {
     setIsMenuModalOpen(false);
     logout();
     cookie.remove('Authorization', { path: '/' }); // Adjust the path and domain as needed.
+    alert('로그아웃 되었습니다!');
     navigate('/');
   };
 
