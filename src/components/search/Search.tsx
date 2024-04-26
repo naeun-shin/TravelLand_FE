@@ -4,7 +4,7 @@ import SearchIcon from '@/icons/search2.svg';
 import { useNavigate } from 'react-router-dom';
 import { useGetMainSearchQuery } from '@/hooks/useQuery';
 
-interface SearchInputProps {
+export interface SearchInputProps {
   placeholder?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onIconClick?: () => void;

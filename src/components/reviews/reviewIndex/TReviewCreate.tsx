@@ -60,11 +60,13 @@ const ReviewCreate = () => {
     setPlaceName(e.target.value);
   };
   const handleCostChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value; // 입력값
-    const parsedValue = parseFloat(value); // 입력값을 숫자로 변환
-    // 입력값이 숫자가 아니거나 빈 문자열이 아닌 경우에만 예산 값을 설정
-    if (!isNaN(parsedValue) || value === '') {
-      setCost(value); // 입력값을 예산 상태 변수에 설정
+    // 숫자가 아닌 모든 문자를 제거합니다.
+    const value = e.target.value.replace(/\D/g, '');
+    // 숫자만 있는 문자열을 콤마를 포함한 포맷으로 변환
+    const formattedValue = value.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+    const numericValue = parseFloat(value);
+    if (!isNaN(numericValue) || value === '') {
+      setCost(formattedValue);
     }
   };
   const handleStartDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {

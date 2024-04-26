@@ -65,27 +65,22 @@ const MainModal: React.FC<IMainModalProps> = ({
   }, []);
 
   // 모달 외부 클릭 시 모달 닫기
-  const handleCloseModal = (
-    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
-  ) => {
-    if (!(event.target as HTMLElement).closest('.ModalContainer')) {
-      setSlide(false);
-      // setTimeout(() => {
-      //   handleLogout(); // 모달 닫힌 후 로그아웃 처리
-      // }, 300);
-    }
+  // 모달 닫기 함수
+  const handleCloseModal = () => {
+    setSlide(false);
+    // setTimeout(() => {
+    //   handleLogout(); // 모달 닫힌 후 로그아웃 처리
+    // }, 300);
   };
 
   return ReactDOM.createPortal(
-    <Modaldrop
-      style={{ opacity: slide ? 1 : 0 }}
-      onClick={handleCloseModal} // 모달 외부 클릭 시 handleCloseModal 호출
-    >
+    <Modaldrop style={{ opacity: slide ? 1 : 0 }}>
       <ModalWrapper
         style={{
           opacity: slide ? 1 : 0,
           transform: slide ? 'translateY(0)' : 'translateY(-20px)',
         }}
+        onClick={handleCloseModal}
       >
         <ModalContainer className="ModalContainer">
           {!isLoggedIn && (

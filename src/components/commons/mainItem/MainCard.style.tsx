@@ -47,7 +47,8 @@ export const TextContainer = styled.div`
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-  justify-content: space-around; // 내용물을 균등하게 배치
+  justify-content: space-around;
+  cursor: pointer;
 `;
 
 export const Title = styled.p`
