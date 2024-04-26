@@ -55,9 +55,7 @@ const MainList: React.FC<MainListProps> = ({ items }) => {
             <Title>
               {item.area} | {item.tripStartDate} - {item.tripEndDate}
             </Title>
-            <MainTitle onClick={() => handleGoToDetail(item.tripId)}>
-              {item.title}
-            </MainTitle>
+            <MainTitle>{item.title}</MainTitle>
             <Content>
               {item.content}...{' '}
               <span onClick={() => handleGoToDetail(item.tripId)}>더보기</span>{' '}
@@ -79,7 +77,6 @@ const MainListContainer = styled.div`
   width: 1400px;
   margin: 0 auto;
   margin-bottom: 100px;
-  cursor: pointer;
 `;
 
 const BookmarkIcon = styled(CiBookmark)`
@@ -121,7 +118,6 @@ const ItemContainer = styled.div`
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   overflow: hidden;
-  cursor: pointer;
 `;
 
 const ImageSection = styled.div`
@@ -136,6 +132,7 @@ const TextSection = styled.div`
   flex: 3;
   position: relative;
   padding: 15px;
+  cursor: default;
 `;
 
 const Title = styled.div`
@@ -144,6 +141,7 @@ const Title = styled.div`
   color: #333;
   font-size: 14px;
   font-weight: 600;
+  cursor: default;
 `;
 
 const MainTitle = styled.div`
@@ -152,8 +150,7 @@ const MainTitle = styled.div`
   color: #000;
   font-size: 22px;
   font-weight: 600;
-
-  cursor: pointer;
+  cursor: default;
 `;
 
 const Content = styled.div`

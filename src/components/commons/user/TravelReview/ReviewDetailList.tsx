@@ -69,6 +69,14 @@ const ReviewDetailList = ({ tripDetail }: ReviewDetailListProps) => {
     }
   };
 
+  // 예산 cost
+  const formatNumberWithRegex = (input: string): string => {
+    // 숫자가 아닌 모든 문자를 제거
+    const numericOnly = input.replace(/\D/g, '');
+    // 숫자를 콤마로 포맷
+    return numericOnly.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+  };
+
   // 여행 정보 -> 삭제하기
   const deleteReviewMutation = useMutation({
     mutationFn: (tripId: number) => deleteTrip(tripId),
@@ -125,7 +133,7 @@ const ReviewDetailList = ({ tripDetail }: ReviewDetailListProps) => {
         </S.ImageBox>
       </S.Container>
       <Container>
-        <DateRange>{`${tripDetail.area} | ${tripDetail.tripStartDate} - ${tripDetail.tripEndDate}`}</DateRange>
+        <DateRange>{`${tripDetail.area} | ${tripDetail.tripStartDate} - ${tripDetail.tripEndDate} | ${formatNumberWithRegex(tripDetail.cost.toString())}원`}</DateRange>{' '}
         <ReviewHeader>
           <LocationTag>{`${tripDetail.title}`}</LocationTag>
           <div style={{ display: 'flex', alignItems: 'center' }}>

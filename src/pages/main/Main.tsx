@@ -134,6 +134,19 @@ const Main: React.FC<MainProps> = () => {
     navigate('/travelReview');
   };
 
+  // 모달 외부 클릭 시 모달 닫기
+  // const handleModalOutsideClick = (event: React.MouseEvent<HTMLDivElement>) => {
+  //   const target = event.target as HTMLElement;
+  //   if (
+  //     !target.closest('.modal-container') &&
+  //     !target.closest('.modal-button') &&
+  //     !target.closest('.burger-menu-icon')
+  //   ) {
+  //     console.log('모달 외부 클릭');
+  //     setModalOpen(false);
+  //   }
+  // };
+
   // 전체 로딩 및 에러 처리
   if (isLoadingTopTen || isLoadingRandom || isLoadingSearch) {
     return <div>Loading...</div>;
@@ -146,42 +159,44 @@ const Main: React.FC<MainProps> = () => {
   return (
     <>
       <ReDesignHeader needSearchInput={false} />
-      <Search
-        placeholder="검색어를 입력해주세요."
-        openSearchModal={toggleSearchModal}
-        onIconClick={handleSearchIconClick}
-        onInputChange={handleSearchInputChange}
-      />
-      <ButtonContainer>
-        {/* 버튼 이벤트 핸들러 로직 */}
-        {/* ... */}
-      </ButtonContainer>
-      <ButtonsWrapper1>
-        <Button text="여행 후기" onClick={handleReviewPageClick} />
-        <Button text="여행 플랜" onClick={handleMakePlanClick} />
-      </ButtonsWrapper1>
-      <Maintitle />
-      <ButtonsWrapper>
-        <SmallButton text="전체" />
-        {/* <SmallButton text="가족 여행" />
+      <div>
+        <Search
+          placeholder="검색어를 입력해주세요."
+          openSearchModal={toggleSearchModal}
+          onIconClick={handleSearchIconClick}
+          onInputChange={handleSearchInputChange}
+        />
+        <ButtonContainer>
+          {/* 버튼 이벤트 핸들러 로직 */}
+          {/* ... */}
+        </ButtonContainer>
+        <ButtonsWrapper1>
+          <Button text="여행 후기" onClick={handleReviewPageClick} />
+          <Button text="여행 플랜" onClick={handleMakePlanClick} />
+        </ButtonsWrapper1>
+        <Maintitle />
+        <ButtonsWrapper>
+          <SmallButton text="전체" />
+          {/* <SmallButton text="가족 여행" />
         <SmallButton text="커플 여행" /> */}
-      </ButtonsWrapper>
-      {/* 해시태그 영역 */}
-      <MainCard cards={randomData?.data} />
-      <ListTitle />
-      {/* 탑텐 데이터 전달 */}
-      <MainList items={TopTenData?.data} />
-      <SearchModal
-        isOpen={isSearchModalOpen}
-        onClose={toggleSearchModal}
-        onSearch={handleSearchResult}
-      />
-      <PopupModal
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
-        onTodayClose={handleTodayClose}
-        imageUrl="/assets/popup.png"
-      />
+        </ButtonsWrapper>
+        {/* 해시태그 영역 */}
+        <MainCard cards={randomData?.data} />
+        <ListTitle />
+        {/* 탑텐 데이터 전달 */}
+        <MainList items={TopTenData?.data} />
+        <SearchModal
+          isOpen={isSearchModalOpen}
+          onClose={toggleSearchModal}
+          onSearch={handleSearchResult}
+        />
+        <PopupModal
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+          onTodayClose={handleTodayClose}
+          imageUrl="/assets/popup.png"
+        />
+      </div>
     </>
   );
 };
