@@ -9,7 +9,7 @@ import {
 // 유저 정보
 export const getUserInfo = async () => {
   try {
-    return await instanceWithToken.get('/users/memberInfo');
+    return await instanceWithToken.get('/users/myInfo');
   } catch (error) {
     console.error(error);
     throw error;
@@ -82,7 +82,7 @@ export const getMyTripList = async (
 };
 
 // 여행 정보 스크랩 목록 조회
-export const getScrapTripList = async (tripListparam: TripListParams) => {
+export const getScrapTripList = async (tripListparam: MypageReviewParams) => {
   const { page, size } = tripListparam;
   try {
     const response = await instanceWithToken.get('/v1/trips/scrap', {

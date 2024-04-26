@@ -96,17 +96,17 @@ export const router = createBrowserRouter([
       {
         path: '/travelCreate',
         element: (
-          <PrivateRoute>
-            <ReviewCreatePage1 />
-          </PrivateRoute>
+          // <PrivateRoute>
+          <ReviewCreatePage1 />
+          // </PrivateRoute>
         ),
       },
       {
         path: '/reviewCreate/2',
         element: (
-          <PrivateRoute>
-            <ReviewCreate2 />
-          </PrivateRoute>
+          // <PrivateRoute>
+          <ReviewCreate2 />
+          // </PrivateRoute>
         ),
       },
       {

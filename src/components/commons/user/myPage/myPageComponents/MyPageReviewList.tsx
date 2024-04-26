@@ -1,9 +1,8 @@
-// import { MediumButton } from '@/components/commons/buttons/Button';
-// import Card from '@/components/commons/cards/Card';
+import { useState } from 'react';
 import Button from '@/components/commons/buttons/Button';
 import ListCard from '@/components/commons/mainItem/ListCard';
 import * as S from '@/components/commons/user/myPage/MyPage.style';
-import { useMypageTrip } from '@/hooks/useQuery';
+import { useMypageScrapTrip, useMypageTrip } from '@/hooks/useQuery';
 import { TravelReviewCardSection } from '@/pages/travelReview/TravelReview.styles';
 // import { useMyTripListQuery } from '@/hooks/useQuery';
 // import { useState } from 'react';
@@ -24,7 +23,14 @@ export interface Trip {
 
 const MyPageReviewList = () => {
   const navigate = useNavigate();
+  const [showScrapList, setShowScrapList] = useState(false);
+
   const { data, isError, isLoading, error } = useMypageTrip({
+    page: 1,
+    size: 10,
+  });
+
+  const { data: scrapData } = useMypageScrapTrip({
     page: 1,
     size: 10,
   });
@@ -35,6 +41,14 @@ const MyPageReviewList = () => {
 
   const handleReviewCreate = () => {
     navigate('/travelCreate');
+  };
+
+  const handleMyReviewListClick = () => {
+    setShowScrapList(false);
+  };
+
+  const handleMyScrapListClick = () => {
+    setShowScrapList(true);
   };
 
   // const [page, _] = useState(1); // 페이지 번호
@@ -53,29 +67,61 @@ const MyPageReviewList = () => {
 
   return (
     <>
-      {/* 버튼 */}
       <S.MyPageButton>
-        {/* <MediumButton text="내가 작성한 4" /> */}
-        {/* <img src="/assets/check.png" alt="체크" />
-        </MediumButton> */}
-        &nbsp;
-        {/* <MediumButton text="스크랩 Number" /> */}
-        {/* <img src="/assets/bookmark.png" alt="북마크" />
-        </MediumButton> */}
         <div>
           <Button
-            text={'작성하기'}
+            color="white"
+            textColor="gray"
+            width="160px"
+            borderColor="gray"
+            marginRight="5px"
+            onClick={handleMyReviewListClick}
+          >
+            내가 작성한 {data?.data.tripTotalElements || 0}
+          </Button>
+          <Button
+            color="white"
+            textColor="gray"
+            width="160px"
+            borderColor="gray"
+            onClick={handleMyScrapListClick}
+          >
+            내가 스크랩한 {scrapData?.data.scrapTotalElements || 0}
+          </Button>
+        </div>
+        <div>
+          <Button
+            text="작성하기"
             width="150px"
             borderRadius="15px"
-            color="#5AC8EC" // 배경색 변경
-            textColor="white" // 텍스트 색상 변경
-            onClick={handleReviewCreate} // 클릭 이벤트 변경 가능성 고려
+            color="#5AC8EC"
+            textColor="white"
+            onClick={handleReviewCreate}
           />
         </div>
       </S.MyPageButton>
-      {/* 카드 섹션 */}
       <TravelReviewCardSection>
-        {data?.data.trips && data.data.trips.length > 0 ? (
+        {showScrapList ? (
+          scrapData?.data.trips && scrapData.data.trips.length > 0 ? (
+            scrapData.data.trips.map((trip: Trip) => (
+              <ListCard
+                key={trip.tripId}
+                tripId={trip.tripId}
+                area={trip.area}
+                title={trip.title}
+                tripStartDate={trip.tripStartDate}
+                tripEndDate={trip.tripEndDate}
+                thumbnailUrl={trip.thumbnailUrl}
+                hashtagList={trip.hashtagList}
+                isScrap={trip.isScrap}
+                viewCount={trip.viewCount}
+                onClick={() => handleCardClick(trip.tripId)}
+              />
+            ))
+          ) : (
+            <div>스크랩한 여행 정보가 없습니다! 추가해주세요!</div>
+          )
+        ) : data?.data.trips && data.data.trips.length > 0 ? (
           data.data.trips.map((trip: Trip) => (
             <ListCard
               key={trip.tripId}

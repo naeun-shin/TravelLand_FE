@@ -19,6 +19,7 @@ import {
   useCreateScrapTripMutation,
 } from '@/hooks/useMutation';
 import ReDesignHeader from '@/components/layouts/Header2';
+import { useAuthStore } from '@/store/useAuthStore';
 
 interface ReviewDetailListProps {
   tripDetail: TripDetail;
@@ -26,6 +27,7 @@ interface ReviewDetailListProps {
 }
 
 const ReviewDetailList = ({ tripDetail }: ReviewDetailListProps) => {
+  const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
   // const [activeButton, setActiveButton] = useState<ActiveButtonState>(null);
   const navigate = useNavigate();
   const [activeIndex, setActiveIndex] = useState(0);
@@ -41,19 +43,40 @@ const ReviewDetailList = ({ tripDetail }: ReviewDetailListProps) => {
   const likeTrip = useCreateLikeTripMutation();
   const disLikeTrip = useCancelLikeTripMutation();
 
-  // 좋아요 기능
-  const toggleLike = (tripId: number) => {
-    !likeActive ? likeTrip.mutate(tripId) : disLikeTrip.mutate(tripId);
-    setLikeActive(!likeActive);
-  };
-
   const scrapTrip = useCreateScrapTripMutation();
   const scrapCancel = useCancelScrapTripMutation();
+  console.log(isLoggedIn);
+  // 좋아요 기능
+  const toggleLike = (tripId: number) => {
+    if (!isLoggedIn) {
+      alert('로그인이 필요합니다.');
+      return;
+    } else {
+      const action = likeActive ? disLikeTrip.mutate : likeTrip.mutate;
+      action(tripId);
+      setLikeActive(!likeActive);
+    }
+  };
 
   const toggleScrap = (tripId: number) => {
-    !scrapActive ? scrapTrip.mutate(tripId) : scrapCancel.mutate(tripId);
-    setScrapActive(!scrapActive);
+    if (!isLoggedIn) {
+      alert('로그인이 필요합니다.');
+      return;
+    } else {
+      const action = scrapActive ? scrapCancel.mutate : scrapTrip.mutate;
+      action(tripId);
+      setScrapActive(!scrapActive);
+    }
   };
+
+  // 예산 cost
+  const formatNumberWithRegex = (input: string): string => {
+    // 숫자가 아닌 모든 문자를 제거
+    const numericOnly = input.replace(/\D/g, '');
+    // 숫자를 콤마로 포맷
+    return numericOnly.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+  };
+
   // 여행 정보 -> 삭제하기
   const deleteReviewMutation = useMutation({
     mutationFn: (tripId: number) => deleteTrip(tripId),
@@ -110,7 +133,7 @@ const ReviewDetailList = ({ tripDetail }: ReviewDetailListProps) => {
         </S.ImageBox>
       </S.Container>
       <Container>
-        <DateRange>{`${tripDetail.area} | ${tripDetail.tripStartDate} - ${tripDetail.tripEndDate}`}</DateRange>
+        <DateRange>{`${tripDetail.area} | ${tripDetail.tripStartDate} - ${tripDetail.tripEndDate} | ${formatNumberWithRegex(tripDetail.cost.toString())}원`}</DateRange>{' '}
         <ReviewHeader>
           <LocationTag>{`${tripDetail.title}`}</LocationTag>
           <div style={{ display: 'flex', alignItems: 'center' }}>
