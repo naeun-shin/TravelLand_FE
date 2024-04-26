@@ -84,9 +84,16 @@ const PlanCreate = () => {
       setTotalBudgetFormatted(numericValue.toLocaleString()); // 포맷된 문자열로 상태 업데이트
     }
   };
+  const today = new Date();
+  today.setHours(0, 0, 0, 0); // 시간, 분, 초, 밀리초를 0으로 설정하여 오늘의 시작을 의미
 
   // 날짜 범위 변경 핸들러
   const handleDateRangeChange = (update: [Date, Date]) => {
+    // 시작 날짜가 오늘 이전인지 확인
+    if (update[0] && update[0] < today) {
+      alert('오늘 이전의 날짜는 선택할 수 없습니다.');
+      return; // 함수 실행 중단
+    }
     setDateRange(update);
   };
 
@@ -398,6 +405,7 @@ const PlanCreate = () => {
             inline
             dateFormat={dateFormat}
             onChange={handleDateRangeChange}
+            minDate={today} // 오늘 날짜 이후만 선택 가능하도록 설정
           />
         </div>
       </div>

@@ -16,6 +16,7 @@ import { FaLocationDot } from 'react-icons/fa6';
 import { CiCirclePlus } from 'react-icons/ci';
 import { Invitation } from '@/components/commons/invitation/Invitation';
 import { VoteCheck } from '@/components/vote/VoteCheck';
+import { useAuthStore } from '@/store/useAuthStore';
 // 사용할 데이터 타입 정의 (예시입니다, 실제 데이터에 맞게 조정해야 합니다.)
 
 interface ButtonProps {
@@ -45,6 +46,7 @@ interface UnitPlan {
 }
 
 const PlanDetail: React.FC<ButtonProps> = () => {
+  const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
   const { id } = useParams<{ id: string }>();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [currentStep, setCurrentStep] = useState<number>(0);
@@ -58,7 +60,12 @@ const PlanDetail: React.FC<ButtonProps> = () => {
 
   // `id`를 숫자로 변환하기 전에 유효성 검사 수행
   const planId = Number(id);
+
   const { data, isLoading, isError } = usePlanDetailQuery(planId);
+  // if (!data?.data.isPublic) {
+  //   const { data: myPlanData } = useMyPlanDetailQuery(planId);
+  //   console.log(myPlanData);
+  // }
 
   const planDetails = data?.data;
   const planVotes = data?.data.planVotes;
@@ -94,8 +101,13 @@ const PlanDetail: React.FC<ButtonProps> = () => {
 
   // 좋아요 기능
   const handleLikeClick = (planId: number) => {
-    !likeActive ? likePlan.mutate(planId) : disLikePlan.mutate(planId);
-    setLikeActive(!likeActive);
+    if (!isLoggedIn) {
+      alert('로그인이 필요합니다.');
+      return;
+    } else {
+      !likeActive ? likePlan.mutate(planId) : disLikePlan.mutate(planId);
+      setLikeActive(!likeActive);
+    }
   };
 
   const scrapPlan = useCreateScrapPlanMutation();
@@ -103,8 +115,13 @@ const PlanDetail: React.FC<ButtonProps> = () => {
 
   // 스크랩 기능
   const handleScrapClick = (planId: number) => {
-    !scrapActive ? scrapPlan.mutate(planId) : scrapCancel.mutate(planId);
-    setScrapActive(!scrapActive);
+    if (!isLoggedIn) {
+      alert('로그인이 필요합니다.');
+      return;
+    } else {
+      !scrapActive ? scrapPlan.mutate(planId) : scrapCancel.mutate(planId);
+      setScrapActive(!scrapActive);
+    }
   };
 
   // 수정 기능

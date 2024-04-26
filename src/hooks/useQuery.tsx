@@ -4,6 +4,7 @@ import {
   getMyPlanList,
   getMyTripList,
   getMypageTrip,
+  getScrapTripList,
   getUserInfo,
 } from '@/api/userAxios';
 import { PlanListParams } from '@/api/interfaces/planInterface';
@@ -41,6 +42,18 @@ export const usePlanDetailQuery = (planId: number) => {
     // refetchOnReconnect: false, // 네트워크 재연결 시 데이터 재요청 안 함
   });
 };
+
+// export const useMyPlanDetailQuery = (planId: number) => {
+//   return useQuery({
+//     queryKey: ['planDetail', planId],
+//     queryFn: () => getMyPlanDetail(planId),
+//     // staleTime: 5 * 60 * 1000, // 데이터를 5분간 신선하게 유지
+//     // gcTime: 30 * 60 * 1000, // 캐시에서 데이터를 30분간 유지 => gcTime으로 수정 필요 => v5에서 변경 됨
+//     // refetchInterval: 360000, // 투표 마감 결과 확인을 위해 1분으로 적용
+//     // refetchOnWindowFocus: false, // 윈도우 포커스 시 데이터 재요청 안 함
+//     // refetchOnReconnect: false, // 네트워크 재연결 시 데이터 재요청 안 함
+//   });
+// };
 
 export const useMyPlanListQuery = (planListParams: PlanListParams) => {
   return useQuery({
@@ -140,6 +153,15 @@ export const useMypageTrip = (params: MypageReviewParams) => {
   return useQuery({
     queryKey: ['mypageTrip', params],
     queryFn: () => getMypageTrip(params),
+    staleTime: 0, // 필요한 경우 캐시 시간을 설정할 수 있습니다
+  });
+};
+
+// 마이페이지 여행 정보 스크랩 불러오기
+export const useMypageScrapTrip = (params: MypageReviewParams) => {
+  return useQuery({
+    queryKey: ['mypageTrip', params],
+    queryFn: () => getScrapTripList(params),
     staleTime: 0, // 필요한 경우 캐시 시간을 설정할 수 있습니다
   });
 };

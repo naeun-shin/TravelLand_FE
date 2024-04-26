@@ -8,6 +8,7 @@ import { ModernInput } from '@/components/commons/inputs/Input';
 import KaKaoMap from '@/components/maps/KaKaoMap';
 import { useCreatePlanMutaton } from '@/hooks/useMutation';
 import { TfiArrowCircleRight } from 'react-icons/tfi';
+import { TimeSelectBox } from '@/components/commons/timeSelect/TimeSelectBox';
 
 export interface UnitPlan {
   title: string;
@@ -114,6 +115,22 @@ const PlanCreate2: React.FC = () => {
       unitPlans: [],
     },
   ]);
+  // 시간과 분을 업데이트하는 함수
+  const handleTimeChange = (
+    part: 'hour' | 'minute',
+    value: string,
+    index: number,
+  ) => {
+    const updatedUnitPlans = [...unitPlans];
+    const timeParts = updatedUnitPlans[index].time.split(':'); // 기존 시간을 ':'으로 분리
+    if (part === 'hour') {
+      timeParts[0] = value; // 시간 부분 업데이트
+    } else if (part === 'minute') {
+      timeParts[1] = value; // 분 부분 업데이트
+    }
+    updatedUnitPlans[index].time = timeParts.join(':'); // 변경된 시간을 다시 조합
+    setUnitPlans(updatedUnitPlans);
+  };
 
   useEffect(() => {
     setTotalDays(calculateTotalDays());
@@ -183,6 +200,14 @@ const PlanCreate2: React.FC = () => {
 
     const updatedUnitPlans = [...unitPlans, newUnitPlan];
     setUnitPlans(updatedUnitPlans);
+  };
+
+  const handleDeleteUnitPlanClick = (index: number) => {
+    if (index > 0) {
+      // 첫 번째 unitPlan은 삭제되지 않도록 함
+      const updatedUnitPlans = unitPlans.filter((_, idx) => idx !== index);
+      setUnitPlans(updatedUnitPlans);
+    }
   };
 
   useEffect(() => {
@@ -325,6 +350,19 @@ const PlanCreate2: React.FC = () => {
           <div style={{ marginBottom: '20px' }}>
             <S.PlanDetailCreateBox>
               <IS.PlanListInputContainer key={index}>
+                <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                  {/* 첫 번째 작성 영역이 아닐 때만 삭제 버튼을 보여줌 */}
+                  {index > 0 && (
+                    <Button
+                      text="삭제하기"
+                      borderColor="gray"
+                      color="white"
+                      textColor="gray"
+                      hoverColor="#5AC8EC"
+                      onClick={() => handleDeleteUnitPlanClick(index)}
+                    />
+                  )}
+                </div>
                 {/* 출발지 영역 */}
                 <IS.ListInputbox>
                   <div
@@ -354,14 +392,26 @@ const PlanCreate2: React.FC = () => {
                     }}
                   >
                     시간 &nbsp; <img src="/assets/icons/requiredPoint.svg" />
+                  </div>{' '}
+                  <div key={index}>
+                    <TimeSelectBox
+                      hourValue={input.time.split(':')[0]} // '시' 부분 추출
+                      minuteValue={input.time.split(':')[1]} // '분' 부분 추출
+                      onHourChange={(hour) =>
+                        handleTimeChange('hour', hour, index)
+                      }
+                      onMinuteChange={(minute) =>
+                        handleTimeChange('minute', minute, index)
+                      }
+                    />
                   </div>
-                  <input
+                  {/* <input
                     placeholder="09:30"
                     value={input.time}
                     onChange={(e) =>
                       handleInputChange(index, 'time', e.target.value)
                     }
-                  />
+                  /> */}
                 </IS.ListInputbox>
                 {/* 일정 영역 */}
                 <IS.ListInputbox>
