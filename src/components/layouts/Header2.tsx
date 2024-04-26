@@ -23,9 +23,13 @@ interface UsersProps {
 
 interface HeaderProps {
   needSearchInput: boolean;
+  onClick?: (event: React.MouseEvent<HTMLDivElement>) => void;
 }
 
-const ReDesignHeader: React.FC<HeaderProps> = ({ needSearchInput }) => {
+const ReDesignHeader: React.FC<HeaderProps> = ({
+  needSearchInput,
+  onClick,
+}) => {
   const { logout, isLoggedIn, login } = useAuthStore(); // 로그인 함수를 가져옵니다.
   const cookie = new Cookies();
   // 메뉴 모달
@@ -34,24 +38,58 @@ const ReDesignHeader: React.FC<HeaderProps> = ({ needSearchInput }) => {
   const [isModalOpen, setIsModalOpen] = useState(false); // 로그인 모달 상태 추가
   // const [isLoggedIn, _] = useState(false); // 로그인 상태를 관리하는 상태 추가
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isSearchModalOpen, setIsSearchModalOpen] = useState(false); // 검색 모달 상태 추가
+  const [isSearchModalOpen, setSearchModalOpen] = useState<boolean>(false);
 
   const [isNoticeModalOpen, setIsNoticeModalOpen] = useState(false); // 알림 모달 상태 관리
   const [isVoteModalOpen, setIsVoteModalOpen] = useState(false); // 투표 모달
+  const [searchQuery, setSearchQuery] = useState(''); // 검색어 상태
 
   const navigate = useNavigate();
 
-  // 모달을 토글하는 함수
-  // const toggleModal = () => setIsModalOpen((prevState) => !prevState);
-
-  // 모달을 여는 함수
-  const openSearchModal = () => {
-    setIsSearchModalOpen(true);
+  const handleOutsideClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    // 모달이 열려있을 때만 처리
+    if (isModalOpen || isSearchModalOpen) {
+      const target = event.target as HTMLElement;
+      // 모달 영역이 아닌 곳을 클릭했을 때 모달을 닫는다.
+      if (
+        !target.closest('.modal-container') &&
+        !target.closest('.modal-button')
+      ) {
+        setIsModalOpen(false);
+        setSearchModalOpen(false);
+      }
+    }
+    if (onClick) {
+      onClick(event);
+    }
+  };
+  // 검색어 입력 시 호출될 함수
+  const handleSearchInputChange = (query: string) => {
+    setSearchQuery(query);
+  };
+  // 검색 아이콘 클릭 시 호출될 함수
+  const handleSearchIconClick = () => {
+    if (searchQuery.trim()) {
+      // 검색어가 있으면 검색 결과 페이지로 이동
+      navigate('/results', { state: searchQuery });
+    } else {
+      // 검색어가 없으면 검색 모달 토글
+      toggleSearchModal();
+    }
+  };
+  // 검색 모달을 토글하는 함수
+  const toggleSearchModal = () => {
+    setSearchModalOpen(!isSearchModalOpen);
   };
 
-  // 모달을 닫는 함수
+  // 검색 모달을 여는 함수
+  const openSearchModal = () => {
+    setSearchModalOpen(true);
+  };
+
+  // 검색 모달을 닫는 함수
   const closeSearchModal = () => {
-    setIsSearchModalOpen(false);
+    setSearchModalOpen(false);
   };
 
   // 버거 메뉴 모달
@@ -95,7 +133,7 @@ const ReDesignHeader: React.FC<HeaderProps> = ({ needSearchInput }) => {
   const closeModal = () => {
     setIsModalOpen(false);
     setIsMenuModalOpen(false);
-    setIsNoticeModalOpen(false); // Make sure to reset all modal states
+    setIsNoticeModalOpen(false);
   };
 
   // 로고 클릭 시 메인 페이지 이동
@@ -153,7 +191,7 @@ const ReDesignHeader: React.FC<HeaderProps> = ({ needSearchInput }) => {
 
   // 로그인 상태에 따라 보여지는 컨텐츠가 달라지도록 조건부 렌더링 처리
   return (
-    <Header needSearchInput={needSearchInput}>
+    <Header needSearchInput={needSearchInput} onClick={handleOutsideClick}>
       <StickyHeader isScrolled={isScrolled}>
         <Container>
           {isScrolled ? (
@@ -173,7 +211,9 @@ const ReDesignHeader: React.FC<HeaderProps> = ({ needSearchInput }) => {
             <>
               <SearchInput
                 placeholder="검색어를 입력해주세요"
-                onIconClick={openSearchModal}
+                openSearchModal={toggleSearchModal}
+                onIconClick={handleSearchIconClick}
+                onInputChange={handleSearchInputChange}
               />
             </>
           ) : (
@@ -181,7 +221,9 @@ const ReDesignHeader: React.FC<HeaderProps> = ({ needSearchInput }) => {
               {isScrolled && (
                 <SearchInput
                   placeholder="검색어를 입력해주세요"
-                  onIconClick={openSearchModal}
+                  openSearchModal={toggleSearchModal}
+                  onIconClick={handleSearchIconClick}
+                  onInputChange={handleSearchInputChange}
                 />
               )}
             </>
