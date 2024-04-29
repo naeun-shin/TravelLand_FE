@@ -1,4 +1,5 @@
 import { UpdateWholePlan } from '@/api/interfaces/planInterface';
+import { TripData } from '@/api/interfaces/reviewInterface';
 import {
   cancelLikePlan,
   cancelScrapPlan,
@@ -13,6 +14,7 @@ import {
   cancelScrapTrip,
   createLikeTrip,
   createScrapTrip,
+  updateTrip,
 } from '@/api/reviewAxios';
 import { updateNickname } from '@/api/userAxios';
 import { checkVote, createVote } from '@/api/voteAxios';
@@ -24,9 +26,17 @@ export interface ErrorResponse {
   message: string;
 }
 
+
 export interface PlanResponse {
   planId: number;
 }
+
+interface UpdateTripMutationVariables {
+  tripId: number;
+  tripData: TripData; // 'TripData' 타입을 적절히 정의해야 합니다.
+  imageList: File[]; // 이미지 리스트가 파일 배열임
+}
+
 // 작성하기 mutation
 export const useCreatePlanMutaton = () => {
   const navigate = useNavigate();
@@ -236,6 +246,24 @@ export const useUpdateNickname = () => {
     },
     onError: () => {
       alert('닉네임 변경에 실패했습니다!');
+    },
+  });
+};
+
+// 여행 정보 수정
+export const useUpdateTripMutation = () => {
+  const navigate = useNavigate();
+
+  return useMutation<unknown, AxiosError, UpdateTripMutationVariables>({
+    mutationFn: ({ tripId, tripData, imageList }) =>
+      updateTrip(tripId, tripData, imageList),
+    onSuccess: () => {
+      alert('여행 정보가 성공적으로 수정 되었습니다.');
+      navigate('/travelReview'); // 성공 후 이동할 경로
+    },
+    onError: (error: AxiosError) => {
+      alert(`업데이트 실패: ${error.message}`);
+      console.error('Update trip error:', error);
     },
   });
 };

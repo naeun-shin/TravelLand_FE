@@ -79,6 +79,7 @@ const TReviewCreate3 = () => {
         cost: state.cost,
         hashTag: selectedTags,
         address: state.address,
+        placeName: state.placeName,
         isPublic: isPublic,
       }),
     );
