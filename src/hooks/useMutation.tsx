@@ -25,6 +25,7 @@ export interface ErrorResponse {
 }
 
 export interface PlanResponse {
+  data: any;
   planId: number;
 }
 // 작성하기 mutation
@@ -48,10 +49,9 @@ export const useUpdatePlanMutation = () => {
   return useMutation<PlanResponse, AxiosError<ErrorResponse>, UpdateWholePlan>({
     mutationFn: updatePlan,
     onSuccess: (data) => {
-      console.log(data);
       alert('수정이 완료됬습니다.');
-      navigate('/planList');
-      // navigate(`/planDetail/${data.planId}`);
+      const planId = data.data.planId;
+      navigate(`/planDetail/${planId}`);
     },
     onError: (error: AxiosError) => {
       const errorMessage =
