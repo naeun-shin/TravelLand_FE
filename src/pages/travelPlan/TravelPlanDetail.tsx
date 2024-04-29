@@ -10,7 +10,6 @@ const TravelPlanDetail = () => {
   }, []);
   return (
     <>
-      <ReDesignHeader needSearchInput={true} />
       <S.TravelPlanMainStyle>
         {/* 타이틀 */}
         <PlanDetail
