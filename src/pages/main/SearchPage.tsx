@@ -56,12 +56,14 @@ const SearchModal: React.FC<SearchModalProps> = ({
     // 카테고리 Api 호출
     setArea(area);
     navigate('/results', { state: { area } });
+    onClose();
   };
 
   // 해시 태그 검색
   const handleHashtagClick = (hashtag: string) => {
     setHashtag(hashtag);
     navigate('/results', { state: { hashtag } });
+    onClose();
   };
 
   return (

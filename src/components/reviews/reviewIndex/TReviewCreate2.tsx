@@ -166,6 +166,7 @@ const ReviewBackButton = styled.button`
   height: 50px;
   border-radius: 16px;
   cursor: pointer;
+  margin-bottom: 500px;
 
   &:hover {
     background-color: #cff4ff;

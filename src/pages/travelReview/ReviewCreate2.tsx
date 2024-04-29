@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import TReviewCreate2 from '@/components/reviews/reviewIndex/TReviewCreate2';
 import styled from 'styled-components';
-import ReDesignHeader from '@/components/layouts/Header2';
+// import ReDesignHeader from '@/components/layouts/Header2';
 
 const ReviewCreate2 = () => {
   const [step, _] = useState<number>(2); // 현재 단계를 2로 설정
 
   return (
     <>
-      <ReDesignHeader needSearchInput={true} />
+      {/* <ReDesignHeader needSearchInput={true} /> */}
       <div style={{ marginBottom: '150px' }}>
         <CenteredContainer>
           <h2>여행 정보 작성하기</h2>
@@ -34,7 +34,7 @@ const CenteredContainer = styled.div`
   max-width: 1100px;
   margin: 0 auto;
   margin-top: 40px;
-  /* margin-bottom: 150px; */
+  /* margin-bottom: 500px; */
 
   h2 {
     font-size: 24px;

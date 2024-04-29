@@ -164,6 +164,7 @@ const TReviewCreate3 = () => {
                 '2030',
               ].map((tag) => (
                 <CategoryButton
+                  cursor="pointer"
                   key={tag}
                   title={tag}
                   onClick={(event) => handleTagClick(tag, event)}

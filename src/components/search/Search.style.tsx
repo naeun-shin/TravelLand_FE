@@ -53,20 +53,6 @@ export const LocalTitle = styled.div`
   font-weight: 600;
   margin-bottom: 30px;
 `;
-// export const CatagoryBtn = styled.button`
-//   display: flex;
-//   min-width: 80px;
-//   height: 40px;
-//   font-weight: 600;
-//   border-radius: 20px;
-//   border: none;
-//   margin: 10px;
-//   padding: 0 20px;
-//   align-items: center;
-//   text-align: center;
-//   font-size: 14px;
-//   cursor: pointer;
-// `;
 
 export const BtnContainer = styled.div`
   width: 500px;
@@ -82,7 +68,7 @@ export const SearchSection = styled.section`
 `;
 
 export const ResultsSection = styled.section`
-  width: 500px;
+  width: 800px;
   margin: 0 auto;
   display: flex;
   justify-content: flex-start;
@@ -96,9 +82,9 @@ export const ResultContainer = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
-  width: 1100px;
+  width: 1200px;
   margin: 0 auto;
-  padding-top: 30px;
+  /* padding-top: 30px; */
   cursor: pointer;
 `;
 
@@ -121,8 +107,6 @@ export const SearchTitle = styled.div`
 
 export const TabContainer = styled.div`
   display: flex;
-  /* justify-content: space-around; */
-  padding: 10px 0;
 `;
 
 export const TabButton = styled.button`
@@ -141,13 +125,11 @@ export const TabButton = styled.button`
 `;
 
 export const ResultsContainer = styled.section`
-  /* padding-left: 10px; */
   background-color: #fff;
+  margin-bottom: 500px;
 `;
 
 export const ResultItem = styled.article`
-  /* border-bottom: 1px solid #000000; */
-  /* padding: 10px 0; */
   display: flex;
   margin-top: 30px;
   position: relative;
