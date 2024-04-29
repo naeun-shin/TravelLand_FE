@@ -48,8 +48,10 @@ export const useUpdatePlanMutation = () => {
   return useMutation<PlanResponse, AxiosError<ErrorResponse>, UpdateWholePlan>({
     mutationFn: updatePlan,
     onSuccess: (data) => {
+      console.log(data);
       alert('수정이 완료됬습니다.');
-      navigate(`/planDetail/${data.planId}`);
+      navigate('/planList');
+      // navigate(`/planDetail/${data.planId}`);
     },
     onError: (error: AxiosError) => {
       const errorMessage =

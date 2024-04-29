@@ -190,6 +190,7 @@ const PlanUpdate2: React.FC = () => {
   const handlePlanUpdateSubmit = () => {
     // console.log('Submit:', wholePlan);
     updatePlanList.mutate(wholePlan);
+    console.log('수정 데이터 wholePlan > ', wholePlan);
   };
 
   return (
