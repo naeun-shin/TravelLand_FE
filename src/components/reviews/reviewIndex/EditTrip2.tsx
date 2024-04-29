@@ -5,22 +5,41 @@ import styled from 'styled-components';
 import { TitleWithCircle } from './TReviewCreate';
 import ToggleButton from '@/components/commons/buttons/ToggleButton';
 
-const ReviewCreate2 = () => {
+const EditTrip2 = () => {
   const navigate = useNavigate();
-  const location = useLocation();
+  const location = useLocation(); // useLocation을 사용하여 이전 페이지의 데이터 접근
   const { state } = location;
-  const { totalReviewTitle } = useParams();
+  const { totalReviewTitle } = useParams(); // URL 매개변수에서 데이터 읽기
   const [isPublic, setIsPublic] = useState<boolean>(state?.isPublic || false);
-  const [title, setTitle] = useState<string>(state?.title || '');
-  const [imageFiles, setImageFiles] = useState<string[]>([]);
+  const [title, setTitle] = useState<string>(state?.title || ''); // 상태 이름 수정
+  const [imageFiles, setImageFiles] = useState<File[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [hasAttemptedSubmit, setHasAttemptedSubmit] = useState<boolean>(false);
+  // const [step, setStep] = useState<number>(1);
 
+  // totalPlanTitle이 변경될 때마다 해당 값을 설정
   useEffect(() => {
     if (totalReviewTitle) {
       setTitle(totalReviewTitle);
     }
   }, [totalReviewTitle]);
+
+  // const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setTitle(e.target.value); // 상태 업데이트 함수 수정
+  // };
+
+  useEffect(() => {
+    // 페이지가 언마운트될 때 수정된 데이터를 로컬 스토리지에 저장
+    return () => {
+      const editedData = {
+        ...state,
+        title,
+        isPublic,
+        imageFiles,
+      };
+      localStorage.setItem('editedData', JSON.stringify(editedData));
+    };
+  }, [title, isPublic, imageFiles, state]);
 
   const toggleIsPublic = () => setIsPublic(!isPublic);
 
@@ -29,38 +48,26 @@ const ReviewCreate2 = () => {
     if (imageFiles.length === 0) {
       alert('사진을 1장 이상 선택해주세요.');
     } else {
-      const reviewData = {
-        title,
-        isPublic,
-        imageFiles,
-      };
-      localStorage.setItem('reviewCreateData', JSON.stringify(reviewData));
       navigate('/reviewCreate/3', {
         state: { ...state, imageFiles, isPublic },
       });
     }
   };
-
-  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files.length > 0) {
-      const fileReader = new FileReader();
-      fileReader.onload = (loadEvent: ProgressEvent<FileReader>) => {
-        const newImageURL = loadEvent.target?.result as string;
-        setImageFiles((prevImages) => [...prevImages, newImageURL]);
-      };
-      fileReader.readAsDataURL(event.target.files[0]);
-    }
+  // 뒤로가기
+  const handleBackClick = () => {
+    navigate(-1);
   };
 
-  useEffect(() => {
-    const savedData = localStorage.getItem('reviewCreateData');
-    if (savedData) {
-      const { title, isPublic, imageFiles } = JSON.parse(savedData);
-      setTitle(title);
-      setIsPublic(isPublic);
-      setImageFiles(imageFiles);
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files) {
+      const fileList = Array.from(event.target.files).slice(
+        0,
+        5 - imageFiles.length,
+      );
+      setImageFiles([...imageFiles, ...fileList]);
+      event.target.value = '';
     }
-  }, []);
+  };
 
   const handleAddImageClick = () => {
     if (fileInputRef.current) {
@@ -72,11 +79,6 @@ const ReviewCreate2 = () => {
     const newImageFiles = [...imageFiles];
     newImageFiles.splice(index, 1);
     setImageFiles(newImageFiles);
-  };
-
-  // 뒤로가기
-  const handleBackClick = () => {
-    navigate(-1);
   };
 
   return (
@@ -111,27 +113,22 @@ const ReviewCreate2 = () => {
             </ReviewBoxWithSpaceBetween>
           </div>
           <PhotoBox>
-            {imageFiles.map(
-              (
-                fileURL,
-                index, // 이미 fileURL은 데이터 URL의 문자열입니다.
-              ) => (
-                <ImagePreview key={index}>
-                  <img
-                    src={fileURL} // 이미 데이터 URL이므로, 이를 직접 사용
-                    alt={`preview ${index}`}
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      objectFit: 'cover',
-                    }}
-                  />
-                  <RemoveButton onClick={() => handleRemoveImage(index)}>
-                    X
-                  </RemoveButton>
-                </ImagePreview>
-              ),
-            )}
+            {imageFiles.map((file, index) => (
+              <ImagePreview key={index}>
+                <img
+                  src={URL.createObjectURL(file)}
+                  alt={`preview ${index}`}
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                  }}
+                />
+                <RemoveButton onClick={() => handleRemoveImage(index)}>
+                  X
+                </RemoveButton>
+              </ImagePreview>
+            ))}
           </PhotoBox>
           <div>
             <div style={{ textAlign: 'center', marginBottom: '25px' }}>
@@ -166,7 +163,7 @@ const ReviewCreate2 = () => {
   );
 };
 
-export default ReviewCreate2;
+export default EditTrip2;
 
 const ErrorMessage = styled.div`
   color: #ff0000;

@@ -20,6 +20,7 @@ import PrivateRoute from '@/components/PrivateRoute';
 import TravelPlanUpdate1 from '@/pages/travelPlan/TravelPlanUpdate1';
 import TravelPlanUpdate2 from '@/pages/travelPlan/TravelPlanUpdate2';
 import EditTrip from '@/components/reviews/reviewIndex/EditTrip';
+import EditTrip2 from '@/components/reviews/reviewIndex/EditTrip2';
 // import EditTrip from '@/components/reviews/reviewIndex/EditTrip';
 
 export const router = createBrowserRouter([
@@ -100,33 +101,41 @@ export const router = createBrowserRouter([
       {
         path: '/travelCreate',
         element: (
-          <PrivateRoute>
+          // <PrivateRoute>
           <ReviewCreatePage1 />
-           </PrivateRoute>
+          // </PrivateRoute>
         ),
       },
       {
         path: '/reviewCreate/2',
         element: (
-          <PrivateRoute>
+          // <PrivateRoute>
           <ReviewCreate2 />
-          </PrivateRoute>
+          // </PrivateRoute>
         ),
       },
       {
         path: '/reviewCreate/3',
         element: (
-           <PrivateRoute>
+          // <PrivateRoute>
           <ReviewCreate3 />
-           </PrivateRoute>
+          // </PrivateRoute>
         ),
       },
       {
         path: '/editTrip',
         element: (
-           <PrivateRoute>
+          // <PrivateRoute>
           <EditTrip />
-           </PrivateRoute>
+          // </PrivateRoute>
+        ),
+      },
+      {
+        path: '/editTrip/2',
+        element: (
+          // <PrivateRoute>
+          <EditTrip2 />
+          // </PrivateRoute>
         ),
       },
       {
