@@ -19,6 +19,7 @@ import {
   useCreateScrapTripMutation,
 } from '@/hooks/useMutation';
 import { useAuthStore } from '@/store/useAuthStore';
+import Modal from '../../modals/Modal';
 
 interface ReviewDetailListProps {
   tripDetail: TripDetail;
@@ -32,6 +33,7 @@ const ReviewDetailList = ({ tripDetail }: ReviewDetailListProps) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [likeActive, setLikeActive] = useState(false);
   const [scrapActive, setScrapActive] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false); // 삭제 확인 모달 상태
 
   // tripDetail로부터 초기 like 및 scrap 상태를 설정
   useEffect(() => {
@@ -90,10 +92,23 @@ const ReviewDetailList = ({ tripDetail }: ReviewDetailListProps) => {
     },
   });
 
-  const handleDelete = (tripId: number) => {
-    deleteReviewMutation.mutate(tripId);
-    console.log('아이디', tripId);
+  const handleOpenDeleteModal = () => {
+    setIsDeleteModalOpen(true);
   };
+
+  const handleCloseDeleteModal = () => {
+    setIsDeleteModalOpen(false);
+  };
+
+  const handleConfirmDelete = (tripId: number) => {
+    deleteReviewMutation.mutate(tripId);
+    handleCloseDeleteModal(); // 모달을 닫습니다.
+  };
+
+  // const handleDelete = (tripId: number) => {
+  //   deleteReviewMutation.mutate(tripId);
+  //   console.log('아이디', tripId);
+  // };
 
   // 여기자나여 => 여기가 썸네일 이미지 구간
   // const imageUrl =
@@ -167,19 +182,44 @@ const ReviewDetailList = ({ tripDetail }: ReviewDetailListProps) => {
           </div>
           <div>
             <S.HeaderBox>
-              {tripDetail.isWriter ? (
-                <>
-                  <S.ButtonBox>
-                    <Button text="수정하기" />
-                    <Button
-                      text="삭제하기"
-                      onClick={() => handleDelete(tripDetail.tripId)}
-                    />
-                  </S.ButtonBox>
-                </>
-              ) : (
-                <></>
-              )}
+              {/* {tripDetail.isWriter ? ( */}
+              <>
+                <S.ButtonBox>
+                  <Button text="수정하기" />
+                  <Button text="삭제하기" onClick={handleOpenDeleteModal} />
+                </S.ButtonBox>
+                {/* 삭제 확인 모달 */}
+                <Modal
+                  isOpen={isDeleteModalOpen}
+                  onClose={handleCloseDeleteModal}
+                >
+                  <div>
+                    <div style={{ textAlign: 'center', fontSize: '20px' }}>
+                      <p>
+                        삭제된 글은 복구할 수 없습니다
+                        <br /> 삭제하시겠습니까?
+                      </p>
+                    </div>
+                    <ModalBtnWrapper>
+                      <Button
+                        text="취소"
+                        onClick={handleCloseDeleteModal}
+                        borderRadius="10px"
+                        hoverColor="#2ca3cb"
+                      />
+                      <Button
+                        borderRadius="10px"
+                        hoverColor="#2ca3cb"
+                        text="삭제하기"
+                        onClick={() => handleConfirmDelete(tripDetail.tripId)}
+                      />
+                    </ModalBtnWrapper>
+                  </div>
+                </Modal>
+              </>
+              {/* ) : ( */}
+              <></>
+              {/* )} */}
             </S.HeaderBox>
           </div>
         </UserBox>
@@ -204,6 +244,13 @@ const ReviewDetailList = ({ tripDetail }: ReviewDetailListProps) => {
 };
 
 export default ReviewDetailList;
+
+const ModalBtnWrapper = styled.div`
+  width: 270px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+`;
 
 const Container = styled.div`
   width: 790px;
