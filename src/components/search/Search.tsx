@@ -43,6 +43,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
     if (inputValue.trim()) {
       await refetch(); // 검색 요청
       navigate('/results', { state: { searchData: searchData || [] } });
+      setInputValue('');
     } else {
       if (openSearchModal) {
         openSearchModal(); // 검색어가 입력되지 않았을 경우 모달 열기 함수를 호출

@@ -7,7 +7,6 @@ import { getTripList } from '@/api/reviewAxios';
 import { AxiosResponse } from 'axios';
 import styled from 'styled-components';
 import ListCard from '@/components/commons/mainItem/ListCard';
-import ReDesignHeader from '@/components/layouts/Header2';
 import CategoryButton from '@/components/commons/buttons/CategoryButton';
 
 export interface Trip {
@@ -98,7 +97,6 @@ const TravelReviewPage = () => {
 
   return (
     <>
-      <ReDesignHeader needSearchInput={true} />
       <ScrollDiv id="scrollableDiv">
         <S.TravelReviewstyle>
           <div>

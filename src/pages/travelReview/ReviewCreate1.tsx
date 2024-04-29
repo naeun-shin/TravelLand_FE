@@ -1,4 +1,4 @@
-import ReDesignHeader from '@/components/layouts/Header2';
+// import ReDesignHeader from '@/components/layouts/Header2';
 import ReviewCreate from '@/components/reviews/reviewIndex/TReviewCreate';
 import { useState } from 'react';
 import styled from 'styled-components';
@@ -8,7 +8,7 @@ const ReviewCreate1 = () => {
 
   return (
     <>
-      <ReDesignHeader needSearchInput={true} />
+      {/* <ReDesignHeader needSearchInput={true} /> */}
       <CenteredContainer>
         <h2>여행 정보 작성하기</h2>
         <StepperContainer>
@@ -30,7 +30,7 @@ const CenteredContainer = styled.div`
   width: 100%;
   margin: 0 auto;
   margin-top: 40px;
-  margin-bottom: 150px;
+  margin-bottom: 500px;
 
   h2 {
     font-size: 24px;

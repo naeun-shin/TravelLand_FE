@@ -26,13 +26,13 @@ const TravelReviewCardSection = styled.div`
 `;
 
 const TravelReviewstyle = styled.div`
-  padding: 50px; // 수정된 패딩
+  padding: 50px 0; // 수정된 패딩
   /* max-width: 1200px; */
   max-width: 1400px;
   margin: 0 auto;
   box-sizing: border-box; // 추가된 스타일
   overflow-x: hidden; // 가로 스크롤 숨김
-  /* margin-top: 120px; */
+  margin-bottom: 300px;
 
   @media (max-width: 768px) {
     padding: 20px;
@@ -352,7 +352,7 @@ export const ReviewBox = styled.div`
   justify-content: space-between;
   align-items: center;
   margin: 0 auto;
-  width: 1210px;
+  width: 1310px;
 `;
 
 export const LoadingText = styled.span`
