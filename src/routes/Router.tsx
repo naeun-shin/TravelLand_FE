@@ -17,6 +17,8 @@ import ReviewCreate3 from '@/pages/travelReview/ReviewCreate3';
 import GlobalStyle from '@/styles/GlobalStyles';
 import App from '@/App';
 import PrivateRoute from '@/components/PrivateRoute';
+import EditTrip from '@/components/reviews/reviewIndex/EditTrip';
+// import EditTrip from '@/components/reviews/reviewIndex/EditTrip';
 
 export const router = createBrowserRouter([
   {
@@ -114,6 +116,14 @@ export const router = createBrowserRouter([
         element: (
           // <PrivateRoute>
           <ReviewCreate3 />
+          // </PrivateRoute>
+        ),
+      },
+      {
+        path: '/editTrip',
+        element: (
+          // <PrivateRoute>
+          <EditTrip />
           // </PrivateRoute>
         ),
       },

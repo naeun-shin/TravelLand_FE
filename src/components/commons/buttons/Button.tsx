@@ -20,6 +20,7 @@ export interface ButtonProps {
   display?: string;
   alignItems?: string;
   justifyContent?: string;
+  backgroundcolor?: string;
 }
 
 // 기본 버튼

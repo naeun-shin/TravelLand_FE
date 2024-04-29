@@ -35,6 +35,11 @@ const ReviewDetailList = ({ tripDetail }: ReviewDetailListProps) => {
   const [scrapActive, setScrapActive] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false); // 삭제 확인 모달 상태
 
+  const handleEditClick = () => {
+    // tripDetail은 현재 페이지에서 사용 중인 여행 리뷰의 상세 정보입니다.
+    navigate('/editTrip', { state: { formData: tripDetail } });
+  };
+
   // tripDetail로부터 초기 like 및 scrap 상태를 설정
   useEffect(() => {
     setLikeActive(tripDetail.isLike);
@@ -147,7 +152,7 @@ const ReviewDetailList = ({ tripDetail }: ReviewDetailListProps) => {
         </S.ImageBox>
       </S.Container>
       <Container>
-        <DateRange>{`${tripDetail.area} | ${tripDetail.tripStartDate} - ${tripDetail.tripEndDate} | ${formatNumberWithRegex(tripDetail.cost.toString())}원`}</DateRange>{' '}
+        <DateRange>{`${tripDetail.area} |${tripDetail.placeName} ${tripDetail.tripStartDate} - ${tripDetail.tripEndDate} | ${formatNumberWithRegex(tripDetail.cost.toString())}원`}</DateRange>{' '}
         <ReviewHeader>
           <LocationTag>{`${tripDetail.title}`}</LocationTag>
           <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -185,7 +190,7 @@ const ReviewDetailList = ({ tripDetail }: ReviewDetailListProps) => {
               {/* {tripDetail.isWriter ? ( */}
               <>
                 <S.ButtonBox>
-                  <Button text="수정하기" />
+                  <Button text="수정하기" onClick={handleEditClick} />
                   <Button text="삭제하기" onClick={handleOpenDeleteModal} />
                 </S.ButtonBox>
                 {/* 삭제 확인 모달 */}
