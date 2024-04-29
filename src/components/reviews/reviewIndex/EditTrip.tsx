@@ -27,7 +27,9 @@ const EditTrip = () => {
     initialData.tripStartDate || '',
   );
   const [tripEndDate, setTripEndDate] = useState(initialData.tripEndDate || '');
-  const [placeName, setPlaceName] = useState('');
+
+  const [placeName, setPlaceName] = useState(initialData.placeName || '');
+
   const [hasAttemptedSubmit, setHasAttemptedSubmit] = useState(false);
 
   useEffect(() => {
