@@ -30,13 +30,13 @@ const ReDesignHeader: React.FC<HeaderProps> = ({
   // needSearchInput,
   onClick,
 }) => {
-  const { logout, login } = useAuthStore(); // 로그인 함수를 가져옵니다.
+  const { logout, login ,isLoggedIn } = useAuthStore(); // 로그인 함수를 가져옵니다.
   const cookie = new Cookies();
   // 메뉴 모달
   const [isMenuModalOpen, setIsMenuModalOpen] = useState(false);
   // 로그인 모달
   const [isModalOpen, setIsModalOpen] = useState(false); // 로그인 모달 상태 추가
-  const [isLoggedIn, _] = useState(true); // 로그인 상태를 관리하는 상태 추가
+ // const [isLoggedIn, _] = useState(true); // 로그인 상태를 관리하는 상태 추가
   const [isScrolled, setIsScrolled] = useState(false);
   const [isSearchModalOpen, setSearchModalOpen] = useState<boolean>(false);
 
