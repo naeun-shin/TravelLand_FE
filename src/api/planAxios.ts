@@ -1,7 +1,12 @@
 import { AxiosResponse } from 'axios';
 import { instance, instanceWithToken } from './axios';
-import { PlanListParams, WholePlan } from './interfaces/planInterface';
+import {
+  PlanListParams,
+  UpdateWholePlan,
+  WholePlan,
+} from './interfaces/planInterface';
 import { Cookies } from 'react-cookie';
+import { PlanResponse } from '@/hooks/useMutation';
 
 // 여행 플랜 작성하기
 export const createPlanList = async (wholePlan: WholePlan) => {
@@ -9,6 +14,22 @@ export const createPlanList = async (wholePlan: WholePlan) => {
     return await instanceWithToken.post('/v1/plans/allInOn', wholePlan);
   } catch (error) {
     console.error(error);
+    throw error;
+  }
+};
+
+// 플랜 수정하기
+export const updatePlan = async (
+  updateWholePlan: UpdateWholePlan,
+): Promise<PlanResponse> => {
+  const { planId } = updateWholePlan;
+  console.log(planId);
+  try {
+    return await instanceWithToken.put(
+      `/v1/plans/allInOn/${planId}`,
+      updateWholePlan,
+    );
+  } catch (error) {
     throw error;
   }
 };

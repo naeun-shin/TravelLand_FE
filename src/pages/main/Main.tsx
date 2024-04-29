@@ -36,6 +36,8 @@ const Main: React.FC<MainProps> = () => {
     // 메인 페이지 로드 시 localStorage에서 'planData','reviewState'를 삭제
     localStorage.removeItem('planData');
     localStorage.removeItem('reviewState');
+    localStorage.removeItem('updatePlanData');
+    localStorage.removeItem('updatePlanData2');
   }, []);
 
   // 팝업 모달을 닫기
