@@ -55,11 +55,10 @@ const PlanUpdate = () => {
       setIsPublic(isPublic || true); // undefined일 경우 기본값 true
       setTitle(title || '');
       setArea(area || '');
-      setTotalPlanTitle(totalPlanTitle || '');
+      setTotalPlanTitle(totalPlanTitle || title);
       setTotalBudget(budget || 0);
-      setTripStartDate(tripStartDate || '');
-      setTripEndDate(tripEndDate || '');
-      setTotalPlanTitle(title);
+      setTripStartDate(tripStartDate || startDate);
+      setTripEndDate(tripEndDate || endDate);
       setDateRange([
         startDate
           ? new Date(startDate)
@@ -112,11 +111,9 @@ const PlanUpdate = () => {
   };
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value === null) {
-      setTotalPlanTitle(title);
-    } else {
-      setTotalPlanTitle(e.target.value);
-    }
+    // console.log(e.target.value);
+    setTitle(e.target.value);
+    setTotalPlanTitle(e.target.value);
   };
 
   const handleBudgetChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -174,12 +171,14 @@ const PlanUpdate = () => {
 
     navigate(`/planUpdate/2/${planId}`, {
       state: {
-        tripStartDate: dateRange[0]?.toLocaleDateString(),
-        tripEndDate: dateRange[1]?.toLocaleDateString(),
-        isPublic,
-        totalPlanTitle,
-        totalBudget,
-        area,
+        planDetails: {
+          tripStartDate: dateRange[0]?.toLocaleDateString(),
+          tripEndDate: dateRange[1]?.toLocaleDateString(),
+          isPublic,
+          totalPlanTitle,
+          totalBudget,
+          area,
+        },
       },
     });
   };
@@ -230,7 +229,7 @@ const PlanUpdate = () => {
                   onFocus={() => handleFocus('title')}
                   onBlur={(e) => handleBlur('title', e)}
                   onChange={handleTitleChange}
-                  value={totalPlanTitle}
+                  value={title}
                 />
               </div>
 

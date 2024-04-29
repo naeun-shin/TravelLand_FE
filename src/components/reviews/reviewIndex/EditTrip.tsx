@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import ToggleButton from '@/components/commons/buttons/ToggleButton';
 import { ModernInput } from '@/components/commons/inputs/Input';
 import styled from 'styled-components';
@@ -10,30 +10,27 @@ import {
   Label,
 } from '@/pages/travelReview/TravelReview.styles';
 
-const ReviewCreate = () => {
+const EditTrip = () => {
   const navigate = useNavigate();
-  const savedState = JSON.parse(localStorage.getItem('reviewState') || '{}');
+  const { state } = useLocation();
+  const initialData = state
+    ? state.formData
+    : JSON.parse(localStorage.getItem('reviewState') || '{}');
 
-  // 상태 관리 변수들
-  const [title, setTitle] = useState<string>(savedState.title || '');
-  const [isPublic, setIsPublic] = useState<boolean>(
-    savedState.isPublic ?? true,
+  console.log('들어온데이터 확인:', initialData);
+
+  const [title, setTitle] = useState(initialData.title || '');
+  const [isPublic, setIsPublic] = useState(initialData.isPublic ?? true);
+  const [cost, setCost] = useState(initialData.cost?.toString() || '');
+  const [address, setAddress] = useState(initialData.area || ''); // `area`를 `address`로 사용
+  const [tripStartDate, setTripStartDate] = useState(
+    initialData.tripStartDate || '',
   );
-  const [cost, setCost] = useState<string>(savedState.cost?.toString() || '');
-  const [address, setAddress] = useState<string>(savedState.address || '');
-  const [tripStartDate, setTripStartDate] = useState<string>(
-    savedState.tripStartDate || '',
-  );
-  const [tripEndDate, setTripEndDate] = useState<string>(
-    savedState.tripEndDate || '',
-  );
-  const [placeName, setPlaceName] = useState<string>(
-    savedState.placeName || '',
-  );
-  const [hasAttemptedSubmit, setHasAttemptedSubmit] = useState<boolean>(false);
+  const [tripEndDate, setTripEndDate] = useState(initialData.tripEndDate || '');
+  const [placeName, setPlaceName] = useState('');
+  const [hasAttemptedSubmit, setHasAttemptedSubmit] = useState(false);
 
   useEffect(() => {
-    // 상태가 바뀔 때마다 업데이트 X / 다음 버튼 클릭 시에만 업데이트됨
     const tripData = {
       title,
       isPublic,
@@ -46,12 +43,11 @@ const ReviewCreate = () => {
     localStorage.setItem('reviewState', JSON.stringify(tripData));
   }, [title, isPublic, address, placeName, cost, tripStartDate, tripEndDate]);
 
-  // 각 입력 필드의 변화를 다루는 함수들
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
   };
   const toggleIsPublic = () => {
-    setIsPublic((prev) => !prev);
+    setIsPublic((prev: any) => !prev);
   };
   const handleAddressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAddress(e.target.value);
@@ -76,44 +72,31 @@ const ReviewCreate = () => {
     setTripEndDate(e.target.value);
   };
 
-  // '여행 플랜 불러오기' 버튼 클릭 처리
-  const handleBringPlanClick = () => {
-    alert('여행 플랜 불러오기 기능은 아직 개발 중입니다!');
-  };
-
-  // '다음' 버튼 클릭을 처리
-  const handleNextClick = () => {
+  const handleSubmit = () => {
     setHasAttemptedSubmit(true);
-    // 필수 입력 사항 확인
-    if (
-      title === '' ||
-      address === '' ||
-      placeName === '' ||
-      tripStartDate === '' ||
-      tripEndDate === ''
-    ) {
+    if (!title || !address || !placeName || !tripStartDate || !tripEndDate) {
       alert('모든 필수 입력 사항을 작성해주세요!');
-      return; // 다음 단계로 넘어가지 않음
+      return;
     }
-    // 입력된 데이터를 객체로 생성하여 2단계 페이지로 넘김!
     const tripData = {
       title,
       isPublic,
       address,
       placeName,
-      cost: parseFloat(cost),
+      cost: parseFloat(cost.replace(/,/g, '')),
       tripStartDate,
       tripEndDate,
-      // 2단계에서 입력받을 나머지 데이터들 일단 빈값으로 둠!
       content: '',
       hashTag: [],
     };
-    localStorage.setItem('reviewState', JSON.stringify(tripData));
     navigate('/reviewCreate/2', { state: tripData });
   };
 
   return (
-    <>
+    <form style={{ width: '700px', margin: '50px auto' }}>
+      <h2 style={{ width: '200px', margin: '50px auto', fontSize: '26px' }}>
+        여행 정보 수정하기
+      </h2>
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
         <div style={{ width: '100%' }}>
           <div>
@@ -149,20 +132,11 @@ const ReviewCreate = () => {
           </div>
           <div>
             <div>
-              <BringPlanBtn onClick={handleBringPlanClick}>
-                {' '}
-                + 여행 플랜 불러오기
-              </BringPlanBtn>
-              {/* 지역 입력 */}
               <ReviewBox>
                 <ReviewContent>
                   <div>
                     <TitleWithCircle>지역</TitleWithCircle>
                   </div>
-                  {/* 지역 입력 여부 확인 */}
-                  {hasAttemptedSubmit && address === '' && (
-                    <ErrorMessage>지역을 입력해주세요</ErrorMessage>
-                  )}
                   <ModernInput
                     type="text"
                     placeholder="지역을 입력해주세요 (예: 서울시 강남구 역삼동)"
@@ -173,19 +147,17 @@ const ReviewCreate = () => {
                     onChange={handleAddressChange}
                     value={address}
                   />
+                  {hasAttemptedSubmit && address === '' && (
+                    <ErrorMessage>지역을 입력해주세요</ErrorMessage>
+                  )}
                 </ReviewContent>
               </ReviewBox>
               <hr />
-              {/* 위치 입력 */}
               <ReviewBox>
                 <ReviewContent>
                   <div>
                     <TitleWithCircle>위치</TitleWithCircle>
                   </div>
-                  {/* 위치 입력 여부 확인 */}
-                  {hasAttemptedSubmit && placeName === '' && (
-                    <ErrorMessage>위치를 입력해주세요</ErrorMessage>
-                  )}
                   <ModernInput
                     type="text"
                     placeholder="위치를 입력해주세요 (예: 메가박스, CGV)"
@@ -196,19 +168,17 @@ const ReviewCreate = () => {
                     onChange={handlePlaceNameChange}
                     value={placeName}
                   />
+                  {hasAttemptedSubmit && placeName === '' && (
+                    <ErrorMessage>위치를 입력해주세요</ErrorMessage>
+                  )}
                 </ReviewContent>
               </ReviewBox>
               <hr />
-              {/* 예산 입력 */}
               <ReviewBox>
                 <ReviewContent>
                   <div>
                     <TitleWithCircle>예산</TitleWithCircle>
                   </div>
-                  {/* 예산 입력 여부 확인 */}
-                  {hasAttemptedSubmit && cost === '' && (
-                    <ErrorMessage>예산을 입력해주세요</ErrorMessage>
-                  )}
                   <ModernInput
                     type="text"
                     placeholder="예산을 입력해주세요"
@@ -219,56 +189,52 @@ const ReviewCreate = () => {
                     onChange={handleCostChange}
                     value={cost}
                   />
+                  {hasAttemptedSubmit && cost === '' && (
+                    <ErrorMessage>예산을 입력해주세요</ErrorMessage>
+                  )}
                 </ReviewContent>
               </ReviewBox>
               <hr />
-              {/* 여행 날짜 입력 */}
-              <ReviewBox>
-                <DateFieldsContainer>
-                  <FieldContainer>
-                    <Label>
-                      <TitleWithCircle>여행 시작일</TitleWithCircle>
-                    </Label>
-                    {/* 여행 시작일 입력 여부 확인 */}
-                    {hasAttemptedSubmit && tripStartDate === '' && (
-                      <ErrorMessage>여행 시작일을 입력해주세요</ErrorMessage>
-                    )}
-                    <Input
-                      type="date"
-                      value={tripStartDate}
-                      onChange={handleStartDateChange}
-                    />
-                  </FieldContainer>
-                  <FieldContainer>
-                    <Label>
-                      <TitleWithCircle>여행 종료일</TitleWithCircle>
-                    </Label>
-                    {/* 여행 종료일 입력 여부 확인 */}
-                    {hasAttemptedSubmit && tripEndDate === '' && (
-                      <ErrorMessage>여행 종료일을 입력해주세요</ErrorMessage>
-                    )}
-                    <Input
-                      type="date"
-                      value={tripEndDate}
-                      onChange={handleEndDateChange}
-                    />
-                  </FieldContainer>
-                </DateFieldsContainer>
-              </ReviewBox>
-              <hr />
+              <DateFieldsContainer>
+                <FieldContainer>
+                  <Label>
+                    <TitleWithCircle>여행 시작일</TitleWithCircle>
+                  </Label>
+                  <Input
+                    type="date"
+                    value={tripStartDate}
+                    onChange={handleStartDateChange}
+                  />
+                  {hasAttemptedSubmit && tripStartDate === '' && (
+                    <ErrorMessage>여행 시작일을 입력해주세요</ErrorMessage>
+                  )}
+                </FieldContainer>
+                <FieldContainer>
+                  <Label>
+                    <TitleWithCircle>여행 종료일</TitleWithCircle>
+                  </Label>
+                  <Input
+                    type="date"
+                    value={tripEndDate}
+                    onChange={handleEndDateChange}
+                  />
+                  {hasAttemptedSubmit && tripEndDate === '' && (
+                    <ErrorMessage>여행 종료일을 입력해주세요</ErrorMessage>
+                  )}
+                </FieldContainer>
+              </DateFieldsContainer>
             </div>
           </div>
         </div>
       </div>
       <ReviewBottomSection>
-        {/* 다음 버튼 클릭시 필수 입력 사항 확인 */}
-        <ReviewNextButton onClick={handleNextClick}>다음</ReviewNextButton>
+        <ReviewNextButton onClick={handleSubmit}>다음</ReviewNextButton>
       </ReviewBottomSection>
-    </>
+    </form>
   );
 };
 
-export default ReviewCreate;
+export default EditTrip;
 
 const ErrorMessage = styled.div`
   color: #ff0000;
@@ -285,18 +251,13 @@ const ReviewBoxWithSpaceBetween = styled.div`
 
 const ReviewBox = styled.div`
   display: flex;
-  flex-direction: row;
-  align-items: flex-start;
+  align-items: 'flex-start';
   padding: 10px 0px;
 `;
 
 const ReviewContent = styled.div`
   display: flex;
-  flex-direction: column;
   padding: 5px;
-  div {
-    /* padding-left: 5px; */
-  }
 `;
 
 const ReviewBottomSection = styled.div`
@@ -324,18 +285,18 @@ const Title = styled.div`
   margin-left: 10px;
 `;
 
-const BringPlanBtn = styled.button`
-  width: 700px;
-  height: 60px;
-  margin: 0 auto;
-  border-radius: 20px;
-  border: none;
-  font-size: 18px;
-  background-color: #cff4ff;
-  color: #238bad;
-  margin: 25px 0;
-  cursor: pointer;
-`;
+// const BringPlanBtn = styled.button`
+//   width: 700px;
+//   height: 60px;
+//   margin: 0 auto;
+//   border-radius: 20px;
+//   border: none;
+//   font-size: 18px;
+//   background-color: #cff4ff;
+//   color: #238bad;
+//   margin: 25px 0;
+//   cursor: pointer;
+// `;
 
 export const TitleWithCircle = styled.span`
   position: relative;

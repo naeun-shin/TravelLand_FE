@@ -9,7 +9,7 @@ import KaKaoMap from '@/components/maps/KaKaoMap';
 // import { useCreatePlanMutaton } from '@/hooks/useMutation';
 import { TfiArrowCircleRight } from 'react-icons/tfi';
 import { TimeSelectBox } from '@/components/commons/timeSelect/TimeSelectBox';
-import { useUpdatePlanMutation } from '@/hooks/useMutation';
+// import { useUpdatePlanMutation } from '@/hooks/useMutation';
 
 export interface UnitPlan {
   title: string;
@@ -39,6 +39,11 @@ export interface WholePlan {
   isVotable: boolean;
   dayPlans: DayPlan[];
 }
+
+interface DefaultPlan extends WholePlan {
+  // 필요한 경우 여기에 DefaultPlan에만 적용될 추가적인 속성을 정의할 수 있습니다.
+}
+
 // 날짜 변환 함수
 // const formatDate = (date: Date) => {
 //   if (isNaN(date.getTime())) {
@@ -75,27 +80,58 @@ const PlanUpdate2: React.FC = () => {
   const [selectedLocationIndex, setSelectedLocationIndex] = useState(0);
   const [isSubmit] = useState<boolean>(false);
   // 여기에 planId 상태를 추가합니다.
-  const [planId, _] = useState<number | null>(null);
+  // const [planId, _] = useState<number | null>(null);
 
   useEffect(() => {
-    // 페이지 초기 로드 또는 리로드 시 실행
     function loadPlanData() {
+      // localStorage에서 저장된 계획 데이터를 불러옵니다.
       const savedPlan = localStorage.getItem('updatePlanData2');
 
       if (savedPlan) {
         // localStorage에서 데이터를 성공적으로 읽었을 때
         const parsedPlan = JSON.parse(savedPlan);
-        setWholePlan(parsedPlan);
-        setDayPlans(parsedPlan.dayPlans || []);
-      } else if (location.state?.planDetails) {
-        // location.state에서 데이터를 읽을 때 (새로운 세션에서 접근)
-        const details = location.state.planDetails as WholePlan;
-        setWholePlan(details);
-        setDayPlans(details.dayPlans);
-        localStorage.setItem('updatePlanData2', JSON.stringify(details)); // 새 데이터를 localStorage에 저장
+
+        // location.state에서 넘어온 데이터를 확인합니다.
+        if (location.state?.planDetails) {
+          // location.state에서 데이터를 읽을 때 (새로운 세션에서 접근)
+          const details = location.state.planDetails as WholePlan;
+          const mergedDayPlans =
+            details.dayPlans.length > 0
+              ? details.dayPlans
+              : parsedPlan.dayPlans;
+
+          // dayPlans가 없는 경우 localStorage의 데이터를 사용합니다.
+          const updatedWholePlan = {
+            ...parsedPlan,
+            ...details,
+            dayPlans: mergedDayPlans,
+          };
+
+          setWholePlan(updatedWholePlan); // 업데이트된 전체 계획을 상태로 설정
+          setDayPlans(mergedDayPlans); // 일자 계획 배열을 상태로 설정
+          localStorage.setItem(
+            'updatePlanData2',
+            JSON.stringify(updatedWholePlan),
+          ); // 새 데이터를 localStorage에 저장
+        } else {
+          setWholePlan(parsedPlan);
+          setDayPlans(parsedPlan.dayPlans || []);
+        }
       } else {
-        // 데이터를 찾을 수 없을 때 에러 페이지로 이동
-        navigate('/error');
+        // localStorage에 저장된 데이터가 없을 경우 기본 상태를 사용합니다.
+        const defaultPlan: DefaultPlan = {
+          title: '',
+          budget: 0,
+          area: '',
+          isPublic: false,
+          tripStartDate: '',
+          tripEndDate: '',
+          dayPlans: [],
+          planId: 0,
+          isVotable: false,
+        };
+        setWholePlan(defaultPlan);
+        setDayPlans(defaultPlan.dayPlans);
       }
     }
 
@@ -182,15 +218,15 @@ const PlanUpdate2: React.FC = () => {
   };
 
   const handlePlanGoBack = () => {
-    navigate(`/planUpdate/1/${planId}`, { state: { wholePlan } });
+    navigate(`/planUpdate/1/${wholePlan.planId}`, { state: { wholePlan } });
   };
 
-  const updatePlanList = useUpdatePlanMutation();
+  // const updatePlanList = useUpdatePlanMutation();
 
   const handlePlanUpdateSubmit = () => {
-    // console.log('Submit:', wholePlan);
-    updatePlanList.mutate(wholePlan);
-    console.log('수정 데이터 wholePlan > ', wholePlan);
+    console.log('Submit:', wholePlan);
+    // updatePlanList.mutate(wholePlan);
+    // setIsSubmit(true);
   };
 
   return (
