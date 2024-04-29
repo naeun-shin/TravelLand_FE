@@ -1,3 +1,4 @@
+import { UpdateWholePlan } from '@/api/interfaces/planInterface';
 import { TripData } from '@/api/interfaces/reviewInterface';
 import {
   cancelLikePlan,
@@ -6,6 +7,7 @@ import {
   createPlanList,
   createScrapPlan,
   deletePlan,
+  updatePlan,
 } from '@/api/planAxios';
 import {
   cancelLikeTrip,
@@ -24,11 +26,17 @@ export interface ErrorResponse {
   message: string;
 }
 
+
+export interface PlanResponse {
+  planId: number;
+}
+
 interface UpdateTripMutationVariables {
   tripId: number;
   tripData: TripData; // 'TripData' 타입을 적절히 정의해야 합니다.
   imageList: File[]; // 이미지 리스트가 파일 배열임
 }
+
 // 작성하기 mutation
 export const useCreatePlanMutaton = () => {
   const navigate = useNavigate();
@@ -41,6 +49,25 @@ export const useCreatePlanMutaton = () => {
     onError: (error) => {
       alert('등록하기 에러가 발생했습니다.');
       console.log(error.message);
+    },
+  });
+};
+
+export const useUpdatePlanMutation = () => {
+  const navigate = useNavigate();
+  return useMutation<PlanResponse, AxiosError<ErrorResponse>, UpdateWholePlan>({
+    mutationFn: updatePlan,
+    onSuccess: (data) => {
+      console.log(data);
+      alert('수정이 완료됬습니다.');
+      navigate('/planList');
+      // navigate(`/planDetail/${data.planId}`);
+    },
+    onError: (error: AxiosError) => {
+      const errorMessage =
+        (error.response?.data as ErrorResponse).message ||
+        '알 수 없는 에러가 발생했습니다.';
+      alert('수정하기 에러가 발생했습니다:' + errorMessage);
     },
   });
 };
