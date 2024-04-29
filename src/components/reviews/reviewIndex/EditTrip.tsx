@@ -285,18 +285,18 @@ const Title = styled.div`
   margin-left: 10px;
 `;
 
-const BringPlanBtn = styled.button`
-  width: 700px;
-  height: 60px;
-  margin: 0 auto;
-  border-radius: 20px;
-  border: none;
-  font-size: 18px;
-  background-color: #cff4ff;
-  color: #238bad;
-  margin: 25px 0;
-  cursor: pointer;
-`;
+// const BringPlanBtn = styled.button`
+//   width: 700px;
+//   height: 60px;
+//   margin: 0 auto;
+//   border-radius: 20px;
+//   border: none;
+//   font-size: 18px;
+//   background-color: #cff4ff;
+//   color: #238bad;
+//   margin: 25px 0;
+//   cursor: pointer;
+// `;
 
 export const TitleWithCircle = styled.span`
   position: relative;

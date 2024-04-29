@@ -9,7 +9,7 @@ import KaKaoMap from '@/components/maps/KaKaoMap';
 // import { useCreatePlanMutaton } from '@/hooks/useMutation';
 import { TfiArrowCircleRight } from 'react-icons/tfi';
 import { TimeSelectBox } from '@/components/commons/timeSelect/TimeSelectBox';
-import { useUpdatePlanMutation } from '@/hooks/useMutation';
+// import { useUpdatePlanMutation } from '@/hooks/useMutation';
 
 export interface UnitPlan {
   title: string;
@@ -80,7 +80,7 @@ const PlanUpdate2: React.FC = () => {
   const [selectedLocationIndex, setSelectedLocationIndex] = useState(0);
   const [isSubmit] = useState<boolean>(false);
   // 여기에 planId 상태를 추가합니다.
-  const [planId, _] = useState<number | null>(null);
+  // const [planId, _] = useState<number | null>(null);
 
   useEffect(() => {
     function loadPlanData() {
@@ -221,7 +221,7 @@ const PlanUpdate2: React.FC = () => {
     navigate(`/planUpdate/1/${wholePlan.planId}`, { state: { wholePlan } });
   };
 
-  const updatePlanList = useUpdatePlanMutation();
+  // const updatePlanList = useUpdatePlanMutation();
 
   const handlePlanUpdateSubmit = () => {
     console.log('Submit:', wholePlan);
