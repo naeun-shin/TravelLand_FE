@@ -1,3 +1,4 @@
+import { UpdateWholePlan } from '@/api/interfaces/planInterface';
 import {
   cancelLikePlan,
   cancelScrapPlan,
@@ -5,6 +6,7 @@ import {
   createPlanList,
   createScrapPlan,
   deletePlan,
+  updatePlan,
 } from '@/api/planAxios';
 import {
   cancelLikeTrip,
@@ -21,6 +23,10 @@ import { useNavigate } from 'react-router-dom';
 export interface ErrorResponse {
   message: string;
 }
+
+export interface PlanResponse {
+  planId: number;
+}
 // 작성하기 mutation
 export const useCreatePlanMutaton = () => {
   const navigate = useNavigate();
@@ -33,6 +39,23 @@ export const useCreatePlanMutaton = () => {
     onError: (error) => {
       alert('등록하기 에러가 발생했습니다.');
       console.log(error.message);
+    },
+  });
+};
+
+export const useUpdatePlanMutation = () => {
+  const navigate = useNavigate();
+  return useMutation<PlanResponse, AxiosError<ErrorResponse>, UpdateWholePlan>({
+    mutationFn: updatePlan,
+    onSuccess: (data) => {
+      alert('수정이 완료됬습니다.');
+      navigate(`/planDetail/${data.planId}`);
+    },
+    onError: (error: AxiosError) => {
+      const errorMessage =
+        (error.response?.data as ErrorResponse).message ||
+        '알 수 없는 에러가 발생했습니다.';
+      alert('수정하기 에러가 발생했습니다:' + errorMessage);
     },
   });
 };

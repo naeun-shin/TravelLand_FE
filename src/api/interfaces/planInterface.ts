@@ -36,3 +36,15 @@ export interface WholePlan {
   isVotable: boolean;
   dayPlans: DayPlan[];
 }
+
+export interface UpdateWholePlan {
+  planId: number;
+  title: string;
+  budget: number;
+  area: string;
+  isPublic: boolean;
+  tripStartDate: string;
+  tripEndDate: string;
+  isVotable: boolean;
+  dayPlans: DayPlan[];
+}
