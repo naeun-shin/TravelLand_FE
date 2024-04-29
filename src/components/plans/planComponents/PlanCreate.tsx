@@ -139,8 +139,8 @@ const PlanCreate = () => {
   useEffect(() => {
     const data = {
       isPublic,
-      startDate: dateRange[0]?.toISOString(),
-      endDate: dateRange[1]?.toISOString(),
+      startDate: dateRange[0]?.toDateString(),
+      endDate: dateRange[1]?.toDateString(),
       totalPlanTitle,
       totalBudget,
       area,
@@ -176,11 +176,12 @@ const PlanCreate = () => {
 
     // dateRange 값 확인
     if (dateRange[0] && dateRange[1]) {
+      console.log(dateRange[0], dateFormat[1]);
       // 날짜 범위가 모두 선택되었다면, 처리 로직 추가
       navigate('/planCreate/2', {
         state: {
-          tripStartDate: dateRange[0].toLocaleDateString(),
-          tripEndDate: dateRange[1].toLocaleDateString(),
+          tripStartDate: dateRange[1]?.toDateString(),
+          tripEndDate: dateRange[1]?.toDateString(),
           isPublic,
           totalPlanTitle,
           totalBudget,

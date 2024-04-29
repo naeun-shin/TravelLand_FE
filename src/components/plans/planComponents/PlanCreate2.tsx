@@ -42,6 +42,13 @@ const formatDate = (date: { toISOString: () => string }) => {
   return date.toISOString().split('T')[0]; // 날짜 부분만 추출 ('YYYY-MM-DD')
 };
 
+const formatDateForWholePlan = (date: Date) => {
+  const year = date.getFullYear();
+  const month = ('0' + (date.getMonth() + 1)).slice(-2);
+  const day = ('0' + date.getDate()).slice(-2);
+  return `${year}-${month}-${day}`;
+};
+
 const PlanCreate2: React.FC = () => {
   const location = useLocation();
 
@@ -64,7 +71,7 @@ const PlanCreate2: React.FC = () => {
   const [unitPlans, setUnitPlans] = useState<UnitPlan[]>([
     {
       title: '',
-      time: '',
+      time: '00:00',
       place_name: '',
       address: '',
       content: '',
@@ -115,20 +122,22 @@ const PlanCreate2: React.FC = () => {
       unitPlans: [],
     },
   ]);
-  // 시간과 분을 업데이트하는 함수
+  // Updates the time in unitPlans at the specified index
   const handleTimeChange = (
     part: 'hour' | 'minute',
     value: string,
     index: number,
   ) => {
     const updatedUnitPlans = [...unitPlans];
-    const timeParts = updatedUnitPlans[index].time.split(':'); // 기존 시간을 ':'으로 분리
+    let timeParts = updatedUnitPlans[index].time.split(':');
+
     if (part === 'hour') {
-      timeParts[0] = value; // 시간 부분 업데이트
+      timeParts[0] = value || '00';
     } else if (part === 'minute') {
-      timeParts[1] = value; // 분 부분 업데이트
+      timeParts[1] = value || '00';
     }
-    updatedUnitPlans[index].time = timeParts.join(':'); // 변경된 시간을 다시 조합
+
+    updatedUnitPlans[index].time = `${timeParts[0]}:${timeParts[1]}`;
     setUnitPlans(updatedUnitPlans);
   };
 
@@ -189,7 +198,7 @@ const PlanCreate2: React.FC = () => {
     // 현재 unitPlans에 새 UnitPlan 추가
     const newUnitPlan = {
       title: '',
-      time: '',
+      time: '00:00',
       address: '',
       content: '',
       place_name: '',
@@ -308,12 +317,13 @@ const PlanCreate2: React.FC = () => {
         title: totalPlanTitle,
         area: area,
         budget: validBudget, // 숫자로 변환된 예산 적용
-        tripStartDate: formatDate(tripStartDate), // 포맷된 날짜로 확정
-        tripEndDate: formatDate(tripEndDate), // 포맷된 날짜로 확정
+        tripStartDate: formatDateForWholePlan(tripStartDate), // 포맷된 날짜로 확정
+        tripEndDate: formatDateForWholePlan(tripEndDate), // 포맷된 날짜로 확정
         dayPlans: updatedDayPlans,
       };
-      // console.log(planToSubmit);
+
       // 여기서 API 호출 등의 추가 작업을 수행할 수 있습니다.
+
       createPlanList.mutate(planToSubmit);
       setIsSubmit(true);
       localStorage.removeItem('planData');
@@ -395,8 +405,8 @@ const PlanCreate2: React.FC = () => {
                   </div>{' '}
                   <div key={index}>
                     <TimeSelectBox
-                      hourValue={input.time.split(':')[0]} // '시' 부분 추출
-                      minuteValue={input.time.split(':')[1]} // '분' 부분 추출
+                      hourValue={input.time.split(':')[0]}
+                      minuteValue={input.time.split(':')[1]}
                       onHourChange={(hour) =>
                         handleTimeChange('hour', hour, index)
                       }
