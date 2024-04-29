@@ -62,10 +62,10 @@ const ReviewCreate = () => {
   const handleCostChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     // 숫자가 아닌 모든 문자를 제거합니다.
     const value = e.target.value.replace(/\D/g, '');
-    // 숫자만 있는 문자열을 콤마를 포함한 포맷으로 변환
+    // 숫자만 있는 문자열을 콤마를 포함한 포맷으로 변환합니다.
     const formattedValue = value.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-    const numericValue = parseFloat(value);
-    if (!isNaN(numericValue) || value === '') {
+    // 유효한 숫자가 입력되었거나 입력 필드가 비워진 경우에만 상태를 업데이트합니다.
+    if (!isNaN(parseFloat(value)) || value === '') {
       setCost(formattedValue);
     }
   };
