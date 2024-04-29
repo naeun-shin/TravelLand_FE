@@ -1,6 +1,5 @@
 import PlanDetail from '@/components/plans/planComponents/PlanDetail';
 import * as S from './TravelPlanMain.style';
-import ReDesignHeader from '@/components/layouts/Header2';
 import { useEffect } from 'react';
 
 const TravelPlanDetail = () => {
