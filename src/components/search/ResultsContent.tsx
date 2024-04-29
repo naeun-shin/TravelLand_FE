@@ -84,18 +84,6 @@ const ResultsContent: React.FC = () => {
     setSearchResults(results);
   }, [areaResults, hashtagResults, location.state]);
 
-  // // 게시물 클릭 (상세보기이동)
-  // const handleItemClick = (tripId: number) => {
-  //   navigate(`/travelDetail/${tripId}`);
-  // };
-
-  // useEffect(() => {
-  //   // location.state에서 searchData를 확인하고 상태를 설정
-  // }, [location]);
-
-  //
-  // useEffect(() => {}, [location]);
-
   if (areaLoading || hashtagLoading) return <div>Loading...</div>;
   if (areaError || hashtagError) return <div>Error loading data</div>;
 
@@ -196,7 +184,7 @@ const DivWrapper = styled.div`
   display: flex;
   position: relative;
   border-bottom: 2px solid #eee;
-  width: 1100px;
+  width: 1200px;
 `;
 const SearchTitle = styled.div`
   width: 110px;

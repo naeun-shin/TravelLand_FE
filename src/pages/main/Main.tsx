@@ -3,8 +3,8 @@ import {
   ButtonContainer,
   ButtonsWrapper,
 } from '@/components/commons/buttons/Button.style';
-import Search from '@/components/search/Search';
-import Button, {
+
+import {
   SmallButton,
   // TabButton,
 } from '@/components/commons/buttons/Button';
@@ -12,10 +12,9 @@ import MainCard from '@/components/commons/mainItem/MainCard';
 import Maintitle from '@/components/commons/mainItem/MainTitle';
 import ListTitle from '@/components/commons/mainItem/ListTitle';
 import MainList from '@/components/commons/mainItem/MainList';
-import ReDesignHeader from '@/components/layouts/Header2';
 import { useNavigate } from 'react-router-dom';
 import SearchModal from './SearchPage';
-import styled from 'styled-components';
+// import styled from 'styled-components';
 import {
   useGetMainRandomListQuery,
   useGetMainRankListQuery,
@@ -29,7 +28,7 @@ interface MainProps {
 
 const Main: React.FC<MainProps> = () => {
   const navigate = useNavigate();
-  const [searchQuery, setSearchQuery] = useState(''); // 검색어 상태
+  const [searchQuery] = useState(''); // 검색어 상태
   const [isSearchModalOpen, setSearchModalOpen] = useState<boolean>(false);
   const [isModalOpen, setModalOpen] = useState(true);
 
@@ -87,28 +86,12 @@ const Main: React.FC<MainProps> = () => {
   if (!searchQuery == null) {
   }
 
-  // 검색 아이콘 클릭 시 호출될 함수
-  const handleSearchIconClick = () => {
-    if (searchQuery.trim()) {
-      // 검색어가 있으면 검색 결과 페이지로 이동
-      navigate('/results', { state: searchQuery });
-    } else {
-      // 검색어가 없으면 검색 모달 토글
-      toggleSearchModal();
-    }
-  };
-
   const handleSearchResult = () => {
     if (searchData) {
       navigate('/search-results', { state: searchData });
     } else {
       closeSearchModal();
     }
-  };
-
-  // 검색어 입력 시 호출될 함수
-  const handleSearchInputChange = (query: string) => {
-    setSearchQuery(query);
   };
 
   // 모달을 토글하는 함수
@@ -126,27 +109,6 @@ const Main: React.FC<MainProps> = () => {
     setSearchModalOpen(false);
   };
 
-  const handleMakePlanClick = () => {
-    navigate('/planList');
-  };
-
-  const handleReviewPageClick = () => {
-    navigate('/travelReview');
-  };
-
-  // 모달 외부 클릭 시 모달 닫기
-  // const handleModalOutsideClick = (event: React.MouseEvent<HTMLDivElement>) => {
-  //   const target = event.target as HTMLElement;
-  //   if (
-  //     !target.closest('.modal-container') &&
-  //     !target.closest('.modal-button') &&
-  //     !target.closest('.burger-menu-icon')
-  //   ) {
-  //     console.log('모달 외부 클릭');
-  //     setModalOpen(false);
-  //   }
-  // };
-
   // 전체 로딩 및 에러 처리
   if (isLoadingTopTen || isLoadingRandom || isLoadingSearch) {
     return <div>Loading...</div>;
@@ -158,22 +120,12 @@ const Main: React.FC<MainProps> = () => {
 
   return (
     <>
-      <ReDesignHeader needSearchInput={false} />
+      {/* <ReDesignHeader /> */}
       <div>
-        <Search
-          placeholder="검색어를 입력해주세요."
-          openSearchModal={toggleSearchModal}
-          onIconClick={handleSearchIconClick}
-          onInputChange={handleSearchInputChange}
-        />
         <ButtonContainer>
           {/* 버튼 이벤트 핸들러 로직 */}
           {/* ... */}
         </ButtonContainer>
-        <ButtonsWrapper1>
-          <Button text="여행 후기" onClick={handleReviewPageClick} />
-          <Button text="여행 플랜" onClick={handleMakePlanClick} />
-        </ButtonsWrapper1>
         <Maintitle />
         <ButtonsWrapper>
           <SmallButton text="전체" />
@@ -202,13 +154,3 @@ const Main: React.FC<MainProps> = () => {
 };
 
 export default Main;
-
-const ButtonsWrapper1 = styled.div`
-  width: 1100px;
-  margin: 0 auto;
-  display: flex;
-  gap: 20px;
-  justify-content: center; /* 수평 가운데 정렬 */
-  align-items: center; /* 수직 가운데 정렬 */
-  height: 100px; /* 버튼을 중앙에 위치시키기 위한 높이 지정 */
-`;

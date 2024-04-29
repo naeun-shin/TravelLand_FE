@@ -18,7 +18,6 @@ import {
   useCreateLikeTripMutation,
   useCreateScrapTripMutation,
 } from '@/hooks/useMutation';
-import ReDesignHeader from '@/components/layouts/Header2';
 import { useAuthStore } from '@/store/useAuthStore';
 
 interface ReviewDetailListProps {
@@ -104,7 +103,7 @@ const ReviewDetailList = ({ tripDetail }: ReviewDetailListProps) => {
 
   return (
     <>
-      <ReDesignHeader needSearchInput={true} />
+      {/* <ReDesignHeader needSearchInput={true} /> */}
       <S.Container>
         <S.ImageBox>
           {tripDetail.imageUrlList &&

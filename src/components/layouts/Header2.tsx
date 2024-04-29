@@ -22,21 +22,21 @@ interface UsersProps {
 }
 
 interface HeaderProps {
-  needSearchInput: boolean;
+  needSearchInput?: boolean;
   onClick?: (event: React.MouseEvent<HTMLDivElement>) => void;
 }
 
 const ReDesignHeader: React.FC<HeaderProps> = ({
-  needSearchInput,
+  // needSearchInput,
   onClick,
 }) => {
-  const { logout, isLoggedIn, login } = useAuthStore(); // 로그인 함수를 가져옵니다.
+  const { logout, login } = useAuthStore(); // 로그인 함수를 가져옵니다.
   const cookie = new Cookies();
   // 메뉴 모달
   const [isMenuModalOpen, setIsMenuModalOpen] = useState(false);
   // 로그인 모달
   const [isModalOpen, setIsModalOpen] = useState(false); // 로그인 모달 상태 추가
-  // const [isLoggedIn, _] = useState(false); // 로그인 상태를 관리하는 상태 추가
+  const [isLoggedIn, _] = useState(true); // 로그인 상태를 관리하는 상태 추가
   const [isScrolled, setIsScrolled] = useState(false);
   const [isSearchModalOpen, setSearchModalOpen] = useState<boolean>(false);
 
@@ -126,7 +126,7 @@ const ReDesignHeader: React.FC<HeaderProps> = ({
   const handleLogoutClick = () => {
     setIsMenuModalOpen(false);
     logout();
-    cookie.remove('Authorization', { path: '/' }); // Adjust the path and domain as needed.
+    cookie.remove('Authorization', { path: '/' });
     alert('로그아웃 되었습니다!');
     navigate('/');
   };
@@ -190,9 +190,17 @@ const ReDesignHeader: React.FC<HeaderProps> = ({
     };
   }, []);
 
+  const handleMakePlanClick = () => {
+    navigate('/planList');
+  };
+
+  const handleReviewPageClick = () => {
+    navigate('/travelReview');
+  };
+
   // 로그인 상태에 따라 보여지는 컨텐츠가 달라지도록 조건부 렌더링 처리
   return (
-    <Header needSearchInput={needSearchInput} onClick={handleOutsideClick}>
+    <Header onClick={handleOutsideClick}>
       <StickyHeader isScrolled={isScrolled}>
         <Container>
           {isScrolled ? (
@@ -208,27 +216,12 @@ const ReDesignHeader: React.FC<HeaderProps> = ({
               </Logo>
             </>
           )}
-          {needSearchInput ? (
-            <>
-              <SearchInput
-                placeholder="검색어를 입력해주세요"
-                openSearchModal={toggleSearchModal}
-                onIconClick={handleSearchIconClick}
-                onInputChange={handleSearchInputChange}
-              />
-            </>
-          ) : (
-            <>
-              {isScrolled && (
-                <SearchInput
-                  placeholder="검색어를 입력해주세요"
-                  openSearchModal={toggleSearchModal}
-                  onIconClick={handleSearchIconClick}
-                  onInputChange={handleSearchInputChange}
-                />
-              )}
-            </>
-          )}
+          <SearchInput
+            placeholder="어디로 떠나볼까요?"
+            openSearchModal={toggleSearchModal}
+            onIconClick={handleSearchIconClick}
+            onInputChange={handleSearchInputChange}
+          />
           {/* {isScrolled && (
             <SearchInput
               placeholder="검색어를 입력해주세요"
@@ -238,21 +231,28 @@ const ReDesignHeader: React.FC<HeaderProps> = ({
           <MenuContainer>
             {/* 알림 */}
             <BurgerMenuIcon>
-              <img src="/assets/icons/bell.svg" onClick={handleNoticeClick} />
-              <img
-                src={burgerIcon}
-                alt="메뉴 모달 열기"
-                onClick={handleBurgerIconClick}
-              />
+              {isLoggedIn ? (
+                <>
+                  <img
+                    src="/assets/icons/bell.svg"
+                    onClick={handleNoticeClick}
+                  />
+                  <img
+                    src={burgerIcon}
+                    alt="메뉴 모달 열기"
+                    onClick={handleBurgerIconClick}
+                  />
+                </>
+              ) : (
+                <div onClick={handleOpenLogin} style={{ fontSize: '20px' }}>
+                  로그인
+                </div>
+              )}
             </BurgerMenuIcon>
             {isMenuModalOpen ? (
               <>
                 {!isLoggedIn ? (
-                  <>
-                    <BurgerMenuList isLoggedIn={isLoggedIn}>
-                      <button onClick={handleOpenLogin}>로그인</button>
-                    </BurgerMenuList>
-                  </>
+                  <></>
                 ) : (
                   <>
                     <BurgerMenuList isLoggedIn={isLoggedIn}>
@@ -334,7 +334,15 @@ const ReDesignHeader: React.FC<HeaderProps> = ({
             )}
           </MenuContainer>
         </Container>
+        <NavContainer>
+          <NavItem onClick={handleReviewPageClick}>떠돌이 랜드</NavItem>
+          <NavItem onClick={handleMakePlanClick}>어디로갈랜?</NavItem>
+        </NavContainer>
       </StickyHeader>
+      {/* <NavContainer>
+        <NavItem onClick={handleReviewPageClick}>떠돌이 랜드</NavItem>
+        <NavItem onClick={handleMakePlanClick}>어디로갈랜</NavItem>
+      </NavContainer> */}
       {/* 로그인 모달 */}
       {isModalOpen && <Login isOpen={isModalOpen} onClose={closeModal} />}
       {/* 검색 모달 */}
@@ -355,6 +363,26 @@ const ReDesignHeader: React.FC<HeaderProps> = ({
 
 export default ReDesignHeader;
 
+const NavContainer = styled.div`
+  max-width: 1400px;
+  margin: 0 auto;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+`;
+
+const NavItem = styled.div`
+  font-size: 20px;
+  margin: 15px 15px 0 10px;
+  cursor: pointer;
+  font-weight: bold;
+  color: #333;
+  &:hover {
+    color: #5ac8ec;
+  }
+`;
+
 const Header = styled.div<HeaderProps>`
   /* max-width: 1400px; */
   /* width: 1400[]; */
@@ -372,19 +400,17 @@ const StickyHeader = styled.div<SearchInputContainerProps>`
   background: #fff;
   transition: position 0.3s ease-in-out;
   z-index: 10;
-  padding: 10px 0;
+  padding: 10px 0 0 0;
   box-shadow: ${(props) =>
     props.isScrolled ? '0 2px 8px rgba(0, 0, 0, 0.15)' : 'none'};
 `;
 
 const Container = styled.div`
   max-width: 1400px;
-  /* width: 100%; */
   margin: 0 auto;
   height: 80px;
   display: flex;
   justify-content: space-between;
-  /* padding: 0 60px 0 10px; */
   align-items: center;
 `;
 
@@ -463,10 +489,10 @@ const BurgerMenuList = styled.div<UsersProps>`
 
   hr {
     border: none;
-    height: 1px; /* Set the height of the hr line */
-    background-color: #c4c4c4; /* The color of the hr line */
-    margin: 8px 0; /* Adjust the space around the hr to your design */
-    width: 100%; /* Ensure the line goes full width */
+    height: 1px;
+    background-color: #c4c4c4;
+    margin: 8px 0;
+    width: 100%;
   }
 `;
 
