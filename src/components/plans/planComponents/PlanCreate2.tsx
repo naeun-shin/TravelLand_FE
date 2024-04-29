@@ -42,6 +42,13 @@ const formatDate = (date: { toISOString: () => string }) => {
   return date.toISOString().split('T')[0]; // 날짜 부분만 추출 ('YYYY-MM-DD')
 };
 
+const formatDateForWholePlan = (date: Date) => {
+  const year = date.getFullYear();
+  const month = ('0' + (date.getMonth() + 1)).slice(-2);
+  const day = ('0' + date.getDate()).slice(-2);
+  return `${year}-${month}-${day}`;
+};
+
 const PlanCreate2: React.FC = () => {
   const location = useLocation();
 
@@ -310,11 +317,11 @@ const PlanCreate2: React.FC = () => {
         title: totalPlanTitle,
         area: area,
         budget: validBudget, // 숫자로 변환된 예산 적용
-        tripStartDate: formatDate(tripStartDate), // 포맷된 날짜로 확정
-        tripEndDate: formatDate(tripEndDate), // 포맷된 날짜로 확정
+        tripStartDate: formatDateForWholePlan(tripStartDate), // 포맷된 날짜로 확정
+        tripEndDate: formatDateForWholePlan(tripEndDate), // 포맷된 날짜로 확정
         dayPlans: updatedDayPlans,
       };
-      console.log(planToSubmit);
+
       // 여기서 API 호출 등의 추가 작업을 수행할 수 있습니다.
 
       createPlanList.mutate(planToSubmit);
