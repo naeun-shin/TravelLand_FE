@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import * as S from '../Plan.style';
 import Map from '@/components/maps/Map';
 import { usePlanDetailQuery } from '@/hooks/useQuery';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Button from '@/components/commons/buttons/Button';
 import {
   useCancelLikePlanMutation,
@@ -46,6 +46,7 @@ interface UnitPlan {
 }
 
 const PlanDetail: React.FC<ButtonProps> = () => {
+  const navigate = useNavigate();
   const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
   const { id } = useParams<{ id: string }>();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -125,8 +126,9 @@ const PlanDetail: React.FC<ButtonProps> = () => {
   };
 
   // 수정 기능
-  const handlePlanUpdate = () => {
-    alert('기능 개발 중입니다!');
+  const handlePlanUpdate = (planId: number) => {
+    navigate(`/planUpdate/2/${planId}`, { state: { planDetails } });
+    console.log(planDetails);
     // deleteMutaion.mutate(planId);
   };
 
@@ -229,7 +231,7 @@ const PlanDetail: React.FC<ButtonProps> = () => {
             <>
               <div>
                 <Button
-                  onClick={handlePlanUpdate}
+                  onClick={() => handlePlanUpdate(planDetails.planId)}
                   text={'수정하기'}
                   borderColor="lightGray"
                   marginRight="5px"

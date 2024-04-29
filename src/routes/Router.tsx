@@ -17,6 +17,8 @@ import ReviewCreate3 from '@/pages/travelReview/ReviewCreate3';
 import GlobalStyle from '@/styles/GlobalStyles';
 import App from '@/App';
 import PrivateRoute from '@/components/PrivateRoute';
+import TravelPlanUpdate1 from '@/pages/travelPlan/TravelPlanUpdate1';
+import TravelPlanUpdate2 from '@/pages/travelPlan/TravelPlanUpdate2';
 
 export const router = createBrowserRouter([
   {
@@ -114,6 +116,22 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <ReviewCreate3 />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: '/planUpdate/1/:id',
+        element: (
+          <PrivateRoute>
+            <TravelPlanUpdate1 />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: '/planUpdate/2/:id',
+        element: (
+          <PrivateRoute>
+            <TravelPlanUpdate2 />
           </PrivateRoute>
         ),
       },
