@@ -5,8 +5,9 @@ import { useEffect } from 'react';
 
 const TravelPlanDetail = () => {
   useEffect(() => {
-    // 메인 페이지 로드 시 localStorage에서 'planData'를 삭제
     localStorage.removeItem('planData');
+    localStorage.removeItem('updatePlanData');
+    localStorage.removeItem('updatePlanData2');
   }, []);
   return (
     <>
