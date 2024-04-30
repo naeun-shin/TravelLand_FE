@@ -6,9 +6,9 @@ function App() {
     <>
       <ReDesignHeader />
       <Outlet />
-      <body>
+      {/* <body>
         <div id="modal-root"></div>
-      </body>
+      </body> */}
     </>
   );
 }

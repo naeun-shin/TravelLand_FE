@@ -24,6 +24,14 @@ import { searchTripsByText } from '@/api/searchAxios';
 // import { getVoteResult } from '@/api/voteAxios';
 // import { UserInfoData } from '@/api/interfaces/userInterface';
 
+export const logoutUser = () => {
+  return useQuery({
+    queryKey: ['logout'],
+    queryFn: getLogout,
+    staleTime: 0,
+  });
+};
+
 export const usePlanListQuery = (planListParams: PlanListParams) => {
   return useQuery({
     queryKey: ['planList', planListParams],
@@ -164,12 +172,5 @@ export const useMypageScrapTrip = (params: MypageReviewParams) => {
     queryKey: ['mypageTrip', params],
     queryFn: () => getScrapTripList(params),
     staleTime: 0, // 필요한 경우 캐시 시간을 설정할 수 있습니다
-  });
-};
-
-export const logoutUser = () => {
-  return useQuery({
-    queryKey: ['logout'],
-    queryFn: () => getLogout(),
   });
 };
