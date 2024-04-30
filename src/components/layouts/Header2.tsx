@@ -12,6 +12,7 @@ import { Cookies } from 'react-cookie';
 import Button from '../commons/buttons/Button';
 import Vote from '../vote/Vote';
 import Login from '@/pages/user/Login';
+import { logoutUser } from '@/hooks/useQuery';
 
 interface SearchInputContainerProps {
   isScrolled: boolean;
@@ -131,7 +132,8 @@ const ReDesignHeader: React.FC<HeaderProps> = ({
 
   const handleLogoutClick = () => {
     setIsMenuModalOpen(false);
-    logout();
+    logoutUser(); // 로그아웃 API호출
+    logout(); // 전역 상태 관리에서 logout처리
     cookie.remove('Authorization', { path: '/' });
     alert('로그아웃 되었습니다!');
     navigate('/');

@@ -228,25 +228,25 @@ const PlanDetail: React.FC<ButtonProps> = () => {
             <img src={`${planDetails.profileUrl}`} />
             {planDetails.memberNickname}
           </div>
-          {planDetails.isWriter ? (
-            <>
-              <div>
-                <Button
-                  onClick={() => handlePlanUpdate(planDetails.planId)}
-                  text={'수정하기'}
-                  borderColor="lightGray"
-                  marginRight="5px"
-                />
-                <Button
-                  onClick={handlePlanDelete}
-                  text={'삭제하기'}
-                  borderColor="lightGray"
-                />
-              </div>
-            </>
-          ) : (
+          {/* {planDetails.isWriter ? ( */}
+          <>
+            <div>
+              <Button
+                onClick={() => handlePlanUpdate(planDetails.planId)}
+                text={'수정하기'}
+                borderColor="lightGray"
+                marginRight="5px"
+              />
+              <Button
+                onClick={handlePlanDelete}
+                text={'삭제하기'}
+                borderColor="lightGray"
+              />
+            </div>
+          </>
+          {/* ) : (
             <></>
-          )}
+          )} */}
         </S.DetailHeaderThirdContent>
         <S.DetailContentSection>
           {/* 투표 영역 */}

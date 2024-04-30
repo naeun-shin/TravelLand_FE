@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { getPlanDetail, getPlanList } from '@/api/planAxios';
 import {
+  getLogout,
   getMyPlanList,
   getMyTripList,
   getMypageTrip,
@@ -163,5 +164,12 @@ export const useMypageScrapTrip = (params: MypageReviewParams) => {
     queryKey: ['mypageTrip', params],
     queryFn: () => getScrapTripList(params),
     staleTime: 0, // 필요한 경우 캐시 시간을 설정할 수 있습니다
+  });
+};
+
+export const logoutUser = () => {
+  return useQuery({
+    queryKey: ['logout'],
+    queryFn: () => getLogout(),
   });
 };
