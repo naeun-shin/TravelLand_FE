@@ -13,23 +13,20 @@ import {
 const EditTrip = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
-  const initialData = state
-    ? state.formData
-    : JSON.parse(localStorage.getItem('reviewState') || '{}');
+  const initialData =
+    state?.formData || JSON.parse(localStorage.getItem('reviewState') || '{}');
 
   console.log('들어온데이터 확인:', initialData);
 
   const [title, setTitle] = useState(initialData.title || '');
   const [isPublic, setIsPublic] = useState(initialData.isPublic ?? true);
   const [cost, setCost] = useState(initialData.cost?.toString() || '');
-  const [address, setAddress] = useState(initialData.area || ''); // `area`를 `address`로 사용
+  const [address, setAddress] = useState(initialData.address || '');
   const [tripStartDate, setTripStartDate] = useState(
     initialData.tripStartDate || '',
   );
   const [tripEndDate, setTripEndDate] = useState(initialData.tripEndDate || '');
-
   const [placeName, setPlaceName] = useState(initialData.placeName || '');
-
   const [hasAttemptedSubmit, setHasAttemptedSubmit] = useState(false);
 
   useEffect(() => {
@@ -42,6 +39,7 @@ const EditTrip = () => {
       tripStartDate,
       tripEndDate,
     };
+    console.log('데이터 확인', tripData);
     localStorage.setItem('reviewState', JSON.stringify(tripData));
   }, [title, isPublic, address, placeName, cost, tripStartDate, tripEndDate]);
 
@@ -80,19 +78,38 @@ const EditTrip = () => {
       alert('모든 필수 입력 사항을 작성해주세요!');
       return;
     }
-    const tripData = {
+    const modifiedData = {
       title,
       isPublic,
       address,
       placeName,
-      cost: parseFloat(cost.replace(/,/g, '')),
+      cost,
       tripStartDate,
       tripEndDate,
       content: '',
       hashTag: [],
     };
-    navigate('/reviewCreate/2', { state: tripData });
+    console.log('수정 데이터 확인', modifiedData);
+    localStorage.setItem('editedReviewState', JSON.stringify(modifiedData));
+    navigate('/editTrip/2', { state: modifiedData });
   };
+
+  //   useEffect(() => {
+  //     try {
+  //       const storedData = localStorage.getItem('editedReviewState');
+  //       const initialData = storedData ? JSON.parse(storedData) : {};
+  //       setTitle(initialData.title || '');
+  //       setIsPublic(initialData.isPublic ?? true);
+  //       setAddress(initialData.address || '');
+  //       setPlaceName(initialData.placeName || '');
+  //       setCost(initialData.cost?.toString() || '');
+  //       setTripStartDate(initialData.tripStartDate || '');
+  //       setTripEndDate(initialData.tripEndDate || '');
+  //     } catch (error) {
+  //       console.error('데이터를 불러오는 중 오류가 발생했습니다:', error);
+  //       alert('저장된 데이터를 불러오는 데 실패했습니다.');
+  //     }
+  //   }, [initialData]);
 
   return (
     <form style={{ width: '700px', margin: '50px auto' }}>
