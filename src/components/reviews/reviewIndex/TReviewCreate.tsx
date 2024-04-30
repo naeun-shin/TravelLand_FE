@@ -95,13 +95,16 @@ const ReviewCreate = () => {
       alert('모든 필수 입력 사항을 작성해주세요!');
       return; // 다음 단계로 넘어가지 않음
     }
+
+    const formattedCost = cost.replace(/,/g, '');
+    const numericCost = parseFloat(formattedCost);
     // 입력된 데이터를 객체로 생성하여 2단계 페이지로 넘김!
     const tripData = {
       title,
       isPublic,
       address,
       placeName,
-      cost: parseFloat(cost),
+      cost: numericCost,
       tripStartDate,
       tripEndDate,
       // 2단계에서 입력받을 나머지 데이터들 일단 빈값으로 둠!

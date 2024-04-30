@@ -20,6 +20,7 @@ const TReviewCreate3 = () => {
 
   console.log('Content:', content); // content 확인
   console.log('Selected Tags:', selectedTags);
+  console.log('예산', state.cost);
 
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value);
@@ -190,7 +191,7 @@ const TReviewCreate3 = () => {
           </div>
           <ReviewBtnBox>
             <ReviewBottomSection>
-              <ReviewBackButton onClick={handleBackClick}>
+              <ReviewBackButton type="button" onClick={handleBackClick}>
                 뒤로
               </ReviewBackButton>
             </ReviewBottomSection>
