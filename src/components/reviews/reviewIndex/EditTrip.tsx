@@ -94,22 +94,22 @@ const EditTrip = () => {
     navigate('/editTrip/2', { state: modifiedData });
   };
 
-  useEffect(() => {
-    try {
-      const storedData = localStorage.getItem('editedReviewState');
-      const initialData = storedData ? JSON.parse(storedData) : {};
-      setTitle(initialData.title || '');
-      setIsPublic(initialData.isPublic ?? true);
-      setAddress(initialData.address || '');
-      setPlaceName(initialData.placeName || '');
-      setCost(initialData.cost?.toString() || '');
-      setTripStartDate(initialData.tripStartDate || '');
-      setTripEndDate(initialData.tripEndDate || '');
-    } catch (error) {
-      console.error('데이터를 불러오는 중 오류가 발생했습니다:', error);
-      alert('저장된 데이터를 불러오는 데 실패했습니다.');
-    }
-  }, []);
+  //   useEffect(() => {
+  //     try {
+  //       const storedData = localStorage.getItem('editedReviewState');
+  //       const initialData = storedData ? JSON.parse(storedData) : {};
+  //       setTitle(initialData.title || '');
+  //       setIsPublic(initialData.isPublic ?? true);
+  //       setAddress(initialData.address || '');
+  //       setPlaceName(initialData.placeName || '');
+  //       setCost(initialData.cost?.toString() || '');
+  //       setTripStartDate(initialData.tripStartDate || '');
+  //       setTripEndDate(initialData.tripEndDate || '');
+  //     } catch (error) {
+  //       console.error('데이터를 불러오는 중 오류가 발생했습니다:', error);
+  //       alert('저장된 데이터를 불러오는 데 실패했습니다.');
+  //     }
+  //   }, [initialData]);
 
   return (
     <form style={{ width: '700px', margin: '50px auto' }}>
