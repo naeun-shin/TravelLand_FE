@@ -23,7 +23,6 @@ export const updatePlan = async (
   updateWholePlan: UpdateWholePlan,
 ): Promise<PlanResponse> => {
   const { planId } = updateWholePlan;
-  console.log(planId);
   try {
     return await instanceWithToken.put(
       `/v1/plans/allInOn/${planId}`,

@@ -101,32 +101,32 @@ export const router = createBrowserRouter([
         path: '/travelCreate',
         element: (
           <PrivateRoute>
-          <ReviewCreatePage1 />
-           </PrivateRoute>
+            <ReviewCreatePage1 />
+          </PrivateRoute>
         ),
       },
       {
         path: '/reviewCreate/2',
         element: (
           <PrivateRoute>
-          <ReviewCreate2 />
+            <ReviewCreate2 />
           </PrivateRoute>
         ),
       },
       {
         path: '/reviewCreate/3',
         element: (
-           <PrivateRoute>
-          <ReviewCreate3 />
-           </PrivateRoute>
+          <PrivateRoute>
+            <ReviewCreate3 />
+          </PrivateRoute>
         ),
       },
       {
         path: '/editTrip',
         element: (
-           <PrivateRoute>
-          <EditTrip />
-           </PrivateRoute>
+          <PrivateRoute>
+            <EditTrip />
+          </PrivateRoute>
         ),
       },
       {
