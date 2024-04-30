@@ -30,13 +30,14 @@ const ReDesignHeader: React.FC<HeaderProps> = ({
   // needSearchInput,
   onClick,
 }) => {
-  const { logout, login ,isLoggedIn } = useAuthStore(); // 로그인 함수를 가져옵니다.
+  const navigate = useNavigate();
+  const { logout, login, isLoggedIn } = useAuthStore(); // 로그인 함수를 가져옵니다.
   const cookie = new Cookies();
   // 메뉴 모달
   const [isMenuModalOpen, setIsMenuModalOpen] = useState(false);
   // 로그인 모달
   const [isModalOpen, setIsModalOpen] = useState(false); // 로그인 모달 상태 추가
- // const [isLoggedIn, _] = useState(true); // 로그인 상태를 관리하는 상태 추가
+  // const [isLoggedIn, _] = useState(true); // 로그인 상태를 관리하는 상태 추가
   const [isScrolled, setIsScrolled] = useState(false);
   const [isSearchModalOpen, setSearchModalOpen] = useState<boolean>(false);
 
@@ -44,7 +45,12 @@ const ReDesignHeader: React.FC<HeaderProps> = ({
   const [isVoteModalOpen, setIsVoteModalOpen] = useState(false); // 투표 모달
   const [searchQuery, setSearchQuery] = useState(''); // 검색어 상태
 
-  const navigate = useNavigate();
+  useEffect(() => {
+    // 헤더 클릭 후 localStorage에서 'planData','reviewState','updatePlanData1'를 삭제
+    localStorage.removeItem('planData');
+    localStorage.removeItem('reviewState');
+    localStorage.removeItem('updatePlanData1');
+  }, []);
 
   const handleOutsideClick = (event: React.MouseEvent<HTMLDivElement>) => {
     // 모달이 열려있을 때만 처리

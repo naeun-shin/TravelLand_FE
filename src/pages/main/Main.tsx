@@ -33,11 +33,10 @@ const Main: React.FC<MainProps> = () => {
   const [isModalOpen, setModalOpen] = useState(true);
 
   useEffect(() => {
-    // 메인 페이지 로드 시 localStorage에서 'planData','reviewState'를 삭제
+    // 메인 페이지 로드 시 localStorage에서 'planData','reviewState','updatePlanData1'를 삭제
     localStorage.removeItem('planData');
     localStorage.removeItem('reviewState');
-    localStorage.removeItem('updatePlanData');
-    localStorage.removeItem('updatePlanData2');
+    localStorage.removeItem('updatePlanData1');
   }, []);
 
   // 팝업 모달을 닫기
