@@ -1,96 +1,98 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { ModernInput } from '@/components/commons/inputs/Input';
+import ToggleButton from '@/components/commons/buttons/ToggleButton';
 import styled from 'styled-components';
 import { TitleWithCircle } from './TReviewCreate';
-import ToggleButton from '@/components/commons/buttons/ToggleButton';
 
-const ReviewCreate2 = () => {
+const EditTrip2 = () => {
   const navigate = useNavigate();
-  const location = useLocation(); // useLocation을 사용하여 이전 페이지의 데이터 접근
+  const location = useLocation();
   const { state } = location;
-  const { totalReviewTitle } = useParams(); // URL 매개변수에서 데이터 읽기
   const [isPublic, setIsPublic] = useState<boolean>(state?.isPublic || false);
-  const [title, setTitle] = useState<string>(state?.title || ''); // 상태 이름 수정
-  const [imageFiles, setImageFiles] = useState<File[]>([]);
+  const [title, setTitle] = useState<string>(state?.title || '');
+  const [imageFiles, setImageFiles] = useState<string[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [hasAttemptedSubmit, setHasAttemptedSubmit] = useState<boolean>(false);
-  // const [step, setStep] = useState<number>(1);
 
-  // totalPlanTitle이 변경될 때마다 해당 값을 설정
   useEffect(() => {
-    if (totalReviewTitle) {
-      setTitle(totalReviewTitle);
+    const savedData = localStorage.getItem('editTripData');
+    if (savedData) {
+      const data = JSON.parse(savedData);
+      setIsPublic(data.isPublic);
+      setTitle(data.title);
+      setImageFiles(data.imageFiles || []);
     }
-  }, [totalReviewTitle]);
+  }, []);
 
-  // const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   setTitle(e.target.value); // 상태 업데이트 함수 수정
-  // };
+  const toggleIsPublic = () => setIsPublic((prev) => !prev);
 
-  const toggleIsPublic = () => setIsPublic(!isPublic);
-
-  const handleNextClick = async () => {
+  const handleNextClick = () => {
     setHasAttemptedSubmit(true);
-
     if (imageFiles.length === 0) {
       alert('사진을 1장 이상 선택해주세요.');
-      return;
+    } else {
+      const editedData = {
+        title,
+        isPublic,
+        imageFiles,
+      };
+      localStorage.setItem('editTripData', JSON.stringify(editedData));
+      navigate('/editTrip/3', {
+        state: { ...state, title, isPublic, imageFiles },
+      });
     }
+  };
 
-    // LocalStorage에 상태 저장하기
-    try {
-      // 이미지 파일을 DataURL로 변환하여 저장
-      const imageUrls = await Promise.all(
-        imageFiles.map((file) => {
-          return new Promise((resolve, reject) => {
+  const handleImageChange = async (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    if (event.target.files) {
+      const files = Array.from(event.target.files);
+      const newImageFiles = await Promise.all(
+        files.map((file) => {
+          return new Promise<string>((resolve, reject) => {
             const reader = new FileReader();
-
-            reader.onload = (e) => resolve(e);
-            reader.onerror = (e) => reject(e);
+            reader.onload = () => resolve(reader.result as string);
+            reader.onerror = (error) => reject(error);
             reader.readAsDataURL(file);
           });
         }),
       );
 
-      const reviewData = { title, isPublic, imageFiles: imageUrls };
-      localStorage.setItem('reviewData', JSON.stringify(reviewData));
-
-      navigate('/reviewCreate/3', {
-        state: { ...state, imageFiles, isPublic, title },
-      });
-    } catch (error) {
-      console.error('Error converting image files:', error);
-      alert('이미지 파일 처리 중 오류가 발생했습니다.');
-    }
-  };
-
-  // 뒤로가기
-  const handleBackClick = () => {
-    navigate(-1);
-  };
-
-  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files) {
-      const fileList = Array.from(event.target.files).slice(
-        0,
-        5 - imageFiles.length,
+      setImageFiles((prevImages) => [...prevImages, ...newImageFiles]);
+      localStorage.setItem(
+        'editTripData',
+        JSON.stringify({
+          ...state,
+          imageFiles: [...imageFiles, ...newImageFiles],
+          title,
+          isPublic,
+        }),
       );
-      setImageFiles([...imageFiles, ...fileList]);
-      event.target.value = '';
     }
   };
 
   const handleAddImageClick = () => {
-    if (fileInputRef.current) {
-      fileInputRef.current.click();
-    }
+    fileInputRef.current?.click();
   };
 
   const handleRemoveImage = (index: number) => {
-    const newImageFiles = [...imageFiles];
-    newImageFiles.splice(index, 1);
-    setImageFiles(newImageFiles);
+    const updatedImages = imageFiles.filter((_, i) => i !== index);
+    setImageFiles(updatedImages);
+    localStorage.setItem(
+      'editTripData',
+      JSON.stringify({
+        ...state,
+        imageFiles: updatedImages,
+        title,
+        isPublic,
+      }),
+    );
+  };
+
+  const handleBackClick = () => {
+    navigate(-1);
   };
 
   return (
@@ -125,10 +127,10 @@ const ReviewCreate2 = () => {
             </ReviewBoxWithSpaceBetween>
           </div>
           <PhotoBox>
-            {imageFiles.map((file, index) => (
+            {imageFiles.map((fileURL, index) => (
               <ImagePreview key={index}>
                 <img
-                  src={URL.createObjectURL(file)}
+                  src={fileURL}
                   alt={`preview ${index}`}
                   style={{
                     width: '100%',
@@ -175,7 +177,7 @@ const ReviewCreate2 = () => {
   );
 };
 
-export default ReviewCreate2;
+export default EditTrip2;
 
 const ErrorMessage = styled.div`
   color: #ff0000;
@@ -191,6 +193,7 @@ const ReviewBackButton = styled.button`
   height: 50px;
   border-radius: 16px;
   cursor: pointer;
+  margin-bottom: 500px;
 
   &:hover {
     background-color: #cff4ff;

@@ -15,10 +15,28 @@ import { CiCalendar } from 'react-icons/ci';
 
 registerLocale('ko', ko as unknown as Locale);
 
+interface DayPlan {
+  id: number;
+  activities: string[];
+  notes: string;
+}
+
+interface PlanDetails {
+  planId: number;
+  isVotable: boolean;
+  title: string;
+  budget: number;
+  area: string;
+  tripStartDate: string;
+  tripEndDate: string;
+  isPublic: boolean;
+  dayPlans: DayPlan[];
+}
+
 const PlanUpdate = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const [isPublic, setIsPublic] = useState(true);
+  const [isPublic, setIsPublic] = useState<boolean>(true);
   const [dateRange, setDateRange] = useState<[Date?, Date?]>([
     undefined,
     undefined,
@@ -26,71 +44,108 @@ const PlanUpdate = () => {
   const [totalPlanTitle, setTotalPlanTitle] = useState<string>('');
   const [totalBudget, setTotalBudget] = useState<number>(0);
   const [area, setArea] = useState<string>('');
-  const [tripStartDate, setTripStartDate] = useState<string>('');
-  const [tripEndDate, setTripEndDate] = useState<string>('');
+  const [tripStartDate, _] = useState<string>('');
+  const [tripEndDate] = useState<string>('');
+  const [dayPlans, setDayPlans] = useState<DayPlan[]>([]);
+  const [title, setTitle] = useState<string>('');
+  const [planId, setPlanId] = useState<number>(0);
+  const [isVotable, setIsVotable] = useState<boolean>(false);
+
   const [focusState, setFocusState] = useState({
     title: false,
     area: false,
     budget: false,
   });
-  const [title, setTitle] = useState<string>('');
-  const [planId, setPlanId] = useState<number>(0);
 
+  // console.log('전달받은 데이터 > ', location.state);
   useEffect(() => {
-    console.log('초기 location 상태:', location.state);
-    const { wholePlan } = location.state || {};
-    if (wholePlan) {
+    if (location.state && location.state.planDetails) {
       const {
-        isPublic,
-        startDate,
-        endDate,
-        totalPlanTitle,
+        planId,
+        title,
         budget,
         area,
-        title,
-        tripEndDate,
         tripStartDate,
-        planId,
-      } = wholePlan;
-      setIsPublic(isPublic || true); // undefined일 경우 기본값 true
-      setTitle(title || '');
-      setArea(area || '');
-      setTotalPlanTitle(totalPlanTitle || title);
-      setTotalBudget(budget || 0);
-      setTripStartDate(tripStartDate || startDate);
-      setTripEndDate(tripEndDate || endDate);
-      setDateRange([
-        startDate
-          ? new Date(startDate)
-          : tripStartDate
-            ? new Date(tripStartDate)
-            : undefined,
-        endDate
-          ? new Date(endDate)
-          : tripEndDate
-            ? new Date(tripEndDate)
-            : undefined,
-      ]);
+        tripEndDate,
+        isPublic,
+        dayPlans,
+        isVotable,
+      } = location.state.planDetails;
+
       setPlanId(planId);
+      setTitle(title);
+      setTotalPlanTitle(title);
+      setTotalBudget(budget);
+      setArea(area);
+      setIsPublic(isPublic);
+      setIsVotable(isVotable);
+      setDayPlans(dayPlans);
+
+      setDateRange([
+        tripStartDate ? new Date(tripStartDate) : undefined,
+        tripEndDate ? new Date(tripEndDate) : undefined,
+      ]);
+    } else {
+      // Fallback to localStorage if no data is passed through location.state
+      loadFromLocalStorage();
     }
-  }, [location.state]); // location.state에 의존성을 두어 반응성을 보장
+  }, [location.state]); // Dependency on location.state ensures this runs only when that changes
+  // 의존성 배열에 location.state를 추가하여 location.state가 변경될 때마다 실행
+  const loadFromLocalStorage = () => {
+    const savedData = localStorage.getItem('updatePlanData1');
+    if (savedData) {
+      const {
+        planId,
+        title,
+        budget,
+        area,
+        tripStartDate,
+        tripEndDate,
+        isPublic,
+        dayPlans,
+        isVotable,
+      } = JSON.parse(savedData);
+
+      setPlanId(planId);
+      setTitle(title);
+      setTotalPlanTitle(title);
+      setTotalBudget(budget);
+      setArea(area);
+      setIsPublic(isPublic);
+      setIsVotable(isVotable);
+      setDayPlans(dayPlans);
+
+      setDateRange([
+        tripStartDate ? new Date(tripStartDate) : undefined,
+        tripEndDate ? new Date(tripEndDate) : undefined,
+      ]);
+    }
+  };
 
   useEffect(() => {
-    updateLocalStorage();
-  }, [isPublic, dateRange, totalPlanTitle, totalBudget, area]);
-
-  const updateLocalStorage = () => {
-    const data = {
-      isPublic,
-      startDate: dateRange[0] ? dateRange[0].toISOString() : tripStartDate,
-      endDate: dateRange[1] ? dateRange[1].toISOString() : tripEndDate,
-      totalPlanTitle,
-      totalBudget,
-      area,
+    const planDetails = {
       planId,
+      title: totalPlanTitle,
+      budget: totalBudget,
+      area,
+      tripStartDate: dateRange[0] ? dateRange[0].toISOString() : '',
+      tripEndDate: dateRange[1] ? dateRange[1].toISOString() : '',
+      isPublic,
+      isVotable,
+      dayPlans,
     };
-    localStorage.setItem('updatePlanData', JSON.stringify(data));
-  };
+
+    localStorage.setItem('updatePlanData1', JSON.stringify(planDetails));
+  }, [
+    planId,
+    totalPlanTitle,
+    totalBudget,
+    area,
+    dateRange,
+    isPublic,
+    isVotable,
+    dayPlans,
+  ]);
 
   const handleFocus = (field: keyof typeof focusState) => {
     setFocusState({ ...focusState, [field]: true });
@@ -101,8 +156,9 @@ const PlanUpdate = () => {
     e: React.FocusEvent<HTMLInputElement>,
   ) => {
     if (field === 'budget' && e.target.value.trim() === '') {
-      setTotalBudget(0);
+      // setPlanDetails((prevDetails) => ({ ...prevDetails, totalBudget: 0 }));
     }
+
     setFocusState({ ...focusState, [field]: false });
   };
 
@@ -123,7 +179,7 @@ const PlanUpdate = () => {
     if (!isNaN(numericBudget)) {
       setTotalBudget(numericBudget);
     } else {
-      setTotalBudget(0); // 유효하지 않은 경우, 0으로 설정
+      setTotalBudget(0); // 입력이 유효하지 않을 때는 0으로 설정
     }
   };
 
@@ -148,10 +204,18 @@ const PlanUpdate = () => {
 
   const handleDateRangeChange = (update: [Date, Date]) => {
     setDateRange(update);
+    // setPlanDetails((prevDetails) => ({
+    //   ...prevDetails,
+    //   tripStartDate: update[0] ? update[0].toISOString() : '',
+    //   tripEndDate: update[1] ? update[1].toISOString() : '',
+    // }));
   };
 
   const toggleIsPublic = () => {
-    setIsPublic((prev) => !prev);
+    // setPlanDetails((prevDetails) => ({
+    //   ...prevDetails,
+    //   isPublic: !prevDetails.isPublic,
+    // }));
   };
 
   // 다음 버튼 활성화 여부 검사
@@ -168,19 +232,26 @@ const PlanUpdate = () => {
       alert('모든 입력을 완료해야 다음으로 진행할 수 있습니다.');
       return;
     }
+    const formattedStartDate = dateRange[0] ? dateRange[0].toISOString() : '';
+    const formattedEndDate = dateRange[1] ? dateRange[1].toISOString() : '';
 
+    // updateLocalStorage();
     navigate(`/planUpdate/2/${planId}`, {
       state: {
         planDetails: {
-          tripStartDate: dateRange[0]?.toLocaleDateString(),
-          tripEndDate: dateRange[1]?.toLocaleDateString(),
-          isPublic,
-          totalPlanTitle,
-          totalBudget,
+          planId,
+          isVotable,
+          title: totalPlanTitle,
+          budget: totalBudget,
           area,
-        },
+          tripStartDate: formattedStartDate,
+          tripEndDate: formattedEndDate,
+          isPublic,
+          dayPlans, // Ensure this is passed correctly
+        } as PlanDetails,
       },
     });
+    // console.log(planDetails);
   };
 
   return (

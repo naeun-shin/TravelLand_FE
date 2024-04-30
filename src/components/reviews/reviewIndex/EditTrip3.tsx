@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import ToggleButton from '@/components/commons/buttons/ToggleButton';
 import { ModernInput } from '@/components/commons/inputs/Input';
 import styled from 'styled-components';
@@ -10,7 +10,7 @@ import { TripData } from '@/api/interfaces/reviewInterface';
 import { useMutation } from '@tanstack/react-query';
 import { createTrip } from '@/api/reviewAxios';
 
-const TReviewCreate3 = () => {
+const EditTrip3 = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
   const [isPublic, setIsPublic] = useState<boolean>(state?.isPublic || false);
@@ -18,12 +18,18 @@ const TReviewCreate3 = () => {
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [hasAttemptedSubmit, setHasAttemptedSubmit] = useState<boolean>(false);
 
-  console.log('Content:', content); // content 확인
-  console.log('Selected Tags:', selectedTags);
-
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value);
   };
+
+  useEffect(() => {
+    const storedData = localStorage.getItem('reviewState');
+    if (storedData) {
+      const initialData = JSON.parse(storedData);
+      setContent(initialData.content || '');
+      // 다른 필요한 데이터도 로드할 수 있습니다.
+    }
+  }, []);
 
   const handleTagClick = (
     tag: string,
@@ -45,19 +51,10 @@ const TReviewCreate3 = () => {
   const handleBackClick = () => {
     navigate(-1);
   };
-  const handleSaveToLocalStorage = () => {
-    const data = {
-      title: state.title,
-      content: content,
-      // 다른 필요한 데이터도 추가할 수 있습니다.
-    };
-    localStorage.setItem('reviewState', JSON.stringify(data));
-  };
 
   const mutation = useMutation<TripData, AxiosError, FormData>({
     mutationFn: createTrip,
     onSuccess: () => {
-      // console.log('여행 정보가 성공적으로 등록되었습니다.', data);
       alert('여행 정보 작성 성공!');
       localStorage.removeItem('reviewState');
       navigate('/travelReview');
@@ -78,9 +75,6 @@ const TReviewCreate3 = () => {
       alert('필수 입력 사항을 입력해주세요!');
       return;
     }
-
-    // 작성 내용을 로컬 스토리지에 저장
-    handleSaveToLocalStorage();
 
     const formData = new FormData();
     formData.append(
@@ -107,6 +101,16 @@ const TReviewCreate3 = () => {
 
     mutation.mutate(formData);
   };
+
+  useEffect(() => {
+    const storedData = localStorage.getItem('editedReviewState');
+    if (storedData) {
+      const initialData = JSON.parse(storedData);
+      setContent(initialData.content || '');
+      setSelectedTags(initialData.hashTag || []);
+      setIsPublic(initialData.isPublic ?? false);
+    }
+  }, []);
 
   return (
     <form onSubmit={handleSubmit}>
@@ -204,7 +208,7 @@ const TReviewCreate3 = () => {
   );
 };
 
-export default TReviewCreate3;
+export default EditTrip3;
 
 const ErrorMessage = styled.div`
   color: #ff0000;
@@ -257,7 +261,6 @@ const CategoryButtonContainer = styled.div`
 const ContentTextarea = styled.textarea`
   width: 700px;
   height: 150px;
-  /* border: 1px solid #ccc; */
   padding: 10px;
   font-size: 15px;
   margin: 10px 0;
