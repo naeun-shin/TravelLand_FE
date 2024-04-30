@@ -14,6 +14,14 @@ const Login: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
     window.location.href = `${base_url}oauth2/authorization/kakao`;
   };
 
+  const handleLoginWithNaver = () => {
+    window.location.href = `${base_url}oauth2/authorization/naver`;
+  };
+
+  const handleLoginWithGoogle = () => {
+    window.location.href = `${base_url}oauth2/authorization/google`;
+  };
+
   return (
     <>
       <LoginModal isOpen={isOpen} onClose={onClose}>
@@ -34,9 +42,34 @@ const Login: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
           </div>
           <h1>SNS 계정으로 로그인 하기</h1>
           <img
-            src="/assets/icons/kakaoLoginButton.svg"
+            src="/assets/kakao/kakao_login_medium_narrow.png"
             onClick={loginWithKakao}
-            style={{ borderRadius: '25px', width: '400px' }}
+            style={{
+              borderRadius: '25px',
+              width: '190px',
+              height: '50px',
+              marginBottom: '10px',
+            }}
+          />
+          <img
+            onClick={handleLoginWithNaver}
+            src="/assets/naver/naverLoginLogo.png"
+            style={{
+              borderRadius: '25px',
+              width: '190px',
+              height: '50px',
+              marginBottom: '10px',
+            }}
+          />
+          <img
+            onClick={handleLoginWithGoogle}
+            src="/assets/google/googleLoginLogo.svg"
+            style={{
+              borderRadius: '25px',
+              width: '190px',
+              height: '50px',
+              marginBottom: '10px',
+            }}
           />
           <h4>
             {' '}

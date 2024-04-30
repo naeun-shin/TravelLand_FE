@@ -87,7 +87,7 @@ export const DetailMapModalOverlay = styled.div`
 
 export const LoginModalOverlay = styled.div`
   width: 500px; // 모달의 너비
-  height: 300px; // 모달의 높이를 화면의 80%로 설정
+  height: 500px; // 모달의 높이를 화면의 80%로 설정
   padding: 25px;
   background-color: #fff;
   border-style: 1px solid transparent;
