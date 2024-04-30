@@ -16,6 +16,9 @@ export const getUserInfo = async () => {
   }
 };
 
+export const getLogout = () => {
+  return instanceWithToken.get('/users/logout');
+};
 // 닉네임 변경 -> 아직 적용 필요
 export const updateNickname = (nickname: string) => {
   return instanceWithToken.patch('/users', { nickname });
