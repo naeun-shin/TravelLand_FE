@@ -12,7 +12,8 @@ import { Cookies } from 'react-cookie';
 import Button from '../commons/buttons/Button';
 import Vote from '../vote/Vote';
 import Login from '@/pages/user/Login';
-import { logoutUser } from '@/hooks/useQuery';
+// import { logoutUser } from '@/hooks/useQuery';
+import { getLogout } from '@/api/userAxios';
 
 interface SearchInputContainerProps {
   isScrolled: boolean;
@@ -32,7 +33,7 @@ const ReDesignHeader: React.FC<HeaderProps> = ({
   onClick,
 }) => {
   const navigate = useNavigate();
-  const { logout, login, isLoggedIn } = useAuthStore(); // 로그인 함수를 가져옵니다.
+  const { logout, isLoggedIn } = useAuthStore(); // 로그인 함수를 가져옵니다.
   const cookie = new Cookies();
   // 메뉴 모달
   const [isMenuModalOpen, setIsMenuModalOpen] = useState(false);
@@ -129,15 +130,29 @@ const ReDesignHeader: React.FC<HeaderProps> = ({
   const handleOpenLogin = () => {
     setIsModalOpen(true); // 로그인 모달 상태를 true로 변경
   };
-
+  // 로그아웃 처리
   const handleLogoutClick = () => {
-    setIsMenuModalOpen(false);
-    logoutUser(); // 로그아웃 API호출
-    logout(); // 전역 상태 관리에서 logout처리
-    cookie.remove('Authorization', { path: '/' });
-    alert('로그아웃 되었습니다!');
-    navigate('/');
+    getLogout()
+      .then(() => {
+        // API 호출 후 로그아웃 처리
+        logout(); // 상태 관리 로그아웃 처리
+        cookie.remove('Authorization', { path: '/' });
+        alert('로그아웃 되었습니다!');
+        navigate('/'); // 홈으로 이동
+      })
+      .catch((error: any) => {
+        console.error('Logout failed:', error);
+        alert('로그아웃에 실패했습니다.');
+      });
   };
+  // const handleLogoutClick = () => {
+  //   setIsMenuModalOpen(false);
+  //   logoutUser(); // 로그아웃 API호출
+  //   logout(); // 전역 상태 관리에서 logout처리
+  //   cookie.remove('Authorization', { path: '/' });
+  //   alert('로그아웃 되었습니다!');
+  //   navigate('/');
+  // };
 
   const closeModal = () => {
     setIsModalOpen(false);
@@ -180,12 +195,6 @@ const ReDesignHeader: React.FC<HeaderProps> = ({
 
   // 스크롤에 따라 상태 변경
   useEffect(() => {
-    // 로그인 상태 쿠키 확인
-    const token = cookie.get('Authorization');
-    if (token) {
-      login(); // Zustand의 로그인 상태를 true로 설정
-    }
-
     const handleScroll = () => {
       const shouldBeScrolled = window.scrollY > 50;
       setIsScrolled(shouldBeScrolled);

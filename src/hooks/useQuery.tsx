@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { getPlanDetail, getPlanList } from '@/api/planAxios';
 import {
-  getLogout,
+  // getLogout,
   getMyPlanList,
   getMyTripList,
   getMypageTrip,
@@ -24,13 +24,13 @@ import { searchTripsByText } from '@/api/searchAxios';
 // import { getVoteResult } from '@/api/voteAxios';
 // import { UserInfoData } from '@/api/interfaces/userInterface';
 
-export const logoutUser = () => {
-  return useQuery({
-    queryKey: ['logout'],
-    queryFn: getLogout,
-    staleTime: 0,
-  });
-};
+// export const logoutUser = () => {
+//   return useQuery({
+//     queryKey: ['logout'],
+//     queryFn: getLogout,
+//     staleTime: 0,
+//   });
+// };
 
 export const usePlanListQuery = (planListParams: PlanListParams) => {
   return useQuery({
