@@ -26,16 +26,15 @@ export interface ErrorResponse {
   message: string;
 }
 
-
 export interface PlanResponse {
   data: any;
   planId: number;
 }
 
-interface UpdateTripMutationVariables {
+interface UpdateTripMutation {
   tripId: number;
-  tripData: TripData; // 'TripData' 타입을 적절히 정의해야 합니다.
-  imageList: File[]; // 이미지 리스트가 파일 배열임
+  formData: TripData;
+  imageList: File[];
 }
 
 // 작성하기 mutation
@@ -254,9 +253,9 @@ export const useUpdateNickname = () => {
 export const useUpdateTripMutation = () => {
   const navigate = useNavigate();
 
-  return useMutation<unknown, AxiosError, UpdateTripMutationVariables>({
-    mutationFn: ({ tripId, tripData, imageList }) =>
-      updateTrip(tripId, tripData, imageList),
+  return useMutation<unknown, AxiosError, UpdateTripMutation>({
+    mutationFn: ({ tripId, formData, imageList }) =>
+      updateTrip(tripId, formData, imageList),
     onSuccess: () => {
       alert('여행 정보가 성공적으로 수정 되었습니다.');
       navigate('/travelReview'); // 성공 후 이동할 경로

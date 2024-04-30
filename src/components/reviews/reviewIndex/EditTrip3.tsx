@@ -2,13 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import ToggleButton from '@/components/commons/buttons/ToggleButton';
 import { ModernInput } from '@/components/commons/inputs/Input';
-import styled from 'styled-components';
 import CategoryButton from '@/components/commons/buttons/CategoryButton';
 import { TitleWithCircle } from './TReviewCreate';
-import { AxiosError } from 'axios';
-import { TripData } from '@/api/interfaces/reviewInterface';
-import { useMutation } from '@tanstack/react-query';
-import { createTrip } from '@/api/reviewAxios';
+import { useUpdateTripMutation } from '@/hooks/useMutation'; // 여기에 추가됨
+import styled from 'styled-components';
 
 const EditTrip3 = () => {
   const navigate = useNavigate();
@@ -18,18 +15,12 @@ const EditTrip3 = () => {
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [hasAttemptedSubmit, setHasAttemptedSubmit] = useState<boolean>(false);
 
+  // useUpdateTripMutation 훅을 여기서 호출합니다.
+  const updateMutation = useUpdateTripMutation();
+
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value);
   };
-
-  useEffect(() => {
-    const storedData = localStorage.getItem('reviewState');
-    if (storedData) {
-      const initialData = JSON.parse(storedData);
-      setContent(initialData.content || '');
-      // 다른 필요한 데이터도 로드할 수 있습니다.
-    }
-  }, []);
 
   const handleTagClick = (
     tag: string,
@@ -52,20 +43,7 @@ const EditTrip3 = () => {
     navigate(-1);
   };
 
-  const mutation = useMutation<TripData, AxiosError, FormData>({
-    mutationFn: createTrip,
-    onSuccess: () => {
-      alert('여행 정보 작성 성공!');
-      localStorage.removeItem('reviewState');
-      navigate('/travelReview');
-    },
-    onError: (error) => {
-      const message = error.response?.data;
-      alert(`여행 정보 등록 실패! 오류: ${message}`);
-      console.error(message);
-    },
-  });
-
+  // 여기에 제출 로직을 추가합니다.
   const handleSubmit = async (
     event: React.FormEvent<HTMLFormElement>,
   ): Promise<void> => {
@@ -77,8 +55,9 @@ const EditTrip3 = () => {
     }
 
     const formData = new FormData();
+    formData.append('tripId', state.tripId.toString());
     formData.append(
-      'requestDto',
+      'tripData',
       JSON.stringify({
         title: state.title,
         content: content,
@@ -99,8 +78,19 @@ const EditTrip3 = () => {
       formData.append('imageList', file);
     });
 
-    mutation.mutate(formData);
+    // updateMutation.mutate를 호출하여 데이터를 서버에 전송합니다.
+    updateMutation.mutate({ tripId: state.tripId, tripData: formData });
   };
+
+  useEffect(() => {
+    const storedData = localStorage.getItem('reviewState');
+    if (storedData) {
+      const initialData = JSON.parse(storedData);
+      setContent(initialData.content || '');
+      setSelectedTags(initialData.hashTag || []);
+      setIsPublic(initialData.isPublic ?? false);
+    }
+  }, []);
 
   useEffect(() => {
     const storedData = localStorage.getItem('editedReviewState');
@@ -113,7 +103,20 @@ const EditTrip3 = () => {
   }, []);
 
   return (
-    <form onSubmit={handleSubmit} style={{ width: '900px', margin: '0 auto' }}>
+    <form
+      onSubmit={handleSubmit}
+      style={{ width: '700px', margin: '50px auto' }}
+    >
+      <div
+        style={{
+          fontSize: '28px',
+          fontWeight: '600',
+          textAlign: 'center',
+          marginBottom: '50PX',
+        }}
+      >
+        여행 정보 수정하기
+      </div>
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
         <div style={{ width: '100%' }}>
           <Title>
@@ -199,7 +202,7 @@ const EditTrip3 = () => {
               </ReviewBackButton>
             </ReviewBottomSection>
             <ReviewBottomSection>
-              <ReviewNextButton>작성하기</ReviewNextButton>
+              <ReviewNextButton>수정하기</ReviewNextButton>
             </ReviewBottomSection>
           </ReviewBtnBox>
         </div>

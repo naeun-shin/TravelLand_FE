@@ -40,19 +40,13 @@ const ReviewCreate2 = () => {
 
     // LocalStorage에 상태 저장하기
     try {
-      // 이미지 파일을 DataURL로 변환하여 저장
+      // 이미지 파일을 DataURL로 변환하여 저장합니다.
       const imageUrls = await Promise.all(
         imageFiles.map((file) => {
           return new Promise((resolve, reject) => {
             const reader = new FileReader();
 
-            reader.onload = (e) => {
-              if (e.target) {
-                resolve(e.target.result);
-              } else {
-                reject(new Error('FileReader의 target이 없습니다.'));
-              }
-            };
+            reader.onload = (e) => resolve(e);
             reader.onerror = (e) => reject(e);
             reader.readAsDataURL(file);
           });
@@ -70,14 +64,9 @@ const ReviewCreate2 = () => {
       alert('이미지 파일 처리 중 오류가 발생했습니다.');
     }
   };
-  const handleSaveToLocalStorage = () => {
-    const data = { title: state.title, isPublic };
-    localStorage.setItem('reviewState', JSON.stringify(data));
-  };
 
   // 뒤로가기
   const handleBackClick = () => {
-    handleSaveToLocalStorage(); // 변경사항을 저장
     navigate(-1);
   };
 
@@ -176,9 +165,7 @@ const ReviewCreate2 = () => {
       </div>
       <ReviewBtnBox>
         <ReviewBottomSection>
-          <ReviewBackButton type="button" onClick={handleBackClick}>
-            뒤로
-          </ReviewBackButton>
+          <ReviewBackButton onClick={handleBackClick}>뒤로</ReviewBackButton>
         </ReviewBottomSection>
         <ReviewBottomSection>
           <ReviewNextButton onClick={handleNextClick}>다음</ReviewNextButton>
