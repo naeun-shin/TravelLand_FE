@@ -92,6 +92,7 @@ const MyPlanListContainer = styled.div`
   justify-content: center;
   flex-direction: column;
   padding-top: 30px;
+  margin-bottom: 300px;
 `;
 
 const MyPageInvitedContainer = styled.div`

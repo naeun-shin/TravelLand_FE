@@ -2,7 +2,11 @@ import { useState } from 'react';
 import Button from '@/components/commons/buttons/Button';
 import ListCard from '@/components/commons/mainItem/ListCard';
 import * as S from '@/components/commons/user/myPage/MyPage.style';
-import { useMypageScrapTrip, useMypageTrip } from '@/hooks/useQuery';
+import {
+  useGetUerInfoQuery,
+  useMypageScrapTrip,
+  useMypageTrip,
+} from '@/hooks/useQuery';
 import { TravelReviewCardSection } from '@/pages/travelReview/TravelReview.styles';
 // import { useMyTripListQuery } from '@/hooks/useQuery';
 // import { useState } from 'react';
@@ -35,6 +39,10 @@ const MyPageReviewList = () => {
     size: 10,
   });
 
+  const { data: count } = useGetUerInfoQuery();
+
+  const userData = count?.data;
+
   const handleCardClick = (tripId?: number) => {
     navigate(`/travelDetail/${tripId}`);
   };
@@ -66,7 +74,7 @@ const MyPageReviewList = () => {
   if (isError) return <div>Error: {error.message}</div>;
 
   return (
-    <>
+    <div style={{ marginBottom: '300px' }}>
       <S.MyPageButton>
         <div>
           <Button
@@ -77,7 +85,7 @@ const MyPageReviewList = () => {
             marginRight="5px"
             onClick={handleMyReviewListClick}
           >
-            내가 작성한 {data?.data.tripTotalElements || 0}
+            내가 작성한 {userData.tripTotalElements || 0}
           </Button>
           <Button
             color="white"
@@ -86,7 +94,7 @@ const MyPageReviewList = () => {
             borderColor="gray"
             onClick={handleMyScrapListClick}
           >
-            내가 스크랩한 {scrapData?.data.scrapTotalElements || 0}
+            내가 스크랩한 {userData.scrapTotalElements || 0}
           </Button>
         </div>
         <div>
@@ -102,8 +110,8 @@ const MyPageReviewList = () => {
       </S.MyPageButton>
       <TravelReviewCardSection>
         {showScrapList ? (
-          scrapData?.data.trips && scrapData.data.trips.length > 0 ? (
-            scrapData.data.trips.map((trip: Trip) => (
+          scrapData?.data && scrapData.data.length > 0 ? (
+            scrapData.data.map((trip: Trip) => (
               <ListCard
                 key={trip.tripId}
                 tripId={trip.tripId}
@@ -121,8 +129,8 @@ const MyPageReviewList = () => {
           ) : (
             <div>스크랩한 여행 정보가 없습니다! 추가해주세요!</div>
           )
-        ) : data?.data.trips && data.data.trips.length > 0 ? (
-          data.data.trips.map((trip: Trip) => (
+        ) : data?.data && data.data.length > 0 ? (
+          data.data.map((trip: Trip) => (
             <ListCard
               key={trip.tripId}
               tripId={trip.tripId}
@@ -141,7 +149,7 @@ const MyPageReviewList = () => {
           <div>나의 여행 정보가 없습니다! 추가해주세요!</div>
         )}
       </TravelReviewCardSection>
-    </>
+    </div>
   );
 };
 

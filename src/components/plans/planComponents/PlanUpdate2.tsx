@@ -12,6 +12,7 @@ import { TimeSelectBox } from '@/components/commons/timeSelect/TimeSelectBox';
 import { useUpdatePlanMutation } from '@/hooks/useMutation';
 
 export interface UnitPlan {
+  placeName?: string;
   title: string;
   content: string;
   time: string;
@@ -82,15 +83,32 @@ const PlanUpdate2: React.FC = () => {
         dayPlans,
       } = location.state.planDetails as WholePlan;
 
+      // 날짜 포맷을 수정하여 설정
+      const formattedStartDate = formatDate(tripStartDate);
+      const formattedEndDate = formatDate(tripEndDate);
+
       setPlanId(planId);
       setTitle(title);
       setBudget(budget);
       setArea(area);
       setIsPublic(isPublic);
-      setTripStartDate(tripStartDate);
-      setTripEndDate(tripEndDate);
+      setTripStartDate(formattedStartDate);
+      setTripEndDate(formattedEndDate);
       setIsVotable(isVotable);
-      setDayPlans(dayPlans || []);
+
+      // 다음은 각 dayPlans의 각 unitPlan에 대해 초기 위치 값을 설정합니다.
+      const updatedDayPlans = dayPlans.map((dayPlan) => ({
+        ...dayPlan,
+        unitPlans: dayPlan.unitPlans.map((unitPlan) => ({
+          ...unitPlan,
+          // 이 부분은 이미 적절한 값이 설정되어 있다고 가정합니다.
+          // 없는 경우 빈 문자열로 처리할 수 있습니다.
+          place_name: unitPlan.placeName || '',
+          address: unitPlan.address || '',
+        })),
+      }));
+
+      setDayPlans(updatedDayPlans || []);
     }
   }, [location.state]);
 
@@ -208,7 +226,6 @@ const PlanUpdate2: React.FC = () => {
       isVotable: isVotable,
       dayPlans: dayPlans,
     };
-    console.log('Submit:', updatedWholePlan);
 
     updatePlanList.mutate(updatedWholePlan);
   };
@@ -363,7 +380,7 @@ const PlanUpdate2: React.FC = () => {
                         value={
                           unitPlan.place_name && unitPlan.address
                             ? `${unitPlan.place_name}, ${unitPlan.address}`
-                            : ''
+                            : `${unitPlan.place_name}${unitPlan.address}`
                         }
                         readonly={true}
                         type={'text'}
