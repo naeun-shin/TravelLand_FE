@@ -42,12 +42,16 @@ export const updateTrip = async (
   formData: FormData,
 ): Promise<AxiosResponse<any>> => {
   try {
-    const response = await instance.put(`/v1/trips/${tripId}`, formData, {
-      headers: {
-        // 'Content-Type': 'multipart/form-data'은 설정하지 않습니다.
-        // FormData와 함께 사용하는 경우 브라우저가 자동으로 필요한 헤더를 설정합니다.
+    const response = await instanceWithToken.put(
+      `/v1/trips/${tripId}`,
+      formData,
+      {
+        headers: {
+          // 'Content-Type': 'multipart/form-data'은 설정하지 않습니다.
+          // FormData와 함께 사용하는 경우 브라우저가 자동으로 필요한 헤더를 설정합니다.
+        },
       },
-    });
+    );
     return response;
   } catch (error) {
     console.error(error);
