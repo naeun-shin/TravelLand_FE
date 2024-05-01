@@ -74,7 +74,7 @@ const MyPageReviewList = () => {
   if (isError) return <div>Error: {error.message}</div>;
 
   return (
-    <>
+    <div style={{ marginBottom: '300px' }}>
       <S.MyPageButton>
         <div>
           <Button
@@ -149,7 +149,7 @@ const MyPageReviewList = () => {
           <div>나의 여행 정보가 없습니다! 추가해주세요!</div>
         )}
       </TravelReviewCardSection>
-    </>
+    </div>
   );
 };
 
