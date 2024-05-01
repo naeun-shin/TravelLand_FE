@@ -34,8 +34,6 @@ const MyPageReviewList = () => {
     size: 10,
   });
 
-  console.log(data?.data.trips);
-
   const { data: scrapData } = useMypageScrapTrip({
     page: 1,
     size: 10,
@@ -44,8 +42,6 @@ const MyPageReviewList = () => {
   const { data: count } = useGetUerInfoQuery();
 
   const userData = count?.data;
-
-  console.log(userData);
 
   const handleCardClick = (tripId?: number) => {
     navigate(`/travelDetail/${tripId}`);
@@ -114,8 +110,8 @@ const MyPageReviewList = () => {
       </S.MyPageButton>
       <TravelReviewCardSection>
         {showScrapList ? (
-          scrapData?.data.trips && scrapData.data.trips.length > 0 ? (
-            scrapData.data.trips.map((trip: Trip) => (
+          scrapData?.data && scrapData.data.length > 0 ? (
+            scrapData.data.map((trip: Trip) => (
               <ListCard
                 key={trip.tripId}
                 tripId={trip.tripId}
@@ -133,8 +129,8 @@ const MyPageReviewList = () => {
           ) : (
             <div>스크랩한 여행 정보가 없습니다! 추가해주세요!</div>
           )
-        ) : data?.data.trips && data.data.trips.length > 0 ? (
-          data.data.trips.map((trip: Trip) => (
+        ) : data?.data && data.data.length > 0 ? (
+          data.data.map((trip: Trip) => (
             <ListCard
               key={trip.tripId}
               tripId={trip.tripId}
