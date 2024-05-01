@@ -33,7 +33,7 @@ const ReDesignHeader: React.FC<HeaderProps> = ({
   onClick,
 }) => {
   const navigate = useNavigate();
-  const { logout, isLoggedIn } = useAuthStore(); // 로그인 함수를 가져옵니다.
+  const { logout, isLoggedIn, login } = useAuthStore(); // 로그인 함수를 가져옵니다.
   const cookie = new Cookies();
   // 메뉴 모달
   const [isMenuModalOpen, setIsMenuModalOpen] = useState(false);
@@ -52,6 +52,16 @@ const ReDesignHeader: React.FC<HeaderProps> = ({
     localStorage.removeItem('planData');
     localStorage.removeItem('reviewState');
     localStorage.removeItem('updatePlanData1');
+
+    // 쿠키에서 로그인 토큰 확인
+    const token = cookie.get('Authorization');
+    if (token) {
+      // 토큰이 존재하면 로그인 상태를 true로 설정
+      login(); // 로그인 처리 함수, 실제 함수명은 useAuthStore에서 제공하는 함수명으로 대체 필요
+    } else {
+      // 토큰이 존재하지 않으면 로그인 상태를 false로 설정
+      logout();
+    }
   }, []);
 
   const handleOutsideClick = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -145,6 +155,7 @@ const ReDesignHeader: React.FC<HeaderProps> = ({
         alert('로그아웃에 실패했습니다.');
       });
   };
+
   // const handleLogoutClick = () => {
   //   setIsMenuModalOpen(false);
   //   logoutUser(); // 로그아웃 API호출
