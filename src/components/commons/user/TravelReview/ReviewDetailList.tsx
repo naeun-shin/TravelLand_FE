@@ -194,44 +194,44 @@ const ReviewDetailList = ({ tripDetail }: ReviewDetailListProps) => {
           </div>
           <div>
             <S.HeaderBox>
-              {/* {tripDetail.isWriter ? ( */}
-              <>
-                <S.ButtonBox>
-                  <Button text="수정하기" onClick={handleEditClick} />
-                  <Button text="삭제하기" onClick={handleOpenDeleteModal} />
-                </S.ButtonBox>
-                {/* 삭제 확인 모달 */}
-                <Modal
-                  isOpen={isDeleteModalOpen}
-                  onClose={handleCloseDeleteModal}
-                >
-                  <div>
-                    <div style={{ textAlign: 'center', fontSize: '20px' }}>
-                      <p>
-                        삭제된 글은 복구할 수 없습니다
-                        <br /> 삭제하시겠습니까?
-                      </p>
+              {tripDetail.isWriter ? (
+                <>
+                  <S.ButtonBox>
+                    <Button text="수정하기" onClick={handleEditClick} />
+                    <Button text="삭제하기" onClick={handleOpenDeleteModal} />
+                  </S.ButtonBox>
+                  {/* 삭제 확인 모달 */}
+                  <Modal
+                    isOpen={isDeleteModalOpen}
+                    onClose={handleCloseDeleteModal}
+                  >
+                    <div>
+                      <div style={{ textAlign: 'center', fontSize: '20px' }}>
+                        <p>
+                          삭제된 글은 복구할 수 없습니다
+                          <br /> 삭제하시겠습니까?
+                        </p>
+                      </div>
+                      <ModalBtnWrapper>
+                        <Button
+                          text="취소"
+                          onClick={handleCloseDeleteModal}
+                          borderRadius="10px"
+                          hoverColor="#2ca3cb"
+                        />
+                        <Button
+                          borderRadius="10px"
+                          hoverColor="#2ca3cb"
+                          text="삭제하기"
+                          onClick={() => handleConfirmDelete(tripDetail.tripId)}
+                        />
+                      </ModalBtnWrapper>
                     </div>
-                    <ModalBtnWrapper>
-                      <Button
-                        text="취소"
-                        onClick={handleCloseDeleteModal}
-                        borderRadius="10px"
-                        hoverColor="#2ca3cb"
-                      />
-                      <Button
-                        borderRadius="10px"
-                        hoverColor="#2ca3cb"
-                        text="삭제하기"
-                        onClick={() => handleConfirmDelete(tripDetail.tripId)}
-                      />
-                    </ModalBtnWrapper>
-                  </div>
-                </Modal>
-              </>
-              {/* ) : ( */}
-              <></>
-              {/* )} */}
+                  </Modal>
+                </>
+              ) : (
+                <></>
+              )}
             </S.HeaderBox>
           </div>
         </UserBox>
