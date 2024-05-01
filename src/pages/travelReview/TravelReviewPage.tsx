@@ -65,7 +65,7 @@ const TravelReviewPage = () => {
   } = useInfiniteQuery({
     queryKey: ['trips', area],
     queryFn: fetchTrips,
-    initialPageParam: 8,
+    initialPageParam: 1,
     getNextPageParam: (lastPage, allPages) => {
       if (lastPage.length < 8) return undefined;
       return allPages.length + 1;
