@@ -42,6 +42,8 @@ const EditTrip = () => {
       tripStartDate,
       tripEndDate,
       tripId: initialData.tripId,
+      content: initialData.content,
+      hashTag: initialData.hashTag,
     };
     console.log('데이터 확인', tripData);
     localStorage.setItem('reviewState', JSON.stringify(tripData));
@@ -86,8 +88,6 @@ const EditTrip = () => {
       cost,
       tripStartDate,
       tripEndDate,
-      content: '',
-      hashTag: [],
     };
     console.log('수정 데이터 확인', modifiedData);
     localStorage.setItem('editedReviewState', JSON.stringify(modifiedData));
