@@ -2,7 +2,11 @@ import { useState } from 'react';
 import Button from '@/components/commons/buttons/Button';
 import ListCard from '@/components/commons/mainItem/ListCard';
 import * as S from '@/components/commons/user/myPage/MyPage.style';
-import { useMypageScrapTrip, useMypageTrip } from '@/hooks/useQuery';
+import {
+  useGetUerInfoQuery,
+  useMypageScrapTrip,
+  useMypageTrip,
+} from '@/hooks/useQuery';
 import { TravelReviewCardSection } from '@/pages/travelReview/TravelReview.styles';
 // import { useMyTripListQuery } from '@/hooks/useQuery';
 // import { useState } from 'react';
@@ -30,10 +34,18 @@ const MyPageReviewList = () => {
     size: 10,
   });
 
+  console.log(data?.data.trips);
+
   const { data: scrapData } = useMypageScrapTrip({
     page: 1,
     size: 10,
   });
+
+  const { data: count } = useGetUerInfoQuery();
+
+  const userData = count?.data;
+
+  console.log(userData);
 
   const handleCardClick = (tripId?: number) => {
     navigate(`/travelDetail/${tripId}`);
@@ -77,7 +89,7 @@ const MyPageReviewList = () => {
             marginRight="5px"
             onClick={handleMyReviewListClick}
           >
-            내가 작성한 {data?.data.tripTotalElements || 0}
+            내가 작성한 {userData.tripTotalElements || 0}
           </Button>
           <Button
             color="white"
@@ -86,7 +98,7 @@ const MyPageReviewList = () => {
             borderColor="gray"
             onClick={handleMyScrapListClick}
           >
-            내가 스크랩한 {scrapData?.data.scrapTotalElements || 0}
+            내가 스크랩한 {userData.scrapTotalElements || 0}
           </Button>
         </div>
         <div>
