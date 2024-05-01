@@ -10,10 +10,15 @@ import styled from 'styled-components';
 const EditTrip3 = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
+  console.log(state);
   const [isPublic, setIsPublic] = useState<boolean>(state?.isPublic || false);
   const [content, setContent] = useState<string>('');
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  const [hasAttemptedSubmit, setHasAttemptedSubmit] = useState<boolean>(false);
+  const [hasAttemptedSubmit] = useState<boolean>(false);
+
+  useEffect(() => {
+    console.log('Current state:', state);
+  }, [state]);
 
   // useUpdateTripMutation 훅을 여기서 호출합니다.
   const updateMutation = useUpdateTripMutation();
@@ -48,17 +53,18 @@ const EditTrip3 = () => {
     event: React.FormEvent<HTMLFormElement>,
   ): Promise<void> => {
     event.preventDefault();
-    setHasAttemptedSubmit(true);
-    if (content.trim() === '' || selectedTags.length === 0) {
-      alert('필수 입력 사항을 입력해주세요!');
+    if (!state || !state.tripId) {
+      console.error('Trip ID 없음');
+      alert('Trip ID 가 안보이네..');
       return;
     }
 
     const formData = new FormData();
-    formData.append('tripId', state.tripId.toString());
+    // 모든 데이터를 requestDto로 묶어서 JSON 문자열로 변환하여 전송
     formData.append(
-      'tripData',
+      'requestDto',
       JSON.stringify({
+        tripId: state.tripId,
         title: state.title,
         content: content,
         tripStartDate: state.tripStartDate,
@@ -78,11 +84,17 @@ const EditTrip3 = () => {
       formData.append('imageList', file);
     });
 
-    // updateMutation.mutate를 호출하여 데이터를 서버에 전송합니다.
-    updateMutation.mutate({ tripId: state.tripId, tripData: formData });
+    updateMutation.mutate({
+      tripId: state.tripId,
+      formData: formData,
+    });
+
+    localStorage.removeItem('editedReviewState');
+    localStorage.removeItem('reviewState');
   };
 
   useEffect(() => {
+    console.log(state);
     const storedData = localStorage.getItem('reviewState');
     if (storedData) {
       const initialData = JSON.parse(storedData);
@@ -197,7 +209,7 @@ const EditTrip3 = () => {
           </div>
           <ReviewBtnBox>
             <ReviewBottomSection>
-              <ReviewBackButton onClick={handleBackClick}>
+              <ReviewBackButton type="button" onClick={handleBackClick}>
                 뒤로
               </ReviewBackButton>
             </ReviewBottomSection>

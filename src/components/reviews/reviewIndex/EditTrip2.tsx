@@ -5,10 +5,11 @@ import styled from 'styled-components';
 import { TitleWithCircle } from './TReviewCreate';
 import ToggleButton from '@/components/commons/buttons/ToggleButton';
 
-const ReviewCreate2 = () => {
+const EditTrip2 = () => {
   const navigate = useNavigate();
   const location = useLocation(); // useLocation을 사용하여 이전 페이지의 데이터 접근
   const { state } = location;
+  const { tripId } = state;
   const { totalReviewTitle } = useParams(); // URL 매개변수에서 데이터 읽기
   const [isPublic, setIsPublic] = useState<boolean>(state?.isPublic || false);
   const [title, setTitle] = useState<string>(state?.title || ''); // 상태 이름 수정
@@ -52,7 +53,7 @@ const ReviewCreate2 = () => {
       localStorage.setItem('reviewData', JSON.stringify(reviewData));
 
       navigate('/editTrip/3', {
-        state: { ...state, imageFiles, isPublic, title },
+        state: { ...state, imageFiles, isPublic, title, tripId },
       });
     } catch (error) {
       console.error('Error converting image files:', error);
@@ -170,7 +171,7 @@ const ReviewCreate2 = () => {
   );
 };
 
-export default ReviewCreate2;
+export default EditTrip2;
 
 const ErrorMessage = styled.div`
   color: #ff0000;

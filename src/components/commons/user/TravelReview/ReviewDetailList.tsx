@@ -37,7 +37,9 @@ const ReviewDetailList = ({ tripDetail }: ReviewDetailListProps) => {
 
   const handleEditClick = () => {
     // tripDetail은 현재 페이지에서 사용 중인 여행 리뷰의 상세 정보입니다.
-    navigate('/editTrip', { state: { formData: tripDetail } });
+    navigate('/editTrip', {
+      state: { formData: tripDetail, tripId: tripDetail.tripId },
+    });
   };
 
   // tripDetail로부터 초기 like 및 scrap 상태를 설정
