@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import ToggleButton from '@/components/commons/buttons/ToggleButton';
 import { ModernInput } from '@/components/commons/inputs/Input';
@@ -18,12 +18,42 @@ const TReviewCreate3 = () => {
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [hasAttemptedSubmit, setHasAttemptedSubmit] = useState<boolean>(false);
 
-  console.log('Content:', content); // content 확인
-  console.log('Selected Tags:', selectedTags);
-
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value);
   };
+
+  // 데이터 불러오기
+  useEffect(() => {
+    const savedData = localStorage.getItem('reviewState');
+    if (savedData) {
+      const { content, selectedTags, isPublic } = JSON.parse(savedData);
+      setContent(content || '');
+      setSelectedTags(selectedTags || []);
+      setIsPublic(isPublic || false);
+    }
+  }, []);
+
+  // 데이터 저장
+  useEffect(() => {
+    const data = {
+      content,
+      selectedTags,
+      isPublic,
+    };
+    localStorage.setItem('reviewState', JSON.stringify(data));
+  }, [content, selectedTags, isPublic]);
+
+  useEffect(() => {
+    const data = {
+      content: content,
+      selectedTags: selectedTags,
+      isPublic: isPublic,
+    };
+    localStorage.setItem('reviewState', JSON.stringify(data));
+  }, [content, selectedTags, isPublic]);
+
+  console.log('Content:', content); // content 확인
+  console.log('Selected Tags:', selectedTags);
 
   const handleTagClick = (
     tag: string,
@@ -31,6 +61,14 @@ const TReviewCreate3 = () => {
   ) => {
     event.preventDefault();
     event.stopPropagation();
+
+    // selectedTags가 배열이 아닌 경우 안전하게 처리
+    if (!Array.isArray(selectedTags)) {
+      console.error('selectedTags is not an array:', selectedTags);
+      setSelectedTags([]); // 안전하게 빈 배열로 초기화
+      return;
+    }
+
     if (selectedTags.includes(tag)) {
       setSelectedTags(selectedTags.filter((t) => t !== tag));
     } else {
@@ -66,6 +104,10 @@ const TReviewCreate3 = () => {
       const message = error.response?.data;
       alert(`여행 정보 등록 실패! 오류: ${message}`);
       console.error(message);
+
+      // 에러 발생 시에도 로컬 스토리지에서 데이터를 제거하도록 처리
+      localStorage.removeItem('reviewState');
+      console.log('Review state removed from localStorage');
     },
   });
 
@@ -106,6 +148,9 @@ const TReviewCreate3 = () => {
     });
 
     mutation.mutate(formData);
+
+    localStorage.removeItem('reviewState');
+    console.log('Review state removed from localStorage');
   };
 
   return (
@@ -190,7 +235,7 @@ const TReviewCreate3 = () => {
           </div>
           <ReviewBtnBox>
             <ReviewBottomSection>
-              <ReviewBackButton onClick={handleBackClick}>
+              <ReviewBackButton type="button" onClick={handleBackClick}>
                 뒤로
               </ReviewBackButton>
             </ReviewBottomSection>

@@ -1,98 +1,92 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { ModernInput } from '@/components/commons/inputs/Input';
-import ToggleButton from '@/components/commons/buttons/ToggleButton';
 import styled from 'styled-components';
 import { TitleWithCircle } from './TReviewCreate';
+import ToggleButton from '@/components/commons/buttons/ToggleButton';
 
 const EditTrip2 = () => {
   const navigate = useNavigate();
-  const location = useLocation();
+  const location = useLocation(); // useLocation을 사용하여 이전 페이지의 데이터 접근
   const { state } = location;
+  const { tripId } = state;
+  const { totalReviewTitle } = useParams(); // URL 매개변수에서 데이터 읽기
   const [isPublic, setIsPublic] = useState<boolean>(state?.isPublic || false);
-  const [title, setTitle] = useState<string>(state?.title || '');
-  const [imageFiles, setImageFiles] = useState<string[]>([]);
+  const [title, setTitle] = useState<string>(state?.title || ''); // 상태 이름 수정
+  const [imageFiles, setImageFiles] = useState<File[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [hasAttemptedSubmit, setHasAttemptedSubmit] = useState<boolean>(false);
 
+  // totalPlanTitle이 변경될 때마다 해당 값을 설정
   useEffect(() => {
-    const savedData = localStorage.getItem('editTripData');
-    if (savedData) {
-      const data = JSON.parse(savedData);
-      setIsPublic(data.isPublic);
-      setTitle(data.title);
-      setImageFiles(data.imageFiles || []);
+    if (totalReviewTitle) {
+      setTitle(totalReviewTitle);
     }
-  }, []);
+  }, [totalReviewTitle]);
 
-  const toggleIsPublic = () => setIsPublic((prev) => !prev);
+  const toggleIsPublic = () => setIsPublic(!isPublic);
 
-  const handleNextClick = () => {
+  const handleNextClick = async () => {
     setHasAttemptedSubmit(true);
+
     if (imageFiles.length === 0) {
       alert('사진을 1장 이상 선택해주세요.');
-    } else {
-      const editedData = {
-        title,
-        isPublic,
-        imageFiles,
-      };
-      localStorage.setItem('editTripData', JSON.stringify(editedData));
-      navigate('/editTrip/3', {
-        state: { ...state, title, isPublic, imageFiles },
-      });
+      return;
     }
-  };
 
-  const handleImageChange = async (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    if (event.target.files) {
-      const files = Array.from(event.target.files);
-      const newImageFiles = await Promise.all(
-        files.map((file) => {
-          return new Promise<string>((resolve, reject) => {
+    // LocalStorage에 상태 저장하기
+    try {
+      // 이미지 파일을 DataURL로 변환하여 저장합니다.
+      const imageUrls = await Promise.all(
+        imageFiles.map((file) => {
+          return new Promise((resolve, reject) => {
             const reader = new FileReader();
-            reader.onload = () => resolve(reader.result as string);
-            reader.onerror = (error) => reject(error);
+
+            reader.onload = (e) => resolve(e);
+            reader.onerror = (e) => reject(e);
             reader.readAsDataURL(file);
           });
         }),
       );
 
-      setImageFiles((prevImages) => [...prevImages, ...newImageFiles]);
-      localStorage.setItem(
-        'editTripData',
-        JSON.stringify({
-          ...state,
-          imageFiles: [...imageFiles, ...newImageFiles],
-          title,
-          isPublic,
-        }),
+      const reviewData = { title, isPublic, imageFiles: imageUrls };
+      localStorage.setItem('reviewData', JSON.stringify(reviewData));
+
+      navigate('/editTrip/3', {
+        state: { ...state, imageFiles, isPublic, title, tripId },
+      });
+    } catch (error) {
+      console.error('Error converting image files:', error);
+      alert('이미지 파일 처리 중 오류가 발생했습니다.');
+    }
+  };
+
+  // 뒤로가기
+  const handleBackClick = () => {
+    navigate(-1);
+  };
+
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files) {
+      const fileList = Array.from(event.target.files).slice(
+        0,
+        5 - imageFiles.length,
       );
+      setImageFiles([...imageFiles, ...fileList]);
+      event.target.value = '';
     }
   };
 
   const handleAddImageClick = () => {
-    fileInputRef.current?.click();
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
   };
 
   const handleRemoveImage = (index: number) => {
-    const updatedImages = imageFiles.filter((_, i) => i !== index);
-    setImageFiles(updatedImages);
-    localStorage.setItem(
-      'editTripData',
-      JSON.stringify({
-        ...state,
-        imageFiles: updatedImages,
-        title,
-        isPublic,
-      }),
-    );
-  };
-
-  const handleBackClick = () => {
-    navigate(-1);
+    const newImageFiles = [...imageFiles];
+    newImageFiles.splice(index, 1);
+    setImageFiles(newImageFiles);
   };
 
   return (
@@ -127,10 +121,10 @@ const EditTrip2 = () => {
             </ReviewBoxWithSpaceBetween>
           </div>
           <PhotoBox>
-            {imageFiles.map((fileURL, index) => (
+            {imageFiles.map((file, index) => (
               <ImagePreview key={index}>
                 <img
-                  src={fileURL}
+                  src={URL.createObjectURL(file)}
                   alt={`preview ${index}`}
                   style={{
                     width: '100%',
