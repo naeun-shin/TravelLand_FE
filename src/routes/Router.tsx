@@ -125,25 +125,25 @@ export const router = createBrowserRouter([
       {
         path: '/editTrip',
         element: (
-          <PrivateRoute>
-            <EditTrip />
-          </PrivateRoute>
+          // <PrivateRoute>
+          <EditTrip />
+          // </PrivateRoute>
         ),
       },
       {
         path: '/editTrip/2',
         element: (
-          <PrivateRoute>
-            <EditTrip2 />
-          </PrivateRoute>
+          // <PrivateRoute>
+          <EditTrip2 />
+          // </PrivateRoute>
         ),
       },
       {
         path: '/editTrip/3',
         element: (
-          <PrivateRoute>
-            <EditTrip3 />
-          </PrivateRoute>
+          // <PrivateRoute>
+          <EditTrip3 />
+          // </PrivateRoute>
         ),
       },
       {

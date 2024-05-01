@@ -24,6 +24,10 @@ const EditTrip2 = () => {
     }
   }, [totalReviewTitle]);
 
+  useEffect(() => {
+    console.log('EditTrip2 State:', state);
+  }, [state]);
+
   const toggleIsPublic = () => setIsPublic(!isPublic);
 
   const handleNextClick = async () => {

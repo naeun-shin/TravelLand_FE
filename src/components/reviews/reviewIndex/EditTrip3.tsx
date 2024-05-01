@@ -10,15 +10,25 @@ import styled from 'styled-components';
 const EditTrip3 = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
-  console.log(state);
   const [isPublic, setIsPublic] = useState<boolean>(state?.isPublic || false);
   const [content, setContent] = useState<string>('');
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [hasAttemptedSubmit] = useState<boolean>(false);
 
   useEffect(() => {
-    console.log('Current state:', state);
+    if (state) {
+      setIsPublic(state.isPublic ?? false);
+      setContent(state.content || '');
+      setSelectedTags(state.hashTag || []);
+    }
   }, [state]);
+  console.log(state);
+  // 해시태그
+  useEffect(() => {
+    if (state?.hashtagList) {
+      setSelectedTags(state.hashtagList);
+    }
+  }, [state?.hashtagList]);
 
   // useUpdateTripMutation 훅을 여기서 호출합니다.
   const updateMutation = useUpdateTripMutation();
@@ -55,7 +65,7 @@ const EditTrip3 = () => {
     event.preventDefault();
     if (!state || !state.tripId) {
       console.error('Trip ID 없음');
-      alert('Trip ID 가 안보이네..');
+      alert('Trip ID 없음');
       return;
     }
 
@@ -94,18 +104,7 @@ const EditTrip3 = () => {
   };
 
   useEffect(() => {
-    console.log(state);
     const storedData = localStorage.getItem('reviewState');
-    if (storedData) {
-      const initialData = JSON.parse(storedData);
-      setContent(initialData.content || '');
-      setSelectedTags(initialData.hashTag || []);
-      setIsPublic(initialData.isPublic ?? false);
-    }
-  }, []);
-
-  useEffect(() => {
-    const storedData = localStorage.getItem('editedReviewState');
     if (storedData) {
       const initialData = JSON.parse(storedData);
       setContent(initialData.content || '');
