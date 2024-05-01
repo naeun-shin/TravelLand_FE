@@ -64,10 +64,6 @@ const PlanDetail: React.FC<ButtonProps> = () => {
   const planId = Number(id);
 
   const { data, isLoading, isError } = usePlanDetailQuery(planId);
-  // if (!data?.data.isPublic) {
-  //   const { data: myPlanData } = useMyPlanDetailQuery(planId);
-  //   console.log(myPlanData);
-  // }
 
   const planDetails = data?.data;
   const planVotes = data?.data.planVotes;
@@ -129,8 +125,6 @@ const PlanDetail: React.FC<ButtonProps> = () => {
   // 수정 기능
   const handlePlanUpdate = (planId: number) => {
     navigate(`/planUpdate/1/${planId}`, { state: { planDetails } });
-    // console.log(planDetails);
-    // deleteMutaion.mutate(planId);
   };
 
   // 삭제 기능

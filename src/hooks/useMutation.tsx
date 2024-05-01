@@ -1,5 +1,5 @@
 import { UpdateWholePlan } from '@/api/interfaces/planInterface';
-import { TripData } from '@/api/interfaces/reviewInterface';
+// import { TripData } from '@/api/interfaces/reviewInterface';
 import {
   cancelLikePlan,
   cancelScrapPlan,
@@ -19,24 +19,23 @@ import {
 import { updateNickname } from '@/api/userAxios';
 import { checkVote, createVote } from '@/api/voteAxios';
 import { useMutation } from '@tanstack/react-query';
-import { AxiosError } from 'axios';
+import { AxiosError, AxiosResponse } from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 export interface ErrorResponse {
   message: string;
 }
 
-
 export interface PlanResponse {
   data: any;
   planId: number;
 }
 
-interface UpdateTripMutationVariables {
-  tripId: number;
-  tripData: TripData; // 'TripData' 타입을 적절히 정의해야 합니다.
-  imageList: File[]; // 이미지 리스트가 파일 배열임
-}
+// interface UpdateTripMutation {
+//   tripId: number;
+//   tripData: TripData;
+//   imageList: File[];
+// }
 
 // 작성하기 mutation
 export const useCreatePlanMutaton = () => {
@@ -254,16 +253,20 @@ export const useUpdateNickname = () => {
 export const useUpdateTripMutation = () => {
   const navigate = useNavigate();
 
-  return useMutation<unknown, AxiosError, UpdateTripMutationVariables>({
-    mutationFn: ({ tripId, tripData, imageList }) =>
-      updateTrip(tripId, tripData, imageList),
+  return useMutation<
+    AxiosResponse<any, any>,
+    AxiosError,
+    { tripId: number; formData: FormData }
+  >({
+    // 직접 updateTrip 함수에 인자를 분해하여 전달합니다.
+    mutationFn: ({ tripId, formData }) => updateTrip(tripId, formData),
     onSuccess: () => {
       alert('여행 정보가 성공적으로 수정 되었습니다.');
       navigate('/travelReview'); // 성공 후 이동할 경로
     },
     onError: (error: AxiosError) => {
-      alert(`업데이트 실패: ${error.message}`);
-      console.error('Update trip error:', error);
+      alert(`여행 정보 수정 실패: ${error.message}`);
+      console.error('수정하기 실패', error);
     },
   });
 };

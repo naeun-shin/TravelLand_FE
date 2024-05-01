@@ -2,6 +2,7 @@ import ReviewDetailList from '@/components/commons/user/TravelReview/ReviewDetai
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { getTripDetail } from '@api/reviewAxios';
+import DetailList from '@/components/commons/user/TravelReview/DetailListCard';
 
 const TravelDetailPage = () => {
   // useParam으로 들어오는 값은 string이라서 const tripId를 Number로 강제 치환 진행
@@ -31,8 +32,7 @@ const TravelDetailPage = () => {
     <>
       <div style={{ marginBottom: '200px' }}>
         <ReviewDetailList tripDetail={tripDetail.data} />
-        {/* <ReviewContent /> */}
-        {/* <ReviewCard /> */}
+        <DetailList />
       </div>
     </>
   );

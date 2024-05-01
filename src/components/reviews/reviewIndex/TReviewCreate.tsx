@@ -46,6 +46,17 @@ const ReviewCreate = () => {
     localStorage.setItem('reviewState', JSON.stringify(tripData));
   }, [title, isPublic, address, placeName, cost, tripStartDate, tripEndDate]);
 
+  useEffect(() => {
+    const savedState = JSON.parse(localStorage.getItem('reviewState') || '{}');
+    setTitle(savedState.title || '');
+    setIsPublic(savedState.isPublic ?? true);
+    setCost(savedState.cost || '');
+    setAddress(savedState.address || '');
+    setTripStartDate(savedState.tripStartDate || '');
+    setTripEndDate(savedState.tripEndDate || '');
+    setPlaceName(savedState.placeName || '');
+  }, []);
+
   // 각 입력 필드의 변화를 다루는 함수들
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
@@ -60,14 +71,9 @@ const ReviewCreate = () => {
     setPlaceName(e.target.value);
   };
   const handleCostChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // 숫자가 아닌 모든 문자를 제거합니다.
-    const value = e.target.value.replace(/\D/g, '');
-    // 숫자만 있는 문자열을 콤마를 포함한 포맷으로 변환합니다.
-    const formattedValue = value.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-    // 유효한 숫자가 입력되었거나 입력 필드가 비워진 경우에만 상태를 업데이트합니다.
-    if (!isNaN(parseFloat(value)) || value === '') {
-      setCost(formattedValue);
-    }
+    const value = e.target.value.replace(/\D/g, ''); // 숫자가 아닌 모든 문자 제거
+    const formattedValue = value.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,'); // 숫자 포맷팅
+    setCost(formattedValue);
   };
   const handleStartDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTripStartDate(e.target.value);
@@ -95,13 +101,16 @@ const ReviewCreate = () => {
       alert('모든 필수 입력 사항을 작성해주세요!');
       return; // 다음 단계로 넘어가지 않음
     }
+
+    const formattedCost = cost.replace(/,/g, '');
+    const numericCost = parseFloat(formattedCost);
     // 입력된 데이터를 객체로 생성하여 2단계 페이지로 넘김!
     const tripData = {
       title,
       isPublic,
       address,
       placeName,
-      cost: parseFloat(cost),
+      cost: numericCost,
       tripStartDate,
       tripEndDate,
       // 2단계에서 입력받을 나머지 데이터들 일단 빈값으로 둠!
