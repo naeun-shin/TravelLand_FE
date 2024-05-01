@@ -40,7 +40,7 @@ const ReviewCreate2 = () => {
 
     // LocalStorage에 상태 저장하기
     try {
-      // 이미지 파일을 DataURL로 변환하여 저장
+      // 이미지 파일을 DataURL로 변환하여 저장합니다.
       const imageUrls = await Promise.all(
         imageFiles.map((file) => {
           return new Promise((resolve, reject) => {

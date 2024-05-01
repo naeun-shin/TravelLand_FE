@@ -13,10 +13,13 @@ import {
 const EditTrip = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
-  const initialData =
-    state?.formData || JSON.parse(localStorage.getItem('reviewState') || '{}');
-
-  console.log('들어온데이터 확인:', initialData);
+  const initialData = {
+    ...state?.formData,
+    tripId:
+      state?.tripId ||
+      JSON.parse(localStorage.getItem('reviewState') || '{}').tripId,
+  };
+  console.log('들어온 데이터 확인:', initialData);
 
   const [title, setTitle] = useState(initialData.title || '');
   const [isPublic, setIsPublic] = useState(initialData.isPublic ?? true);
@@ -38,6 +41,7 @@ const EditTrip = () => {
       cost,
       tripStartDate,
       tripEndDate,
+      tripId: initialData.tripId,
     };
     console.log('데이터 확인', tripData);
     localStorage.setItem('reviewState', JSON.stringify(tripData));
@@ -56,14 +60,9 @@ const EditTrip = () => {
     setPlaceName(e.target.value);
   };
   const handleCostChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // 숫자가 아닌 모든 문자를 제거합니다.
+    // 숫자만 입력되도록 처리
     const value = e.target.value.replace(/\D/g, '');
-    // 숫자만 있는 문자열을 콤마를 포함한 포맷으로 변환합니다.
-    const formattedValue = value.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-    // 유효한 숫자가 입력되었거나 입력 필드가 비워진 경우에만 상태를 업데이트합니다.
-    if (!isNaN(parseFloat(value)) || value === '') {
-      setCost(formattedValue);
-    }
+    setCost(value);
   };
   const handleStartDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTripStartDate(e.target.value);
@@ -79,6 +78,7 @@ const EditTrip = () => {
       return;
     }
     const modifiedData = {
+      ...initialData,
       title,
       isPublic,
       address,
@@ -94,22 +94,22 @@ const EditTrip = () => {
     navigate('/editTrip/2', { state: modifiedData });
   };
 
-  //   useEffect(() => {
-  //     try {
-  //       const storedData = localStorage.getItem('editedReviewState');
-  //       const initialData = storedData ? JSON.parse(storedData) : {};
-  //       setTitle(initialData.title || '');
-  //       setIsPublic(initialData.isPublic ?? true);
-  //       setAddress(initialData.address || '');
-  //       setPlaceName(initialData.placeName || '');
-  //       setCost(initialData.cost?.toString() || '');
-  //       setTripStartDate(initialData.tripStartDate || '');
-  //       setTripEndDate(initialData.tripEndDate || '');
-  //     } catch (error) {
-  //       console.error('데이터를 불러오는 중 오류가 발생했습니다:', error);
-  //       alert('저장된 데이터를 불러오는 데 실패했습니다.');
-  //     }
-  //   }, [initialData]);
+  // useEffect(() => {
+  //   try {
+  //     const storedData = localStorage.getItem('editedReviewState');
+  //     const initialData = storedData ? JSON.parse(storedData) : {};
+  //     setTitle(initialData.title || '');
+  //     setIsPublic(initialData.isPublic ?? true);
+  //     setAddress(initialData.address || '');
+  //     setPlaceName(initialData.placeName || '');
+  //     setCost(initialData.cost?.toString() || '');
+  //     setTripStartDate(initialData.tripStartDate || '');
+  //     setTripEndDate(initialData.tripEndDate || '');
+  //   } catch (error) {
+  //     console.error('데이터를 불러오는 중 오류가 발생했습니다:', error);
+  //     alert('저장된 데이터를 불러오는 데 실패했습니다.');
+  //   }
+  // }, [initialData]);
 
   return (
     <form style={{ width: '700px', margin: '50px auto' }}>
@@ -303,19 +303,6 @@ const ReviewNextButton = styled.button`
 const Title = styled.div`
   margin-left: 10px;
 `;
-
-// const BringPlanBtn = styled.button`
-//   width: 700px;
-//   height: 60px;
-//   margin: 0 auto;
-//   border-radius: 20px;
-//   border: none;
-//   font-size: 18px;
-//   background-color: #cff4ff;
-//   color: #238bad;
-//   margin: 25px 0;
-//   cursor: pointer;
-// `;
 
 export const TitleWithCircle = styled.span`
   position: relative;

@@ -2,34 +2,30 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import ToggleButton from '@/components/commons/buttons/ToggleButton';
 import { ModernInput } from '@/components/commons/inputs/Input';
-import styled from 'styled-components';
 import CategoryButton from '@/components/commons/buttons/CategoryButton';
 import { TitleWithCircle } from './TReviewCreate';
-import { AxiosError } from 'axios';
-import { TripData } from '@/api/interfaces/reviewInterface';
-import { useMutation } from '@tanstack/react-query';
-import { createTrip } from '@/api/reviewAxios';
+import { useUpdateTripMutation } from '@/hooks/useMutation'; // 여기에 추가됨
+import styled from 'styled-components';
 
 const EditTrip3 = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
+  console.log(state);
   const [isPublic, setIsPublic] = useState<boolean>(state?.isPublic || false);
   const [content, setContent] = useState<string>('');
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  const [hasAttemptedSubmit, setHasAttemptedSubmit] = useState<boolean>(false);
+  const [hasAttemptedSubmit] = useState<boolean>(false);
+
+  useEffect(() => {
+    console.log('Current state:', state);
+  }, [state]);
+
+  // useUpdateTripMutation 훅을 여기서 호출합니다.
+  const updateMutation = useUpdateTripMutation();
 
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value);
   };
-
-  useEffect(() => {
-    const storedData = localStorage.getItem('reviewState');
-    if (storedData) {
-      const initialData = JSON.parse(storedData);
-      setContent(initialData.content || '');
-      // 다른 필요한 데이터도 로드할 수 있습니다.
-    }
-  }, []);
 
   const handleTagClick = (
     tag: string,
@@ -52,34 +48,23 @@ const EditTrip3 = () => {
     navigate(-1);
   };
 
-  const mutation = useMutation<TripData, AxiosError, FormData>({
-    mutationFn: createTrip,
-    onSuccess: () => {
-      alert('여행 정보 작성 성공!');
-      localStorage.removeItem('reviewState');
-      navigate('/travelReview');
-    },
-    onError: (error) => {
-      const message = error.response?.data;
-      alert(`여행 정보 등록 실패! 오류: ${message}`);
-      console.error(message);
-    },
-  });
-
+  // 여기에 제출 로직을 추가합니다.
   const handleSubmit = async (
     event: React.FormEvent<HTMLFormElement>,
   ): Promise<void> => {
     event.preventDefault();
-    setHasAttemptedSubmit(true);
-    if (content.trim() === '' || selectedTags.length === 0) {
-      alert('필수 입력 사항을 입력해주세요!');
+    if (!state || !state.tripId) {
+      console.error('Trip ID 없음');
+      alert('Trip ID 가 안보이네..');
       return;
     }
 
     const formData = new FormData();
+    // 모든 데이터를 requestDto로 묶어서 JSON 문자열로 변환하여 전송
     formData.append(
       'requestDto',
       JSON.stringify({
+        tripId: state.tripId,
         title: state.title,
         content: content,
         tripStartDate: state.tripStartDate,
@@ -99,8 +84,25 @@ const EditTrip3 = () => {
       formData.append('imageList', file);
     });
 
-    mutation.mutate(formData);
+    updateMutation.mutate({
+      tripId: state.tripId,
+      formData: formData,
+    });
+
+    localStorage.removeItem('editedReviewState');
+    localStorage.removeItem('reviewState');
   };
+
+  useEffect(() => {
+    console.log(state);
+    const storedData = localStorage.getItem('reviewState');
+    if (storedData) {
+      const initialData = JSON.parse(storedData);
+      setContent(initialData.content || '');
+      setSelectedTags(initialData.hashTag || []);
+      setIsPublic(initialData.isPublic ?? false);
+    }
+  }, []);
 
   useEffect(() => {
     const storedData = localStorage.getItem('editedReviewState');
@@ -113,7 +115,20 @@ const EditTrip3 = () => {
   }, []);
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form
+      onSubmit={handleSubmit}
+      style={{ width: '700px', margin: '50px auto' }}
+    >
+      <div
+        style={{
+          fontSize: '28px',
+          fontWeight: '600',
+          textAlign: 'center',
+          marginBottom: '50PX',
+        }}
+      >
+        여행 정보 수정하기
+      </div>
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
         <div style={{ width: '100%' }}>
           <Title>
@@ -194,12 +209,12 @@ const EditTrip3 = () => {
           </div>
           <ReviewBtnBox>
             <ReviewBottomSection>
-              <ReviewBackButton onClick={handleBackClick}>
+              <ReviewBackButton type="button" onClick={handleBackClick}>
                 뒤로
               </ReviewBackButton>
             </ReviewBottomSection>
             <ReviewBottomSection>
-              <ReviewNextButton>작성하기</ReviewNextButton>
+              <ReviewNextButton>수정하기</ReviewNextButton>
             </ReviewBottomSection>
           </ReviewBtnBox>
         </div>

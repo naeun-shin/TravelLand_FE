@@ -37,7 +37,9 @@ const ReviewDetailList = ({ tripDetail }: ReviewDetailListProps) => {
 
   const handleEditClick = () => {
     // tripDetail은 현재 페이지에서 사용 중인 여행 리뷰의 상세 정보입니다.
-    navigate('/editTrip', { state: { formData: tripDetail } });
+    navigate('/editTrip', {
+      state: { formData: tripDetail, tripId: tripDetail.tripId },
+    });
   };
 
   // tripDetail로부터 초기 like 및 scrap 상태를 설정
@@ -80,7 +82,12 @@ const ReviewDetailList = ({ tripDetail }: ReviewDetailListProps) => {
     // 숫자가 아닌 모든 문자를 제거
     const numericOnly = input.replace(/\D/g, '');
     // 숫자를 콤마로 포맷
-    return numericOnly.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+    const numberWithCommas = numericOnly.replace(
+      /(\d)(?=(\d{3})+(?!\d))/g,
+      '$1,',
+    );
+    // 원화 표시를 추가하여 반환
+    return numberWithCommas + '원';
   };
 
   // 여행 정보 -> 삭제하기
@@ -152,7 +159,7 @@ const ReviewDetailList = ({ tripDetail }: ReviewDetailListProps) => {
         </S.ImageBox>
       </S.Container>
       <Container>
-        <DateRange>{`${tripDetail.area} |${tripDetail.placeName} ${tripDetail.tripStartDate} - ${tripDetail.tripEndDate} | ${formatNumberWithRegex(tripDetail.cost.toString())}원`}</DateRange>{' '}
+        <DateRange>{`${tripDetail.area} |${tripDetail.placeName} ${tripDetail.tripStartDate} - ${tripDetail.tripEndDate} | ${formatNumberWithRegex(tripDetail.cost.toString())}`}</DateRange>{' '}
         <ReviewHeader>
           <LocationTag>{`${tripDetail.title}`}</LocationTag>
           <div style={{ display: 'flex', alignItems: 'center' }}>
