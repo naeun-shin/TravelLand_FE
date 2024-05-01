@@ -5,6 +5,7 @@ import {
   MypageReviewParams,
   TripListParams,
 } from './interfaces/reviewInterface';
+// import { LoogoutResponse } from './interfaces/userInterface';
 
 // 유저 정보
 export const getUserInfo = async () => {
@@ -12,6 +13,15 @@ export const getUserInfo = async () => {
     return await instanceWithToken.get('/users/myInfo');
   } catch (error) {
     console.error(error);
+    throw error;
+  }
+};
+
+export const getLogout = async () => {
+  try {
+    return await instanceWithToken.get('/users/logout');
+  } catch (error) {
+    console.log(error);
     throw error;
   }
 };

@@ -58,6 +58,7 @@ const DivWrapper = styled.div`
   border-bottom: 2px solid #eee;
   width: 1100px;
 `;
+
 const SearchTitle = styled.div`
   width: 110px;
   cursor: pointer;
