@@ -30,10 +30,14 @@ const MyPageReviewList = () => {
     size: 10,
   });
 
+  console.log(data?.data.trips);
+
   const { data: scrapData } = useMypageScrapTrip({
     page: 1,
     size: 10,
   });
+
+  console.log(scrapData);
 
   const handleCardClick = (tripId?: number) => {
     navigate(`/travelDetail/${tripId}`);
