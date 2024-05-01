@@ -69,7 +69,6 @@ const PlanUpdate2: React.FC = () => {
   // 여기에 planId 상태를 추가합니다.
   const [planId, setPlanId] = useState<number>(0);
 
-  console.log(location.state);
   useEffect(() => {
     if (location.state && location.state.planDetails) {
       const {
@@ -227,7 +226,6 @@ const PlanUpdate2: React.FC = () => {
       isVotable: isVotable,
       dayPlans: dayPlans,
     };
-    // console.log('Submit:', updatedWholePlan);
 
     updatePlanList.mutate(updatedWholePlan);
   };
