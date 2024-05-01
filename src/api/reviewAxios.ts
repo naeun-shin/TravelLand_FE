@@ -124,3 +124,17 @@ export const cancelScrapTrip = async (tripId: number) => {
     throw error;
   }
 };
+
+// 여행 상세보기 -> 좋아요 기반 여행글 추천 조회!
+
+export const getRecommendedTrips = async (
+  tripId: number,
+): Promise<AxiosResponse<any>> => {
+  try {
+    const response = await instance.get(`/v1/trips/${tripId}/recommend`);
+    return response;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
