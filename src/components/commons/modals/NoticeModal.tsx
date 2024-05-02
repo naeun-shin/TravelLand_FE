@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
-import styled from 'styled-components';
+import * as S from '@/components/commons/modals/Modal.style';
 import Vote from '@/components/vote/Vote';
 import Button from '../buttons/Button';
 
@@ -65,26 +65,26 @@ export const NoticeModal = () => {
   // HTML 파일 내에 해당 ID를 가진 요소가 있는지 확인하세요.
   return ReactDOM.createPortal(
     <>
-      <Modaldrop
+      <S.Modaldrop
         style={{ opacity: slide ? 1 : 0 }}
         onClick={handleCloseModal}
       />
-      <ModalWrapper
+      <S.ModalWrapper
         style={{
           opacity: slide ? 1 : 0,
           transform: slide ? 'translateY(0)' : 'translateY(-20px)',
         }}
       >
-        <ModalContainer>
-          <MenuItem>
-            <TitleBox>
-              <Title>
+        <S.AllModalContainer>
+          <S.NotiMenuItem>
+            <S.TitleBox>
+              <S.Title>
                 {' '}
                 <img src="/assets/icons/blueDot.svg" />
                 봄날의 고성
-              </Title>{' '}
+              </S.Title>{' '}
               플랜에 초대되었습니다. 수락하시겠습니까?
-            </TitleBox>
+            </S.TitleBox>
             <div>
               <Button
                 text="거절"
@@ -97,16 +97,16 @@ export const NoticeModal = () => {
               />
               <Button text="수락" borderRadius="15px" width="100px" />
             </div>
-          </MenuItem>
-          <MenuItem>
-            <TitleBox>
-              <Title>
+          </S.NotiMenuItem>
+          <S.NotiMenuItem>
+            <S.TitleBox>
+              <S.Title>
                 {' '}
                 <img src="/assets/icons/blueDot.svg" />
                 비가 안온다면 어떤 플랜이 나을까요?
-              </Title>{' '}
+              </S.Title>{' '}
               에 투표할 수 있습니다.
-            </TitleBox>
+            </S.TitleBox>
             <div>
               <Button
                 text="투표하러 가기"
@@ -118,9 +118,9 @@ export const NoticeModal = () => {
                 onClick={handleOpenVoteModal}
               />
             </div>
-          </MenuItem>
-        </ModalContainer>
-      </ModalWrapper>
+          </S.NotiMenuItem>
+        </S.AllModalContainer>
+      </S.ModalWrapper>
       {/* 투표 모달이 열렸을 때, Vote 컴포넌트를 렌더링합니다. */}
       {isVoteModalOpen && (
         <Vote isOpen={isVoteModalOpen} onClose={handleCloseVoteModal} />
@@ -129,68 +129,3 @@ export const NoticeModal = () => {
     document.getElementById('notice-modal-root')!,
   );
 };
-
-const ModalWrapper = styled.div`
-  font-size: 18px;
-  position: fixed;
-  width: 480px;
-  /* height: 400px; */
-  right: 26%;
-  top: 100px;
-  z-index: 10;
-  opacity: 0;
-  transition:
-    opacity 0.3s,
-    transform 0.3s;
-  transform-origin: top right;
-`;
-
-const Modaldrop = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 1;
-  transition: opacity 1s;
-`;
-
-const ModalContainer = styled.div`
-  background-color: #fff;
-  border-radius: 20px;
-  /* overflow: hidden; */
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-  margin-bottom: 8px;
-`;
-
-const MenuItem = styled.div`
-  cursor: pointer;
-  padding: 30px 16px;
-  border-bottom: 1px solid #eee;
-
-  &:last-child {
-    border-bottom: none;
-  }
-
-  &:hover {
-    background-color: #f9f9f9;
-    border-radius: 15px;
-  }
-`;
-
-const TitleBox = styled.div`
-  display: flex;
-  padding: 5px 0px;
-`;
-
-const Title = styled.div`
-  color: #5ac8ec;
-  font-size: 18px;
-  display: flex;
-  align-items: flex-start;
-  padding-bottom: 15px;
-
-  img {
-    padding: 0px 5px;
-  }
-`;

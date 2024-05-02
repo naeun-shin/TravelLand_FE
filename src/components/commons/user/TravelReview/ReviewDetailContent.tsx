@@ -1,6 +1,6 @@
 // import React from 'react';
 // import { TripDetail } from '@/api/interfaces/reviewInterface';
-import styled from 'styled-components';
+import * as S from '@/components/commons/user/TravelReview/Review.style';
 
 // interface ReviewContentProps {
 //   tripDetail: TripDetail;
@@ -9,8 +9,8 @@ import styled from 'styled-components';
 const ReviewContent = () => {
   return (
     <>
-      <Container>
-        <CommentsList>
+      <S.Container>
+        <S.CommentsList>
           {/* <Comment>
             <UserAvatar />
             <div>
@@ -39,75 +39,11 @@ const ReviewContent = () => {
               <CommentText>좋은 정보 감사합니다~😊</CommentText>
             </div>
           </Comment> */}
-        </CommentsList>
-      </Container>
+        </S.CommentsList>
+      </S.Container>
       {/* <ViewMore>댓글 더보기</ViewMore> */}
     </>
   );
 };
 
 export default ReviewContent;
-
-const Container = styled.div`
-  width: 1400px;
-  margin: 0 auto;
-  padding: 16px;
-  border-radius: 8px;
-  background: #fff;
-`;
-
-// const ContentBox = styled.div`
-//   min-height: 350px;
-//   overflow: auto;
-// `;
-
-// const ContentDiv = styled.p`
-//   width: 85%;
-//   font-size: 16px;
-//   font-size: 16px;
-//   line-height: 1.6;
-//   margin-bottom: 1em;
-//   white-space: pre-line;
-//   word-wrap: break-word;
-// `;
-
-const CommentsList = styled.ul`
-  list-style: none;
-  margin: 0;
-  padding: 0;
-`;
-
-// const Comment = styled.li`
-//   display: flex;
-//   align-items: center;
-//   padding: 15px 0;
-//   border-top: 1px solid #bbb;
-// `;
-
-// const UserAvatar = styled.div`
-//   width: 40px;
-//   height: 40px;
-//   border-radius: 20px;
-//   background: #ddd;
-//   margin-right: 8px;
-// `;
-
-// const CommentName = styled.div`
-//   font-size: 16px;
-//   font-weight: 600;
-// `;
-
-// const CommentText = styled.div`
-//   padding-top: 5px;
-//   color: #4a4a4a;
-// `;
-
-// const ViewMore = styled.div`
-//   text-align: center;
-//   margin-top: 10px;
-//   width: 100%;
-//   padding: 8px 0;
-//   cursor: pointer;
-//   padding-bottom: 40px;
-//   border-bottom: 4px solid #ddd;
-// `;

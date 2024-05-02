@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import ToggleButton from '@/components/commons/buttons/ToggleButton';
 import { ModernInput } from '@/components/commons/inputs/Input';
-import styled from 'styled-components';
+import * as S from '@/components/reviews/reviewIndex/CreateEditStyle';
 import {
   DateFieldsContainer,
   FieldContainer,
@@ -94,23 +94,6 @@ const EditTrip = () => {
     navigate('/editTrip/2', { state: modifiedData });
   };
 
-  // useEffect(() => {
-  //   try {
-  //     const storedData = localStorage.getItem('editedReviewState');
-  //     const initialData = storedData ? JSON.parse(storedData) : {};
-  //     setTitle(initialData.title || '');
-  //     setIsPublic(initialData.isPublic ?? true);
-  //     setAddress(initialData.address || '');
-  //     setPlaceName(initialData.placeName || '');
-  //     setCost(initialData.cost?.toString() || '');
-  //     setTripStartDate(initialData.tripStartDate || '');
-  //     setTripEndDate(initialData.tripEndDate || '');
-  //   } catch (error) {
-  //     console.error('데이터를 불러오는 중 오류가 발생했습니다:', error);
-  //     alert('저장된 데이터를 불러오는 데 실패했습니다.');
-  //   }
-  // }, [initialData]);
-
   return (
     <form style={{ width: '700px', margin: '50px auto' }}>
       <h2 style={{ width: '200px', margin: '50px auto', fontSize: '26px' }}>
@@ -119,10 +102,10 @@ const EditTrip = () => {
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
         <div style={{ width: '100%' }}>
           <div>
-            <Title>
-              <TitleWithCircle>제목</TitleWithCircle>
-            </Title>
-            <ReviewBoxWithSpaceBetween>
+            <S.Title>
+              <S.TitleWithCircle>제목</S.TitleWithCircle>
+            </S.Title>
+            <S.ReviewBoxWithSpaceBetween>
               <div style={{ display: 'flex', alignItems: 'center' }}>
                 <img
                   src="/assets/icons/Rectangle.png"
@@ -140,21 +123,21 @@ const EditTrip = () => {
                   value={title}
                 />
                 {hasAttemptedSubmit && title === '' && (
-                  <ErrorMessage>제목을 입력해주세요</ErrorMessage>
+                  <S.ErrorMessage>제목을 입력해주세요</S.ErrorMessage>
                 )}
               </div>
 
               <div>
                 <ToggleButton isChecked={isPublic} onToggle={toggleIsPublic} />
               </div>
-            </ReviewBoxWithSpaceBetween>
+            </S.ReviewBoxWithSpaceBetween>
           </div>
           <div>
             <div>
-              <ReviewBox>
-                <ReviewContent>
+              <S.ReviewBox>
+                <S.ReviewContent>
                   <div>
-                    <TitleWithCircle>지역</TitleWithCircle>
+                    <S.TitleWithCircle>지역</S.TitleWithCircle>
                   </div>
                   <ModernInput
                     type="text"
@@ -167,15 +150,15 @@ const EditTrip = () => {
                     value={address}
                   />
                   {hasAttemptedSubmit && address === '' && (
-                    <ErrorMessage>지역을 입력해주세요</ErrorMessage>
+                    <S.ErrorMessage>지역을 입력해주세요</S.ErrorMessage>
                   )}
-                </ReviewContent>
-              </ReviewBox>
+                </S.ReviewContent>
+              </S.ReviewBox>
               <hr />
-              <ReviewBox>
-                <ReviewContent>
+              <S.ReviewBox>
+                <S.ReviewContent>
                   <div>
-                    <TitleWithCircle>위치</TitleWithCircle>
+                    <S.TitleWithCircle>위치</S.TitleWithCircle>
                   </div>
                   <ModernInput
                     type="text"
@@ -188,15 +171,15 @@ const EditTrip = () => {
                     value={placeName}
                   />
                   {hasAttemptedSubmit && placeName === '' && (
-                    <ErrorMessage>위치를 입력해주세요</ErrorMessage>
+                    <S.ErrorMessage>위치를 입력해주세요</S.ErrorMessage>
                   )}
-                </ReviewContent>
-              </ReviewBox>
+                </S.ReviewContent>
+              </S.ReviewBox>
               <hr />
-              <ReviewBox>
-                <ReviewContent>
+              <S.ReviewBox>
+                <S.ReviewContent>
                   <div>
-                    <TitleWithCircle>예산</TitleWithCircle>
+                    <S.TitleWithCircle>예산</S.TitleWithCircle>
                   </div>
                   <ModernInput
                     type="text"
@@ -209,15 +192,15 @@ const EditTrip = () => {
                     value={cost}
                   />
                   {hasAttemptedSubmit && cost === '' && (
-                    <ErrorMessage>예산을 입력해주세요</ErrorMessage>
+                    <S.ErrorMessage>예산을 입력해주세요</S.ErrorMessage>
                   )}
-                </ReviewContent>
-              </ReviewBox>
+                </S.ReviewContent>
+              </S.ReviewBox>
               <hr />
               <DateFieldsContainer>
                 <FieldContainer>
                   <Label>
-                    <TitleWithCircle>여행 시작일</TitleWithCircle>
+                    <S.TitleWithCircle>여행 시작일</S.TitleWithCircle>
                   </Label>
                   <Input
                     type="date"
@@ -225,12 +208,12 @@ const EditTrip = () => {
                     onChange={handleStartDateChange}
                   />
                   {hasAttemptedSubmit && tripStartDate === '' && (
-                    <ErrorMessage>여행 시작일을 입력해주세요</ErrorMessage>
+                    <S.ErrorMessage>여행 시작일을 입력해주세요</S.ErrorMessage>
                   )}
                 </FieldContainer>
                 <FieldContainer>
                   <Label>
-                    <TitleWithCircle>여행 종료일</TitleWithCircle>
+                    <S.TitleWithCircle>여행 종료일</S.TitleWithCircle>
                   </Label>
                   <Input
                     type="date"
@@ -238,7 +221,7 @@ const EditTrip = () => {
                     onChange={handleEndDateChange}
                   />
                   {hasAttemptedSubmit && tripEndDate === '' && (
-                    <ErrorMessage>여행 종료일을 입력해주세요</ErrorMessage>
+                    <S.ErrorMessage>여행 종료일을 입력해주세요</S.ErrorMessage>
                   )}
                 </FieldContainer>
               </DateFieldsContainer>
@@ -246,76 +229,11 @@ const EditTrip = () => {
           </div>
         </div>
       </div>
-      <ReviewBottomSection>
-        <ReviewNextButton onClick={handleSubmit}>다음</ReviewNextButton>
-      </ReviewBottomSection>
+      <S.ReviewBottomSection>
+        <S.ReviewNextButton onClick={handleSubmit}>다음</S.ReviewNextButton>
+      </S.ReviewBottomSection>
     </form>
   );
 };
 
 export default EditTrip;
-
-const ErrorMessage = styled.div`
-  color: #ff0000;
-  font-size: 14px;
-`;
-
-const ReviewBoxWithSpaceBetween = styled.div`
-  display: flex;
-  justify-content: space-between;
-  div {
-    padding-left: 5px;
-  }
-`;
-
-const ReviewBox = styled.div`
-  display: flex;
-  align-items: 'flex-start';
-  padding: 10px 0px;
-`;
-
-const ReviewContent = styled.div`
-  display: flex;
-  padding: 5px;
-`;
-
-const ReviewBottomSection = styled.div`
-  display: flex;
-  justify-content: center;
-  padding: 20px 15px;
-`;
-
-const ReviewNextButton = styled.button`
-  background-color: #5ac8ec;
-  color: white;
-  justify-content: center;
-  border: none;
-  width: 160px;
-  height: 50px;
-  border-radius: 16px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #cff4ff;
-  }
-`;
-
-const Title = styled.div`
-  margin-left: 10px;
-`;
-
-export const TitleWithCircle = styled.span`
-  position: relative;
-  margin-right: 5px;
-
-  &::before {
-    content: '';
-    position: absolute;
-    width: 6px;
-    height: 6px;
-    background-color: #f43b3b;
-    border-radius: 50%;
-    top: -3px;
-    right: -10px;
-  }
-`;
