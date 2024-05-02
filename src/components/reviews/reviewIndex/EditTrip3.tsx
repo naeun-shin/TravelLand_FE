@@ -3,7 +3,6 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import ToggleButton from '@/components/commons/buttons/ToggleButton';
 import { ModernInput } from '@/components/commons/inputs/Input';
 import CategoryButton from '@/components/commons/buttons/CategoryButton';
-import { TitleWithCircle } from './TReviewCreate';
 import { useUpdateTripMutation } from '@/hooks/useMutation'; // 여기에 추가됨
 import * as S from '@/components/reviews/reviewIndex/CreateEditStyle';
 
@@ -131,7 +130,7 @@ const EditTrip3 = () => {
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
         <div style={{ width: '100%' }}>
           <S.Title>
-            <TitleWithCircle>제목</TitleWithCircle>
+            <S.TitleWithCircle>제목</S.TitleWithCircle>
           </S.Title>
           <S.ReviewBoxWithSpaceBetween>
             <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -159,7 +158,7 @@ const EditTrip3 = () => {
           <S.ReviewBox>
             <S.ReviewContent>
               <div>
-                <TitleWithCircle>내용</TitleWithCircle>
+                <S.TitleWithCircle>내용</S.TitleWithCircle>
               </div>
               {hasAttemptedSubmit && content.trim() === '' && (
                 <S.ErrorMessage>내용을 입력해주세요</S.ErrorMessage>
@@ -174,7 +173,7 @@ const EditTrip3 = () => {
           <S.HashTagContainer>
             <div style={{ display: 'flex' }}>
               <S.HashTagTitle>
-                <TitleWithCircle>해시태그</TitleWithCircle>
+                <S.TitleWithCircle>해시태그</S.TitleWithCircle>
               </S.HashTagTitle>
               <S.HashTagDescription>
                 최대 4개를 선택할 수 있어요
