@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import * as S from '../Plan.style';
 import Map from '@/components/maps/Map';
-import { usePlanDetailQuery } from '@/hooks/useQuery';
 import { useNavigate, useParams } from 'react-router-dom';
 import Button from '@/components/commons/buttons/Button';
 import { FaLocationDot } from 'react-icons/fa6';
@@ -15,6 +14,7 @@ import {
   useCreateScrapPlanMutation,
   useDeleteMutation,
 } from '@/hooks/useMutation/useTravelPlanMutation';
+import { usePlanDetailQuery } from '@/hooks/useQuery/useTravelPlanQuery';
 
 interface ButtonProps {
   active: boolean;
