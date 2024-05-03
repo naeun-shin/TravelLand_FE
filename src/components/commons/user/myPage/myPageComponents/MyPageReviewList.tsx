@@ -3,9 +3,6 @@ import Button from '@/components/commons/buttons/Button';
 import ListCard from '@/components/commons/mainItem/ListCard';
 import * as S from '@/components/commons/user/myPage/MyPage.style';
 import { TravelReviewCardSection } from '@/components/reviews/reviewIndex/TravelReviewPage.styles';
-// import { useMyTripListQuery } from '@/hooks/useQuery';
-// import { useState } from 'react';
-// import { getMyTripList } from '@/api/userAxios';
 import { useNavigate } from 'react-router-dom';
 import {
   useMypageTrip,
@@ -58,17 +55,6 @@ const MyPageReviewList = () => {
   const handleMyScrapListClick = () => {
     setShowScrapList(true);
   };
-
-  // const [page, _] = useState(1); // 페이지 번호
-  // const [size] = useState(10); // 한 페이지 당 받아올 겟수
-  // const [sortBy] = useState('createdAt');
-  // const [isAsc] = useState(true);
-
-  // 페이지네이션을 위한 파라미터 설정
-  // const tripListParams = { page, size, isAsc, sortBy };
-
-  // const { data, isError, isLoading } = useMyTripListQuery(tripListParams);
-  // console.log(data);
 
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error: {error.message}</div>;

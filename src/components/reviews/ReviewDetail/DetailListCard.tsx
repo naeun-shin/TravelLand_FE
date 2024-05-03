@@ -1,5 +1,5 @@
-import * as S from '@/components/commons/user/ReviewDetail/ReviewDetail.style';
-import ListCard from '../../mainItem/ListCard';
+import * as S from '@/components/reviews/ReviewDetail/ReviewDetail.style';
+import ListCard from '../../commons/mainItem/ListCard';
 import { getRecommendedTrips } from '@/api/reviewAxios';
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';

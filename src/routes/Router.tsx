@@ -82,9 +82,9 @@ export const router = createBrowserRouter([
       {
         path: '/planCreate/1',
         element: (
-          // <PrivateRoute>
-          <TravelPlanCreate1 />
-          // </PrivateRoute>
+          <PrivateRoute>
+            <TravelPlanCreate1 />
+          </PrivateRoute>
         ),
       },
       {
