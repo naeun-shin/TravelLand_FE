@@ -1,16 +1,15 @@
 import styled from 'styled-components';
 
-const MyPageContainer = styled.div`
+export const MyPageContainer = styled.div`
   display: flex;
 `;
 
-const UserInfoContainer = styled.div`
+export const UserInfoContainer = styled.div`
   border-radius: 25px;
   border: 1px solid lightgray;
   height: 100px;
 
   display: flex;
-  /* justify-content: space-between; */
   align-items: center;
 
   padding: 0px 15px;
@@ -18,7 +17,6 @@ const UserInfoContainer = styled.div`
 
   width: 65%;
   img {
-    /* border: 1px solid black; */
     width: 65px;
     height: 65px;
     border-radius: 50%;
@@ -34,13 +32,13 @@ const UserInfoContainer = styled.div`
   }
 `;
 
-const UserInfoCotent = styled.div`
+export const UserInfoCotent = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
 `;
 
-const UserOtherInfoContainer = styled.div`
+export const UserOtherInfoContainer = styled.div`
   width: 35%;
   border: 1px solid lightgray;
   border-radius: 25px;
@@ -49,25 +47,25 @@ const UserOtherInfoContainer = styled.div`
   margin: 15px 10px;
 `;
 
-const UserInfoContentName = styled.div`
+export const UserInfoContentName = styled.div`
   display: flex;
   flex-direction: column;
 `;
 
 // 아래 탭 스타일
-const MyPageTabStyle = styled.div`
+export const MyPageTabStyle = styled.div`
   display: flex;
   flex-direction: row;
   padding: 2px;
 `;
 
-const MyPageButton = styled.div`
+export const MyPageButton = styled.div`
   padding: 25px 5px;
   display: flex;
   justify-content: flex-end;
 `;
 
-const MyPageTabButton = styled.button<{ isActive: boolean }>`
+export const MyPageTabButton = styled.button<{ isActive: boolean }>`
   width: 110px;
   cursor: pointer;
   font-size: 24px;
@@ -87,7 +85,7 @@ const MyPageTabButton = styled.button<{ isActive: boolean }>`
   }
 `;
 
-const MyPlanListContainer = styled.div`
+export const MyPlanListContainer = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -95,14 +93,14 @@ const MyPlanListContainer = styled.div`
   margin-bottom: 300px;
 `;
 
-const MyPageInvitedContainer = styled.div`
+export const MyPageInvitedContainer = styled.div`
   padding: 10px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 25px;
 `;
 
-const MyPagePagination = styled.div`
+export const MyPagePagination = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -115,16 +113,35 @@ const MyPagePagination = styled.div`
     border: none;
   }
 `;
-export {
-  UserInfoContentName,
-  MyPageContainer,
-  UserInfoContainer,
-  UserInfoCotent,
-  MyPagePagination,
-  MyPageTabStyle,
-  MyPageButton,
-  MyPageTabButton,
-  MyPageInvitedContainer,
-  MyPlanListContainer,
-  UserOtherInfoContainer,
-};
+
+// MyPage Tab 스타일
+export const DivWrapper = styled.div`
+  display: flex;
+  position: relative;
+  border-bottom: 2px solid #eee;
+  width: 1100px;
+`;
+
+export const SearchTitle = styled.div`
+  width: 110px;
+  cursor: pointer;
+  font-size: 24px;
+  font-weight: 600;
+  padding: 60px 0 30px 0;
+  position: relative;
+  text-align: center;
+
+  &.active::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -2px;
+    transform: translateX(-50%);
+    width: 100%;
+    border-bottom: 3px solid #000;
+  }
+`;
+
+export const Sort = styled.div`
+  margin-left: 20px;
+`;

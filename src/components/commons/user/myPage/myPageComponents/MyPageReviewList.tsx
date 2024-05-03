@@ -7,7 +7,7 @@ import {
   useMypageScrapTrip,
   useMypageTrip,
 } from '@/hooks/useQuery';
-import { TravelReviewCardSection } from '@/pages/travelReview/TravelReview.styles';
+import { TravelReviewCardSection } from '@/components/reviews/reviewIndex/TravelReviewPage.styles';
 // import { useMyTripListQuery } from '@/hooks/useQuery';
 // import { useState } from 'react';
 // import { getMyTripList } from '@/api/userAxios';

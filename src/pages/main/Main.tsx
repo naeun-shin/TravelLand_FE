@@ -1,26 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import {
-  ButtonContainer,
-  ButtonsWrapper,
-} from '@/components/commons/buttons/Button.style';
-
-import {
-  SmallButton,
-  // TabButton,
-} from '@/components/commons/buttons/Button';
-import MainCard from '@/components/commons/mainItem/MainCard';
-import Maintitle from '@/components/commons/mainItem/MainTitle';
-import ListTitle from '@/components/commons/mainItem/ListTitle';
-import MainList from '@/components/commons/mainItem/MainList';
 import { useNavigate } from 'react-router-dom';
-import SearchModal from './SearchPage';
-// import styled from 'styled-components';
-import {
-  useGetMainRandomListQuery,
-  useGetMainRankListQuery,
-  useGetMainSearchQuery,
-} from '@/hooks/useQuery';
+import SearchModal from '../Search/SearchPageModal';
+import { useGetMainSearchQuery } from '@/hooks/useQuery';
 import PopupModal from '@/components/commons/modals/PopupModal';
+import MainContent from '@/components/commons/mainItem/MainContent';
 
 interface MainProps {
   onClick?: () => void;
@@ -63,20 +46,6 @@ const Main: React.FC<MainProps> = () => {
     }
   }, []);
 
-  // TopTen
-  const {
-    data: TopTenData,
-    isLoading: isLoadingTopTen,
-    isError: isErrorTopTen,
-  } = useGetMainRankListQuery();
-
-  // 랜덤 8개
-  const {
-    data: randomData,
-    isLoading: isLoadingRandom,
-    isError: isErrorRandom,
-  } = useGetMainRandomListQuery();
-
   // 검색 API
   const {
     isLoading: isLoadingSearch,
@@ -100,44 +69,19 @@ const Main: React.FC<MainProps> = () => {
     setSearchModalOpen(!isSearchModalOpen);
   };
 
-  // 모달을 여는 함수
-  // const openSearchModal = () => {
-  //   setSearchModalOpen(true);
-  // };
-
   // // // 모달을 닫는 함수
   const closeSearchModal = () => {
     setSearchModalOpen(false);
   };
 
-  // 전체 로딩 및 에러 처리
-  if (isLoadingTopTen || isLoadingRandom || isLoadingSearch) {
-    return <div>Loading...</div>;
-  }
-
-  if (isErrorTopTen || isErrorRandom || isErrorSearch) {
+  if (isLoadingSearch || isErrorSearch) {
     return <div>Error occurred</div>;
   }
 
   return (
     <>
-      {/* <ReDesignHeader /> */}
       <div>
-        <ButtonContainer>
-          {/* 버튼 이벤트 핸들러 로직 */}
-          {/* ... */}
-        </ButtonContainer>
-        <Maintitle />
-        <ButtonsWrapper>
-          <SmallButton text="전체" />
-          {/* <SmallButton text="가족 여행" />
-        <SmallButton text="커플 여행" /> */}
-        </ButtonsWrapper>
-        {/* 해시태그 영역 */}
-        <MainCard cards={randomData?.data} />
-        <ListTitle />
-        {/* 탑텐 데이터 전달 */}
-        <MainList items={TopTenData?.data} />
+        <MainContent />
         <SearchModal
           isOpen={isSearchModalOpen}
           onClose={toggleSearchModal}

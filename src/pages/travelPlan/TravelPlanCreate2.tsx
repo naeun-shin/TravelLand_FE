@@ -1,5 +1,5 @@
 import PlanCreate2 from '@/components/plans/planComponents/PlanCreate2';
-import * as S from './TravelPlanMain.style';
+import * as S from '../../components/plans/TravelPlanMain.style';
 
 const TravelPlanCreate2 = () => {
   return (

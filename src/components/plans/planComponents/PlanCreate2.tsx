@@ -65,9 +65,6 @@ const PlanCreate2: React.FC = () => {
   const [currentStep, setCurrentStep] = useState<number>(0);
   const [isSubmit, setIsSubmit] = useState<boolean>(false);
 
-  // Initializing displayDate
-  // const [, setDisplayDate] = useState<string>(formatDate(tripStartDate));
-
   const [unitPlans, setUnitPlans] = useState<UnitPlan[]>([
     {
       title: '',
@@ -415,13 +412,6 @@ const PlanCreate2: React.FC = () => {
                       }
                     />
                   </div>
-                  {/* <input
-                    placeholder="09:30"
-                    value={input.time}
-                    onChange={(e) =>
-                      handleInputChange(index, 'time', e.target.value)
-                    }
-                  /> */}
                 </IS.ListInputbox>
                 {/* 일정 영역 */}
                 <IS.ListInputbox>
@@ -491,11 +481,6 @@ const PlanCreate2: React.FC = () => {
                       fontSize={18}
                     />
                     <IS.ImgBox>
-                      {/* <IoIosArrowDropright
-                    color="lightGray"
-                    size="2rem"
-                    onClick={() => handleOpenMapClick(index)}
-                  /> */}
                       <TfiArrowCircleRight
                         size="35px"
                         color="lightGray"

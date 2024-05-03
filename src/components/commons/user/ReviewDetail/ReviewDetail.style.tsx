@@ -1,5 +1,22 @@
 import styled, { css } from 'styled-components';
 
+//  여행 정보 카드 레이아웃 스타일
+
+export const CardTitle = styled.h2`
+  font-size: 28px;
+  font-weight: 600;
+  margin: 100px 0 50px 0;
+`;
+
+export const CardBox = styled.div`
+  width: 1500px;
+  margin: 0 auto;
+`;
+
+export const CardContainer = styled.div`
+  display: flex;
+`;
+
 // 여행 정보페이지
 
 export const ReviewListTabStyle = styled.div`
@@ -76,12 +93,6 @@ export const ReviewListTitle = styled.div`
   width: 350px;
 `;
 
-// 여행 후기 상세보기 페이지
-
-// interface DotProps {
-//   active?: boolean;
-// }
-
 export const Container = styled.div`
   width: 800px;
   margin: 0 auto;
@@ -150,7 +161,6 @@ export const Dot = styled.div<{ active: boolean }>`
 `;
 
 // 수정 / 삭제 버튼
-
 export const ButtonBox = styled.div`
   display: flex;
   justify-content: space-between;
@@ -165,3 +175,122 @@ export const HeaderBox = styled.div`
   justify-content: space-between;
   /* align-items: center; */
 `;
+
+// DetailList 스타일
+export const ModalBtnWrapper = styled.div`
+  width: 270px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+`;
+
+export const Container2 = styled.div`
+  width: 800px;
+  margin: 0 auto;
+  padding: 16px;
+  margin-bottom: 40px;
+`;
+
+export const ReviewHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 3px 0 30px 0;
+  height: 40px;
+  line-height: 40px;
+`;
+
+export const LocationTag = styled.div`
+  padding: 4px 0;
+  font-size: 20px;
+  font-weight: 600;
+`;
+
+export const DateRange = styled.div`
+  font-size: 15px;
+  color: #666;
+  margin-left: 2px;
+`;
+
+export const ContentBox = styled.div`
+  min-height: 250px;
+  overflow: auto;
+`;
+
+export const ContentDiv = styled.p`
+  width: 85%;
+  font-size: 18px;
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 1em;
+  white-space: pre-line;
+  word-wrap: break-word;
+  max-height: 100vh;
+  overflow: auto;
+`;
+
+export const UserBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 50px;
+  line-height: 50px;
+`;
+
+// 댓글 부분 나중에 살려서 쓰기
+
+// export const ContentBox = styled.div`
+//   min-height: 350px;
+//   overflow: auto;
+// `;
+
+// const ContentDiv = styled.p`
+//   width: 85%;
+//   font-size: 16px;
+//   font-size: 16px;
+//   line-height: 1.6;
+//   margin-bottom: 1em;
+//   white-space: pre-line;
+//   word-wrap: break-word;
+// `;
+
+export const CommentsList = styled.ul`
+  list-style: none;
+  margin: 0;
+  padding: 0;
+`;
+
+// export const Comment = styled.li`
+//   display: flex;
+//   align-items: center;
+//   padding: 15px 0;
+//   border-top: 1px solid #bbb;
+// `;
+
+// export const UserAvatar = styled.div`
+//   width: 40px;
+//   height: 40px;
+//   border-radius: 20px;
+//   background: #ddd;
+//   margin-right: 8px;
+// `;
+
+// export const CommentName = styled.div`
+//   font-size: 16px;
+//   font-weight: 600;
+// `;
+
+// export const CommentText = styled.div`
+//   padding-top: 5px;
+//   color: #4a4a4a;
+// `;
+
+// export  const ViewMore = styled.div`
+//   text-align: center;
+//   margin-top: 10px;
+//   width: 100%;
+//   padding: 8px 0;
+//   cursor: pointer;
+//   padding-bottom: 40px;
+//   border-bottom: 4px solid #ddd;
+// `;

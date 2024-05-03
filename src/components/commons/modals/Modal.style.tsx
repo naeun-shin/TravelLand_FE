@@ -165,3 +165,98 @@ export const CreateVoteModalOverlay = styled.div`
 export const CreateVoteModalContainer = styled.div`
   padding: 30px 45px;
 `;
+
+// Main Modal 스타일
+
+export const ModalWrapper = styled.div`
+  position: fixed;
+  width: 180px;
+  right: 20%;
+  top: 110px;
+  z-index: 10;
+  opacity: 0;
+  transition:
+    opacity 0.3s,
+    transform 0.3s;
+  transform-origin: top right;
+`;
+
+export const Modaldrop = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  transition: opacity 1s;
+`;
+
+export const AllModalContainer = styled.div`
+  background-color: #fff;
+  border-radius: 20px;
+  /* overflow: hidden; */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  margin-bottom: 8px;
+`;
+
+export const MenuItem = styled.div`
+  cursor: pointer;
+  padding: 16px;
+  border-bottom: 1px solid #eee;
+  &:last-child {
+    border-bottom: none;
+  }
+  &:hover {
+    background-color: #f9f9f9;
+    border-radius: 15px;
+  }
+`;
+
+// Notice Modal 스타일
+
+export const NotiModalWrapper = styled.div`
+  font-size: 18px;
+  position: fixed;
+  width: 480px;
+  /* height: 400px; */
+  right: 26%;
+  top: 100px;
+  z-index: 10;
+  opacity: 0;
+  transition:
+    opacity 0.3s,
+    transform 0.3s;
+  transform-origin: top right;
+`;
+
+export const NotiMenuItem = styled.div`
+  cursor: pointer;
+  padding: 30px 16px;
+  border-bottom: 1px solid #eee;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &:hover {
+    background-color: #f9f9f9;
+    border-radius: 15px;
+  }
+`;
+
+export const TitleBox = styled.div`
+  display: flex;
+  padding: 5px 0px;
+`;
+
+export const Title = styled.div`
+  color: #5ac8ec;
+  font-size: 18px;
+  display: flex;
+  align-items: flex-start;
+  padding-bottom: 15px;
+
+  img {
+    padding: 0px 5px;
+  }
+`;

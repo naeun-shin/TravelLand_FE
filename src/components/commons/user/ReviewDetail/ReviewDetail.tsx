@@ -1,6 +1,6 @@
 // import React from 'react';
 import { TripDetail } from '@/api/interfaces/reviewInterface';
-import * as S from '@/components/commons/user/TravelReview/Review.style';
+import * as S from '@/components/commons/user/ReviewDetail/ReviewDetail.style';
 import { useState } from 'react';
 import Button from '../../buttons/Button';
 import { useMutation } from '@tanstack/react-query';

@@ -10,12 +10,7 @@ interface SearchInputProps {
   onInputChange?: (query: string) => void;
 }
 
-const SearchResults: React.FC<SearchInputProps> = (
-  {
-    // openSearchModal,
-    // onInputChange,
-  },
-) => {
+const SearchResults: React.FC<SearchInputProps> = () => {
   return (
     <>
       <ResultsContent />

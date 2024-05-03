@@ -1,4 +1,3 @@
-// import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import { FaCamera, FaTimes } from 'react-icons/fa';
 
@@ -26,12 +25,11 @@ const TravelReviewCardSection = styled.div`
 `;
 
 const TravelReviewstyle = styled.div`
-  padding: 50px 0; // 수정된 패딩
-  /* max-width: 1200px; */
+  padding: 50px 0;
   max-width: 1400px;
   margin: 0 auto;
-  box-sizing: border-box; // 추가된 스타일
-  overflow-x: hidden; // 가로 스크롤 숨김
+  box-sizing: border-box;
+  overflow-x: hidden;
   margin-bottom: 300px;
 
   @media (max-width: 768px) {
@@ -149,13 +147,6 @@ export const ReviewInvitedContainer = styled.div`
   grid-gap: 25px;
 `;
 
-// export const TitleLink = styled(Link)`
-//   font-size: 24px;
-//   font-weight: 600;
-//   text-decoration: none;
-//   color: #000;
-// `;
-
 export const FieldContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -165,7 +156,6 @@ export const FieldContainer = styled.div`
 
 export const Label = styled.label`
   margin-bottom: 5px;
-  /* font-weight: bold; */
   margin-left: 5px;
 `;
 
@@ -340,7 +330,6 @@ export const ReviewBtn = styled.button`
   background-color: #5ac8ec;
   font-size: 15px;
   font-weight: 600;
-  /* margin-left: 330px; */
   &:hover {
     background-color: #cff4ff;
     color: #fff;
@@ -359,4 +348,11 @@ export const LoadingText = styled.span`
   font-size: 16px;
   font-weight: bold;
   color: #000;
+`;
+
+// 여행 정보 페이지 스타일
+export const ReviewCateBox = styled.div`
+  max-width: 1400px;
+  margin: 0 auto;
+  padding-left: 45px;
 `;

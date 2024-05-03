@@ -1,17 +1,13 @@
 import { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import * as S from '@/components/commons/user/ReviewDetail/ReviewDetail.style';
 import { TripDetail } from '@/api/interfaces/reviewInterface';
-import * as S from '@/components/commons/user/TravelReview/Review.style';
 import Button from '../../buttons/Button';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import { deleteTrip } from '@/api/reviewAxios';
 import { AxiosError } from 'axios';
 import CategoryButton from '../../buttons/CategoryButton';
-import {
-  // CategoriesContainer,
-  HashTagContainer,
-} from '../../mainItem/MainCard.style';
+import { HashTagContainer } from '../../mainItem/MainCard.style';
 import {
   useCancelLikeTripMutation,
   useCancelScrapTripMutation,
@@ -114,19 +110,8 @@ const ReviewDetailList = ({ tripDetail }: ReviewDetailListProps) => {
 
   const handleConfirmDelete = (tripId: number) => {
     deleteReviewMutation.mutate(tripId);
-    handleCloseDeleteModal(); // 모달을 닫습니다.
+    handleCloseDeleteModal();
   };
-
-  // const handleDelete = (tripId: number) => {
-  //   deleteReviewMutation.mutate(tripId);
-  //   console.log('아이디', tripId);
-  // };
-
-  // 여기자나여 => 여기가 썸네일 이미지 구간
-  // const imageUrl =
-  //   tripDetail.imageUrlList && tripDetail.imageUrlList.length > 0
-  //     ? tripDetail.imageUrlList[0]
-  //     : '기본이미지URL';
 
   return (
     <>
@@ -158,10 +143,10 @@ const ReviewDetailList = ({ tripDetail }: ReviewDetailListProps) => {
           </S.SliderDots>
         </S.ImageBox>
       </S.Container>
-      <Container>
-        <DateRange>{`${tripDetail.area} |${tripDetail.placeName} ${tripDetail.tripStartDate} - ${tripDetail.tripEndDate} | ${formatNumberWithRegex(tripDetail.cost.toString())}`}</DateRange>{' '}
-        <ReviewHeader>
-          <LocationTag>{`${tripDetail.title}`}</LocationTag>
+      <S.Container>
+        <S.DateRange>{`${tripDetail.area} |${tripDetail.placeName} ${tripDetail.tripStartDate} - ${tripDetail.tripEndDate} | ${formatNumberWithRegex(tripDetail.cost.toString())}`}</S.DateRange>{' '}
+        <S.ReviewHeader>
+          <S.LocationTag>{`${tripDetail.title}`}</S.LocationTag>
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <div
               onClick={() => toggleLike(tripDetail.tripId)}
@@ -184,8 +169,8 @@ const ReviewDetailList = ({ tripDetail }: ReviewDetailListProps) => {
               }}
             />
           </div>
-        </ReviewHeader>
-        <UserBox>
+        </S.ReviewHeader>
+        <S.UserBox>
           <div>
             <S.UserSection>
               <S.UserImage src={tripDetail.profileImage} alt="사진" />
@@ -212,7 +197,7 @@ const ReviewDetailList = ({ tripDetail }: ReviewDetailListProps) => {
                           <br /> 삭제하시겠습니까?
                         </p>
                       </div>
-                      <ModalBtnWrapper>
+                      <S.ModalBtnWrapper>
                         <Button
                           text="취소"
                           onClick={handleCloseDeleteModal}
@@ -225,7 +210,7 @@ const ReviewDetailList = ({ tripDetail }: ReviewDetailListProps) => {
                           text="삭제하기"
                           onClick={() => handleConfirmDelete(tripDetail.tripId)}
                         />
-                      </ModalBtnWrapper>
+                      </S.ModalBtnWrapper>
                     </div>
                   </Modal>
                 </>
@@ -234,12 +219,12 @@ const ReviewDetailList = ({ tripDetail }: ReviewDetailListProps) => {
               )}
             </S.HeaderBox>
           </div>
-        </UserBox>
-      </Container>
-      <Container2>
-        <ContentBox>
+        </S.UserBox>
+      </S.Container>
+      <S.Container2>
+        <S.ContentBox>
           {/* 여기에  리뷰 내용을 렌더링 */}
-          <ContentDiv>{tripDetail.content}</ContentDiv>
+          <S.ContentDiv>{tripDetail.content}</S.ContentDiv>
           <HashTagContainer>
             {tripDetail.hashtagList && tripDetail.hashtagList.length > 0 ? (
               tripDetail.hashtagList.map((category, idx) => (
@@ -249,124 +234,10 @@ const ReviewDetailList = ({ tripDetail }: ReviewDetailListProps) => {
               <p>해시태그가 없습니다.</p>
             )}
           </HashTagContainer>
-        </ContentBox>
-      </Container2>
+        </S.ContentBox>
+      </S.Container2>
     </>
   );
 };
 
 export default ReviewDetailList;
-
-const ModalBtnWrapper = styled.div`
-  width: 270px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-`;
-
-const Container = styled.div`
-  width: 790px;
-  margin: 0 auto;
-  padding: 16px;
-  border-bottom: 2px solid #ddd;
-  /* border-radius: 8px; */
-  margin-bottom: 40px;
-  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
-`;
-const Container2 = styled.div`
-  width: 800px;
-  margin: 0 auto;
-  padding: 16px;
-  /* border: 1px solid #eee; */
-  /* border-radius: 8px; */
-  margin-bottom: 40px;
-  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
-`;
-
-const ReviewHeader = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 3px 0 30px 0;
-  height: 40px;
-  line-height: 40px;
-`;
-
-const LocationTag = styled.div`
-  padding: 4px 0;
-  font-size: 20px;
-  font-weight: 600;
-`;
-
-const DateRange = styled.div`
-  font-size: 15px;
-  color: #666;
-  margin-left: 2px;
-`;
-
-const ContentBox = styled.div`
-  min-height: 250px;
-  overflow: auto;
-  /* height: 75vh; */
-`;
-
-const ContentDiv = styled.p`
-  width: 85%;
-  font-size: 18px;
-  font-size: 16px;
-  line-height: 1.6;
-  margin-bottom: 1em;
-  white-space: pre-line;
-  word-wrap: break-word;
-  max-height: 100vh;
-  overflow: auto;
-`;
-
-// const ButtonSection = styled.div`
-//   display: flex;
-//   justify-content: space-between;
-// `;
-
-// const buttonStyles = css<ButtonProps>`
-//   width: 420px;
-//   height: 45px;
-//   padding: 8px 16px;
-//   font-size: 16px;
-//   cursor: pointer;
-//   border-radius: 8px;
-//   font-weight: 600;
-//   border: 1px solid #ccc;
-//   background-color: #fff;
-//   transition:
-//     background-color 0.3s,
-//     color 0.3s;
-
-//   ${({ $active }) =>
-//     $active &&
-//     css`
-//       background-color: #000;
-//       color: #fff;
-//       border: 1px solid #000;
-//     `}
-// `;
-
-// const LikeButton = styled.button<ButtonProps>`
-//   ${buttonStyles}
-// `;
-
-// const ScrapButton = styled.button<ButtonProps>`
-//   ${buttonStyles}
-// `;
-
-const UserBox = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 50px;
-  line-height: 50px;
-`;
-
-// const Icon = styled.img`
-//   width: 35px;
-//   height: 35px;
-// `;
