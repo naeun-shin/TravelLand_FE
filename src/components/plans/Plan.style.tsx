@@ -8,7 +8,7 @@ interface ButtonProps {
   disabled?: boolean;
 }
 
-const PlanFirstSection = styled.div`
+export const PlanFirstSection = styled.div`
   display: flex;
   align-items: center;
   flex-direction: row;
@@ -18,9 +18,9 @@ const PlanFirstSection = styled.div`
   }
 `;
 
-const PlanSecondSection = styled.div``;
+export const PlanSecondSection = styled.div``;
 
-const PlanBoxWithSpaceBetween = styled.div`
+export const PlanBoxWithSpaceBetween = styled.div`
   display: flex;
   justify-content: space-between;
   div {
@@ -28,13 +28,13 @@ const PlanBoxWithSpaceBetween = styled.div`
   }
 `;
 
-const PlanBoxWithCalendar = styled.div`
+export const PlanBoxWithCalendar = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
 `;
 
-const PlanBox = styled.div`
+export const PlanBox = styled.div`
   display: flex;
   /* align-content: center; */
   flex-direction: row;
@@ -44,7 +44,7 @@ const PlanBox = styled.div`
   padding: 10px 0px;
 `;
 
-const PlanContent = styled.div`
+export const PlanContent = styled.div`
   padding-left: 15px;
   /* font-weight: normal; */
   /* justify-content: center; */
@@ -53,14 +53,14 @@ const PlanContent = styled.div`
   }
 `;
 
-const PlanContentTitle = styled.div`
+export const PlanContentTitle = styled.div`
   padding-bottom: 10px;
   font-weight: bold;
   font-size: 18px;
   font-family: 'pretendard';
 `;
 
-const PlanHorizontalContent = styled.div`
+export const PlanHorizontalContent = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -70,20 +70,20 @@ const PlanHorizontalContent = styled.div`
   padding-left: 15px;
 `;
 
-const PlanHorizontalRightButton = styled.button`
+export const PlanHorizontalRightButton = styled.button`
   display: flex;
   align-items: center;
   border: none;
   background-color: white;
 `;
 
-const PlanBottomSection = styled.div`
+export const PlanBottomSection = styled.div`
   display: flex;
   justify-content: center;
   padding: 20px 15px;
 `;
 
-const PlanNextButton = styled.button<ButtonProps>`
+export const PlanNextButton = styled.button<ButtonProps>`
   background-color: ${(props) =>
     props.disabled ? '#C5F1FF' : '#5AC8EC'}; // 비활성화 상태에 따라 색상 변경
   color: white;
@@ -101,7 +101,7 @@ const PlanNextButton = styled.button<ButtonProps>`
 
 // 두번째 플랜 페이지
 
-const PlanDetailCreateBox = styled.div`
+export const PlanDetailCreateBox = styled.div`
   background-color: white;
   border: 1px solid lightgray;
   border-radius: 35px;
@@ -117,7 +117,7 @@ const PlanDetailCreateBox = styled.div`
     padding: 5px 0px;
   }
 `;
-const PlanDateButton = styled.div`
+export const PlanDateButton = styled.div`
   background-color: white;
   border: none;
 
@@ -136,7 +136,7 @@ const PlanDateButton = styled.div`
 `;
 
 // List 영역
-const ButtonBox = styled.div`
+export const ButtonBox = styled.div`
   padding-top: 30px;
   display: flex;
   justify-content: space-between;
@@ -148,7 +148,7 @@ const ButtonBox = styled.div`
   }
 `;
 
-const ButtonBoxToRight = styled.div`
+export const ButtonBoxToRight = styled.div`
   display: flex;
   justify-content: end;
   width: 80%;
@@ -157,17 +157,17 @@ const ButtonBoxToRight = styled.div`
 `;
 
 // detail 영역
-const PlanDetailContainer = styled.div`
+export const PlanDetailContainer = styled.div`
   /* width: 85%; */
   display: flex;
   flex-direction: column;
 `;
 
-const PlanDetailDateBox = styled.div`
+export const PlanDetailDateBox = styled.div`
   padding: 25px 0px;
 `;
 
-const PlanDetailDateButton = styled.button<PlanDetailDateButtonProps>`
+export const PlanDetailDateButton = styled.button<PlanDetailDateButtonProps>`
   margin-right: 10px;
   width: 150px;
   font-size: 16px;
@@ -187,7 +187,7 @@ const PlanDetailDateButton = styled.button<PlanDetailDateButtonProps>`
   }
 `;
 
-const DateDisplay = styled.div`
+export const DateDisplay = styled.div`
   position: absolute;
   /* bottom: -20px; // Adjust as necessary to position below the day button */
   left: 0;
@@ -197,7 +197,7 @@ const DateDisplay = styled.div`
   padding: 5px;
 `;
 
-const PlanDetailContentBox = styled.div`
+export const PlanDetailContentBox = styled.div`
   background-color: white;
   border: 1px solid lightgray;
   border-radius: 35px;
@@ -213,7 +213,7 @@ const PlanDetailContentBox = styled.div`
   }
 `;
 
-const PlanDetailContentHeader = styled.div`
+export const PlanDetailContentHeader = styled.div`
   display: flex;
   font-size: 16px;
   color: gray;
@@ -222,7 +222,7 @@ const PlanDetailContentHeader = styled.div`
   padding-bottom: 30px;
 `;
 
-const DetailHeaderContent = styled.div`
+export const DetailHeaderContent = styled.div`
   color: gray;
   display: flex;
   flex-direction: column;
@@ -231,7 +231,7 @@ const DetailHeaderContent = styled.div`
   }
 `;
 
-const DetailHeaderSubContent = styled.div`
+export const DetailHeaderSubContent = styled.div`
   display: flex;
   align-items: center;
 
@@ -246,7 +246,7 @@ const DetailHeaderSubContent = styled.div`
   padding-left: 20px;
 `;
 
-const DetailHeaderThirdContent = styled.div`
+export const DetailHeaderThirdContent = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -269,7 +269,7 @@ const DetailHeaderThirdContent = styled.div`
   }
 `;
 
-const DetaiHeaderSubDestination = styled.div`
+export const DetaiHeaderSubDestination = styled.div`
   display: flex;
   align-items: center;
 
@@ -291,13 +291,13 @@ const DetaiHeaderSubDestination = styled.div`
   }
 `;
 
-const DetailContentSection = styled.div`
+export const DetailContentSection = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
 `;
 
-const DetailContentBox = styled.div`
+export const DetailContentBox = styled.div`
   position: relative;
   /* border-left: 1px solid black; */
   padding: 5px 0px;
@@ -306,7 +306,7 @@ const DetailContentBox = styled.div`
   width: 800px;
 `;
 
-const DetailPlanNumber = styled.div`
+export const DetailPlanNumber = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -330,7 +330,7 @@ const DetailPlanNumber = styled.div`
   margin-right: 15px;
 `;
 
-const DetailPlanContent = styled.div`
+export const DetailPlanContent = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0px 25px;
@@ -340,20 +340,19 @@ const DetailPlanContent = styled.div`
   }
 `;
 
-const DetailPlanContentCity = styled.div`
+export const DetailPlanContentCity = styled.div`
   color: black;
   font-size: 22px;
   font-weight: bold;
-  /* padding: 15px 0px; */
 `;
 
-const DetailContentItem = styled.div`
+export const DetailContentItem = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
 `;
 
-const DetailButtonDiv = styled.button`
+export const DetailButtonDiv = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -371,7 +370,7 @@ const DetailButtonDiv = styled.button`
     width: 100%;
   }
 `;
-const DetailContent = styled.div`
+export const DetailContent = styled.div`
   justify-content: flex-start;
   font-size: 16px;
   color: gray;
@@ -379,7 +378,7 @@ const DetailContent = styled.div`
   width: 70%;
 `;
 
-const DetailLocationBox = styled.div`
+export const DetailLocationBox = styled.div`
   display: flex;
   flex-direction: column;
   font-size: 14px;
@@ -389,7 +388,7 @@ const DetailLocationBox = styled.div`
   width: 100%;
 `;
 
-const InvitationBox = styled.div`
+export const InvitationBox = styled.div`
   padding: 5px 0px;
   display: flex;
   align-items: center;
@@ -397,7 +396,7 @@ const InvitationBox = styled.div`
   justify-content: center;
 `;
 
-const InvitationDiv = styled.div`
+export const InvitationDiv = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -409,53 +408,12 @@ const InvitationDiv = styled.div`
   border-radius: 25px;
 `;
 
-const PlanInvitationBox = styled.div`
+export const PlanInvitationBox = styled.div`
   display: flex;
   background-color: gray;
 `;
 
-const DetailButtonsBox = styled.div`
+export const DetailButtonsBox = styled.div`
   display: flex;
   align-items: center;
 `;
-
-export {
-  PlanFirstSection,
-  PlanSecondSection,
-  PlanBoxWithSpaceBetween,
-  PlanBox,
-  PlanContent,
-  PlanHorizontalContent,
-  PlanDetailContainer,
-  PlanContentTitle,
-  PlanHorizontalRightButton,
-  PlanBottomSection,
-  PlanNextButton,
-  PlanDateButton,
-  PlanDetailDateBox,
-  PlanDetailContentBox,
-  PlanDetailCreateBox,
-  ButtonBox,
-  PlanDetailDateButton,
-  PlanDetailContentHeader,
-  DetailHeaderContent,
-  DetailHeaderSubContent,
-  DetailContentSection,
-  DetailPlanNumber,
-  DetailContentBox,
-  DetailPlanContent,
-  DetailPlanContentCity,
-  DetailContentItem,
-  DetailButtonDiv,
-  DetailHeaderThirdContent,
-  DetaiHeaderSubDestination,
-  ButtonBoxToRight,
-  PlanInvitationBox,
-  PlanBoxWithCalendar,
-  DateDisplay,
-  DetailLocationBox,
-  InvitationDiv,
-  InvitationBox,
-  DetailContent,
-  DetailButtonsBox,
-};

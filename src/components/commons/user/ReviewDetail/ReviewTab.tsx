@@ -1,4 +1,4 @@
-import * as S from './Review.style';
+import * as S from './ReviewDetail.style';
 
 const ReviewPageTab = () => {
   return (

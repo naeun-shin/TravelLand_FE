@@ -25,12 +25,8 @@
   background-color: #fff;
   font-size: 18px;
   color: #000;
-  /* border: 1px solid #aeaeae; */
-  /* border-radius: 0.3rem; */
-  /* display: flex; */
   position: relative;
   line-height: initial;
-  /* width: 100%; */
   justify-content: center;
   align-items: center;
 }

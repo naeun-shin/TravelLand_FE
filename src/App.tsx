@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom';
-import ReDesignHeader from './components/layouts/Header2';
+import ReDesignHeader from './components/layouts/Header';
 
 function App() {
   return (

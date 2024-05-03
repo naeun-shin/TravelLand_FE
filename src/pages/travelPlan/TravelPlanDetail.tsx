@@ -1,5 +1,5 @@
 import PlanDetail from '@/components/plans/planComponents/PlanDetail';
-import * as S from './TravelPlanMain.style';
+import * as S from '../../components/plans/TravelPlanMain.style';
 import { useEffect } from 'react';
 
 const TravelPlanDetail = () => {

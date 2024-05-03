@@ -1,5 +1,4 @@
-// import React from 'react';
-import styled from 'styled-components';
+import * as S from '@/components/commons/user/ReviewDetail/ReviewDetail.style';
 import ListCard from '../../mainItem/ListCard';
 import { getRecommendedTrips } from '@/api/reviewAxios';
 import { useQuery } from '@tanstack/react-query';
@@ -23,27 +22,27 @@ const DetailList = () => {
 
   if (isLoading)
     return (
-      <CardBox>
+      <S.CardBox>
         <div>Loading...</div>
-      </CardBox>
+      </S.CardBox>
     );
   if (error)
     return (
-      <CardBox>
+      <S.CardBox>
         <div>An error occurred: {error.message}</div>
-      </CardBox>
+      </S.CardBox>
     );
   if (!data || data.data.length === 0)
     return (
-      <CardBox>
+      <S.CardBox>
         <div>No recommendations found</div>
-      </CardBox>
+      </S.CardBox>
     );
 
   return (
-    <CardBox>
-      <Title>당신을 위한 여행 정보추천</Title>
-      <CardContainer>
+    <S.CardBox>
+      <S.CardTitle>당신을 위한 여행 정보추천</S.CardTitle>
+      <S.CardContainer>
         {data.data.map((trip: any) => (
           <ListCard
             key={trip.tripId}
@@ -57,24 +56,9 @@ const DetailList = () => {
             onClick={() => handleCardClick(trip.tripId)}
           />
         ))}
-      </CardContainer>
-    </CardBox>
+      </S.CardContainer>
+    </S.CardBox>
   );
 };
 
 export default DetailList;
-
-const Title = styled.h2`
-  font-size: 28px;
-  font-weight: 600;
-  margin: 100px 0 50px 0;
-`;
-
-const CardBox = styled.div`
-  width: 1500px;
-  margin: 0 auto;
-`;
-
-const CardContainer = styled.div`
-  display: flex;
-`;
