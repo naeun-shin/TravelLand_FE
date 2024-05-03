@@ -15,12 +15,13 @@ import MainList from '@/components/commons/mainItem/MainList';
 import { useNavigate } from 'react-router-dom';
 import SearchModal from './SearchPage';
 // import styled from 'styled-components';
-import {
-  useGetMainRandomListQuery,
-  useGetMainRankListQuery,
-  useGetMainSearchQuery,
-} from '@/hooks/useQuery';
+
 import PopupModal from '@/components/commons/modals/PopupModal';
+import {
+  useGetMainRankListQuery,
+  useGetMainRandomListQuery,
+  useGetMainSearchQuery,
+} from '@/hooks/useQuery/useMainQuery';
 
 interface MainProps {
   onClick?: () => void;
