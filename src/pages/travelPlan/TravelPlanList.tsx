@@ -1,5 +1,5 @@
 import PlanList from '@/components/plans/planComponents/PlanList';
-import * as S from './TravelPlanMain.style';
+import * as S from '../../components/plans/TravelPlanMain.style';
 import { useEffect } from 'react';
 
 const TravelPlanList = () => {

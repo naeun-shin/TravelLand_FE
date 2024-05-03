@@ -1,11 +1,8 @@
 import { useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useNavigate } from 'react-router-dom';
-import * as S from './TravelReview.styles';
-
+import * as S from '../../components/reviews/reviewIndex/TravelReviewPage.styles';
 import { getTripList } from '@/api/reviewAxios';
-// import { AxiosResponse } from 'axios';
-import styled from 'styled-components';
 import ListCard from '@/components/commons/mainItem/ListCard';
 import CategoryButton from '@/components/commons/buttons/CategoryButton';
 import { useInfiniteQuery } from '@tanstack/react-query';
@@ -38,11 +35,6 @@ enum Area {
 
 const TravelReviewPage = () => {
   const navigate = useNavigate();
-  // const [page, setPage] = useState<number>(1);
-  // const [trips, setTrips] = useState<Trip[]>([]);
-  // const [hasMore, setHasMore] = useState<boolean>(true);
-  // const [loading, setLoading] = useState<boolean>(false);
-  // const [_, setError] = useState<string | null>(null);
   const [area, setArea] = useState<string>(Area['전체']);
 
   const fetchTrips = async ({ pageParam = 1 }) => {
@@ -55,22 +47,16 @@ const TravelReviewPage = () => {
     return response.data;
   };
 
-  const {
-    data,
-    fetchNextPage,
-    hasNextPage,
-    isLoading,
-    error,
-    // isFetchingNextPage,
-  } = useInfiniteQuery({
-    queryKey: ['trips', area],
-    queryFn: fetchTrips,
-    initialPageParam: 1,
-    getNextPageParam: (lastPage, allPages) => {
-      if (lastPage.length < 8) return undefined;
-      return allPages.length + 1;
-    },
-  });
+  const { data, fetchNextPage, hasNextPage, isLoading, error } =
+    useInfiniteQuery({
+      queryKey: ['trips', area],
+      queryFn: fetchTrips,
+      initialPageParam: 1,
+      getNextPageParam: (lastPage, allPages) => {
+        if (lastPage.length < 8) return undefined;
+        return allPages.length + 1;
+      },
+    });
 
   const handleCardClick = (tripId?: number) => {
     navigate(`/travelDetail/${tripId}`);
@@ -84,14 +70,6 @@ const TravelReviewPage = () => {
     setArea(area);
     navigate('/results', { state: { area } });
   };
-
-  // const fetchMoreData = () => {
-  //   // console.log('스크롤 감지', hasMore);
-  //   if (!loading && hasMore) {
-  //     setPage((prevPage) => prevPage + 1);
-  //     // console.log('page증가');
-  //   }
-  // };
 
   if (isLoading) return <S.LoadingContainer>Loading...</S.LoadingContainer>;
   if (error) return <S.ErrorContainer>Error</S.ErrorContainer>;
@@ -110,7 +88,7 @@ const TravelReviewPage = () => {
               정보 작성하기
             </S.ReviewBtn>
           </S.ReviewBox>
-          <ReviewCateBox>
+          <S.ReviewCateBox>
             <h2>지역별 여행 후기</h2>
             <div style={{ display: 'flex' }}>
               {Object.entries(Area).map(([label, value]) => (
@@ -122,7 +100,7 @@ const TravelReviewPage = () => {
                 />
               ))}
             </div>
-          </ReviewCateBox>
+          </S.ReviewCateBox>
         </div>
         <InfiniteScroll
           style={{ overflow: 'hidden' }}
@@ -159,17 +137,3 @@ const TravelReviewPage = () => {
 };
 
 export default TravelReviewPage;
-
-// const ScrollDiv = styled.div`
-//   height: 90vh;
-//   overflow-y: auto;
-//   overflow-x: hidden;
-//   width: 100%;
-//   box-sizing: border-box;
-// `;
-
-const ReviewCateBox = styled.div`
-  max-width: 1400px;
-  margin: 0 auto;
-  padding-left: 45px;
-`;

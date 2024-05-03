@@ -37,11 +37,6 @@ export interface MypageReviewParams {
   size: number;
 }
 
-// 여행 정보 상세 조회 인터페이스
-// export interface TripDetailParams {
-//   tripId: number;
-// }
-
 // 여행 정보 상세 조회
 export interface TripDetail {
   tripId: number;

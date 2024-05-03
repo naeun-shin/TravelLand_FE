@@ -2,8 +2,7 @@ import { useState } from 'react';
 import Button from '@/components/commons/buttons/Button';
 import ListCard from '@/components/commons/mainItem/ListCard';
 import * as S from '@/components/commons/user/myPage/MyPage.style';
-
-import { TravelReviewCardSection } from '@/pages/travelReview/TravelReview.styles';
+import { TravelReviewCardSection } from '@/components/reviews/reviewIndex/TravelReviewPage.styles';
 // import { useMyTripListQuery } from '@/hooks/useQuery';
 // import { useState } from 'react';
 // import { getMyTripList } from '@/api/userAxios';

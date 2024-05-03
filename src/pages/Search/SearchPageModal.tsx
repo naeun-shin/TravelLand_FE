@@ -2,9 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { IoLocationSharp } from 'react-icons/io5';
 import * as S from '@components/search/Search.style';
 import CategoryButton from '@/components/commons/buttons/CategoryButton';
-import SearchInput from '@/components/search/Search';
+import SearchInput from '@/components/search/SearchInput';
 import { IoClose } from 'react-icons/io5';
-import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import {
   useGetHahtagListQuery,
@@ -13,7 +12,7 @@ import {
 interface SearchModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSearch: () => void; // 수정된 부분
+  onSearch: () => void;
 }
 
 const SearchModal: React.FC<SearchModalProps> = ({
@@ -31,11 +30,6 @@ const SearchModal: React.FC<SearchModalProps> = ({
   // 인기 지역 (선택박스)
   const { data: areaList } = useGetAreaListQuery();
   const areaItem = areaList?.data;
-  // const [isSearchModalOpen, setSearchModalOpen] = useState<boolean>(false);
-
-  // const toggleSearchModal = () => {
-  //   setSearchModalOpen(!isSearchModalOpen);
-  // };
 
   useEffect(() => {
     const handleScroll = (event: WheelEvent) => {
@@ -72,10 +66,9 @@ const SearchModal: React.FC<SearchModalProps> = ({
     <>
       <S.ModalOverlay onClick={onClose}>
         <S.ModalContainer onClick={(e) => e.stopPropagation()}>
-          <CloseButton onClick={onClose}>
+          <S.CloseButton onClick={onClose}>
             <IoClose size="50px" />{' '}
-            {/* 아이콘 크기는 예시이므로 원하는 대로 조절하세요. */}
-          </CloseButton>
+          </S.CloseButton>
           <S.SearchSection>
             <SearchInput placeholder="검색어를 입력해주세요." />
           </S.SearchSection>
@@ -114,16 +107,3 @@ const SearchModal: React.FC<SearchModalProps> = ({
 };
 
 export default SearchModal;
-
-const CloseButton = styled.button`
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
