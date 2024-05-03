@@ -1,14 +1,14 @@
 import React from 'react';
-import {
-  useGetMainRankListQuery,
-  useGetMainRandomListQuery,
-} from '@/hooks/useQuery';
 import MainCard from '@/components/commons/mainItem/MainCard';
 import ListTitle from '@/components/commons/mainItem/ListTitle';
 import MainList from '@/components/commons/mainItem/MainList';
 import { ButtonContainer, ButtonsWrapper } from '../buttons/Button.style';
 import Maintitle from './MainTitle';
 import { SmallButton } from '../buttons/Button';
+import {
+  useGetMainRankListQuery,
+  useGetMainRandomListQuery,
+} from '@/hooks/useQuery/useMainQuery';
 
 const MainContent: React.FC = () => {
   // TopTen 데이터 페칭

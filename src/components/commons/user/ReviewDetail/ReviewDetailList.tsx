@@ -7,15 +7,19 @@ import { useMutation } from '@tanstack/react-query';
 import { deleteTrip } from '@/api/reviewAxios';
 import { AxiosError } from 'axios';
 import CategoryButton from '../../buttons/CategoryButton';
-import { HashTagContainer } from '../../mainItem/MainCard.style';
 import {
-  useCancelLikeTripMutation,
-  useCancelScrapTripMutation,
-  useCreateLikeTripMutation,
-  useCreateScrapTripMutation,
-} from '@/hooks/useMutation';
+  // CategoriesContainer,
+  HashTagContainer,
+} from '../../mainItem/MainCard.style';
+
 import { useAuthStore } from '@/store/useAuthStore';
 import Modal from '../../modals/Modal';
+import {
+  useCreateLikeTripMutation,
+  useCancelLikeTripMutation,
+  useCreateScrapTripMutation,
+  useCancelScrapTripMutation,
+} from '@/hooks/useMutation/useTravelReviewMutation';
 
 interface ReviewDetailListProps {
   tripDetail: TripDetail;
