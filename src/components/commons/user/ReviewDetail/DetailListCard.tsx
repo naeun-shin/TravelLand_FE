@@ -1,4 +1,4 @@
-import * as S from '@/components/commons/user/TravelReview/Review.style';
+import * as S from '@/components/commons/user/ReviewDetail/ReviewDetail.style';
 import ListCard from '../../mainItem/ListCard';
 import { getRecommendedTrips } from '@/api/reviewAxios';
 import { useQuery } from '@tanstack/react-query';

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import * as S from '@/components/commons/user/TravelReview/Review.style';
+import * as S from '@/components/commons/user/ReviewDetail/ReviewDetail.style';
 import { TripDetail } from '@/api/interfaces/reviewInterface';
 import Button from '../../buttons/Button';
 import { useNavigate } from 'react-router-dom';
