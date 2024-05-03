@@ -65,9 +65,6 @@ const PlanCreate2: React.FC = () => {
   const [currentStep, setCurrentStep] = useState<number>(0);
   const [isSubmit, setIsSubmit] = useState<boolean>(false);
 
-  // Initializing displayDate
-  // const [, setDisplayDate] = useState<string>(formatDate(tripStartDate));
-
   const [unitPlans, setUnitPlans] = useState<UnitPlan[]>([
     {
       title: '',

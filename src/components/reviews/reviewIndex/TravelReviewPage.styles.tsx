@@ -149,13 +149,6 @@ export const ReviewInvitedContainer = styled.div`
   grid-gap: 25px;
 `;
 
-// export const TitleLink = styled(Link)`
-//   font-size: 24px;
-//   font-weight: 600;
-//   text-decoration: none;
-//   color: #000;
-// `;
-
 export const FieldContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -359,4 +352,11 @@ export const LoadingText = styled.span`
   font-size: 16px;
   font-weight: bold;
   color: #000;
+`;
+
+// 여행 정보 페이지 스타일
+export const ReviewCateBox = styled.div`
+  max-width: 1400px;
+  margin: 0 auto;
+  padding-left: 45px;
 `;

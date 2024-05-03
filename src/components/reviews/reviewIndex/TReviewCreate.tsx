@@ -8,7 +8,7 @@ import {
   FieldContainer,
   Input,
   Label,
-} from '@/pages/travelReview/TravelReview.styles';
+} from '@/components/reviews/reviewIndex/TravelReviewPage.styles';
 
 const ReviewCreate = () => {
   const navigate = useNavigate();

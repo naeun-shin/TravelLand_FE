@@ -2,7 +2,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import Main from '../pages/main/Main';
 import KakaoRedirect from '@/pages/user/KakaoRedirect';
 import MyPage from '@/pages/user/MyPage';
-import SearchPage from '@/pages/main/SearchPage';
+import SearchPage from '@/pages/Search/SearchPageModal';
 import TravelReviewPage from '@/pages/travelReview/TravelReviewPage';
 import TravelDetailPage from '@/pages/travelReview/TravelDetailPage';
 import Login from '@/pages/user/Login';
@@ -10,7 +10,7 @@ import TravelPlanCreate1 from '@/pages/travelPlan/TravelPlanCreate1';
 import TravelPlanCreate2 from '@/pages/travelPlan/TravelPlanCreate2';
 import TravelPlanList from '@/pages/travelPlan/TravelPlanList';
 import TravelPlanDetail from '@/pages/travelPlan/TravelPlanDetail';
-import SearchResults from '@/pages/main/SearchResults';
+import SearchResults from '@/pages/Search/SearchResults';
 import ReviewCreatePage1 from '@/pages/travelReview/ReviewCreate1';
 import ReviewCreate2 from '@/pages/travelReview/ReviewCreate2';
 import ReviewCreate3 from '@/pages/travelReview/ReviewCreate3';
@@ -90,9 +90,9 @@ export const router = createBrowserRouter([
       {
         path: '/planCreate/2',
         element: (
-          // <PrivateRoute>
-          <TravelPlanCreate2 />
-          // </PrivateRoute>
+          <PrivateRoute>
+            <TravelPlanCreate2 />
+          </PrivateRoute>
         ),
       },
       { path: '/planList', element: <TravelPlanList /> },
@@ -101,49 +101,49 @@ export const router = createBrowserRouter([
       {
         path: '/travelCreate',
         element: (
-          // <PrivateRoute>
-          <ReviewCreatePage1 />
-          // </PrivateRoute>
+          <PrivateRoute>
+            <ReviewCreatePage1 />
+          </PrivateRoute>
         ),
       },
       {
         path: '/reviewCreate/2',
         element: (
-          // <PrivateRoute>
-          <ReviewCreate2 />
-          // </PrivateRoute>
+          <PrivateRoute>
+            <ReviewCreate2 />
+          </PrivateRoute>
         ),
       },
       {
         path: '/reviewCreate/3',
         element: (
-          // <PrivateRoute>
-          <ReviewCreate3 />
-          // </PrivateRoute>
+          <PrivateRoute>
+            <ReviewCreate3 />
+          </PrivateRoute>
         ),
       },
       {
         path: '/editTrip',
         element: (
-          // <PrivateRoute>
-          <EditTrip />
-          // </PrivateRoute>
+          <PrivateRoute>
+            <EditTrip />
+          </PrivateRoute>
         ),
       },
       {
         path: '/editTrip/2',
         element: (
-          // <PrivateRoute>
-          <EditTrip2 />
-          // </PrivateRoute>
+          <PrivateRoute>
+            <EditTrip2 />
+          </PrivateRoute>
         ),
       },
       {
         path: '/editTrip/3',
         element: (
-          // <PrivateRoute>
-          <EditTrip3 />
-          // </PrivateRoute>
+          <PrivateRoute>
+            <EditTrip3 />
+          </PrivateRoute>
         ),
       },
       {

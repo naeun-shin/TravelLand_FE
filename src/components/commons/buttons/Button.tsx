@@ -79,6 +79,7 @@ export const SmallButton: React.FC<{ text: string }> = ({ text }) => (
     textColor="#666"
     fontSize="15px"
     hoverColor="#5AC8EC" // 호버 시 색상 추가
+    backgroundcolor="#fff"
   />
 );
 
