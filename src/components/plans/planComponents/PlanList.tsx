@@ -4,7 +4,7 @@ import * as S from '@/components/plans/Plan.style';
 // import * as LS from '@components/commons/Lists/List.style';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { usePlanListQuery } from '@/hooks/useQuery';
+import { usePlanListQuery } from '@/hooks/useQuery/useTravelPlanQuery';
 
 const PlanList = () => {
   const navigate = useNavigate();

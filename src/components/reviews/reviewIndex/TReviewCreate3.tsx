@@ -5,10 +5,7 @@ import { ModernInput } from '@/components/commons/inputs/Input';
 import styled from 'styled-components';
 import CategoryButton from '@/components/commons/buttons/CategoryButton';
 import { TitleWithCircle } from './TReviewCreate';
-import { AxiosError } from 'axios';
-import { TripData } from '@/api/interfaces/reviewInterface';
-import { useMutation } from '@tanstack/react-query';
-import { createTrip } from '@/api/reviewAxios';
+import { useCreateTripMutation } from '@/hooks/useMutation/useTravelReviewMutation';
 
 const TReviewCreate3 = () => {
   const navigate = useNavigate();
@@ -92,25 +89,7 @@ const TReviewCreate3 = () => {
     localStorage.setItem('reviewState', JSON.stringify(data));
   };
 
-  const mutation = useMutation<TripData, AxiosError, FormData>({
-    mutationFn: createTrip,
-    onSuccess: () => {
-      // console.log('여행 정보가 성공적으로 등록되었습니다.', data);
-      alert('여행 정보 작성 성공!');
-      localStorage.removeItem('reviewState');
-      navigate('/travelReview');
-    },
-    onError: (error) => {
-      const message = error.response?.data;
-      alert(`여행 정보 등록 실패! 오류: ${message}`);
-      console.error(message);
-
-      // 에러 발생 시에도 로컬 스토리지에서 데이터를 제거하도록 처리
-      localStorage.removeItem('reviewState');
-      console.log('Review state removed from localStorage');
-    },
-  });
-
+  const createMutation = useCreateTripMutation();
   const handleSubmit = async (
     event: React.FormEvent<HTMLFormElement>,
   ): Promise<void> => {
@@ -147,7 +126,7 @@ const TReviewCreate3 = () => {
       formData.append('imageList', file);
     });
 
-    mutation.mutate(formData);
+    createMutation.mutate(formData);
 
     localStorage.removeItem('reviewState');
     console.log('Review state removed from localStorage');

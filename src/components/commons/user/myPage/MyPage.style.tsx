@@ -115,6 +115,7 @@ const MyPagePagination = styled.div`
     border: none;
   }
 `;
+
 export {
   UserInfoContentName,
   MyPageContainer,

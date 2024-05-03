@@ -1,5 +1,5 @@
 // import { NicknameModal } from '@/components/commons/modals/Modal';
-import { useGetUerInfoQuery } from '@/hooks/useQuery';
+import { useGetUerInfoQuery } from '@/hooks/useQuery/useUserQuery';
 import * as S from '@components/commons/user/myPage/MyPage.style';
 // import { useState } from 'react';
 

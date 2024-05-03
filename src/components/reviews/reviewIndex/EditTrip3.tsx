@@ -4,8 +4,8 @@ import ToggleButton from '@/components/commons/buttons/ToggleButton';
 import { ModernInput } from '@/components/commons/inputs/Input';
 import CategoryButton from '@/components/commons/buttons/CategoryButton';
 import { TitleWithCircle } from './TReviewCreate';
-import { useUpdateTripMutation } from '@/hooks/useMutation'; // 여기에 추가됨
 import styled from 'styled-components';
+import { useUpdateTripMutation } from '@/hooks/useMutation/useTravelReviewMutation';
 
 const EditTrip3 = () => {
   const navigate = useNavigate();

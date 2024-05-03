@@ -12,14 +12,15 @@ import {
   // CategoriesContainer,
   HashTagContainer,
 } from '../../mainItem/MainCard.style';
-import {
-  useCancelLikeTripMutation,
-  useCancelScrapTripMutation,
-  useCreateLikeTripMutation,
-  useCreateScrapTripMutation,
-} from '@/hooks/useMutation';
+
 import { useAuthStore } from '@/store/useAuthStore';
 import Modal from '../../modals/Modal';
+import {
+  useCreateLikeTripMutation,
+  useCancelLikeTripMutation,
+  useCreateScrapTripMutation,
+  useCancelScrapTripMutation,
+} from '@/hooks/useMutation/useTravelReviewMutation';
 
 interface ReviewDetailListProps {
   tripDetail: TripDetail;
