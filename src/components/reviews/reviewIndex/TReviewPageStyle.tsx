@@ -44,7 +44,6 @@ export const CenteredContainer2 = styled.div`
   max-width: 1100px;
   margin: 0 auto;
   margin-top: 40px;
-  /* margin-bottom: 500px; */
 
   h2 {
     font-size: 24px;

@@ -107,8 +107,6 @@ const PlanCreate = () => {
             border="transparent"
             fontSize={16}
             readonly={true}
-            // onKeyDown={(e) => activeEnter(e)}
-            // onChange={handleAreaChange}
           />
         </>
       );

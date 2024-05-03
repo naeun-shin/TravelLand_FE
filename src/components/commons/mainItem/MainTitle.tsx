@@ -1,4 +1,3 @@
-// import React from 'react';
 import * as S from '@/components/commons/mainItem/MainItemStyle';
 
 import minilogo from '@/icons/Group 11478.svg';

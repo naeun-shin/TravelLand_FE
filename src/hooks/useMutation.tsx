@@ -31,12 +31,6 @@ export interface PlanResponse {
   planId: number;
 }
 
-// interface UpdateTripMutation {
-//   tripId: number;
-//   tripData: TripData;
-//   imageList: File[];
-// }
-
 // 작성하기 mutation
 export const useCreatePlanMutaton = () => {
   const navigate = useNavigate();

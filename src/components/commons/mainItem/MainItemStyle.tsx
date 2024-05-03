@@ -29,10 +29,6 @@ export const BookmarkIcon = styled(CiBookmark)`
 `;
 
 export const Rank = styled.div`
-  /* position: absolute; */
-  /* top: 10px; */
-  /* left: 10px; */
-  /* background: #fff; */
   padding: 5px 10px;
   /* margin-top: 20px; */
   color: #5ac8ec;

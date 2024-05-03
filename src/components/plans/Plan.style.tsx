@@ -344,7 +344,6 @@ export const DetailPlanContentCity = styled.div`
   color: black;
   font-size: 22px;
   font-weight: bold;
-  /* padding: 15px 0px; */
 `;
 
 export const DetailContentItem = styled.div`
