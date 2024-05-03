@@ -2,12 +2,18 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" type="image/svg+xml" href="assets/logo_short.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React + TS</title>
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+    <script
+      type="text/javascript"
+      src="//dapi.kakao.com/v2/maps/sdk.js?appkey=08e1281c2815cc56f6861c8024e90202&libraries=services,clusterer,drawing"
+    ></script>
+    <title>떠나볼까</title>
   </head>
   <body>
-    <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <div id="root"></div>
+    <!-- <div id="notice-modal-root"></div> -->
   </body>
 </html>
