@@ -15,6 +15,7 @@ import {
   useDeleteMutation,
 } from '@/hooks/useMutation/useTravelPlanMutation';
 import { usePlanDetailQuery } from '@/hooks/useQuery/useTravelPlanQuery';
+import { LoadingComponent } from '@/components/layouts/LoadingComponent';
 
 interface ButtonProps {
   active: boolean;
@@ -169,7 +170,7 @@ const PlanDetail: React.FC<ButtonProps> = () => {
 
   if (isLoading) {
     // 데이터 로딩 중 UI
-    return <div>Loading...</div>;
+    return <div>{LoadingComponent()}</div>;
   }
 
   if (isError) {

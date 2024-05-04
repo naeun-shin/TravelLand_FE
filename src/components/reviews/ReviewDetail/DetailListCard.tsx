@@ -4,6 +4,7 @@ import { getRecommendedTrips } from '@/api/reviewAxios';
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { LoadingComponent } from '@/components/layouts/LoadingComponent';
 
 const DetailList = () => {
   const navigate = useNavigate();
@@ -23,7 +24,9 @@ const DetailList = () => {
   if (isLoading)
     return (
       <S.CardBox>
-        <div>Loading...</div>
+        <div>
+          <div>{LoadingComponent()}</div>
+        </div>
       </S.CardBox>
     );
   if (error)
