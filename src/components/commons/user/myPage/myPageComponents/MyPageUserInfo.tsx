@@ -1,25 +1,19 @@
 // import { NicknameModal } from '@/components/commons/modals/Modal';
+import { LoadingComponent } from '@/components/layouts/LoadingComponent';
 import { useGetUerInfoQuery } from '@/hooks/useQuery/useUserQuery';
 import * as S from '@components/commons/user/myPage/MyPage.style';
 // import { useState } from 'react';
 
 const MyPageUserInfo = () => {
-  // return <></>;
   const { data, isLoading, isError } = useGetUerInfoQuery();
-  // const [modalOpen, setModalOpen] = useState(false);
-
-  // const handleModalOpen = () => {
-  //   console.log('모달 열기');
-  //   setModalOpen(true);
-  // };
-
-  // const handleModalClose = () => {
-  //   console.log('모달 닫기');
-  //   setModalOpen(false);
-  // };
 
   const userData = data?.data;
-  if (isLoading) return <div>Data is Loading</div>;
+  if (isLoading)
+    return (
+      <div>
+        <div>{LoadingComponent()}</div>
+      </div>
+    );
   if (isError) return <div>Error occurred during fetching</div>;
   return (
     <>

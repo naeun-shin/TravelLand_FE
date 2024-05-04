@@ -9,6 +9,7 @@ import {
   useMypageScrapTrip,
   useGetUerInfoQuery,
 } from '@/hooks/useQuery/useUserQuery';
+import { LoadingComponent } from '@/components/layouts/LoadingComponent';
 
 export interface Trip {
   tripId: number;
@@ -71,7 +72,12 @@ const MyPageReviewList = () => {
     setShowScrapList(true);
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading)
+    return (
+      <div>
+        <div>{LoadingComponent()}</div>
+      </div>
+    );
   if (isError) return <div>Error: {error.message}</div>;
 
   return (

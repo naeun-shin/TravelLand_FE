@@ -17,6 +17,7 @@ import {
   useCancelScrapTripMutation,
 } from '@/hooks/useMutation/useTravelReviewMutation';
 import { useTripDetailQuery } from '@/hooks/useQuery/useTravelReviewQuery';
+import { LoadingComponent } from '@/components/layouts/LoadingComponent';
 
 const ReviewDetailList = () => {
   const navigate = useNavigate();
@@ -106,7 +107,7 @@ const ReviewDetailList = () => {
     handleCloseDeleteModal();
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <div>{LoadingComponent()}</div>;
   if (isError) return <div>Error occurred</div>;
   if (!tripDetail) return <div>No data</div>;
 
