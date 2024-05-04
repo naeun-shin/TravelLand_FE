@@ -40,6 +40,21 @@ const MyPageReviewList = () => {
 
   const userData = count?.data;
 
+  const renderTripTotalElements = () => {
+    if (userData?.tripTotalElements === 0) {
+      return 0;
+    } else {
+      return userData?.tripTotalElements || 0;
+    }
+  };
+
+  const renderScrapTotalElements = () => {
+    if (userData?.scrapTotalElements === 0) {
+      return 0;
+    } else {
+      return userData?.scrapTotalElements || 0;
+    }
+  };
   const handleCardClick = (tripId?: number) => {
     navigate(`/travelDetail/${tripId}`);
   };
@@ -71,7 +86,7 @@ const MyPageReviewList = () => {
             marginRight="5px"
             onClick={handleMyReviewListClick}
           >
-            내가 작성한 {userData.tripTotalElements || 0}
+            내가 작성한 {renderTripTotalElements()}
           </Button>
           <Button
             color="white"
@@ -80,7 +95,7 @@ const MyPageReviewList = () => {
             borderColor="gray"
             onClick={handleMyScrapListClick}
           >
-            내가 스크랩한 {userData.scrapTotalElements || 0}
+            내가 스크랩한 {renderScrapTotalElements()}
           </Button>
         </div>
         <div>
