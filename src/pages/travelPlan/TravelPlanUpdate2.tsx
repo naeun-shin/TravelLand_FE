@@ -1,4 +1,4 @@
-import * as S from './TravelPlanMain.style';
+import * as S from '../../components/plans/TravelPlanMain.style';
 import PlanUpdate2 from '@/components/plans/planComponents/PlanUpdate2';
 
 const TravelPlanUpdate2 = () => {

@@ -3,11 +3,11 @@ import React, { useEffect, useState } from 'react';
 import * as S from './Search.style';
 import styled from 'styled-components';
 import CategoryButton from '../commons/buttons/CategoryButton';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
   useGetSearchResultAreaQuery,
   useGetSearchResultHashtagQuery,
-} from '@/hooks/useQuery';
-import { useLocation, useNavigate } from 'react-router-dom';
+} from '@/hooks/useQuery/useMainQuery';
 // import { IoLocationSharp } from 'react-icons/io5';
 
 // interface IPlaceNameProps {

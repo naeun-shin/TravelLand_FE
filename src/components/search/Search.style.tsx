@@ -155,3 +155,17 @@ export const ItemContent = styled.p`
   color: #444;
   max-width: 700px;
 `;
+
+// SearchModalPage 스타일 버튼
+export const CloseButton = styled.button`
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
