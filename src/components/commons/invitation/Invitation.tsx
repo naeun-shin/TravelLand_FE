@@ -1,12 +1,16 @@
+import React, { useState } from 'react';
 import { FiSearch } from 'react-icons/fi';
+import { IoClose } from 'react-icons/io5';
 import Button from '../buttons/Button';
 import { InvitationModal } from '../modals/Modal';
 import * as S from './Invitation.style';
+import { useNicknameSearchQuery } from '@/hooks/useQuery';
+import { InvitedPerson } from '@/components/plans/planComponents/PlanDetail';
 
 interface InvitationProps {
   isOpen: boolean;
   onClose: () => void;
-  onInvite: () => void; // 초대하기 버튼 클릭 시 호출될 함수 추가
+  onInvite: (user: InvitedPerson) => void;
 }
 
 export const Invitation: React.FC<InvitationProps> = ({
@@ -14,33 +18,92 @@ export const Invitation: React.FC<InvitationProps> = ({
   onClose,
   onInvite,
 }) => {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedUser, setSelectedUser] = useState<InvitedPerson | null>(null);
+  const {
+    data: users,
+    isLoading,
+    isError,
+    error,
+  } = useNicknameSearchQuery(searchTerm);
+
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value);
+  };
+
+  // selectedUser 전체 객체를 저장하는 로직
+  const handleSelectionChange = (user: InvitedPerson) => {
+    setSelectedUser(user);
+  };
+
+  const handleInvite = () => {
+    if (selectedUser) {
+      onInvite(selectedUser);
+      setSearchTerm('');
+      setSelectedUser(null);
+      onClose();
+    } else {
+      alert('사용자를 선택해주세요.');
+    }
+  };
+
+  const handleClose = () => {
+    setSearchTerm('');
+    setSelectedUser(null);
+    onClose();
+  };
+
   return (
     <>
-      <InvitationModal isOpen={isOpen} onClose={onClose}>
-        {/* 초대하기 버튼 추가 */}
-        <div>
-          <S.InvitationHeader>
-            <div>함께 여행할 동행자를 선택해주세요</div>
-            <S.InvitationCloseButton onClick={onClose}>
-              X
-            </S.InvitationCloseButton>
-          </S.InvitationHeader>
-          <hr />
-          <S.InvitationSearchBar>
-            <S.InvitationSearchInput
-              type="text"
-              placeholder="동행자를 검색해주세요."
-              required
-            />
-            <S.InvitationSearchButton>
-              <FiSearch size="1.5em" />
-            </S.InvitationSearchButton>
-          </S.InvitationSearchBar>
-        </div>
-        <div>{/* <input /> */}</div>
+      <InvitationModal isOpen={isOpen} onClose={handleClose}>
+        <S.InvitationCloseButton onClick={onClose}>
+          <IoClose size="50px" />
+        </S.InvitationCloseButton>
+        <S.InvitationHeader>
+          <div style={{ marginTop: '30px' }}>
+            함께 여행할 동행자를 선택해주세요
+          </div>
+        </S.InvitationHeader>
+        <hr />
+        <S.InvitationSearchBar>
+          <S.InvitationSearchInput
+            type="text"
+            placeholder="동행자를 검색해주세요."
+            required
+            value={searchTerm}
+            onChange={handleSearchChange}
+          />
+          <S.InvitationSearchButton onClick={() => setSearchTerm(searchTerm)}>
+            <FiSearch size="1.5em" />
+          </S.InvitationSearchButton>
+        </S.InvitationSearchBar>
+        {isLoading && <div>검색 중...</div>}
+        {isError && <div>검색에 실패했습니다: {error?.message}</div>}
+        {users?.data && (
+          <ul>
+            {users.data.map(
+              (
+                user: InvitedPerson, // 타입 명시적 적용
+              ) => (
+                <li key={user.email}>
+                  <label>
+                    <input
+                      type="radio"
+                      name="selectedUser"
+                      value={user.email}
+                      checked={selectedUser?.email === user.email}
+                      onChange={() => handleSelectionChange(user)}
+                    />
+                    {user.nickname} ({user.email})
+                  </label>
+                </li>
+              ),
+            )}
+          </ul>
+        )}
         <Button
           text="초대하기"
-          onClick={onInvite}
+          onClick={handleInvite}
           color="#5ac8ec"
           height="50px"
           width="160px"

@@ -11,9 +11,9 @@ import {
   useCreateScrapPlanMutation,
   useDeleteMutation,
 } from '@/hooks/useMutation';
-// import InvitationCard from '@/components/commons/cards/InvitationCard';
+import InvitationCard from '@/components/commons/cards/InvitationCard';
 import { FaLocationDot } from 'react-icons/fa6';
-// import { CiCirclePlus } from 'react-icons/ci';
+import { CiCirclePlus } from 'react-icons/ci';
 import { Invitation } from '@/components/commons/invitation/Invitation';
 import { VoteCheck } from '@/components/vote/VoteCheck';
 import { useAuthStore } from '@/store/useAuthStore';
@@ -45,7 +45,11 @@ interface UnitPlan {
   time: string;
   placeName: string;
 }
-
+export interface InvitedPerson {
+  email: string;
+  nickname: string;
+  profileImage: string;
+}
 const PlanDetail: React.FC<ButtonProps> = () => {
   const navigate = useNavigate();
   const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
@@ -55,11 +59,9 @@ const PlanDetail: React.FC<ButtonProps> = () => {
   const [dayPlans, setDayPlans] = useState<DayPlan[]>([]);
   const [address, setAddress] = useState<string>(''); // 예시 주소를 빈 문자열로 초기화// ...기존의 useState와 useEffect 로직...
   const [isInvitationModalOpen, setIsInvitationModalOpen] = useState(false); // 초대 모달 상태를 관리하는 useState
-  // const [invitedPeople, _] = useState<string[]>([]); // 초대된 사람 목록을 저장할 상태
-
+  const [invitedPeople, setInvitedPeople] = useState<InvitedPerson[]>([]);
   const [likeActive, setLikeActive] = useState(false);
   const [scrapActive, setScrapActive] = useState(false);
-
   // `id`를 숫자로 변환하기 전에 유효성 검사 수행
   const planId = Number(id);
 
@@ -145,9 +147,9 @@ const PlanDetail: React.FC<ButtonProps> = () => {
   // 초대하기 목록 불러오기 쿼리
 
   // 초대하기 모달을 여는 함수
-  // const handleOpenInvitation = () => {
-  //   setIsInvitationModalOpen(true); // 초대 모달 상태를 true로 설정
-  // };
+  const handleOpenInvitation = () => {
+    setIsInvitationModalOpen(true); // 초대 모달 상태를 true로 설정
+  };
 
   // 초대하기 모달을 닫는 함수
   const closeInvitationModal = () => {
@@ -155,20 +157,17 @@ const PlanDetail: React.FC<ButtonProps> = () => {
   };
 
   // 초대하기 로직
-  const handleInvite = () => {
-    alert('초대하기 기능이 개발중입니다. 빠른 시일 내에 오픈하겠습니다.');
-    // 초대 로직 구현 필요
-    closeInvitationModal(); // 초대 후 모달 닫기
+  // 초대하기 로직을 변경: 이메일 대신 사용자 객체 전체를 초대 목록에 추가
+  const handleInvite = (user: InvitedPerson) => {
+    setInvitedPeople((prev) => [...prev, user]);
+    closeInvitationModal();
+    alert(`${user.nickname}님을 초대했습니다.`);
   };
 
   // 초대한 사람 삭제
-  // const handleDeleteClick = (index: number) => {
-  //   console.log(index);
-  //   // 초대된 사람들 배열에서 해당 인덱스의 항목을 제거
-  //   // const updatedInvitedPeople = [...invitedPeople];
-  //   // updatedInvitedPeople.splice(index, 1);
-  //   // setInvitedPeople(updatedInvitedPeople);
-  // };
+  const handleDeleteClick = (index: number) => {
+    setInvitedPeople((prev) => prev.filter((_, idx) => idx !== index));
+  };
 
   if (isLoading) {
     // 데이터 로딩 중 UI
@@ -298,12 +297,12 @@ const PlanDetail: React.FC<ButtonProps> = () => {
 
             {/*초대 */}
             <S.InvitationBox>
-              {/* <S.InvitationDiv>
+              <S.InvitationDiv>
                 {invitedPeople.length > 0 ? (
                   invitedPeople.map((person, index) => (
                     <InvitationCard
                       key={index}
-                      src={person} // 예제 코드에서는 각 초대된 사람의 이미지 URL을 사용한다고 가정
+                      src={person.profileImage} // 예제 코드에서는 각 초대된 사람의 이미지 URL을 사용한다고 가정
                       onClick={() => handleDeleteClick(index)}
                     />
                   ))
@@ -315,17 +314,17 @@ const PlanDetail: React.FC<ButtonProps> = () => {
                   onClick={handleOpenInvitation}
                   style={{ cursor: 'pointer' }}
                 />
-              </S.InvitationDiv> */}
-              <S.PlanInvitationBox>
-                {/* 초대된 사람들 노출 및 삭제 구간 */}
-                {/* {invitedPeople.map((person, index) => (
-                <InvitationCard
-                  key={index}
-                  src={person.src}
-                  onClick={() => handleDeleteClick(index)}
-                />
-              ))} */}
-              </S.PlanInvitationBox>
+              </S.InvitationDiv>
+              {/* <S.PlanInvitationBox> */}
+              {/* 초대된 사람들 노출 및 삭제 구간 */}
+              {/* {invitedPeople.map((person, index) => (
+                  <InvitationCard
+                    key={index}
+                    src={person.profileImage}
+                    onClick={() => handleDeleteClick(index)}
+                  />
+                ))}
+              </S.PlanInvitationBox> */}
             </S.InvitationBox>
           </div>
         </S.DetailContentSection>

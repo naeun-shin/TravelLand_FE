@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { getPlanDetail, getPlanList } from '@/api/planAxios';
+import { getPlanDetail, getPlanList, searchNickname } from '@/api/planAxios';
 import {
   // getLogout,
   getMyPlanList,
@@ -172,5 +172,15 @@ export const useMypageScrapTrip = (params: MypageReviewParams) => {
     queryKey: ['mypageTrip', params],
     queryFn: () => getScrapTripList(params),
     staleTime: 0, // 필요한 경우 캐시 시간을 설정할 수 있습니다
+  });
+};
+
+// 닉네임 검색 결과
+export const useNicknameSearchQuery = (nickname: string) => {
+  return useQuery({
+    queryKey: ['nicknameSearch', nickname],
+    queryFn: () => searchNickname(nickname),
+    staleTime: 0,
+    enabled: Boolean(nickname), // 닉네임이 있을 때만 검색을 실행
   });
 };
