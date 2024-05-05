@@ -315,16 +315,6 @@ const PlanDetail: React.FC<ButtonProps> = () => {
                   style={{ cursor: 'pointer' }}
                 />
               </S.InvitationDiv>
-              {/* <S.PlanInvitationBox> */}
-              {/* 초대된 사람들 노출 및 삭제 구간 */}
-              {/* {invitedPeople.map((person, index) => (
-                  <InvitationCard
-                    key={index}
-                    src={person.profileImage}
-                    onClick={() => handleDeleteClick(index)}
-                  />
-                ))}
-              </S.PlanInvitationBox> */}
             </S.InvitationBox>
           </div>
         </S.DetailContentSection>
