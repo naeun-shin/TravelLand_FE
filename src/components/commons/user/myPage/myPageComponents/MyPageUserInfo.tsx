@@ -6,9 +6,10 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import { IoClose } from 'react-icons/io5';
 import { useUpdateNickname } from '@/hooks/useMutation/useUserMutation';
+import Modal from '@/components/commons/modals/Modal';
 
 const MyPageUserInfo = () => {
-  const { data, isLoading, isError } = useGetUerInfoQuery();
+  const { data, isLoading, isError, refetch } = useGetUerInfoQuery();
   const [modalOpen, setModalOpen] = useState(false);
   const [newNickname, setNewNickname] = useState('');
   const { mutate: updateNickname } = useUpdateNickname();
@@ -27,6 +28,7 @@ const MyPageUserInfo = () => {
       onSuccess: () => {
         alert('닉네임이 변경되었습니다.');
         setModalOpen(false); // 모달 닫기
+        refetch();
       },
       onError: (error) => {
         alert(`닉네임 변경에 실패했습니다: ${error.message}`);
@@ -43,6 +45,7 @@ const MyPageUserInfo = () => {
     console.log('모달 닫기');
     setModalOpen(false);
   };
+
   const userData = data?.data;
   if (isLoading)
     return (

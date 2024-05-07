@@ -25,7 +25,7 @@ export const useUpdateNickname = () => {
     mutationFn: (newNickname: string) => updateNickname(newNickname),
     onSuccess: () => {
       alert('닉네임이 성공적으로 변경되었습니다.');
-      navigate('/userProfile');
+      navigate('/user/myPage');
     },
     onError: () => {
       alert('닉네임 변경에 실패했습니다!');
