@@ -6,6 +6,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import { IoClose } from 'react-icons/io5';
 import { useUpdateNickname } from '@/hooks/useMutation/useUserMutation';
+import Modal from '@/components/commons/modals/Modal';
 
 const MyPageUserInfo = () => {
   const { data, isLoading, isError } = useGetUerInfoQuery();
