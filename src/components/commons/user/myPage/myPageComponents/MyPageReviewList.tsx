@@ -2,16 +2,16 @@ import { useState } from 'react';
 import Button from '@/components/commons/buttons/Button';
 import ListCard from '@/components/commons/mainItem/ListCard';
 import * as S from '@/components/commons/user/myPage/MyPage.style';
-import {
-  useGetUerInfoQuery,
-  useMypageScrapTrip,
-  useMypageTrip,
-} from '@/hooks/useQuery';
 import { TravelReviewCardSection } from '@/components/reviews/reviewIndex/TravelReviewPage.styles';
 // import { useMyTripListQuery } from '@/hooks/useQuery';
 // import { useState } from 'react';
 // import { getMyTripList } from '@/api/userAxios';
 import { useNavigate } from 'react-router-dom';
+import {
+  useMypageTrip,
+  useMypageScrapTrip,
+  useGetUerInfoQuery,
+} from '@/hooks/useQuery/useUserQuery';
 
 export interface Trip {
   tripId: number;

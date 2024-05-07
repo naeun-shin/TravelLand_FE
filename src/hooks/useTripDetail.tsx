@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { TripDetail } from '@/api/interfaces/reviewInterface';
 
-const useTripDetail = (tripId: number) => {
+export const useTripDetail = (tripId: number) => {
   const [tripDetail, setTripDetail] = useState<TripDetail | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);

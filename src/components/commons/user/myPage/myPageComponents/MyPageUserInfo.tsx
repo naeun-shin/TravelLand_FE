@@ -1,11 +1,10 @@
 import Modal from '@/components/commons/modals/Modal';
-import { useUpdateNickname } from '@/hooks/useMutation';
-import { useGetUerInfoQuery } from '@/hooks/useQuery';
+import { useGetUerInfoQuery } from '@/hooks/useQuery/useUserQuery';
 import * as S from '@components/commons/user/myPage/MyPage.style';
 import { useState } from 'react';
 import styled from 'styled-components';
-import CloseIcon from '@/icons/closeBtn.svg';
 import { IoClose } from 'react-icons/io5';
+import { useUpdateNickname } from '@/hooks/useMutation/useUserMutation';
 
 const MyPageUserInfo = () => {
   // return <></>;

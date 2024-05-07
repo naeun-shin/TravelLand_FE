@@ -5,8 +5,10 @@ import CategoryButton from '@/components/commons/buttons/CategoryButton';
 import SearchInput from '@/components/search/SearchInput';
 import { IoClose } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
-import { useGetAreaListQuery, useGetHahtagListQuery } from '@/hooks/useQuery';
-
+import {
+  useGetHahtagListQuery,
+  useGetAreaListQuery,
+} from '@/hooks/useQuery/useMainQuery';
 interface SearchModalProps {
   isOpen: boolean;
   onClose: () => void;
