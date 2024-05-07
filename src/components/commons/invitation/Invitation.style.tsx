@@ -13,14 +13,17 @@ const InvitationSearchBar = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 40px;
+  margin-top: 20px;
 `;
 
 const InvitationSearchInput = styled.input`
   padding: 5px 15px;
-  width: 400px;
-  height: 40px;
+  width: 450px;
+  height: 50px;
   border: 1px solid lightgray;
-  border-radius: 25px;
+  border-radius: 30px;
+  font-size: 18px;
 `;
 
 const InvitationSearchButton = styled.button`
@@ -31,19 +34,21 @@ const InvitationSearchButton = styled.button`
   margin: 5px;
   width: 45px;
   height: 45px;
-  left: 437px;
+  left: 500px;
   position: absolute;
 `;
 
 const InvitationCloseButton = styled.button`
-  font-size: 20px;
-
-  width: 40px;
-  height: 40px;
+  width: 60px;
+  height: 60px;
 
   display: flex;
-  align-items: center;
-  justify-content: center;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  /* align-items: center; */
+  /* justify-content: center; */
+  /* margin-left: 20px; */
 
   background-color: white;
   border-style: none;
