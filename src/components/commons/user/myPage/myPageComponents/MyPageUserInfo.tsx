@@ -1,4 +1,5 @@
-import Modal from '@/components/commons/modals/Modal';
+// import { NicknameModal } from '@/components/commons/modals/Modal';
+import { LoadingComponent } from '@/components/layouts/LoadingComponent';
 import { useGetUerInfoQuery } from '@/hooks/useQuery/useUserQuery';
 import * as S from '@components/commons/user/myPage/MyPage.style';
 import { useState } from 'react';
@@ -7,7 +8,6 @@ import { IoClose } from 'react-icons/io5';
 import { useUpdateNickname } from '@/hooks/useMutation/useUserMutation';
 
 const MyPageUserInfo = () => {
-  // return <></>;
   const { data, isLoading, isError } = useGetUerInfoQuery();
   const [modalOpen, setModalOpen] = useState(false);
   const [newNickname, setNewNickname] = useState('');
@@ -43,9 +43,13 @@ const MyPageUserInfo = () => {
     console.log('모달 닫기');
     setModalOpen(false);
   };
-
   const userData = data?.data;
-  if (isLoading) return <div>Data is Loading</div>;
+  if (isLoading)
+    return (
+      <div>
+        <div>{LoadingComponent()}</div>
+      </div>
+    );
   if (isError) return <div>Error occurred during fetching</div>;
   return (
     <>

@@ -9,6 +9,7 @@ import {
   useGetHahtagListQuery,
   useGetAreaListQuery,
 } from '@/hooks/useQuery/useMainQuery';
+import { LoadingComponent } from '@/components/layouts/LoadingComponent';
 interface SearchModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -25,10 +26,10 @@ const SearchModal: React.FC<SearchModalProps> = ({
   const [, setHashtag] = useState<string>('');
 
   // // 인기 태그 (선택박스)
-  const { data: tagList } = useGetHahtagListQuery();
+  const { data: tagList, isLoading: tagLoading } = useGetHahtagListQuery();
 
   // 인기 지역 (선택박스)
-  const { data: areaList } = useGetAreaListQuery();
+  const { data: areaList, isLoading: areaLoading } = useGetAreaListQuery();
   const areaItem = areaList?.data;
 
   useEffect(() => {
@@ -62,6 +63,13 @@ const SearchModal: React.FC<SearchModalProps> = ({
     onClose();
   };
 
+  if (tagLoading || areaLoading) {
+    return (
+      <div>
+        <div>{LoadingComponent()}</div>
+      </div>
+    );
+  }
   return (
     <>
       <S.ModalOverlay onClick={onClose}>

@@ -13,7 +13,8 @@ export const useGetMainRankListQuery = () => {
   return useQuery({
     queryKey: ['mainRank'],
     queryFn: getMainTopTenRankList,
-    staleTime: 0,
+    staleTime: Infinity,
+    gcTime: 5 * 60 * 1000,
   });
 };
 
@@ -22,7 +23,8 @@ export const useGetMainRandomListQuery = () => {
   return useQuery({
     queryKey: ['mainRandom'],
     queryFn: getMainRandomList,
-    staleTime: 0,
+    staleTime: Infinity,
+    gcTime: 5 * 60 * 1000,
   });
 };
 
@@ -31,7 +33,8 @@ export const useGetHahtagListQuery = () => {
   return useQuery({
     queryKey: ['topHashTag'],
     queryFn: getTopHashtags,
-    staleTime: 0,
+    staleTime: Infinity,
+    gcTime: 5 * 60 * 1000,
   });
 };
 
@@ -40,7 +43,8 @@ export const useGetAreaListQuery = () => {
   return useQuery({
     queryKey: ['topArea'],
     queryFn: getSearchTopArea,
-    staleTime: 0,
+    staleTime: Infinity,
+    gcTime: 5 * 60 * 1000,
   });
 };
 
@@ -63,7 +67,8 @@ export const useGetSearchResultHashtagQuery = (
   return useQuery({
     queryKey: ['resultHashtag', searchHashtagParams],
     queryFn: () => searchTripsByHashtag(searchHashtagParams),
-    staleTime: 0,
+    staleTime: Infinity,
+    gcTime: 5 * 60 * 1000,
     enabled: Boolean(searchHashtagParams.hashtag),
   });
 };
@@ -73,6 +78,7 @@ export const useGetMainSearchQuery = (text: string) => {
   return useQuery({
     queryKey: ['tripSearch', text],
     queryFn: () => searchTripsByText(text, 1, 9, '', true),
-    staleTime: 0,
+    staleTime: Infinity,
+    gcTime: 5 * 60 * 1000,
   });
 };

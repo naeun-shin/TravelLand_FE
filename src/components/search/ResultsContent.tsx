@@ -8,6 +8,7 @@ import {
   useGetSearchResultAreaQuery,
   useGetSearchResultHashtagQuery,
 } from '@/hooks/useQuery/useMainQuery';
+import { LoadingComponent } from '../layouts/LoadingComponent';
 // import { IoLocationSharp } from 'react-icons/io5';
 
 // interface IPlaceNameProps {
@@ -84,7 +85,12 @@ const ResultsContent: React.FC = () => {
     setSearchResults(results);
   }, [areaResults, hashtagResults, location.state]);
 
-  if (areaLoading || hashtagLoading) return <div>Loading...</div>;
+  if (areaLoading || hashtagLoading)
+    return (
+      <div>
+        <div>{LoadingComponent()}</div>
+      </div>
+    );
   if (areaError || hashtagError) return <div>Error loading data</div>;
 
   return (
