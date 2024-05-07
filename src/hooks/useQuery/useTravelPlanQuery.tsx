@@ -1,5 +1,5 @@
 import { PlanListParams } from '@/api/interfaces/planInterface';
-import { getPlanList, getPlanDetail } from '@/api/planAxios';
+import { getPlanList, getPlanDetail, searchNickname } from '@/api/planAxios';
 import { useQuery } from '@tanstack/react-query';
 
 export const usePlanListQuery = (planListParams: PlanListParams) => {
@@ -19,5 +19,15 @@ export const usePlanDetailQuery = (planId: number) => {
     // refetchInterval: 360000, // 투표 마감 결과 확인을 위해 1분으로 적용
     // refetchOnWindowFocus: false, // 윈도우 포커스 시 데이터 재요청 안 함
     // refetchOnReconnect: false, // 네트워크 재연결 시 데이터 재요청 안 함
+  });
+};
+
+// 닉네임 검색 결과
+export const useNicknameSearchQuery = (nickname: string) => {
+  return useQuery({
+    queryKey: ['nicknameSearch', nickname],
+    queryFn: () => searchNickname(nickname),
+    staleTime: 0,
+    enabled: Boolean(nickname), // 닉네임이 있을 때만 검색을 실행
   });
 };
