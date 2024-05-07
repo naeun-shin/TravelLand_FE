@@ -1,0 +1,6 @@
+.info:hover {
+  margin: 5px;
+  border-radius: 15px;
+  background-color: #f6f6f6;
+  transition: background-color 0.3s;
+}
