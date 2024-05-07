@@ -28,7 +28,7 @@ export const getLogout = async () => {
 
 // 닉네임 변경 -> 아직 적용 필요
 export const updateNickname = (nickname: string) => {
-  return instanceWithToken.patch('/users', { nickname });
+  return instanceWithToken.patch('/users/change-nickname', { nickname });
 };
 
 // 마이페이지 여행 정보 목록 조회

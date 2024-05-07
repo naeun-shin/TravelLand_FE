@@ -68,7 +68,7 @@ const Button: React.FC<ButtonProps> = ({
 export default Button;
 
 // 스몰 버튼
-export const SmallButton: React.FC<{ text: string }> = ({ text }) => (
+export const SmallButton: React.FC<ButtonProps> = ({ text, onClick }) => (
   <Button
     width="90px"
     height="40px"
@@ -80,6 +80,7 @@ export const SmallButton: React.FC<{ text: string }> = ({ text }) => (
     fontSize="15px"
     hoverColor="#5AC8EC" // 호버 시 색상 추가
     backgroundcolor="#fff"
+    onClick={onClick}
   />
 );
 

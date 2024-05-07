@@ -398,7 +398,7 @@ export const InvitationBox = styled.div`
 
 export const InvitationDiv = styled.div`
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   align-items: center;
   width: 100%;
   padding: 0px 20px;
