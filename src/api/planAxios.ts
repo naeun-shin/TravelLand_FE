@@ -126,3 +126,17 @@ export const cancelScrapPlan = async (planId: number) => {
     throw error;
   }
 };
+
+// 사용자 닉네임으로 검색하기
+export const searchNickname = async (
+  nickname: string,
+): Promise<AxiosResponse<any>> => {
+  try {
+    return await instance.get('/users/search-nickname', {
+      params: { nickname },
+    });
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};

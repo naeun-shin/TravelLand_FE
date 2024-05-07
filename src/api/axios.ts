@@ -19,7 +19,7 @@ export const instanceWithToken = axios.create({
 });
 
 // interceptor로 해야함
-instance.interceptors.request.use(
+instanceWithToken.interceptors.request.use(
   (config) => {
     const token = cookies.get('Authorization');
     if (token) {

@@ -61,6 +61,7 @@ const InvitationCardContainer = styled.div`
   background-color: #f4f4f4;
   align-content: center;
   flex-direction: row;
+  margin-right: 20px;
 
   img {
     width: 35px;
