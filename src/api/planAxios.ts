@@ -6,7 +6,7 @@ import {
   WholePlan,
 } from './interfaces/planInterface';
 import { Cookies } from 'react-cookie';
-import { PlanResponse } from '@/hooks/useMutation';
+import { PlanResponse } from '@/hooks/useMutation/useTravelPlanMutation';
 
 // 여행 플랜 작성하기
 export const createPlanList = async (wholePlan: WholePlan) => {
@@ -23,7 +23,6 @@ export const updatePlan = async (
   updateWholePlan: UpdateWholePlan,
 ): Promise<PlanResponse> => {
   const { planId } = updateWholePlan;
-  console.log(planId);
   try {
     return await instanceWithToken.put(
       `/v1/plans/allInOn/${planId}`,
@@ -122,6 +121,20 @@ export const createScrapPlan = async (planId: number) => {
 export const cancelScrapPlan = async (planId: number) => {
   try {
     return await instanceWithToken.delete(`/v1/plans/${planId}/scrap`);
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+// 사용자 닉네임으로 검색하기
+export const searchNickname = async (
+  nickname: string,
+): Promise<AxiosResponse<any>> => {
+  try {
+    return await instance.get('/users/search-nickname', {
+      params: { nickname },
+    });
   } catch (error) {
     console.error(error);
     throw error;

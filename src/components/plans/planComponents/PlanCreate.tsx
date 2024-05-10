@@ -67,11 +67,6 @@ const PlanCreate = () => {
     setArea(e.target.value);
   };
 
-  // 제목
-  // const handleTitleChange = (e: any) => {
-  //   setTotalPlanTitle(e.target.value);
-  // };
-
   // 비용 변경 핸들러
   const handleBudgetChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const budgetValue = e.target.value.replace(/\D/g, ''); // 숫자 이외 삭제
@@ -112,8 +107,6 @@ const PlanCreate = () => {
             border="transparent"
             fontSize={16}
             readonly={true}
-            // onKeyDown={(e) => activeEnter(e)}
-            // onChange={handleAreaChange}
           />
         </>
       );
@@ -176,11 +169,10 @@ const PlanCreate = () => {
 
     // dateRange 값 확인
     if (dateRange[0] && dateRange[1]) {
-      console.log(dateRange[0], dateFormat[1]);
       // 날짜 범위가 모두 선택되었다면, 처리 로직 추가
       navigate('/planCreate/2', {
         state: {
-          tripStartDate: dateRange[1]?.toDateString(),
+          tripStartDate: dateRange[0]?.toDateString(),
           tripEndDate: dateRange[1]?.toDateString(),
           isPublic,
           totalPlanTitle,

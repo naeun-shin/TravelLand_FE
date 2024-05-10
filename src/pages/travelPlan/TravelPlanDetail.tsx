@@ -1,6 +1,5 @@
 import PlanDetail from '@/components/plans/planComponents/PlanDetail';
-import * as S from './TravelPlanMain.style';
-import ReDesignHeader from '@/components/layouts/Header2';
+import * as S from '../../components/plans/TravelPlanMain.style';
 import { useEffect } from 'react';
 
 const TravelPlanDetail = () => {
@@ -11,7 +10,6 @@ const TravelPlanDetail = () => {
   }, []);
   return (
     <>
-      <ReDesignHeader needSearchInput={true} />
       <S.TravelPlanMainStyle>
         {/* 타이틀 */}
         <PlanDetail

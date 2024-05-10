@@ -1,10 +1,6 @@
 import { AxiosResponse } from 'axios';
 import { instance, instanceWithToken } from './axios';
-import {
-  TripData,
-  TripDetail,
-  TripListParams,
-} from './interfaces/reviewInterface';
+import { TripData, TripListParams } from './interfaces/reviewInterface';
 import { Cookies } from 'react-cookie';
 
 // 여행 정보 등록
@@ -39,27 +35,16 @@ export const getTripList = async (tripListparam: TripListParams) => {
 // 여행 정보 수정
 export const updateTrip = async (
   tripId: number,
-  tripData: TripData,
-  imageList?: File[],
+  formData: FormData,
 ): Promise<AxiosResponse<any>> => {
   try {
-    const formData = new FormData();
-
-    formData.append('requestDto', JSON.stringify(tripData));
-
-    // 이미지 리스트가 있으면 함께 전송
-    if (imageList) {
-      imageList.forEach((file, index) =>
-        formData.append(`imageList[${index}]`, file),
-      );
-    }
-
     const response = await instanceWithToken.put(
       `/v1/trips/${tripId}`,
       formData,
       {
         headers: {
-          'Content-Type': 'multipart/form-data',
+          // 'Content-Type': 'multipart/form-data'은 설정하지 않습니다.
+          // FormData와 함께 사용하는 경우 브라우저가 자동으로 필요한 헤더를 설정합니다.
         },
       },
     );
@@ -73,7 +58,7 @@ export const updateTrip = async (
 // 여행 정보 상세 보기
 export const getTripDetail = async (
   tripId: number,
-): Promise<AxiosResponse<TripDetail>> => {
+): Promise<AxiosResponse<any>> => {
   const cookie = new Cookies();
   try {
     if (cookie.get('Authorization')) {
@@ -134,6 +119,20 @@ export const createScrapTrip = async (tripId: number) => {
 export const cancelScrapTrip = async (tripId: number) => {
   try {
     return await instanceWithToken.delete(`/v1/trips/${tripId}/scrap`);
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+// 여행 상세보기 -> 좋아요 기반 여행글 추천 조회!
+
+export const getRecommendedTrips = async (
+  tripId: number,
+): Promise<AxiosResponse<any>> => {
+  try {
+    const response = await instance.get(`/v1/trips/${tripId}/recommend`);
+    return response;
   } catch (error) {
     console.error(error);
     throw error;

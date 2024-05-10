@@ -20,6 +20,7 @@ export interface ButtonProps {
   display?: string;
   alignItems?: string;
   justifyContent?: string;
+  backgroundcolor?: string;
 }
 
 // 기본 버튼
@@ -66,33 +67,8 @@ const Button: React.FC<ButtonProps> = ({
 
 export default Button;
 
-// 라지 버튼
-// export const LargeButton: React.FC<{ text: string }> = ({ text }) => (
-//   <Button
-//     width="200px"
-//     height="60px"
-//     color="#fff"
-//     borderColor="#000"
-//     borderRadius="30px"
-//     text={text}
-//     textColor="#000"
-//   />
-// );
-
-// 미디움 버튼
-// export const MediumButton: React.FC<{ text: string }> = ({ text }) => (
-//   <Button
-//     width="150px"
-//     height="50px"
-//     color="#fff"
-//     borderRadius="25px"
-//     text={text}
-//     textColor="#000"
-//   />
-// );
-
 // 스몰 버튼
-export const SmallButton: React.FC<{ text: string }> = ({ text }) => (
+export const SmallButton: React.FC<ButtonProps> = ({ text, onClick }) => (
   <Button
     width="90px"
     height="40px"
@@ -103,6 +79,8 @@ export const SmallButton: React.FC<{ text: string }> = ({ text }) => (
     textColor="#666"
     fontSize="15px"
     hoverColor="#5AC8EC" // 호버 시 색상 추가
+    backgroundcolor="#fff"
+    onClick={onClick}
   />
 );
 

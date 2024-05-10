@@ -6,9 +6,9 @@ import Button from '@/components/commons/buttons/Button';
 import { useLocation } from 'react-router-dom';
 import { ModernInput } from '@/components/commons/inputs/Input';
 import KaKaoMap from '@/components/maps/KaKaoMap';
-import { useCreatePlanMutaton } from '@/hooks/useMutation';
 import { TfiArrowCircleRight } from 'react-icons/tfi';
 import { TimeSelectBox } from '@/components/commons/timeSelect/TimeSelectBox';
+import { useCreatePlanMutation } from '@/hooks/useMutation/useTravelPlanMutation';
 
 export interface UnitPlan {
   title: string;
@@ -64,9 +64,6 @@ const PlanCreate2: React.FC = () => {
   // useState부분
   const [currentStep, setCurrentStep] = useState<number>(0);
   const [isSubmit, setIsSubmit] = useState<boolean>(false);
-
-  // Initializing displayDate
-  // const [, setDisplayDate] = useState<string>(formatDate(tripStartDate));
 
   const [unitPlans, setUnitPlans] = useState<UnitPlan[]>([
     {
@@ -284,7 +281,7 @@ const PlanCreate2: React.FC = () => {
     );
   };
 
-  const createPlanList = useCreatePlanMutaton();
+  const createPlanList = useCreatePlanMutation();
 
   // 등록하기 버튼
   const handlePlanSubmit = () => {
@@ -415,13 +412,6 @@ const PlanCreate2: React.FC = () => {
                       }
                     />
                   </div>
-                  {/* <input
-                    placeholder="09:30"
-                    value={input.time}
-                    onChange={(e) =>
-                      handleInputChange(index, 'time', e.target.value)
-                    }
-                  /> */}
                 </IS.ListInputbox>
                 {/* 일정 영역 */}
                 <IS.ListInputbox>
@@ -491,11 +481,6 @@ const PlanCreate2: React.FC = () => {
                       fontSize={18}
                     />
                     <IS.ImgBox>
-                      {/* <IoIosArrowDropright
-                    color="lightGray"
-                    size="2rem"
-                    onClick={() => handleOpenMapClick(index)}
-                  /> */}
                       <TfiArrowCircleRight
                         size="35px"
                         color="lightGray"

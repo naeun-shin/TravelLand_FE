@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import * as S from '../Plan.style';
 import * as IS from '@components/commons/inputs/Input.style';
 import * as PS from '@components/plans/Plan.style';
@@ -9,9 +9,10 @@ import KaKaoMap from '@/components/maps/KaKaoMap';
 // import { useCreatePlanMutaton } from '@/hooks/useMutation';
 import { TfiArrowCircleRight } from 'react-icons/tfi';
 import { TimeSelectBox } from '@/components/commons/timeSelect/TimeSelectBox';
-import { useUpdatePlanMutation } from '@/hooks/useMutation';
+import { useUpdatePlanMutation } from '@/hooks/useMutation/useTravelPlanMutation';
 
 export interface UnitPlan {
+  placeName?: string;
   title: string;
   content: string;
   time: string;
@@ -40,84 +41,106 @@ export interface WholePlan {
   dayPlans: DayPlan[];
 }
 // 날짜 변환 함수
-// const formatDate = (date: Date) => {
-//   if (isNaN(date.getTime())) {
-//     return ''; // 유효하지 않은 날짜는 빈 문자열 반환
-//   }
-//   return date.toISOString().split('T')[0];
-// };
+
+const formatDate = (dateString: string) => {
+  const date = new Date(dateString);
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, '0'); // 월은 0부터 시작하므로 1을 더해줍니다.
+  const day = date.getDate().toString().padStart(2, '0');
+  return `${year}-${month}-${day}`;
+};
 
 const PlanUpdate2: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
-
-  // 상태 초기화
-  const [wholePlan, setWholePlan] = useState<WholePlan>(() => {
-    const localData = localStorage.getItem('updatePlanData2');
-    if (localData) return JSON.parse(localData);
-    else if (location.state?.planDetails) return location.state.planDetails;
-    else
-      return {
-        title: '',
-        budget: 0,
-        area: '',
-        isPublic: false,
-        tripStartDate: '',
-        tripEndDate: '',
-        dayPlans: [],
-        planId: 0,
-      };
-  });
 
   const [dayPlans, setDayPlans] = useState<DayPlan[]>([]);
   const [currentStep, setCurrentStep] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedLocationIndex, setSelectedLocationIndex] = useState(0);
   const [isSubmit] = useState<boolean>(false);
+  const [title, setTitle] = useState<string>('');
+  const [budget, setBudget] = useState<number>(0);
+  const [area, setArea] = useState<string>('');
+  const [isPublic, setIsPublic] = useState<boolean>(true);
+  const [tripStartDate, setTripStartDate] = useState<string>('');
+  const [tripEndDate, setTripEndDate] = useState<string>('');
+  const [isVotable, setIsVotable] = useState<boolean>(true);
   // 여기에 planId 상태를 추가합니다.
-  const [planId, _] = useState<number | null>(null);
+  const [planId, setPlanId] = useState<number>(0);
 
   useEffect(() => {
-    // 페이지 초기 로드 또는 리로드 시 실행
-    function loadPlanData() {
-      const savedPlan = localStorage.getItem('updatePlanData2');
+    if (location.state && location.state.planDetails) {
+      const {
+        planId,
+        title,
+        budget,
+        area,
+        isPublic,
+        tripStartDate,
+        tripEndDate,
+        isVotable,
+        dayPlans,
+      } = location.state.planDetails as WholePlan;
 
-      if (savedPlan) {
-        // localStorage에서 데이터를 성공적으로 읽었을 때
-        const parsedPlan = JSON.parse(savedPlan);
-        setWholePlan(parsedPlan);
-        setDayPlans(parsedPlan.dayPlans || []);
-      } else if (location.state?.planDetails) {
-        // location.state에서 데이터를 읽을 때 (새로운 세션에서 접근)
-        const details = location.state.planDetails as WholePlan;
-        setWholePlan(details);
-        setDayPlans(details.dayPlans);
-        localStorage.setItem('updatePlanData2', JSON.stringify(details)); // 새 데이터를 localStorage에 저장
-      } else {
-        // 데이터를 찾을 수 없을 때 에러 페이지로 이동
-        navigate('/error');
-      }
+      // 날짜 포맷을 수정하여 설정
+      const formattedStartDate = formatDate(tripStartDate);
+      const formattedEndDate = formatDate(tripEndDate);
+
+      setPlanId(planId);
+      setTitle(title);
+      setBudget(budget);
+      setArea(area);
+      setIsPublic(isPublic);
+      setTripStartDate(formattedStartDate);
+      setTripEndDate(formattedEndDate);
+      setIsVotable(isVotable);
+
+      // 다음은 각 dayPlans의 각 unitPlan에 대해 초기 위치 값을 설정합니다.
+      const updatedDayPlans = dayPlans.map((dayPlan) => ({
+        ...dayPlan,
+        unitPlans: dayPlan.unitPlans.map((unitPlan) => ({
+          ...unitPlan,
+          // 이 부분은 이미 적절한 값이 설정되어 있다고 가정합니다.
+          // 없는 경우 빈 문자열로 처리할 수 있습니다.
+          place_name: unitPlan.placeName || '',
+          address: unitPlan.address || '',
+        })),
+      }));
+
+      setDayPlans(updatedDayPlans || []);
     }
+  }, [location.state]);
 
-    loadPlanData();
-  }, [location, navigate]);
-
-  const handleInputChange = (
-    index: number,
-    field: keyof UnitPlan,
-    value: string,
-    dayIndex: number = currentStep,
-  ) => {
-    // wholePlan에서 직접 dayPlans를 업데이트
-    const updatedWholePlan = { ...wholePlan }; // 현재 wholePlan을 복사
-    const updatedUnitPlans = [...updatedWholePlan.dayPlans[dayIndex].unitPlans]; // 현재 단계의 unitPlans를 복사
-    const updatedUnitPlan = { ...updatedUnitPlans[index], [field]: value }; // 특정 unitPlan을 업데이트
-
-    updatedUnitPlans[index] = updatedUnitPlan; // 업데이트된 unitPlan을 배열에 할당
-    updatedWholePlan.dayPlans[dayIndex].unitPlans = updatedUnitPlans; // 업데이트된 unitPlans 배열을 dayPlans에 할당
-
-    setWholePlan(updatedWholePlan); // 업데이트된 wholePlan을 상태로 설정
-  };
+  const handleInputChange = useCallback(
+    (
+      index: number,
+      field: keyof UnitPlan,
+      value: string,
+      dayIndex: number = currentStep,
+    ) => {
+      setDayPlans((current) =>
+        current.map((day, idx) => {
+          if (idx === dayIndex) {
+            return {
+              ...day,
+              unitPlans: day.unitPlans.map((unit, unitIndex) => {
+                if (unitIndex === index) {
+                  return {
+                    ...unit,
+                    [field]: value,
+                  };
+                }
+                return unit;
+              }),
+            };
+          }
+          return day;
+        }),
+      );
+    },
+    [currentStep],
+  );
 
   const handleTimeChange = (
     part: 'hour' | 'minute',
@@ -133,27 +156,28 @@ const PlanUpdate2: React.FC = () => {
     handleInputChange(index, 'time', timeParts.join(':'));
   };
 
-  const handlePlanAdd = () => {
+  const handlePlanAdd = useCallback(() => {
     const newUnitPlan: UnitPlan = {
       title: '',
+      content: '',
       time: '00:00',
+      budget: 0,
       place_name: '',
       address: '',
-      content: '',
-      budget: 0,
       x: 0,
       y: 0,
     };
-    const updatedWholePlan = { ...wholePlan };
-    updatedWholePlan.dayPlans[currentStep].unitPlans.push(newUnitPlan);
+    setDayPlans((current) => {
+      const updatedDayPlans = [...current];
+      updatedDayPlans[currentStep].unitPlans.push(newUnitPlan);
+      return updatedDayPlans;
+    });
+  }, [currentStep]);
 
-    setWholePlan(updatedWholePlan);
-  };
-
-  const handleOpenMapClick = (index: number) => {
+  const handleOpenMapClick = useCallback((index: number) => {
     setSelectedLocationIndex(index);
     setIsModalOpen(true);
-  };
+  }, []);
 
   // KaKaoMap 컴포넌트에서 위치가 선택되었을 때 호출될 함수
   // 위치 선택 핸들러 수정
@@ -162,34 +186,48 @@ const PlanUpdate2: React.FC = () => {
     const y = parseFloat(selectedLocation.y);
     const address =
       selectedLocation.road_address_name || selectedLocation.address_name;
-    const place_name = selectedLocation.place_name;
+    const place_name = selectedLocation.place_name; // 변수 이름을 place_name으로 변경
     handleInputChange(index, 'x', x.toString());
     handleInputChange(index, 'y', y.toString());
     handleInputChange(index, 'address', address);
-    handleInputChange(index, 'place_name', place_name);
+    handleInputChange(index, 'place_name', place_name); // 필드도 place_name으로 변경
     setIsModalOpen(false);
   };
 
-  const handleDeleteUnitPlanClick = (index: number) => {
-    const updatedWholePlan = { ...wholePlan };
-    updatedWholePlan.dayPlans[currentStep].unitPlans.splice(index, 1);
-
-    setWholePlan(updatedWholePlan);
-  };
+  const handleDeleteUnitPlanClick = useCallback(
+    (index: number) => {
+      setDayPlans((current) => {
+        const updatedDayPlans = [...current];
+        updatedDayPlans[currentStep].unitPlans.splice(index, 1);
+        return updatedDayPlans;
+      });
+    },
+    [currentStep],
+  );
 
   const handleDayChange = (index: number) => {
     setCurrentStep(index);
   };
 
   const handlePlanGoBack = () => {
-    navigate(`/planUpdate/1/${planId}`, { state: { wholePlan } });
+    navigate(`/planUpdate/1/${planId}`);
   };
 
   const updatePlanList = useUpdatePlanMutation();
-
   const handlePlanUpdateSubmit = () => {
-    // console.log('Submit:', wholePlan);
-    updatePlanList.mutate(wholePlan);
+    const updatedWholePlan: WholePlan = {
+      planId: planId,
+      title: title,
+      budget: budget,
+      area: area,
+      isPublic: isPublic,
+      tripStartDate: formatDate(tripStartDate),
+      tripEndDate: formatDate(tripEndDate),
+      isVotable: isVotable,
+      dayPlans: dayPlans,
+    };
+
+    updatePlanList.mutate(updatedWholePlan);
   };
 
   return (
@@ -342,7 +380,7 @@ const PlanUpdate2: React.FC = () => {
                         value={
                           unitPlan.place_name && unitPlan.address
                             ? `${unitPlan.place_name}, ${unitPlan.address}`
-                            : ''
+                            : `${unitPlan.place_name}${unitPlan.address}`
                         }
                         readonly={true}
                         type={'text'}
@@ -409,7 +447,7 @@ const PlanUpdate2: React.FC = () => {
           borderColor="#5AC8EC"
           marginRight="15px"
           onClick={handlePlanUpdateSubmit} // 수정하기 버튼 클릭 핸들러 추가
-          disabled={isSubmit}
+          disabled={isSubmit || !updatePlanList}
         />
       </S.ButtonBoxToRight>
 

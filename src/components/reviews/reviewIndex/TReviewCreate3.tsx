@@ -1,14 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import ToggleButton from '@/components/commons/buttons/ToggleButton';
 import { ModernInput } from '@/components/commons/inputs/Input';
-import styled from 'styled-components';
+import * as S from '@/components/reviews/reviewIndex/CreateEditStyle';
 import CategoryButton from '@/components/commons/buttons/CategoryButton';
-import { TitleWithCircle } from './TReviewCreate';
-import { AxiosError } from 'axios';
-import { TripData } from '@/api/interfaces/reviewInterface';
-import { useMutation } from '@tanstack/react-query';
-import { createTrip } from '@/api/reviewAxios';
+import { useCreateTripMutation } from '@/hooks/useMutation/useTravelReviewMutation';
 
 const TReviewCreate3 = () => {
   const navigate = useNavigate();
@@ -22,12 +18,53 @@ const TReviewCreate3 = () => {
     setContent(e.target.value);
   };
 
+  // 데이터 불러오기
+  useEffect(() => {
+    const savedData = localStorage.getItem('reviewState');
+    if (savedData) {
+      const { content, selectedTags, isPublic } = JSON.parse(savedData);
+      setContent(content || '');
+      setSelectedTags(selectedTags || []);
+      setIsPublic(isPublic || false);
+    }
+  }, []);
+
+  // 데이터 저장
+  useEffect(() => {
+    const data = {
+      content,
+      selectedTags,
+      isPublic,
+    };
+    localStorage.setItem('reviewState', JSON.stringify(data));
+  }, [content, selectedTags, isPublic]);
+
+  useEffect(() => {
+    const data = {
+      content: content,
+      selectedTags: selectedTags,
+      isPublic: isPublic,
+    };
+    localStorage.setItem('reviewState', JSON.stringify(data));
+  }, [content, selectedTags, isPublic]);
+
+  console.log('Content:', content); // content 확인
+  console.log('Selected Tags:', selectedTags);
+
   const handleTagClick = (
     tag: string,
     event: React.MouseEvent<HTMLButtonElement>,
   ) => {
     event.preventDefault();
     event.stopPropagation();
+
+    // selectedTags가 배열이 아닌 경우 안전하게 처리
+    if (!Array.isArray(selectedTags)) {
+      console.error('selectedTags is not an array:', selectedTags);
+      setSelectedTags([]); // 안전하게 빈 배열로 초기화
+      return;
+    }
+
     if (selectedTags.includes(tag)) {
       setSelectedTags(selectedTags.filter((t) => t !== tag));
     } else {
@@ -42,22 +79,16 @@ const TReviewCreate3 = () => {
   const handleBackClick = () => {
     navigate(-1);
   };
+  const handleSaveToLocalStorage = () => {
+    const data = {
+      title: state.title,
+      content: content,
+      // 다른 필요한 데이터도 추가할 수 있습니다.
+    };
+    localStorage.setItem('reviewState', JSON.stringify(data));
+  };
 
-  const mutation = useMutation<TripData, AxiosError, FormData>({
-    mutationFn: createTrip,
-    onSuccess: () => {
-      // console.log('여행 정보가 성공적으로 등록되었습니다.', data);
-      alert('여행 정보 작성 성공!');
-      localStorage.removeItem('reviewState');
-      navigate('/travelReview');
-    },
-    onError: (error) => {
-      const message = error.response?.data;
-      alert(`여행 정보 등록 실패! 오류: ${message}`);
-      console.error(message);
-    },
-  });
-
+  const createMutation = useCreateTripMutation();
   const handleSubmit = async (
     event: React.FormEvent<HTMLFormElement>,
   ): Promise<void> => {
@@ -67,6 +98,9 @@ const TReviewCreate3 = () => {
       alert('필수 입력 사항을 입력해주세요!');
       return;
     }
+
+    // 작성 내용을 로컬 스토리지에 저장
+    handleSaveToLocalStorage();
 
     const formData = new FormData();
     formData.append(
@@ -79,6 +113,7 @@ const TReviewCreate3 = () => {
         cost: state.cost,
         hashTag: selectedTags,
         address: state.address,
+        placeName: state.placeName,
         isPublic: isPublic,
       }),
     );
@@ -90,17 +125,20 @@ const TReviewCreate3 = () => {
       formData.append('imageList', file);
     });
 
-    mutation.mutate(formData);
+    createMutation.mutate(formData);
+
+    localStorage.removeItem('reviewState');
+    console.log('Review state removed from localStorage');
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
         <div style={{ width: '100%' }}>
-          <Title>
-            <TitleWithCircle>제목</TitleWithCircle>
-          </Title>
-          <ReviewBoxWithSpaceBetween>
+          <S.Title>
+            <S.TitleWithCircle>제목</S.TitleWithCircle>
+          </S.Title>
+          <S.ReviewBoxWithSpaceBetween>
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <img
                 src="/assets/icons/Rectangle.png"
@@ -122,37 +160,37 @@ const TReviewCreate3 = () => {
               isChecked={isPublic}
               onToggle={() => setIsPublic(!isPublic)}
             />
-          </ReviewBoxWithSpaceBetween>
-          <ReviewBox>
-            <ReviewContent>
+          </S.ReviewBoxWithSpaceBetween>
+          <S.ReviewBox>
+            <S.ReviewContent>
               <div>
-                <TitleWithCircle>내용</TitleWithCircle>
+                <S.TitleWithCircle>내용</S.TitleWithCircle>
               </div>
               {hasAttemptedSubmit && content.trim() === '' && (
-                <ErrorMessage>내용을 입력해주세요</ErrorMessage>
+                <S.ErrorMessage>내용을 입력해주세요</S.ErrorMessage>
               )}
-              <ContentTextarea
+              <S.ContentTextarea
                 placeholder="내용을 입력해주세요"
                 value={content}
                 onChange={handleContentChange}
               />
-            </ReviewContent>
-          </ReviewBox>
-          <HashTagContainer>
+            </S.ReviewContent>
+          </S.ReviewBox>
+          <S.HashTagContainer>
             <div style={{ display: 'flex' }}>
-              <HashTagTitle>
-                <TitleWithCircle>해시태그</TitleWithCircle>
-              </HashTagTitle>
-              <HashTagDescription>
+              <S.HashTagTitle>
+                <S.TitleWithCircle>해시태그</S.TitleWithCircle>
+              </S.HashTagTitle>
+              <S.HashTagDescription>
                 최대 4개를 선택할 수 있어요
-              </HashTagDescription>
+              </S.HashTagDescription>
             </div>
-          </HashTagContainer>
+          </S.HashTagContainer>
           {hasAttemptedSubmit && selectedTags.length === 0 && (
-            <ErrorMessage>1개이상 선택해주세요</ErrorMessage>
+            <S.ErrorMessage>1개이상 선택해주세요</S.ErrorMessage>
           )}
           <div>
-            <CategoryButtonContainer>
+            <S.CategoryButtonContainer>
               {[
                 '데이트',
                 '가족여행',
@@ -164,24 +202,25 @@ const TReviewCreate3 = () => {
                 '2030',
               ].map((tag) => (
                 <CategoryButton
+                  cursor="pointer"
                   key={tag}
                   title={tag}
                   onClick={(event) => handleTagClick(tag, event)}
                   selected={selectedTags.includes(tag)}
                 />
               ))}
-            </CategoryButtonContainer>
+            </S.CategoryButtonContainer>
           </div>
-          <ReviewBtnBox>
-            <ReviewBottomSection>
-              <ReviewBackButton onClick={handleBackClick}>
+          <S.ReviewBtnBox>
+            <S.ReviewBottomSection>
+              <S.ReviewBackButton type="button" onClick={handleBackClick}>
                 뒤로
-              </ReviewBackButton>
-            </ReviewBottomSection>
-            <ReviewBottomSection>
-              <ReviewNextButton>작성하기</ReviewNextButton>
-            </ReviewBottomSection>
-          </ReviewBtnBox>
+              </S.ReviewBackButton>
+            </S.ReviewBottomSection>
+            <S.ReviewBottomSection>
+              <S.ReviewNextButton>작성하기</S.ReviewNextButton>
+            </S.ReviewBottomSection>
+          </S.ReviewBtnBox>
         </div>
       </div>
     </form>
@@ -189,112 +228,3 @@ const TReviewCreate3 = () => {
 };
 
 export default TReviewCreate3;
-
-const ErrorMessage = styled.div`
-  color: #ff0000;
-  font-size: 14px;
-`;
-
-const ReviewBtnBox = styled.div`
-  display: flex;
-  justify-content: center;
-`;
-
-const ReviewBackButton = styled.button`
-  background-color: #5ac8ec;
-  color: white;
-  justify-content: center;
-  border: none;
-  width: 160px;
-  height: 50px;
-  border-radius: 16px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #cff4ff;
-  }
-`;
-
-const HashTagContainer = styled.div`
-  display: flex;
-  gap: 30px;
-  padding: 20px 0 0 0;
-`;
-
-const HashTagTitle = styled.div`
-  font-weight: bold;
-  margin-right: 20px;
-`;
-
-const HashTagDescription = styled.div`
-  color: #238bad;
-  font-weight: 600;
-`;
-const CategoryButtonContainer = styled.div`
-  display: flex;
-  width: 400px;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin: 20px 0 80px 90px;
-`;
-
-const ContentTextarea = styled.textarea`
-  width: 700px;
-  height: 150px;
-  /* border: 1px solid #ccc; */
-  padding: 10px;
-  font-size: 15px;
-  margin: 10px 0;
-  border-radius: 4px;
-  border: none;
-  resize: none;
-`;
-
-const ReviewBoxWithSpaceBetween = styled.div`
-  display: flex;
-  justify-content: space-between;
-  div {
-    padding-left: 5px;
-  }
-`;
-
-const ReviewBox = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  padding: 10px 0px;
-`;
-
-const ReviewContent = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 5px;
-  div {
-    padding-left: 5px;
-  }
-`;
-
-const ReviewBottomSection = styled.div`
-  display: flex;
-  justify-content: center;
-  padding: 20px 15px;
-`;
-
-const ReviewNextButton = styled.button`
-  background-color: #5ac8ec;
-  color: white;
-  justify-content: center;
-  border: none;
-  width: 160px;
-  height: 50px;
-  border-radius: 16px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #cff4ff;
-  }
-`;
-
-const Title = styled.div`
-  margin-left: 10px;
-`;

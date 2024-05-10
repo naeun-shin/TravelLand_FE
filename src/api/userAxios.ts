@@ -5,6 +5,7 @@ import {
   MypageReviewParams,
   TripListParams,
 } from './interfaces/reviewInterface';
+// import { LoogoutResponse } from './interfaces/userInterface';
 
 // 유저 정보
 export const getUserInfo = async () => {
@@ -16,9 +17,18 @@ export const getUserInfo = async () => {
   }
 };
 
+export const getLogout = async () => {
+  try {
+    return await instanceWithToken.get('/users/logout');
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
 // 닉네임 변경 -> 아직 적용 필요
 export const updateNickname = (nickname: string) => {
-  return instanceWithToken.patch('/users', { nickname });
+  return instanceWithToken.patch('/users/change-nickname', { nickname });
 };
 
 // 마이페이지 여행 정보 목록 조회
